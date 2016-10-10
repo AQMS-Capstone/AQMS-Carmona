@@ -1,0 +1,59 @@
+body{
+    color: black;
+}
+
+.header1 {
+  background-image: url('../assets/data/banner1.jpg');
+  background-repeat: no-repeat;
+  margin-bottom: 0;
+}
+
+.header-fade {
+  background-color: rgba(38,50,56,0.6);
+}
+
+.content-body{
+
+}
+
+.content-background-color{
+    background-color: rgba(77,182,172,1);
+}
+
+.content-image{
+    display: block;
+    margin: auto;
+    width: 100%;
+}
+
+.content-p{
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+}
+
+.header-content {
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+}
+
+.header-content h1, h2, p{
+  font-family: "Roboto", Times, serif;
+}
+
+p.thick {
+  font-weight: bold;
+}
+
+p.thicker{
+  font-weight: 400;
+}
+
+.sumports-header{
+  font-size: 25px;
+}
+
+.sumports{
+  font-size: 20px;
+}
