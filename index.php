@@ -76,7 +76,7 @@
 <body id ="mybody">
 <!--<body style="overflow: hidden; will-change: overflow;">-->
 
-  <nav class="navbar navbar-default" style="background-color: #212121; height: 65px;">
+  <nav class="navbar navbar-default" style="background-color: #009688; height: 65px;">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -87,7 +87,7 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-default navbar-centered"style="background-color: #212121;">
+<nav class="navbar navbar-default navbar-centered"style="background-color: #009688;">
         <ul class="nav navbar-nav">
             <li><a href="index.php" id = "homeClick"><span class="glyphicon glyphicon-home" style="vertical-align:middle; padding-right: 5px;"></span>Home</a></li>
             <li class="dropdown">
