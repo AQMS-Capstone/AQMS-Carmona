@@ -17,7 +17,7 @@
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
     <script>
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            window.location = "mobile.php";
+            window.location = "mobile/mobile.php";
         }
     </script>
 
@@ -29,7 +29,7 @@
 
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
     <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
-    <script src="js/caqms_api.js"></script>
+    <script src="js/caqms-api.js"></script>
 
 </head>
 

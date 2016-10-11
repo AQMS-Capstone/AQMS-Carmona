@@ -13,13 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Air Quality Monitoring</title>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="../res/favicon.ico" type="image/x-icon" />
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script src="js/mobile/caqms_api.js"></script>
+    <script src="../js/mobile/caqms_api.js"></script>
 
 </head>
 <body>
@@ -27,7 +27,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="brand-centered">
-                <a class="navbar-brand" href="index.php"><img src="res/logo.png" alt="AQMS"></a>
+                <a class="navbar-brand" href="../index.php"><img src="../res/logo.png" alt="AQMS"></a>
             </div>
         </div>
     </div>
@@ -84,17 +84,17 @@
             <tr>
                 <td>CO</td>
                 <td>999</td>
-                <td><img src="res/sampleData.png"></td>
+                <td><img src="../res/sampleData.png"></td>
             </tr>
             <tr>
                 <td>NO2</td>
                 <td>999</td>
-                <td><img src="res/sampleData.png"></td>
+                <td><img src="../res/sampleData.png"></td>
             </tr>
             <tr>
                 <td>O3</td>
                 <td>999</td>
-                <td><img src="res/sampleData.png"></td>
+                <td><img src="../res/sampleData.png"></td>
             </tr>
             </tbody>
         </table>
@@ -104,7 +104,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
 
