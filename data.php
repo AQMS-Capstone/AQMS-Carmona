@@ -1,21 +1,4 @@
-
-
-  <!-- Jumbotron -->
-
-  <!--
-      <div class="jumbotron header1 navbar-default shadow" style="z-index: 10" align = "middle">
-        <div class="header-fade">
-          <div class = "header-content">
-              <br/>
-          <h1>Air Quality Data</h1>
-          <p class="lead thicker">This website provides access to air quality data collected from Carmona, Cavite.</p>
-          <p><a class="btn btn-lg btn-success" href="#" role="button">DOWNLOAD TODAY'S DATA</a></p>
-              <br/>
-          </div>
-        </div>
-      </div>
--->
-      <nav class="navbar navbar-default navbar-centered shadow " style="text-align: center; z-index: 3">
+<nav class="navbar navbar-default navbar-centered shadow " style="text-align: center; z-index: 3">
           <ul class="nav navbar-nav nonres-nav">
               <li ><a style="color: #2196F3;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Good</a></li>
               <li><a style="color: #FFEB3B;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Moderate</a></li>
@@ -24,7 +7,7 @@
               <li><a style="color: #9C27B0;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Very Unhealthy</a></li>
               <li><a style="color: #b71c1c;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Hazardous</a></li>
           </ul>
-      </nav>
+</nav>
 
       <div class = "content-body content-background-color shadow" style="z-index: 3">
         <div class = "container">
@@ -37,7 +20,7 @@
           </div>
         </div>
         <br/>
-      </div>
+</div>
 
 <div class = "container">
   <br/>
