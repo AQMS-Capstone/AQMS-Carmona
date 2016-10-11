@@ -212,12 +212,12 @@ table{
     margin:0 auto;
 }
 
-.footer ul li{
+.footer-fixed ul li, .footer ul li{
     display:inline-block!important;
     padding: 5px;
 }
 
-.footer ul li a{
+.footer-fixed ul li, .footer ul li a{
     color: white!important;
     text-decoration: none;
 }
