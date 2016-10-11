@@ -24,9 +24,16 @@
         }
 
         $(document).ready(function(){
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+
+            $("#homeClick").click(function(){
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            });
+
           $("#dataClick").click(function(){
             $("#home").hide();
             $("#data").show();
+              $("#body-div").css({'overflow':'visible'});
           });
 
           $("#drpBancal").click(function(){
@@ -72,10 +79,9 @@
 
 </head>
 
-<body>
-<!--<body style="overflow: hidden; will-change: overflow;">-->
+<body id="body-div" style="overflow: hidden">
 
-  <nav class="navbar navbar-default" style="background-color: #009688; height: 65px;">
+<nav class="navbar navbar-default" style="background-color: #009688; height: 65px;">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -98,7 +104,7 @@
                 </ul>
             </li>
 
-            <li><a href="#" id = "dataClick"><span class="glyphicon glyphicon-globe" style="vertical-align:middle; padding-right: 5px;"></span>Data</a></li>
+            <li><a href="#" id = "dataClick"><span class="glyphicon glyphicon-globe" style="vertical-align:middle; padding-right: 5px;"></span>Data and Summary Reports</a></li>
             <li><a href="#"><span class="glyphicon glyphicon-envelope" style="vertical-align:middle; padding-right: 5px;"></span>About Us</a></li>
         </ul>
     </nav>
@@ -122,15 +128,6 @@
     <?php include_once('home/data-and-reports.php');?>
 </div>
 
-<!--
-<nav class="footer" style="position: fixed;">
-    <div class="container">
-        <ul>
-            <li style="vertical-align:middle; color:white">© 2016 AQMS</li>
-        </ul>
-    </div>
-</nav>
--->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>

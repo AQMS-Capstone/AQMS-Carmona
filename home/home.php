@@ -116,3 +116,11 @@
 <div class="map-container">
     <div id="googleMap" class="mapAPI"></div>
 </div>
+
+<nav class="footer-fixed">
+    <div class="container">
+        <ul>
+            <li style="vertical-align:middle; color:white">© 2016 AQMS</li>
+        </ul>
+    </div>
+</nav>
