@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2016 at 06:21 PM
+-- Generation Time: Oct 15, 2016 at 07:00 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -73,8 +73,8 @@ CREATE TABLE `master` (
   `m_id` bigint(20) NOT NULL,
   `a_id` bigint(20) NOT NULL,
   `e_id` bigint(20) NOT NULL,
-  `concentLevel` bigint(20) NOT NULL,
-  `dateUpdated` datetime NOT NULL
+  `concentration_value` bigint(20) NOT NULL,
+  `timestamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
