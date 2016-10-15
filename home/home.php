@@ -42,7 +42,7 @@
                 <tr>
                     <td>CO</td>
                     <td>999</td>
-                    <td><img src="res/sampleData.png"></td>
+                    <td><div id="chart_div" style="width: 100%; height: 30px;"></div></td>
                     <td>0</td>
                     <td>999</td>
                 </tr>
