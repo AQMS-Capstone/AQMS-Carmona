@@ -4,7 +4,11 @@
  * User: Skullpluggery
  * Date: 8/13/2016
  * Time: 3:13 AM
- */?>
+ */
+
+  include_once('dbConnect.php');
+
+ ?>
 
 <!DOCTYPE html>
 <html>
