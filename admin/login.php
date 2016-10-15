@@ -16,8 +16,8 @@
     <title>Login - Air Quality Monitoring</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,7 +31,7 @@
 <nav class="navbar navbar-default shadow" style="background-color: #009688;">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php" style="color: white;">Carmona Air Quality Monitoring System</a>
+            <a class="navbar-brand" href="../index.php" style="color: white;">Carmona Air Quality Monitoring System</a>
         </div>
     </div>
 </nav>
@@ -73,6 +73,6 @@
 </nav>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 </body>
 

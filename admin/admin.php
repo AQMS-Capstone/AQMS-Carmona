@@ -16,22 +16,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Air Quality Monitoring</title>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="../res/favicon.ico" type="image/x-icon" />
     <script>
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            window.location = "mobile/mobile.php";
+            window.location = "../mobile/mobile.php";
         }
     </script>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
     <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
-    <script src="js/caqms-api.js"></script>
+    <script src="../js/caqms-api.js"></script>
 
 </head>
 
@@ -42,7 +42,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <div class="brand-centered">
-                <a class="navbar-brand" href="index.php"><img src="res/logo.png" alt="AQMS"></a>
+                <a class="navbar-brand" href="../index.php"><img src="../res/logo.png" alt="AQMS"></a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
 <nav class="navbar navbar-default navbar-centered shadow"style="background-color: #009688;">
     <ul class="nav navbar-nav">
-        <li><a href="index.php"><span class="glyphicon glyphicon-home" style="vertical-align:middle; padding-right: 5px;"></span>Home</a></li>
+        <li><a href="../index.php"><span class="glyphicon glyphicon-home" style="vertical-align:middle; padding-right: 5px;"></span>Home</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-map-marker" style="vertical-align:middle; padding-right: 5px;"></span>Sensors Map
                 <span class="caret"></span></a>
@@ -102,21 +102,21 @@
             <tr>
                 <td>CO</td>
                 <td>999</td>
-                <td><img src="res/sampleData.png"></td>
+                <td><img src="../res/sampleData.png"></td>
                 <td>0</td>
                 <td>999</td>
             </tr>
             <tr>
                 <td>NO2</td>
                 <td>999</td>
-                <td><img src="res/sampleData.png"></td>
+                <td><img src="../res/sampleData.png"></td>
                 <td>0</td>
                 <td>999</td>
             </tr>
             <tr>
                 <td>O3</td>
                 <td>999</td>
-                <td><img src="res/sampleData.png"></td>
+                <td><img src="../res/sampleData.png"></td>
                 <td>0</td>
                 <td>999</td>
             </tr>
@@ -140,6 +140,6 @@
 </nav>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
