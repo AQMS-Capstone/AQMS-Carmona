@@ -6,7 +6,7 @@
  * Time: 7:00 PM
  */
 
-  include_once('include/db_connect.php');
+  //include_once('include/db_connect.php');
 
  ?>
 
@@ -76,6 +76,9 @@
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="home/graph/graph.js"></script>
 
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
     <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
