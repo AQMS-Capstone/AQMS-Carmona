@@ -29,6 +29,7 @@
 
         $(document).ready(function(){
             $("html, body").animate({ scrollTop: 0 }, "fast");
+            $('#zoneStatus').css({'visibility':'hidden'});
 
             $("#homeClick").click(function(){
                 $("html, body").animate({ scrollTop: 0 }, "slow");

@@ -1,6 +1,6 @@
 
 <!--Zone Status Card-->
-<div id="zoneStatus" class="card">
+<div id="zoneStatus" class="card-float">
     <div>
         <div class="col-md-6">
             <div class="AQIStat" id="AQIStat">
