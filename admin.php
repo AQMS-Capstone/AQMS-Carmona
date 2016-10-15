@@ -4,7 +4,9 @@
  * User: Skullpluggery
  * Date: 8/17/2016
  * Time: 2:30 AM
- */?>
+ */
+ include_once('dbConnect.php');
+ ?>
 
 <!DOCTYPE html>
 <html>
@@ -141,5 +143,3 @@
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
