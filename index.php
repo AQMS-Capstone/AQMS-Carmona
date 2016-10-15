@@ -6,7 +6,7 @@
  * Time: 3:13 AM
  */
 
-  include_once('dbConnect.php');
+  include_once('include/db_connect.php');
 
  ?>
 

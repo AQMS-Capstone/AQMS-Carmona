@@ -5,7 +5,7 @@
  * Date: 8/17/2016
  * Time: 2:30 AM
  */
- include_once('dbConnect.php');
+ include_once('include/db_connect.php');
  ?>
 
 <!DOCTYPE html>
