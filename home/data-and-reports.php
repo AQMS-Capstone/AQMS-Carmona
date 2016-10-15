@@ -1,17 +1,51 @@
 
-<div class = "content-body content-background-color shadow" style="z-index: 3">
-    <div class = "container">
-        <div class = "row">
-            <h2 class = "content-p text-center">Today's Air Quality Statistics</h2>
-            <br/>
-            <p class = "text-center"><img src = "assets/borrowed/samplegraph.png" class = "content-image img-thumbnail"></p>
-            <br/>
-            <p class = "text-center"><a class="btn btn-primary" href="#" role="button">VIEW MORE &raquo;</a></p>
-        </div>
-    </div>
-    <br/>
-</div>
+<div class = "content-body shadow" style="z-index: 3">
+<div>
+            <div class='col-md-12'>
+                <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                    <!-- Bottom Carousel Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#quote-carousel" data-slide-to="1"></li>
+                    </ol>
 
+                    <!-- Carousel Slides / Quotes -->
+                    <div class="carousel-inner">
+
+                        <!-- Quote 1 -->
+                        <div class="item active">
+                            <blockquote>
+                                <div class="row">
+                                    <div class='col-md-offset-2 col-md-8 text-center'>
+                                        <h3>Bancal Prevalent Status Report</h3>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <img src="assets/borrowed/samplegraph.PNG">
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+                        <!-- Quote 2 -->
+                        <div class="item">
+                            <blockquote>
+                                <div class="row">
+                                    <div class='col-md-12 text-center'>
+                                        <h3>SLEX - Carmona Exit Prevalent Status Report</h3>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <img src="assets/borrowed/samplegraph.PNG">
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Buttons Next/Prev -->
+                    <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                    <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+                </div>
+            </div>
+</div>
 <div class = "container">
     <br/>
     <div class="row">
