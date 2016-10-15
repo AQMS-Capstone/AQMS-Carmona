@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Skullpluggery&Vonn&Kris
+ * User: Skullpluggery
  * Date: 8/13/2016
  * Time: 3:13 AM
  */
