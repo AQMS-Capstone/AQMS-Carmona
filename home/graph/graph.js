@@ -45,4 +45,13 @@ function drawChart() {
     var chart = new google.visualization.LineChart(
         document.getElementById('chart_div'));
     chart.draw(data, options);
+
+    var chart2 = new google.visualization.LineChart(
+        document.getElementById('chart_div2'));
+    chart2.draw(data, options);
+
+    var chart3 = new google.visualization.LineChart(
+        document.getElementById('chart_div3'));
+    chart3.draw(data, options);
+
 }

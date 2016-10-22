@@ -65,7 +65,7 @@
                 <div class="card" id="zoneSynthesis">
                     <div class="card-content">
                         <h5 class = "text-center sumports-header">SYNTHESIS</h5>
-                        <p class = "text-center sumports-header">Passenger vehicles are a major pollution contributor, producing significant amounts of nitrogen oxides, carbon monoxide, and other pollution.</p>
+                        <p class = "text-center sumports-header" id = "ZoneSyntheis">Passenger vehicles are a major pollution contributor, producing significant amounts of nitrogen oxides, carbon monoxide, and other pollution.</p>
                     </div>
                 </div>
                 <br/>
