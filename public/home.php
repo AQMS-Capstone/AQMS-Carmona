@@ -26,43 +26,67 @@
 
 <body>
 
-<nav>
-    <div class="nav-wrapper">
-        <a href="#"><img class="brand-logo center" src="../res/logo.png"> </a>
-    </div>
-</nav>
-<nav>
-    <div class="nav-wrapper">
-        <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
-            <li><a href="home.php"><span class="material-icons">home</span> Home</a></li>
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a href="data-and-reports.html"><span class="material-icons">trending_up</span> Data and Reports</a></li>
-            <li><a href="about.html"><span class="material-icons">email</span> About Us</a></li>
-        </ul>
-    </div>
-</nav>
+<div>
+    <nav class="z-depth-0">
+        <div class="nav-wrapper">
+            <a href="#"><img class="brand-logo center" src="../res/logo.png"> </a>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <nav class="z-depth-0">
+        <div class="nav-wrapper">
+            <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
+                <li><a href="home.php"><span class="material-icons">home</span> Home</a></li>
+                <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a href="data-and-reports.html"><span class="material-icons">trending_up</span> Data and Reports</a></li>
+                <li><a href="about.html"><span class="material-icons">email</span> About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
     <li><a id="drpBancal">SLEX - Carmona Exit</a></li>
     <li><a id="drpSLEX">Bancal</a></li>
 </ul>
+<div>
+    <nav>
+        <div class="nav-wrapper white">
+            <ul id="nav-mobile" class="centered-nav nav-status hide-on-med-and-down black-text">
+                <li><a style="color: #2196F3;"><span class="material-icons">cloud</span> Good</a></li>
+                <li><a style="color: #FFEB3B;"><span class="material-icons">cloud</span> Moderate</a></li>
+                <li><a style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups</a></li>
+                <li><a style="color: #f44336;"><span class="material-icons">cloud</span> Unhealthy</a></li>
+                <li><a style="color: #9C27B0;"><span class="material-icons">cloud</span> Very Unhealthy</a></li>
+                <li><a style="color: #b71c1c;"><span class="material-icons">cloud</span> Hazardous</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
 
-<nav>
-    <div class="nav-wrapper white">
-        <ul id="nav-mobile" class="centered-nav nav-status hide-on-med-and-down black-text">
-            <li><a style="color: #2196F3;"><span class="material-icons">cloud</span> Good</a></li>
-            <li><a style="color: #FFEB3B;"><span class="material-icons">cloud</span> Moderate</a></li>
-            <li><a style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups</a></li>
-            <li><a style="color: #f44336;"><span class="material-icons">cloud</span> Unhealthy</a></li>
-            <li><a style="color: #9C27B0;"><span class="material-icons">cloud</span> Very Unhealthy</a></li>
-            <li><a style="color: #b71c1c;"><span class="material-icons">cloud</span> Hazardous</a></li>
-        </ul>
+<div class="row float">
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Card Title</span>
+                <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+            </div>
+        </div>
     </div>
-</nav>
+</div>
 
 <div class="map-container">
-    <div id="googleMap" class="mapAPI"></div>
+    <div id="googleMap"></div>
 </div>
+
+
 
 <!--  Scripts-->
 <script src="../js/jquery-3.1.1.min.js"></script>
