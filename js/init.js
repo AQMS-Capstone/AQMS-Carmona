@@ -31,3 +31,13 @@ $( "#prevItem" ).click(function() {
         optionIsVisible = true;
     }
 });
+
+$("#home-tab").click(function () {
+    $("#home").show();
+    $("#reports").hide();
+})
+
+$("#reports-tab").click(function () {
+    $("#home").hide();
+    $("#reports").show();
+})
