@@ -35,20 +35,24 @@ $( "#prevItem" ).click(function() {
 
 $("#home-tab").click(function () {
     $("#home").show();
+    $("#legends").show();
     $("#reports").hide();
 })
 
 $("#reports-tab").click(function () {
     $("#home").hide();
+    $("#legends").hide();
     $("#reports").show();
 })
 
 $("#drpBancal").click(function () {
     $("#home").show();
+    $("#legends").show();
     $("#reports").hide();
 })
 
 $("#drpSLEX").click(function () {
     $("#home").show();
+    $("#legends").show();
     $("#reports").hide();
 })

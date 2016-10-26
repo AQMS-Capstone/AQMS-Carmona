@@ -15,11 +15,11 @@
     </nav>
 </div>
 <div>
-    <nav class="z-depth-0 small-nav">
+    <nav id="nav" class="small-nav">
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                 <li><a id="home-tab"><span class="material-icons">home</span> Home</a></li>
-                <li><a class="dropdown-button" href="#!" data-beloworigin="true" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li><a id="reports-tab"><span class="material-icons">trending_up</span> Data and Reports</a></li>
                 <li><a id="about-tab"><span class="material-icons">email</span> About Us</a></li>
             </ul>
@@ -32,7 +32,7 @@
     <li><a id="drpBancal">Bancal</a></li>
 </ul>
 <div>
-    <nav class="navbar-fixed">
+    <nav id ="legends" class="navbar-fixed">
         <div class="nav-wrapper white">
             <ul id="nav-mobile" class="centered-nav nav-status hide-on-med-and-down black-text">
                 <li><a style="color: #2196F3;"><span class="material-icons">cloud</span> Good</a></li>
