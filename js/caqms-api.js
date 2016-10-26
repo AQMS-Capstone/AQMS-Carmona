@@ -13,10 +13,126 @@ var veryUnhealthyAir = "#9C27B0";
 var hazardoussAir = "#b71c1c";
 
 //ETO UNG BABAGUHIN , LALAGYAN NG CONDITION
-var bancalAirQuality = moderateAir;
-var slexAirQuality = unhealthy2Air;
-var bancalAQI = 54;
-var slexAQI = 152;
+
+//var bancalAirQuality = moderateAir;
+//var slexAirQuality = unhealthy2Air;
+//var bancalAQI = 54;
+//var slexAQI = 152;
+
+var bancalAirQuality = "";
+var slexAirQuality = "";
+
+//We can optimize this code once we put the values in DB
+switch(bancalPrevalentPollutant)
+{
+  case 0: // TSP
+    if(bancalAQIValue >= 0 && bancalAQIValue <= 80){
+      bancalAirQuality = goodAir;
+    }else if(bancalAQIValue >= 81 && bancalAQIValue <= 230){
+      bancalAirQuality = moderateAir;
+    }else if(bancalAQIValue >= 231 && bancalAQIValue <= 349){
+      bancalAirQuality = unhealthy1Air;
+    }else if(bancalAQIValue >= 350 && bancalAQIValue <= 599){
+      bancalAirQuality = unhealthy2Air;
+    }else if(bancalAQIValue >= 600 && bancalAQIValue <= 899){
+      bancalAirQuality = veryUnhealthyAir;
+    }else if(bancalAQIValue >= 900){
+      bancalAirQuality = hazardoussAir;
+    }else {
+      bancalAirQuality = hazardoussAir;
+    }
+    break;
+
+  case 1: // PM 10
+    if(bancalAQIValue >= 0 && bancalAQIValue <= 54){
+      bancalAirQuality = goodAir;
+    }else if(bancalAQIValue >= 55 && bancalAQIValue <= 154){
+      bancalAirQuality = moderateAir;
+    }else if(bancalAQIValue >= 155 && bancalAQIValue <= 254){
+      bancalAirQuality = unhealthy1Air;
+    }else if(bancalAQIValue >= 255 && bancalAQIValue <= 354){
+      bancalAirQuality = unhealthy2Air;
+    }else if(bancalAQIValue >= 355 && bancalAQIValue <= 424){
+      bancalAirQuality = veryUnhealthyAir;
+    }else if(bancalAQIValue >= 425 && bancalAQIValue <= 504){
+      bancalAirQuality = hazardoussAir;
+    }
+    break;
+
+    case 2: // SO2
+      if(bancalAQIValue >= 0.000 && bancalAQIValue <= 0.034){
+        bancalAirQuality = goodAir;
+      }else if(bancalAQIValue >= 0.035 && bancalAQIValue <= 0.144){
+        bancalAirQuality = moderateAir;
+      }else if(bancalAQIValue >= 0.145 && bancalAQIValue <= 0.224){
+        bancalAirQuality = unhealthy1Air;
+      }else if(bancalAQIValue >= 0.225 && bancalAQIValue <= 0.304){
+        bancalAirQuality = unhealthy2Air;
+      }else if(bancalAQIValue >= 0.305 && bancalAQIValue <= 0.604){
+        bancalAirQuality = veryUnhealthyAir;
+      }else if(bancalAQIValue >= 0.605 && bancalAQIValue <= 0.804){
+        bancalAirQuality = hazardoussAir;
+      }
+      break;
+
+  case 3: // O3
+
+    if(bancalAQIValue > 0.375){ // O3 1hr
+      if(bancalAQIValue >= 0.000 && bancalAQIValue <= 0.124){
+
+      }else if(bancalAQIValue >= 0.125 && bancalAQIValue <= 0.164){
+        bancalAirQuality = unhealthy1Air;
+      }else if(bancalAQIValue >= 0.165 && bancalAQIValue <= 0.204){
+        bancalAirQuality = unhealthy2Air;
+      }else if(bancalAQIValue >= 0.205 && bancalAQIValue <= 0.404){
+        bancalAirQuality = veryUnhealthyAir;
+      }else if(bancalAQIValue >= 0.405 && bancalAQIValue <= 0.504){
+        bancalAirQuality = hazardoussAir;
+      }
+    }
+
+    else { // O3 8 hr
+      if(bancalAQIValue >= 0.000 && bancalAQIValue <= 0.064){
+        bancalAirQuality = goodAir;
+      }else if(bancalAQIValue >= 0.065 && bancalAQIValue <= 0.084){
+        bancalAirQuality = moderateAir;
+      }else if(bancalAQIValue >= 0.085 && bancalAQIValue <= 0.104){
+        bancalAirQuality = unhealthy1Air;
+      }else if(bancalAQIValue >= 0.105 && bancalAQIValue <= 0.124){
+        bancalAirQuality = unhealthy2Air;
+      }else if(bancalAQIValue >= 0.125 && bancalAQIValue <= 0.374){
+        bancalAirQuality = veryUnhealthyAir;
+      }
+    }
+    break;
+
+  case 4: // CO
+    if(bancalAQIValue >= 0.0 && bancalAQIValue <= 4.4){
+      bancalAirQuality = goodAir;
+    }else if(bancalAQIValue >= 4.5 && bancalAQIValue <= 9.4){
+      bancalAirQuality = moderateAir;
+    }else if(bancalAQIValue >= 9.5 && bancalAQIValue <= 12.4){
+      bancalAirQuality = unhealthy1Air;
+    }else if(bancalAQIValue >= 12.5 && bancalAQIValue <= 15.4){
+      bancalAirQuality = unhealthy2Air;
+    }else if(bancalAQIValue >= 15.5 && bancalAQIValue <= 30.4){
+      bancalAirQuality = veryUnhealthyAir;
+    }else if(bancalAQIValue >= 30.5 && bancalAQIValue <= 40.4){
+      bancalAirQuality = hazardoussAir;
+    }
+    break;
+
+  case 5: // NO2
+    if(bancalAQIValue >= 0.00 && bancalAQIValue <= 0.64){
+
+    }else if(bancalAQIValue >= 1.25 && bancalAQIValue <= 1.64){
+      bancalAirQuality = hazardoussAir;
+    }
+    break;
+}
+
+var bancalAQI = bancalAQIValue;
+var slexAQI = slexAQIValue;
 
 function initialize()
 {

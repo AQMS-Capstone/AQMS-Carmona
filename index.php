@@ -8,6 +8,19 @@
 
   //include_once('include/db_connect.php');
 
+  //NAAQGV:
+  //INDEX: 0 - PM10: 24-hour averaging = 150 ug/Ncm
+  //INDEX: 1 - TSP: 24-hour averaging = 230 ug/Ncm
+  //INDEX: 2 - O3: 1-hour averaging = 140 ug/Ncm
+  //INDEX: 3 - CO: 1-hour averaging = 30 ppm
+  //INDEX: 4 - NO2: 24-hour averaging = 150 ug/Ncm
+  //INDEX: 5 - SO2: 24-hour averaging = 180 ug/Ncm
+  //INDEX: 6 - Lead: 3 months = 1.5 ug/Ncm
+
+  $bancalPrevalentPollutant = 0;
+  $slexPrevalentPollutant = 3;
+  $bancalAQIValue = 40;
+  $slexAQIValue = 10;
  ?>
 
 <!DOCTYPE html>
@@ -19,7 +32,12 @@
 
     <title>Air Quality Monitoring</title>
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
-
+    <script type = "text/javascript">
+      var bancalPrevalentPollutant = <?= $bancalPrevalentPollutant ?>;
+      var slexPrevalentPollutant = <?= $slexPrevalentPollutant ?>;
+      var bancalAQIValue = <?= $bancalAQIValue ?>;
+      var slexAQIValue = <?= $slexAQIValue ?>
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script>
@@ -119,11 +137,11 @@
 <nav class="navbar navbar-default navbar-centered shadow " style="text-align: center; z-index: 3">
     <ul class="nav navbar-nav nonres-nav">
         <li ><a style="color: #2196F3;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Good</a></li>
-        <li><a style="color: #FFEB3B;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Moderate</a></li>
-        <li><a style="color: #FF9800;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Unhealthy for Sensitive Groups</a></li>
-        <li><a style="color: #f44336;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Unhealthy</a></li>
-        <li><a style="color: #9C27B0;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Very Unhealthy</a></li>
-        <li><a style="color: #b71c1c;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Hazardous</a></li>
+        <li><a style="color: #FFEB3B;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Fair</a></li>
+        <li><a style="color: #FF9800;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Unhealthy for sensitive groups</a></li>
+        <li><a style="color: #f44336;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Very Unhealthy</a></li>
+        <li><a style="color: #9C27B0;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Acutey Unhealthy</a></li>
+        <li><a style="color: #b71c1c;"><span class="glyphicon glyphicon-cloud" style="vertical-align:middle; padding-right: 5px;"></span>Emergency</a></li>
     </ul>
 </nav>
 
