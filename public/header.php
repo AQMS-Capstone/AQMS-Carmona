@@ -19,7 +19,7 @@
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                 <li><a id="home-tab"><span class="material-icons">home</span> Home</a></li>
-                <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-button" href="#!" data-beloworigin="true" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li><a id="reports-tab"><span class="material-icons">trending_up</span> Data and Reports</a></li>
                 <li><a id="about-tab"><span class="material-icons">email</span> About Us</a></li>
             </ul>
@@ -28,8 +28,8 @@
 </div>
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-    <li><a id="drpBancal">SLEX - Carmona Exit</a></li>
-    <li><a id="drpSLEX">Bancal</a></li>
+    <li><a id="drpSLEX">SLEX - Carmona Exit</a></li>
+    <li><a id="drpBancal">Bancal</a></li>
 </ul>
 <div>
     <nav class="navbar-fixed">

@@ -78,7 +78,7 @@ function initialize()
         GetSLEXStatus();
     });
 
-    google.maps.event.addListener(map, 'dragend', function() { document.getElementById("zoneStatus").style.visibility = 'hidden'; } );
+    google.maps.event.addListener(map, 'dragend', function() { $("#zoneStatus").hide(); } );
 
     document.getElementById("drpBancal").onclick = function(){
         GetBancalStatus();
@@ -93,25 +93,25 @@ function initialize()
     bancalMarker.setMap(map);
     slexMarker.setMap(map);
 
-    var bancalZoom=new google.maps.LatLng(14.2816712,121.0147383);
+    var bancalZoom=new google.maps.LatLng(14.283969,121.015671);
     function GetBancalStatus() {
         map.setZoom(16);
         map.setCenter(bancalZoom);
 
-        document.getElementById("zoneStatus").style.visibility = 'visible';
+        $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = bancalAirQuality;
         document.getElementById("zoneName").innerHTML = 'Bancal, Carmona, Cavite';
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = 'Moderate';
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
     }
-    var slexZoom=new google.maps.LatLng(14.3203282,121.0711943);
+    var slexZoom=new google.maps.LatLng(14.32274,121.071688);
     //noinspection JSAnnotator
     function GetSLEXStatus() {
         map.setZoom(16);
         map.setCenter(slexZoom);
 
-        document.getElementById("zoneStatus").style.visibility = 'visible';
+        $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = slexAirQuality;
         document.getElementById("zoneName").innerHTML = 'SLEX Carmona Exit, Cavite';
         document.getElementById("aqiNum").innerHTML = slexAQI;

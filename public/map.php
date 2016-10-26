@@ -8,22 +8,25 @@
 ?>
 <div id="home" class="map-container">
 
-    <div class="card float-card">
+    <div id="zoneStatus" class="card float-card">
         <div class="card-content black-text">
             <div class="row">
                 <div id="AQIStat" class="col s12 m4">
-                    <span class="center-align"><h3>12345</h3></span>
+                    <span class="center-align"><h2  id="aqiNum">12345</h2></span>
                 </div>
                 <div class="col s12 m8">
-                    <div class="row">
-                        <div id="ZoneName" class="col s12">
-                            <span class="card-title"><b>Zone Name</b></span>
+                    <div class="row-no-after">
+                        <div class="col s12">
+                            <span class="card-title"><b id="zoneName">Zone Name</b></span>
+                        </div>
+                        <div class="col s12">
+                            <span id="aqiText">AQI Status</span>
                         </div>
                         <div id="AQIStat_txt" class="col s12">
-                            <span>AQI Status</span>
+                            <span>Prevalant Air Pollutant: ##</span>
                         </div>
-                        <div id="timeUpdated" class="col s12">
-                            <span>DateToday TimeToday</span>
+                        <div class="col s12">
+                            <span id="timeUpdated">DateToday TimeToday</span>
                         </div>
                     </div>
 

@@ -1,10 +1,11 @@
 $( document ).ready(function(){
     $(".button-collapse").sideNav();
     $('.carousel.carousel-slider').carousel({full_width: true});
-
-
+    $("#zoneStatus").hide();
 })
 
+
+//Functions
 var optionIsVisible = true;
 
 $( "#nextItem" ).click(function() {
@@ -40,4 +41,14 @@ $("#home-tab").click(function () {
 $("#reports-tab").click(function () {
     $("#home").hide();
     $("#reports").show();
+})
+
+$("#drpBancal").click(function () {
+    $("#home").show();
+    $("#reports").hide();
+})
+
+$("#drpSLEX").click(function () {
+    $("#home").show();
+    $("#reports").hide();
 })
