@@ -1,6 +1,6 @@
 <?php
 class Area{
-    protected $id;
-    protected $name;
+    var $id;
+    var $name;
 }
 ?>
