@@ -84,7 +84,7 @@ nav  ul.black-text a{
 .carousel .indicators{
    margin: 0 0 10px 10px;
 }
-#AQIStat{
+#AQIStat, #AQIStat-reports{
     background-color: #00acc1;
     border-radius: 2px;
 }
@@ -98,4 +98,17 @@ nav  ul.black-text a{
 html, body{
     height: 100%;
 
+}
+
+.tabs .tab a{
+    color: #009688;
+
+}
+.tabs .tab a:hover{
+    color: #B2DFDB;
+
+}
+
+.tabs .indicator{
+    background-color: #009688;
 }
