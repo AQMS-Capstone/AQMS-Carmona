@@ -5,7 +5,15 @@
  * Date: 8/13/2016
  * Time: 7:00 PM
  */
+ include("class/Map.php");
 
+ //$bancalPrevalentPollutant = 0;
+ //$slexPrevalentPollutant = 3;
+ //$bancalAQIValue = 40;
+ //$slexAQIValue = 10;
+
+ $bancalMap = new Map(0, 20);
+ $slexMap = new Map(1,425);
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +30,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    
+
 </head>
 
 <body>
@@ -44,6 +52,17 @@
 
 
 <!--  Scripts-->
+<script type="text/javascript">
+
+  function Map (id, value) {
+      this.p_id = id;
+      this.p_value = value;
+  }
+
+  var bancalMap = new Map(<?= $bancalMap->p_id ?>, <?= $bancalMap->p_value ?>);
+  var slexMap =  new Map(<?= $slexMap->p_id ?>, <?= $slexMap->p_value ?>);
+
+</script>
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
