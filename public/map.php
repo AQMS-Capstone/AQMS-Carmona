@@ -23,7 +23,7 @@
                             <span id="aqiText">AQI Status</span>
                         </div>
                         <div id="AQIStat_txt" class="col s12">
-                            <span>Prevalant Air Pollutant: ##</span>
+                            <span><b id="prevalentPollutant">Prevalant Air Pollutant</b></span>
                         </div>
                         <div class="col s12">
                             <span id="timeUpdated">DateToday TimeToday</span>
@@ -48,19 +48,19 @@
 
                                 <tbody>
                                 <tr>
-                                    <td>Alvin</td>
-                                    <td>Eclair</td>
-                                    <td>$0.87</td>
+                                    <td>CO</td>
+                                    <td>0.5</td>
+                                    <td>4.4</td>
                                 </tr>
                                 <tr>
-                                    <td>Alan</td>
-                                    <td>Jellybean</td>
-                                    <td>$3.76</td>
+                                    <td>NO2</td>
+                                    <td>0.33</td>
+                                    <td>0.70</td>
                                 </tr>
                                 <tr>
-                                    <td>Jonathan</td>
-                                    <td>Lollipop</td>
-                                    <td>$7.00</td>
+                                    <td>SO2</td>
+                                    <td>0.000</td>
+                                    <td>0.304</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -96,5 +96,3 @@
 
     <div id="googleMap"></div>
 </div>
-
-

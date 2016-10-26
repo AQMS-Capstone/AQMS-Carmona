@@ -15,10 +15,15 @@ var zoomSize = 13;
 //var bancalAQI = 54;
 //var slexAQI = 152;
 
+var bancalAQIStatus = bancalMap.p_aqi_status;
 var bancalAirQuality = bancalMap.p_airqualiy;
-var slexAirQuality = slexMap.p_airqualiy;
 var bancalAQI = bancalMap.p_value;
+var bancalprevalentPollutant = bancalMap.p_name;
+
+var slexAQIStatus = slexMap.p_aqi_status;
+var slexAirQuality = slexMap.p_airqualiy;
 var slexAQI = slexMap.p_value;
+var slexprevalentPollutant = slexMap.p_name;
 
 function initialize()
 {
@@ -103,8 +108,9 @@ function initialize()
         $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = bancalAirQuality;
         document.getElementById("zoneName").innerHTML = 'Bancal, Carmona, Cavite';
+        document.getElementById("prevalentPollutant").innerHTML = bancalprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = bancalAQI;
-        document.getElementById("aqiText").innerHTML = 'Moderate';
+        document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
     }
     var slexZoom=new google.maps.LatLng(14.32274,121.071688);
@@ -116,8 +122,9 @@ function initialize()
         $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = slexAirQuality;
         document.getElementById("zoneName").innerHTML = 'SLEX Carmona Exit, Cavite';
+        document.getElementById("prevalentPollutant").innerHTML = slexprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = slexAQI;
-        document.getElementById("aqiText").innerHTML = 'Unhealthy';
+        document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
     }
 }
