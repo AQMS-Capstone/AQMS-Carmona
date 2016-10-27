@@ -112,3 +112,6 @@ html, body{
 .tabs .indicator{
     background-color: #009688;
 }
+td, th{
+    padding: 12px 5px;
+}
