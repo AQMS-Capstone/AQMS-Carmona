@@ -14,8 +14,9 @@
         </div>
     </nav>
 </div>
+
 <div>
-    <nav id="nav" class="small-nav">
+    <nav id="nav">
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                 <li><a id="home-tab"><span class="material-icons">home</span> Home</a></li>
@@ -26,6 +27,7 @@
         </div>
     </nav>
 </div>
+
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
     <li><a id="drpSLEX">SLEX - Carmona Exit</a></li>
