@@ -33,6 +33,7 @@
                 </div>
 
             </div>
+
             <div class="row">
                 <div class="col s12 m12">
                     <div class="carousel carousel-slider">
@@ -40,25 +41,29 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    <th data-field="id">Current</th>
-                                    <th data-field="name">Min</th>
-                                    <th data-field="price">Max</th>
+                                    <th>Current</th>
+                                    <th></th>
+                                    <th>Min</th>
+                                    <th>Max</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 <tr>
                                     <td>CO</td>
+                                    <td><div id="chart1_div"></div></td>
                                     <td>0.5</td>
                                     <td>4.4</td>
                                 </tr>
                                 <tr>
                                     <td>NO2</td>
+                                    <td><div id="chart2_div"></div></td>
                                     <td>0.33</td>
                                     <td>0.70</td>
                                 </tr>
                                 <tr>
                                     <td>SO2</td>
+                                    <td><div id="chart3_div"></div></td>
                                     <td>0.000</td>
                                     <td>0.304</td>
                                 </tr>

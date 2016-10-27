@@ -236,7 +236,10 @@
 
 </script>
 <script src="js/jquery-3.1.1.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>-->
 <script src="js/materialize.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="js/graph.js"></script>
 <script src="js/init.js"></script>
 
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
