@@ -58,3 +58,4 @@ $("#drpSLEX").click(function () {
     $("#legends").show();
     $("#reports").hide();
 })
+

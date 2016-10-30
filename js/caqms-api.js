@@ -9,11 +9,7 @@ var zoomSize = 13;
 
 */
 
-//ETO UNG BABAGUHIN , LALAGYAN NG CONDITION
-//var bancalAirQuality = moderateAir;
-//var slexAirQuality = unhealthy2Air;
-//var bancalAQI = 54;
-//var slexAQI = 152;
+
 
 var bancalAQIStatus = bancalMap.p_aqi_status;
 var bancalAirQuality = bancalMap.p_airqualiy;
@@ -127,6 +123,9 @@ function initialize()
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
     }
+    
+    
+    
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

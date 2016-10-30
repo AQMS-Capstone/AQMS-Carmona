@@ -20,49 +20,84 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-
-
                             <span class="center-align">
-
                                 <h5 id="zoneName-reports">
                                     <a id ="prevZone-reports" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_left</i></a>
                                     <b>Zone Name</b>
                                     <a id ="nextZone-reports" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_right</i></a>
                                 </h5>
-
                             </span>
-
                         </div>
                     </div>
+                    </div>
+                </div>
+            <div class="card">
+                <div class="card-content">
                     <div class="row">
                         <div class="col s12">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th data-field="id">Current</th>
-                                    <th data-field="name">Min</th>
-                                    <th data-field="price">Max</th>
-                                </tr>
-                                </thead>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Current</th>
+                                        <th></th>
+                                        <th>Min</th>
+                                        <th>Max</th>
+                                    </tr>
+                                    </thead>
 
-                                <tbody>
-                                <tr>
-                                    <td>Alvin</td>
-                                    <td>Eclair</td>
-                                    <td>$0.87</td>
-                                </tr>
-                                <tr>
-                                    <td>Alan</td>
-                                    <td>Jellybean</td>
-                                    <td>$3.76</td>
-                                </tr>
-                                <tr>
-                                    <td>Jonathan</td>
-                                    <td>Lollipop</td>
-                                    <td>$7.00</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                    <tbody>
+                                    <tr>
+                                        <td class="elementName">PSI</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart1_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">PM2.5</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart2_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">PM10</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart3_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">O3</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">NO2</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">SO2</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">CO</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                         </div>
                     </div>
                     <div class="center-align">

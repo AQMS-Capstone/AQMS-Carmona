@@ -35,54 +35,91 @@
             </div>
 
             <div class="row">
-                <div class="col s12 m12">
-                    <div class="carousel carousel-slider">
-                        <div class="carousel-item black-text" href="#one!">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Current</th>
-                                    <th></th>
-                                    <th>Min</th>
-                                    <th>Max</th>
-                                </tr>
-                                </thead>
+                    <div class="col s12 m12">
+                        <div class="carousel carousel-slider">
 
-                                <tbody>
-                                <tr>
-                                    <td>CO</td>
-                                    <td><div id="chart1_div"></div></td>
-                                    <td>0.5</td>
-                                    <td>4.4</td>
-                                </tr>
-                                <tr>
-                                    <td>NO2</td>
-                                    <td><div id="chart2_div"></div></td>
-                                    <td>0.33</td>
-                                    <td>0.70</td>
-                                </tr>
-                                <tr>
-                                    <td>SO2</td>
-                                    <td><div id="chart3_div"></div></td>
-                                    <td>0.000</td>
-                                    <td>0.304</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="carousel-item black-text-text" href="#two!">
-                            <div class="row">
-                                <div class="col s12 m12">
-                                    <p><h5>Synthesis</h5></p>
-                                </div>
-                                <div class="col s12 m12">
-                                    <p>The burning of fossil fuels to power industries and vehicles is a major cause of pollution.
-                                        Generating electrical power through thermal power stations releases huge amounts of carbon dioxide into the atmosphere.</p>
+                             <div class="carousel-item black-text" href="#one!">
+                                <div class="scroll">
+                                    <table>
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Current</th>
+                                        <th></th>
+                                        <th>Min</th>
+                                        <th>Max</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td class="elementName">PSI</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart1_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">PM2.5</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart2_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">PM10</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart3_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">O3</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">NO2</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">SO2</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="elementName">CO</td>
+                                        <td class="elementCurrent">55</td>
+                                        <td><div id="chart#_div"></div></td>
+                                        <td class="elementMin">55</td>
+                                        <td class="elementMax">60</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                 </div>
                             </div>
-                        </div>
+
+                            <div class="carousel-item black-text-text" href="#two!">
+                                <div class="row">
+                                    <div class="col s12 m12">
+                                        <p><h5>Synthesis</h5></p>
+                                    </div>
+                                    <div class="col s12 m12">
+                                        <p>The burning of fossil fuels to power industries and vehicles is a major cause of pollution.
+                                            Generating electrical power through thermal power stations releases huge amounts of carbon dioxide into the atmosphere.</p>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
+
             </div>
             <div class="center-align">
                 <a id ="prevItem" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_left</i></a>
