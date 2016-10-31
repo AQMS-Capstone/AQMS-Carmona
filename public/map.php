@@ -12,24 +12,26 @@
         <div class="card-content black-text">
             <div class="row">
                 <div id="AQIStat" class="col s12 m4">
-                    <span class="center-align"><h2  id="aqiNum">12345</h2></span>
+                    <span class="center-align">
+                        <h6 class="margin-5">AQI</h6>
+                        <h2 class="margin-5" id="aqiNum">12345</h2>
+                        <h5 class="margin-5" id="aqiText">AQI Status</h5>
+                    </span>
                 </div>
+                <div class="center-align">
                 <div class="col s12 m8">
                     <div class="row-no-after">
                         <div class="col s12">
                             <span class="card-title"><b id="zoneName">Zone Name</b></span>
                         </div>
-                        <div class="col s12">
-                            <span id="aqiText">AQI Status</span>
-                        </div>
                         <div id="AQIStat_txt" class="col s12">
-                            <span><b id="prevalentPollutant">Prevalant Air Pollutant</b></span>
+                           <b>Prevalant Air Pollutant: </b> <span id="prevalentPollutant">Prevalant Air Pollutant</span>
                         </div>
                         <div class="col s12">
                             <span id="timeUpdated">DateToday TimeToday</span>
                         </div>
                     </div>
-
+                </div>
                 </div>
 
             </div>

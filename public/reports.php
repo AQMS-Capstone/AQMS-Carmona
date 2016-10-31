@@ -15,7 +15,12 @@
                 <div class="card-content">
                     <div class="row">
                         <div id="AQIStat-reports" class="col s12">
-                            <span class="center-align"><h2  id="aqiNum-reports">12345</h2></span>
+                            <span class="center-align">
+                                <h2>AQI</h2>
+                                <h2  id="aqiNum-reports">
+                                    12345
+                                </h2>
+                            </span>
                         </div>
                     </div>
                     <div class="row">
