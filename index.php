@@ -11,8 +11,6 @@
  //$slexPrevalentPollutant = 3;
  //$bancalAQIValue = 40;
  //$slexAQIValue = 10;
-
- 
 ?>
 
 <!DOCTYPE html>
@@ -30,30 +28,42 @@
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+
+    <script type = "text/javascript">
+    function DashClicked(var1)
+    {
+
+      phpValue = var1;
+
+      $.ajax( {
+          type: "GET",
+          url: 'setter/include_files.php',
+          //data: $('#mainForm').serialize(),
+          data: {phpValue: JSON.stringify(phpValue)},
+          success: function(response) {
+              $('#ContentPanel').html(response);
+          }
+      });
+    }
+    </script>
 </head>
 
-<body>
+<body onload="DashClicked('Home')">
 
     <!--   Header  -->
-
     <?php  include('public/header.php'); ?>
     <!--   Header  -->
 
-    <div class="content-holder">
-        <?php  include('public/map.php'); ?>
-        <?php  include('public/history.php'); ?>
+    <div id="ContentPanel" class="content-holder">
+        <?php  //include('public/map.php'); ?>
+        <?php  //include('public/history.php'); ?>
     </div>
 
-
     <!--   Content  -->
-
-
-
     <!--   Content  -->
 
     <!--   Footer  -->
     <!--   Footer  -->
-
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
