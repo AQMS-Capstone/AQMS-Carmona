@@ -7,26 +7,7 @@
  */
 ?>
 
-<div id="reports" xmlns="http://www.w3.org/1999/html">
-
-    <div id="index-banner" class="parallax-container" style="height: 350px;">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <br><br>
-                <h1 class="header center teal-text text-lighten-2">Air Quality Monitoring System</h1>
-                <div class="row center">
-                    <h5 class="header white-text col s12 light">Be a part of the solution, not part of the pollution. Know the air that you are breathing.</h5>
-                </div>
-            </div>
-
-
-            <div class="row center">
-                <a href="#goto-reports"class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
-            </div>
-            <br><br>
-        </div>
-        <div class="parallax parallax-css"><img src="res/images/map.jpg"></div>
-    </div>
+<div id="reports">
 
     <div class="white">
         <div class="container">

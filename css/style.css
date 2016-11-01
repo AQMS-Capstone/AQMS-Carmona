@@ -92,9 +92,8 @@ nav{
             1px 1px 0 #ffffff;
 }
 nav.navbar-fixed {
-    top: -4px;
-    height: 40px;
-    line-height: 40px;
+    height: 45px;
+    line-height: 45px;
 }
 
 .material-icons{
@@ -105,18 +104,13 @@ nav  ul.black-text a{
     color: #444;
 }
 
-.map-container{
-    flex: 1;
-    top: -4px;
-    position: relative;
-}
+
 #googleMap{
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
+    top: 164px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .float-card{
@@ -147,18 +141,6 @@ nav  ul.black-text a{
     background-color: #00acc1;
     border-radius: 2px;
 }
-.flex{
-    display: flex;
-    min-height: 100%;
-    height: 100%;
-    flex-direction: column;
-}
-
-html, body{
-    height: 100%;
-
-}
-
 .tabs .tab a{
     color: #009688;
 

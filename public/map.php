@@ -6,7 +6,7 @@
  * Time: 8:34 PM
  */
 ?>
-<div id="home" class="map-container">
+<div id="home">
 
     <div id="zoneStatus" class="card float-card">
         <div class="card-content black-text">

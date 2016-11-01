@@ -33,22 +33,26 @@
 </head>
 
 <body>
-<div class="flex">
 
     <!--   Header  -->
+
     <?php  include('public/header.php'); ?>
     <!--   Header  -->
 
-    <!--   Content  -->
-    <?php  include('public/map.php'); ?>
+    <div class="content-holder">
+        <?php  include('public/map.php'); ?>
+        <?php  include('public/history.php'); ?>
+    </div>
 
-    <?php  include('public/history.php'); ?>
+
+    <!--   Content  -->
+
+
+
     <!--   Content  -->
 
     <!--   Footer  -->
     <!--   Footer  -->
-
-</div>
 
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
