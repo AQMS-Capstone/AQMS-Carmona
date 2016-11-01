@@ -99,7 +99,7 @@ function initialize()
 
     google.maps.event.addListener(map, 'dragend', function() { $("#zoneStatus").hide(); } );
 
-   
+
     zoneBancal.setMap(map);
     zoneSLEX.setMap(map);
     bancalMarker.setMap(map);
@@ -117,6 +117,7 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
+        document.getElementById("element1").innerHTML =  'hi';
     }
     var slexZoom=new google.maps.LatLng(14.32274,121.071688);
     //noinspection JSAnnotator
@@ -131,6 +132,7 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
+        document.getElementById("element1").innerHTML =  'hello';
     }
 
     var area = getUrlParameter('area');
@@ -142,9 +144,7 @@ function initialize()
             GetBancalStatus();
         }
     }
-    
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-

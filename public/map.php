@@ -55,7 +55,7 @@
 
                                     <tbody>
                                     <tr>
-                                        <td class="elementName">PSI</td>
+                                        <td class="elementName" id="element1">PSI</td>
                                         <td class="elementCurrent">55</td>
                                         <td><div id="chart1_div"></div></td>
                                         <td class="elementMin">55</td>
@@ -108,6 +108,7 @@
                                 </div>
                             </div>
 
+                            <!--
                             <div class="carousel-item black-text-text" href="#two!">
                                 <div class="row">
                                     <div class="col s12 m12">
@@ -119,16 +120,20 @@
                                     </div>
                                 </div>
                             </div>
+                          -->
                     </div>
                 </div>
 
             </div>
+
+            <!--
             <div class="center-align">
                 <a id ="prevItem" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_left</i></a>
                 <a id ="nextItem" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_right</i></a>
             </div>
+          -->
         </div>
-        <div id="plotOption">
+        <div id="plotOption" class="center-align">
             <div class="divider"></div>
             <div class="card-action">
                 <a href="#">VIEW MORE</a>

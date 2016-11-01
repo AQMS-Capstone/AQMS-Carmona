@@ -12,6 +12,7 @@ $( document ).ready(function(){
 //Functions
 var optionIsVisible = true;
 
+/*
 $( "#nextItem" ).click(function() {
     $('.carousel').carousel('next');
 
@@ -36,7 +37,7 @@ $( "#prevItem" ).click(function() {
         optionIsVisible = true;
     }
 });
-
+*/
 
 $("#reports-tab").click(function () {
     $("#home").hide();
@@ -52,4 +53,3 @@ $("#reports-tab").click(function () {
 $("#home-tab").click(function () {
     location.reload();
 })
-

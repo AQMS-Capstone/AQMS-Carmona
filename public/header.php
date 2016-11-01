@@ -20,7 +20,9 @@
                 <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                     <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
                     <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
-                    <li><a id="reports-tab"><span class="material-icons">trending_up</span> Data and Reports</a></li>
+                    <li><a id=""><span class="material-icons">access_time</span> Daily</a></li>
+                    <li><a id="reports-tab"><span class="material-icons">trending_up</span> History</a></li>
+                    <li><a id=""><span class="material-icons">timeline</span> AQI Calculator</a></li>
                     <li><a id="about-tab"><span class="material-icons">email</span> About Us</a></li>
                 </ul>
             </div>
