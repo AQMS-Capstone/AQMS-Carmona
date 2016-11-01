@@ -79,7 +79,18 @@ nav{
     left: -16%;
 
 }
+.parallax-css{
+    -webkit-filter: grayscale(80%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(80%);
+}
 
+.stroke-white{
+    text-shadow:
+            -1px -1px 0 #ffffff,
+            1px -1px 0 #ffffff,
+            -1px 1px 0 #ffffff,
+            1px 1px 0 #ffffff;
+}
 nav.navbar-fixed {
     top: -4px;
     height: 40px;
