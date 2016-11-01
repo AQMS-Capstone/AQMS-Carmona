@@ -7,7 +7,7 @@
  */
 ?>
 
-<div id="reports">
+<div id="reports" xmlns="http://www.w3.org/1999/html">
 
     <div id="index-banner" class="parallax-container" style="height: 350px;">
         <div class="section no-pad-bot">
@@ -15,7 +15,7 @@
                 <br><br>
                 <h1 class="header center teal-text text-lighten-2">Air Quality Monitoring System</h1>
                 <div class="row center">
-                    <h5 class="header col s12 light">Be a part of the solution, not part of the pollution. Know the air that you are breathing.</h5>
+                    <h5 class="header white-text col s12 light">Be a part of the solution, not part of the pollution. Know the air that you are breathing.</h5>
                 </div>
             </div>
 
@@ -64,115 +64,185 @@
     </div>
 
     <div id="goto-reports" class="section no-pad-bot">
-        <div class="container center">
-            <div class="row-no-after">
-                <div class="col s12 center">
-                    <h2 class="card-title"><b id="zoneName">Zone Name</b></h2>
-                </div>
+        </br>
+            <div class="row">
 
-                <div id="AQIStat_txt" class="col s12">
-                    <b>Prevalant Air Pollutant: </b> <span id="prevalentPollutant">Prevalant Air Pollutant</span>
-                </div>
-                <div class="col s12">
-                    <span id="timeUpdated">DateToday TimeToday</span>
-                </div>
-             </div>
+                <form class="col s6 offset-s3">
+                    <div class="title"><h3>Generate Reports</h3></div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select>
+                                <option value="" disabled selected>Choose an Area</option>
+                                <option value="1">SLEX - Carmona Exit</option>
+                                <option value="2">Bancal</option>
+                            </select>
+                            <label>Area</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select multiple>
+                                <option value="" disabled selected>Choose a pollutant</option>
+                                <option value="1">PSI</option>
+                                <option value="2">PM2.5</option>
+                                <option value="4">PM10</option>
+                                <option value="5">O3</option>
+                                <option value="6">NO2</option>
+                                <option value="7">SO2</option>
+                                <option value="8">CO</option>
+                            </select>
+                            <label>Pollutant</label>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">Year</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">Month</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">Day</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <a class="waves-effect waves-light btn">Generate</a>
+                        </div>
+                    </div>
 
-            <div class="row center yellow">
-                <div class="col s12">
-                    <h5 class="margin-5" id="aqiText">AQI Status</h5>
-                </div>
+                </form>
             </div>
 
-            <div class="row">
-                    <div class="col s12 m12">
-                        <div class="carousel carousel-slider">
+    </div>
+        <div class="section white no-pad-bot">
+            <div class="container">
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="row">
 
-                            <div class="carousel-item black-text" href="#one!">
-                                <div class="scroll">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Current</th>
-                                            <th></th>
-                                            <th>Min</th>
-                                            <th>Max</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        <tr>
-                                            <td class="elementName">PSI</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart1_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="elementName">PM2.5</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart2_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="elementName">PM10</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart3_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="elementName">O3</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart#_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="elementName">NO2</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart#_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="elementName">SO2</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart#_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="elementName">CO</td>
-                                            <td class="elementCurrent">55</td>
-                                            <td><div id="chart#_div"></div></td>
-                                            <td class="elementMin">55</td>
-                                            <td class="elementMax">60</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="col s12">
+                                        <b id="zoneName" style="font-size: 50px">Zone Name</b>
+                                        </br>
+                                        <b>Generated on: </b><span id="timeUpdated">DateToday TimeToday</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="carousel-item black-text-text" href="#two!">
                                 <div class="row">
                                     <div class="col s12 m12">
-                                        <p><h5>Synthesis</h5></p>
+                                        <div class="carousel carousel-slider">
+
+                                            <div class="carousel-item black-text" href="#one!">
+                                                <div class="scroll">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Current</th>
+                                                            <th></th>
+                                                            <th>Min</th>
+                                                            <th>Max</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="elementName">PSI</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart1_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="elementName">PM2.5</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart2_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="elementName">PM10</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart3_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="elementName">O3</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart#_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="elementName">NO2</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart#_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="elementName">SO2</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart#_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="elementName">CO</td>
+                                                            <td class="elementCurrent">55</td>
+                                                            <td><div id="chart#_div"></div></td>
+                                                            <td class="elementMin">55</td>
+                                                            <td class="elementMax">60</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div class="carousel-item black-text-text" href="#two!">
+                                                <div class="row">
+                                                    <div class="col s12 m12">
+                                                        <p><h5>Synthesis</h5></p>
+                                                    </div>
+                                                    <div class="col s12 m12">
+                                                        <p>The burning of fossil fuels to power industries and vehicles is a major cause of pollution.
+                                                            Generating electrical power through thermal power stations releases huge amounts of carbon dioxide into the atmosphere.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col s12 m12">
-                                        <p>The burning of fossil fuels to power industries and vehicles is a major cause of pollution.
-                                            Generating electrical power through thermal power stations releases huge amounts of carbon dioxide into the atmosphere.</p>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="col s6">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="row">
+
+                                    <div class="col s12">
+                                        <b style="font-size: 32px">Synthesis</b>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </br>
-        </div>
+
+
+            </div>
+            <div
 
         <?php  include('footer.php'); ?>
 
