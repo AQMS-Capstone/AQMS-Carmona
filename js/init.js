@@ -5,6 +5,7 @@ $( document ).ready(function(){
     $("#zoneStatus").hide();
     $("#reports").hide();
     $('select').material_select();
+    $('#home-tab').on('click',initialize)
 })
 
 
@@ -36,11 +37,6 @@ $( "#prevItem" ).click(function() {
     }
 });
 
-$("#home-tab").click(function () {
-    $("#home").show();
-    $("#legends").show();
-    $("#reports").hide();
-})
 
 $("#reports-tab").click(function () {
     $("#home").hide();
@@ -48,15 +44,12 @@ $("#reports-tab").click(function () {
     $("#reports").show();
 })
 
-$("#drpBancal").click(function () {
-    $("#home").show();
-    $("#legends").show();
-    $("#reports").hide();
+
+$("#reports-tab").click(function () {
+    $("#content-holder").load('public/history.php');
 })
 
-$("#drpSLEX").click(function () {
-    $("#home").show();
-    $("#legends").show();
-    $("#reports").hide();
+$("#home-tab").click(function () {
+    location.reload();
 })
 

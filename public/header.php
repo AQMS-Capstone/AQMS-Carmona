@@ -18,9 +18,9 @@
         <nav id="nav">
             <div class="nav-wrapper">
                 <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
-                    <li><a href="#home" id="home-tab" onclick="DashClicked('Home')"><span class="material-icons">home</span> Home</a></li>
+                    <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
                     <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
-                    <li><a href="#data-reports" id="reports-tab" onclick="DashClicked('Data')"><span class="material-icons">trending_up</span> Data and Reports</a></li>
+                    <li><a id="reports-tab"><span class="material-icons">trending_up</span> Data and Reports</a></li>
                     <li><a id="about-tab"><span class="material-icons">email</span> About Us</a></li>
                 </ul>
             </div>
@@ -28,8 +28,8 @@
     </div>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#home_SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
-        <li><a href="#home_Bancal" id="drpBancal">Bancal</a></li>
+        <li><a href="?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
+        <li><a href="?area=Bancal" id="drpBancal">Bancal</a></li>
     </ul>
     <div>
         <nav id ="legends" class="navbar-fixed">

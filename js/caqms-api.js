@@ -21,6 +21,22 @@ var slexAirQuality = slexMap.p_airqualiy;
 var slexAQI = slexMap.p_value;
 var slexprevalentPollutant = slexMap.p_name;
 
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
 function initialize()
 {
     var mapProp = {
@@ -83,14 +99,7 @@ function initialize()
 
     google.maps.event.addListener(map, 'dragend', function() { $("#zoneStatus").hide(); } );
 
-    document.getElementById("drpBancal").onclick = function(){
-        GetBancalStatus();
-    };
-
-    document.getElementById("drpSLEX").onclick = function(){
-        GetSLEXStatus();
-    };
-
+   
     zoneBancal.setMap(map);
     zoneSLEX.setMap(map);
     bancalMarker.setMap(map);
@@ -123,9 +132,19 @@ function initialize()
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
     }
-    
-    
+
+    var area = getUrlParameter('area');
+    if(area!=null){
+        if(area=="SLEX"){
+            GetSLEXStatus();
+        }
+        else if(area="Bancal"){
+            GetBancalStatus();
+        }
+    }
     
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+
