@@ -131,8 +131,7 @@
         <div id="plotOption">
             <div class="divider"></div>
             <div class="card-action">
-                <a href="#">AQI Plot</a>
-                <a href="#">Concentration Plot</a>
+                <a href="#">VIEW MORE</a>
             </div>
         </div>
 

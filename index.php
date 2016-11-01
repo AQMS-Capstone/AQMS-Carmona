@@ -42,7 +42,7 @@
     <!--   Content  -->
     <?php  include('public/map.php'); ?>
 
-    <?php  include('public/reports.php'); ?>
+    <?php  include('public/history.php'); ?>
     <!--   Content  -->
 
     <!--   Footer  -->

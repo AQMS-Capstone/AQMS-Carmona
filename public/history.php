@@ -68,7 +68,7 @@
             <div class="row">
 
                 <form class="col s6 offset-s3">
-                    <div class="title"><h3>Generate Reports</h3></div>
+                    <div class="title"><h3>Generate History Reports</h3></div>
                     <div class="row">
                         <div class="input-field col s12">
                             <select>
