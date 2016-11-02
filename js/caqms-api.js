@@ -6,15 +6,15 @@ var slex=new google.maps.LatLng(14.322350,121.062300);
 var zoomSize = 13;
 
 
-var bancalAQIStatus = bancalValues_array[0].p_aqi_status;
-var bancalAirQuality = bancalValues_array[0].p_airqualiy;
-var bancalAQI = parseInt(bancalValues_array[0].concentration_value.replace(/"/g, ''));
-var bancalprevalentPollutant = bancalValues_array[0].e_name;
+var bancalAQIStatus = prevalentValues_bancal_array[0].p_aqi_status;
+var bancalAirQuality = prevalentValues_bancal_array[0].p_airqualiy;
+var bancalAQI = parseInt(prevalentValues_bancal_array[0].concentration_value);
+var bancalprevalentPollutant = prevalentValues_bancal_array[0].e_name;
 
-var slexAQIStatus = slexValues_array[0].p_aqi_status;
-var slexAirQuality = slexValues_array[0].p_airqualiy;
-var slexAQI = parseInt(slexValues_array[0].concentration_value.replace(/"/g, ''));
-var slexprevalentPollutant = slexValues_array[0].e_name;
+var slexAQIStatus = prevalentValues_slex_array[0].p_aqi_status;
+var slexAirQuality = prevalentValues_slex_array[0].p_airqualiy;
+var slexAQI = parseInt(prevalentValues_slex_array[0].concentration_value);
+var slexprevalentPollutant = prevalentValues_slex_array[0].e_name;
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -111,7 +111,33 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
-        //document.getElementById("element1").innerHTML =  item_array[0].p_aqi_status;
+
+        for(var i = 0; i < bancalValues_array.length; i++)
+        {
+          var elementName = "e_symbol_" + (i+1);
+          var conentrationName = "concentration_value_" + (i+1);
+
+          document.getElementById(elementName).innerHTML =  bancalValues_array[i].e_symbol;
+          document.getElementById(conentrationName).innerHTML =  bancalValues_array[i].concentration_value;
+        }
+
+        /*
+        document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
+        document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
+        document.getElementById("e_symbol_3").innerHTML =  bancalValues_array[2].e_symbol;
+        document.getElementById("e_symbol_4").innerHTML =  bancalValues_array[3].e_symbol;
+        document.getElementById("e_symbol_5").innerHTML =  bancalValues_array[4].e_symbol;
+        document.getElementById("e_symbol_6").innerHTML =  bancalValues_array[5].e_symbol;
+        document.getElementById("e_symbol_7").innerHTML =  bancalValues_array[6].e_symbol;
+
+        document.getElementById("concentration_value_1").innerHTML =  slexValues_array[0].e_symbol;
+        document.getElementById("concentration_value_2").innerHTML =  slexValues_array[1].e_symbol;
+        document.getElementById("concentration_value_3").innerHTML =  slexValues_array[2].e_symbol;
+        document.getElementById("concentration_value_4").innerHTML =  slexValues_array[3].e_symbol;
+        document.getElementById("concentration_value_5").innerHTML =  slexValues_array[4].e_symbol;
+        document.getElementById("concentration_value_6").innerHTML =  slexValues_array[5].e_symbol;
+        document.getElementById("concentration_value_7").innerHTML =  slexValues_array[6].e_symbol;
+        */
     }
     var slexZoom=new google.maps.LatLng(14.32274,121.071688);
     //noinspection JSAnnotator
@@ -126,7 +152,33 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
-        //document.getElementById("element1").innerHTML =  item_array[0].p_aqi_status;
+
+        for(var i = 0; i < slexValues_array.length; i++)
+        {
+          var elementName = "e_symbol_" + (i+1);
+          var conentrationName = "concentration_value_" + (i+1);
+
+          document.getElementById(elementName).innerHTML =  slexValues_array[i].e_symbol;
+          document.getElementById(conentrationName).innerHTML =  slexValues_array[i].concentration_value;
+        }
+
+        /*
+        document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
+        document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
+        document.getElementById("e_symbol_3").innerHTML =  bancalValues_array[2].e_symbol;
+        document.getElementById("e_symbol_4").innerHTML =  bancalValues_array[3].e_symbol;
+        document.getElementById("e_symbol_5").innerHTML =  bancalValues_array[4].e_symbol;
+        document.getElementById("e_symbol_6").innerHTML =  bancalValues_array[5].e_symbol;
+        document.getElementById("e_symbol_7").innerHTML =  bancalValues_array[6].e_symbol;
+
+        document.getElementById("concentration_value_1").innerHTML =  bancalValues_array[0].e_symbol;
+        document.getElementById("concentration_value_2").innerHTML =  bancalValues_array[1].e_symbol;
+        document.getElementById("concentration_value_3").innerHTML =  bancalValues_array[2].e_symbol;
+        document.getElementById("concentration_value_4").innerHTML =  bancalValues_array[3].e_symbol;
+        document.getElementById("concentration_value_5").innerHTML =  bancalValues_array[4].e_symbol;
+        document.getElementById("concentration_value_6").innerHTML =  bancalValues_array[5].e_symbol;
+        document.getElementById("concentration_value_7").innerHTML =  bancalValues_array[6].e_symbol;
+        */
     }
 
     var area = getUrlParameter('area');

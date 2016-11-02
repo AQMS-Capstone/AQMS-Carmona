@@ -53,56 +53,76 @@
                                     </tr>
                                     </thead>
 
+
+
                                     <tbody>
+
+                                      <?php
+                                      for ($x = 0; $x < count($bancalValues); $x++) {
+                                        $elementName = "e_symbol_".($x+1);
+                                        $conentrationName = "concentration_value_".($x+1);
+
+                                        echo "<tr>";
+                                          echo "<td class='elementName' id='$elementName'>NaN</td>";
+                                          echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                          echo "<td><div id='chart1_div'></div></td>";
+                                          echo "<td class='elementMin'>NaN</td>";
+                                          echo "<td class='elementMax'>NaN</td>";
+                                        echo "</tr>";
+                                      }
+
+                                      ?>
+                                    <!--
                                     <tr>
-                                        <td class="elementName" id="element1">PSI</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_1">CO</td>
+                                        <td class="elementCurrent" id="concentration_value_1">NaN</td>
                                         <td><div id="chart1_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
                                     <tr>
-                                        <td class="elementName">PM2.5</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_2">SO2</td>
+                                        <td class="elementCurrent" id="concentration_value_2">NaN</td>
                                         <td><div id="chart2_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
                                     <tr>
-                                        <td class="elementName">PM10</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_3">NO2</td>
+                                        <td class="elementCurrent" id="concentration_value_3">NaN</td>
                                         <td><div id="chart3_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
                                     <tr>
-                                        <td class="elementName">O3</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_4">O3</td>
+                                        <td class="elementCurrent" id="concentration_value_4">NaN</td>
                                         <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
                                     <tr>
-                                        <td class="elementName">NO2</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_5">Pb</td>
+                                        <td class="elementCurrent" id="concentration_value_5">NaN</td>
                                         <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
                                     <tr>
-                                        <td class="elementName">SO2</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_6">PM 10</td>
+                                        <td class="elementCurrent" id="concentration_value_6">NaN</td>
                                         <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
                                     <tr>
-                                        <td class="elementName">CO</td>
-                                        <td class="elementCurrent">55</td>
+                                        <td class="elementName" id="e_symbol_7">TSP</td>
+                                        <td class="elementCurrent" id="concentration_value_7">NaN</td>
                                         <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">55</td>
-                                        <td class="elementMax">60</td>
+                                        <td class="elementMin">NaN</td>
+                                        <td class="elementMax">NaN</td>
                                     </tr>
+                                  -->
                                     </tbody>
                                 </table>
                                 </div>

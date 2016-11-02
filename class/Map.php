@@ -13,6 +13,7 @@ class Map{
   var $a_id = "";
   var $e_id = "";
   var $e_prevalent_name = "";
+  var $e_symbol = "";
   var $prevalent_concentration_value = "";
   var $timestamp = "";
 
@@ -31,7 +32,7 @@ date_default_timezone_set('Asia/Manila');
 $date_now = date("Y/m/d H");
 $new_date = $date_now.":00:00";
 
-$sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP = '$new_date'";
+$sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP = '$new_date' ORDER BY MASTER.E_ID";
 $result =  mysqli_query($con,$sql);
 
 while($row=mysqli_fetch_assoc($result))
@@ -44,6 +45,7 @@ while($row=mysqli_fetch_assoc($result))
     $bancalMap->a_id = $row['a_id'];
     $bancalMap->e_id = $row['e_id'];
     $bancalMap->e_name = $row['e_name'];
+    $bancalMap->e_symbol = $row['e_symbol'];
     $bancalMap->concentration_value = $row['concentration_value'];
     $bancalMap->timestamp = $row['e_id'];
 
@@ -58,12 +60,15 @@ while($row=mysqli_fetch_assoc($result))
     $slexMap->a_id = $row['a_id'];
     $slexMap->e_id = $row['e_id'];
     $slexMap->e_name = $row['e_name'];
+    $slexMap->e_symbol = $row['e_symbol'];
     $slexMap->concentration_value = $row['concentration_value'];
     $slexMap->timestamp = $row['e_id'];
 
     array_push($slexValues, $slexMap);
   }
 }
+
+//echo count($bancalValues);
 
 /*
 foreach ($bancalValues as $car) {
@@ -119,6 +124,8 @@ if($slexMap->e_id == "")
   var veryUnhealthyAir = "#9C27B0";
   var hazardoussAir = "#b71c1c";
 
+  var prevalentValues_bancal_array = [];
+  var prevalentValues_slex_array = [];
   var bancalValues_array = [];
   var slexValues_array = [];
 
@@ -139,16 +146,11 @@ if($slexMap->e_id == "")
     slexValues_array.push(dataMap);
   }
 
-  //alert(JSON.stringify(bancalValues[0].concentration_value));
-  //alert(bancalValues_array[0].concentration_value);
+  var prevalentBancal = new Map("1", 0);
+  prevalentValues_bancal_array.push(prevalentBancal);
 
-  //alert(JSON.stringify(slexValues[0].concentration_value));
-  /*
-  for(var i = 0; i < slexValues.length; i++)
-  {
-    var e_id = JSON.stringify(slexValues[i].concentration_value);
-    alert(e_id);
-  }*/
+  var prevalentSlex = new Map("2", 0);
+  prevalentValues_slex_array.push(prevalentSlex);
 
   function Map (determiner, indexI) {
 
@@ -156,21 +158,23 @@ if($slexMap->e_id == "")
     this.p_aqi_status = "Good";
 
     if(determiner == "2"){
-      this.m_id = JSON.stringify(bancalValues[indexI].m_id);
-      this.a_id = JSON.stringify(bancalValues[indexI].a_id);
-      this.e_id = JSON.stringify(bancalValues[indexI].e_id);
-      this.concentration_value = JSON.stringify(bancalValues[indexI].concentration_value);
-      this.timestamp = JSON.stringify(bancalValues[indexI].timestamp);
-      this.e_name = JSON.stringify(bancalValues[indexI].e_name);
+      this.m_id = JSON.stringify(bancalValues[indexI].m_id).replace(/"/g, '');
+      this.a_id = JSON.stringify(bancalValues[indexI].a_id).replace(/"/g, '');
+      this.e_id = JSON.stringify(bancalValues[indexI].e_id).replace(/"/g, '');
+      this.e_symbol = JSON.stringify(bancalValues[indexI].e_symbol).replace(/"/g, '');
+      this.concentration_value = JSON.stringify(bancalValues[indexI].concentration_value).replace(/"/g, '');
+      this.timestamp = JSON.stringify(bancalValues[indexI].timestamp).replace(/"/g, '');
+      this.e_name = JSON.stringify(bancalValues[indexI].e_name.replace(/"/g, ''));
     }
 
     else if(determiner == "1") {
-      this.m_id =  JSON.stringify(slexValues[indexI].m_id);
-      this.a_id = JSON.stringify(slexValues[indexI].a_id);
-      this.e_id = JSON.stringify(slexValues[indexI].e_id);
-      this.concentration_value =JSON.stringify(slexValues[indexI].concentration_value);
-      this.timestamp = JSON.stringify(slexValues[indexI].timestamp);
-      this.e_name = JSON.stringify(slexValues[indexI].e_name);
+      this.m_id =  JSON.stringify(slexValues[indexI].m_id).replace(/"/g, '');
+      this.a_id = JSON.stringify(slexValues[indexI].a_id).replace(/"/g, '');
+      this.e_id = JSON.stringify(slexValues[indexI].e_id).replace(/"/g, '');
+      this.e_symbol = JSON.stringify(slexValues[indexI].e_symbol).replace(/"/g, '');
+      this.concentration_value =JSON.stringify(slexValues[indexI].concentration_value).replace(/"/g, '');
+      this.timestamp = JSON.stringify(slexValues[indexI].timestamp).replace(/"/g, '');
+      this.e_name = JSON.stringify(slexValues[indexI].e_name).replace(/"/g, '');
     }
 
     //alert(JSON.stringify(guidelineValues[10].description));
