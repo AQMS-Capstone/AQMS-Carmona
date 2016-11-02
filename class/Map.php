@@ -1,21 +1,85 @@
 <?php
 class Map{
-  var $m_id;
-  var $p_id;
-  var $p_name;
-  var $p_value;
-  var $p_status;
-  var $p_time;
+  /*
+  var $m_id = "";
+  var $p_id = "";
+  var $p_name = "";
+  var $p_value = "";
+  var $p_status = "";
+  var $p_time = "";
+  */
 
-  function Map($pollutant, $value)
+  var $m_id = "";
+  var $a_id = "";
+  var $e_id = "";
+  var $concentration_value = "";
+  var $timestamp = "";
+
+  function Map(){}
+}
+
+require_once 'public/include/db_connect.php';
+
+$bancalMap = new Map();
+$slexMap = new Map();
+
+$sql = "SELECT * FROM MASTER";
+$result =  mysqli_query($con,$sql);
+
+while($row=mysqli_fetch_assoc($result))
+{
+  if($row['a_id'] == "2")
   {
-    $this->p_id = $pollutant;
-    $this->p_value = $value;
+    $bancalMap->m_id = $row['m_id'];
+    $bancalMap->a_id = $row['a_id'];
+    $bancalMap->e_id = $row['e_id'];
+    $bancalMap->concentration_value = $row['concentration_value'];
+    $bancalMap->timestamp = $row['e_id'];
+  }
+
+  else if($row['a_id'] == "1")
+  {
+    $slexMap->m_id = $row['m_id'];
+    $slexMap->a_id = $row['a_id'];
+    $slexMap->e_id = $row['e_id'];
+    $slexMap->concentration_value = $row['concentration_value'];
+    $slexMap->timestamp = $row['e_id'];
   }
 }
 
-$bancalMap = new Map(0, 90);
-$slexMap = new Map(1,50);
+$sql = "SELECT * FROM PSCSGP";
+$result =  mysqli_query($con,$sql);
+
+$guidelineValues=array();
+
+while($row=mysqli_fetch_assoc($result))
+{
+  $guidelineValues[] = $row;
+}
+
+//Default Values
+if($bancalMap->e_id == "")
+{
+  $bancalMap->m_id = "0";
+  $bancalMap->a_id = "0";
+  $bancalMap->e_id = "0";
+  $bancalMap->concentration_value = "0";
+  $bancalMap->timestamp = "0";
+}
+
+if($slexMap->e_id == "")
+{
+  $slexMap->m_id = "0";
+  $slexMap->a_id = "0";
+  $slexMap->e_id = "0";
+  $slexMap->concentration_value = "0";
+  $slexMap->timestamp = "0";
+}
+
+//$airData = json_encode($rows);
+
+//$bancalMap = new Map(0, 90);
+//$slexMap = new Map(1,50);
 ?>
 
 
@@ -30,13 +94,63 @@ $slexMap = new Map(1,50);
   var veryUnhealthyAir = "#9C27B0";
   var hazardoussAir = "#b71c1c";
 
-  function Map (id, value) {
-    this.p_id = id;
-    this.p_value = value;
-    this.p_airqualiy = "";
-    this.p_aqi_status = "";
-    this.p_name = "";
+  var guidelineValues = <?= json_encode($guidelineValues) ?>
+  //alert(JSON.stringify(guidelineValues[10].description));
 
+  function Map (determiner) {
+
+    if(determiner == "2"){
+      this.m_id = <?= $bancalMap->m_id ?>;
+      this.a_id = <?= $bancalMap->a_id ?>;
+      this.e_id = <?= $bancalMap->e_id ?>;
+      this.contentration_value = <?= $bancalMap->concentration_value ?>;
+      this.timestamp = <?= $bancalMap->timestamp ?>;
+    }
+
+    else if(determiner == "1") {
+      this.m_id =  <?= $slexMap->m_id ?>;
+      this.a_id = <?= $slexMap->a_id ?>;
+      this.e_id = <?= $slexMap->e_id ?>;
+      this.contentration_value = <?= $slexMap->concentration_value ?>;
+      this.timestamp = <?= $slexMap->timestamp ?>;
+    }
+
+    //alert(JSON.stringify(guidelineValues[10].description));
+
+    for(var i = 0; i < guidelineValues.length; i++)
+    {
+      var e_id = JSON.stringify(guidelineValues[i].e_id);
+      var aqi_code = JSON.stringify(guidelineValues[i].aqi_code);
+      var description =JSON.stringify(guidelineValues[i].description);
+      var value_min = JSON.stringify(guidelineValues[i].value_min);
+      var value_max = JSON.stringify(guidelineValues[i].value_max);
+      var averaging_time = JSON.stringify(guidelineValues[i].averaging_time);
+      var time_unit = JSON.stringify(guidelineValues[i].time_unit);
+
+      if(this.pid == e_id)
+      {
+
+      }
+    }
+
+
+    /*
+    for(var key in guidelineValuesString) {
+      if (guidelineValuesString.hasOwnProperty(key)) {
+          //alert("Hello");
+          alert(guidelineValuesString[key]);
+      }
+    }*/
+
+    /*
+    for(i = 0 ; i < guidelineValues.length ; i++)
+    {
+
+    }*/
+
+    //window.alert(guidelineValues);
+
+    /*
     switch(this.p_id)
     {
       case 0: // TSP
@@ -196,10 +310,10 @@ $slexMap = new Map(1,50);
           this.p_aqi_status = "Out of the NAAQGV.";
         }
         break;
-    }
+    }*/
   }
 
-  var bancalMap = new Map(<?= $bancalMap->p_id ?>, <?= $bancalMap->p_value ?>);
-  var slexMap =  new Map(<?= $slexMap->p_id ?>, <?= $slexMap->p_value ?>);
+  var bancalMap = new Map("2");
+  var slexMap =  new Map("1");
 
 </script>

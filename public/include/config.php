@@ -12,6 +12,6 @@
 
 //LOCAL DB
 define("DB_HOST", "localhost");
-define("DB_USER", "melotraxadmin");
-define("DB_PASSWORD", "m3lotraxpass1234");
-define("DB_DATABASE", "melotraxdb");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+define("DB_DATABASE", "aqms");
