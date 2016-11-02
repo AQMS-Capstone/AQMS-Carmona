@@ -127,9 +127,9 @@ if($slexMap->e_id == "")
       var averaging_time = JSON.stringify(guidelineValues[i].averaging_time);
       var time_unit = JSON.stringify(guidelineValues[i].time_unit);
 
-      if(this.pid == e_id)
+      if(this.pid == e_id && this.time_unit == time_unit)
       {
-
+        
       }
     }
 
