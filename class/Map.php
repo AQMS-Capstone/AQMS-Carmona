@@ -11,8 +11,8 @@ class Map{
 
   var $m_id = "";
   var $a_id = "";
-  var $e_id = "";
-  var $concentration_value = "";
+  var $e_prevalent_name = "";
+  var $prevalent_concentration_value = "";
   var $timestamp = "";
 
   function Map(){}
@@ -20,28 +20,36 @@ class Map{
 
 require_once 'public/include/db_connect.php';
 
-$bancalMap = new Map();
-$slexMap = new Map();
+date_default_timezone_set('Asia/Manila');
+$date_now = date("Y/m/d H");
+$new_date = $date_now.":00:00";
 
-$sql = "SELECT * FROM MASTER";
+$sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP = '$new_date'";
 $result =  mysqli_query($con,$sql);
 
 while($row=mysqli_fetch_assoc($result))
 {
-  if($row['a_id'] == "2")
+
+  if($row['a_id'] == "2") // BANCAL
   {
+    $bancalMap = new Map();
+
     $bancalMap->m_id = $row['m_id'];
     $bancalMap->a_id = $row['a_id'];
     $bancalMap->e_id = $row['e_id'];
+    $bancalMap->e_name = $row['e_name'];
     $bancalMap->concentration_value = $row['concentration_value'];
     $bancalMap->timestamp = $row['e_id'];
   }
 
-  else if($row['a_id'] == "1")
+  else if($row['a_id'] == "1") // SLEX
   {
+    $slexMap = new Map();
+
     $slexMap->m_id = $row['m_id'];
     $slexMap->a_id = $row['a_id'];
     $slexMap->e_id = $row['e_id'];
+    $slexMap->e_name = $row['e_name'];
     $slexMap->concentration_value = $row['concentration_value'];
     $slexMap->timestamp = $row['e_id'];
   }
@@ -63,6 +71,7 @@ if($bancalMap->e_id == "")
   $bancalMap->m_id = "0";
   $bancalMap->a_id = "0";
   $bancalMap->e_id = "0";
+  $bancalMap->e_name = "Null";
   $bancalMap->concentration_value = "0";
   $bancalMap->timestamp = "0";
 }
@@ -72,6 +81,7 @@ if($slexMap->e_id == "")
   $slexMap->m_id = "0";
   $slexMap->a_id = "0";
   $slexMap->e_id = "0";
+  $slexMap->e_name = "Null";
   $slexMap->concentration_value = "0";
   $slexMap->timestamp = "0";
 }
@@ -99,12 +109,16 @@ if($slexMap->e_id == "")
 
   function Map (determiner) {
 
+    this.p_airqualiy = goodAir;
+    this.p_aqi_status = "Good";
+
     if(determiner == "2"){
       this.m_id = <?= $bancalMap->m_id ?>;
       this.a_id = <?= $bancalMap->a_id ?>;
       this.e_id = <?= $bancalMap->e_id ?>;
       this.contentration_value = <?= $bancalMap->concentration_value ?>;
       this.timestamp = <?= $bancalMap->timestamp ?>;
+      this.e_name = "<?= $bancalMap->e_name ?>";
     }
 
     else if(determiner == "1") {
@@ -113,6 +127,7 @@ if($slexMap->e_id == "")
       this.e_id = <?= $slexMap->e_id ?>;
       this.contentration_value = <?= $slexMap->concentration_value ?>;
       this.timestamp = <?= $slexMap->timestamp ?>;
+      this.e_name = "<?= $slexMap->e_name ?>";
     }
 
     //alert(JSON.stringify(guidelineValues[10].description));
@@ -129,7 +144,7 @@ if($slexMap->e_id == "")
 
       if(this.pid == e_id && this.time_unit == time_unit)
       {
-        
+
       }
     }
 

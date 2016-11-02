@@ -12,12 +12,12 @@ var zoomSize = 13;
 var bancalAQIStatus = bancalMap.p_aqi_status;
 var bancalAirQuality = bancalMap.p_airqualiy;
 var bancalAQI = bancalMap.contentration_value;
-var bancalprevalentPollutant = bancalMap.p_name;
+var bancalprevalentPollutant = bancalMap.e_name;
 
 var slexAQIStatus = slexMap.p_aqi_status;
 var slexAirQuality = slexMap.p_airqualiy;
 var slexAQI = slexMap.contentration_value;
-var slexprevalentPollutant = slexMap.p_name;
+var slexprevalentPollutant = slexMap.e_name;
 
 
 var getUrlParameter = function getUrlParameter(sParam) {
