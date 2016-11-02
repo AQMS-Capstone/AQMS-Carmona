@@ -5,6 +5,13 @@
  * Date: 10/26/2016
  * Time: 8:34 PM
  */
+
+ $data = "";
+
+ if(isset($_GET["area"]))
+    {
+        $data = $_GET["area"];
+    }
 ?>
 <div id="home">
 
@@ -58,19 +65,34 @@
                                     <tbody>
 
                                       <?php
-                                      for ($x = 0; $x < count($bancalValues); $x++) {
-                                        $elementName = "e_symbol_".($x+1);
-                                        $conentrationName = "concentration_value_".($x+1);
+                                      if(isset($_GET["area"]))
+                                      {
+                                            $data = $_GET["area"];
+                                            $untilValue = 0;
 
-                                        echo "<tr>";
-                                          echo "<td class='elementName' id='$elementName'>NaN</td>";
-                                          echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                          echo "<td><div id='chart1_div'></div></td>";
-                                          echo "<td class='elementMin'>NaN</td>";
-                                          echo "<td class='elementMax'>NaN</td>";
-                                        echo "</tr>";
+                                            if($data == "SLEX")
+                                            {
+                                                $untilValue = count($slexValues);
+                                            }
+
+                                            else if($data == "Bancal")
+                                            {
+                                                $untilValue = count($bancalValues);
+                                            }
+
+                                            for ($x = 0; $x < $untilValue; $x++) {
+                                              $elementName = "e_symbol_".($x+1);
+                                              $conentrationName = "concentration_value_".($x+1);
+
+                                              echo "<tr>";
+                                                echo "<td class='elementName' id='$elementName'>NaN</td>";
+                                                echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                                echo "<td><div id='chart1_div'></div></td>";
+                                                echo "<td class='elementMin'>NaN</td>";
+                                                echo "<td class='elementMax'>NaN</td>";
+                                              echo "</tr>";
+                                            }
                                       }
-
                                       ?>
                                     <!--
                                     <tr>
