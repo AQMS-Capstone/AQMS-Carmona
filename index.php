@@ -29,32 +29,29 @@
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
 
+
+</head>
+
+<body>
+
+    
+    <?php  include('public/header.php'); ?>
+    
+    <div id="content-holder">
+        <?php include('public/map.php'); ?>
+    </div>
+
+
+
+    
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
     <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
     <script src="js/caqms-api.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="js/graph.js"></script>
-</head>
-
-<body>
-
-    <!--   Header  -->
-    <?php  include('public/header.php'); ?>
-    <!--   Header  -->
-
-    <div id="content-holder">
-        <?php include('public/map.php'); ?>
-    </div>
-
-    <!--   Content  -->
-    <!--   Content  -->
-
-    <!--   Footer  -->
-    <!--   Footer  -->
-
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
 
 </body>
 </html>

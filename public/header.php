@@ -7,31 +7,34 @@
  */
 
 ?>
+
     <div>
         <nav class="z-depth-0">
             <div class="nav-wrapper">
-                <a href="#"><img class="brand-logo center" src="res/logo.png"> </a>
+                <a id="logo" href="#"><img class="brand-logo center" src="res/logo.png"> </a>
             </div>
         </nav>
     </div>
+
+
     <div>
         <nav id="nav">
             <div class="nav-wrapper">
                 <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                     <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
                     <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a></li>
-                    <li><a id=""><span class="material-icons">access_time</span> Daily</a></li>
-                    <li><a id="reports-tab"><span class="material-icons">trending_up</span> History</a></li>
-                    <li><a id=""><span class="material-icons">timeline</span> AQI Calculator</a></li>
-                    <li><a id="about-tab"><span class="material-icons">email</span> About Us</a></li>
+                    <li><a href="daily.php" id=""><span class="material-icons">access_time</span> Daily</a></li>
+                    <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>
+                    <li><a href="aqi-calculator.php"id=""><span class="material-icons">timeline</span> AQI Calculator</a></li>
+                    <li><a href="about.php"id="about-tab"><span class="material-icons">email</span> About Us</a></li>
                 </ul>
             </div>
         </nav>
     </div>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
-        <li><a href="?area=Bancal" id="drpBancal">Bancal</a></li>
+        <li><a href="index.php?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
+        <li><a href="index.php?area=Bancal" id="drpBancal">Bancal</a></li>
     </ul>
     <div>
         <nav id ="legends" class="navbar-fixed">
