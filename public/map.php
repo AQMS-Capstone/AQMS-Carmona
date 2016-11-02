@@ -136,7 +136,7 @@
         <div id="plotOption" class="center-align">
             <div class="divider"></div>
             <div class="card-action">
-                <a href="#">VIEW MORE</a>
+                <a href="daily.php">VIEW MORE</a>
             </div>
         </div>
 

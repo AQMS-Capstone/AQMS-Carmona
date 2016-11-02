@@ -36,8 +36,8 @@
         <li><a href="index.php?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
         <li><a href="index.php?area=Bancal" id="drpBancal">Bancal</a></li>
     </ul>
-    <div>
-        <nav id ="legends" class="navbar-fixed">
+    <div id ="legends">
+        <nav class="navbar-fixed">
             <div class="nav-wrapper white">
                 <ul id="nav-mobile" class="centered-nav nav-status hide-on-med-and-down black-text">
                     <li><a style="color: #2196F3;"><span class="material-icons">cloud</span> Good</a></li>
