@@ -5,20 +5,16 @@ var slex=new google.maps.LatLng(14.322350,121.062300);
 
 var zoomSize = 13;
 
-/*
 
-*/
+var bancalAQIStatus = bancalValues_array[0].p_aqi_status;
+var bancalAirQuality = bancalValues_array[0].p_airqualiy;
+var bancalAQI = parseInt(bancalValues_array[0].concentration_value.replace(/"/g, ''));
+var bancalprevalentPollutant = bancalValues_array[0].e_name;
 
-var bancalAQIStatus = bancalMap.p_aqi_status;
-var bancalAirQuality = bancalMap.p_airqualiy;
-var bancalAQI = bancalMap.contentration_value;
-var bancalprevalentPollutant = bancalMap.e_name;
-
-var slexAQIStatus = slexMap.p_aqi_status;
-var slexAirQuality = slexMap.p_airqualiy;
-var slexAQI = slexMap.contentration_value;
-var slexprevalentPollutant = slexMap.e_name;
-
+var slexAQIStatus = slexValues_array[0].p_aqi_status;
+var slexAirQuality = slexValues_array[0].p_airqualiy;
+var slexAQI = parseInt(slexValues_array[0].concentration_value.replace(/"/g, ''));
+var slexprevalentPollutant = slexValues_array[0].e_name;
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),

@@ -65,7 +65,6 @@ while($row=mysqli_fetch_assoc($result))
   }
 }
 
-echo $bancalValues[0]->concentration_value;
 /*
 foreach ($bancalValues as $car) {
     echo $car->e_name;
@@ -120,34 +119,63 @@ if($slexMap->e_id == "")
   var veryUnhealthyAir = "#9C27B0";
   var hazardoussAir = "#b71c1c";
 
-  var guidelineValues = <?= json_encode($guidelineValues) ?>
-  //alert(JSON.stringify(guidelineValues[10].description));
+  var bancalValues_array = [];
+  var slexValues_array = [];
 
-  function Map (determiner) {
+  var guidelineValues = <?= json_encode($guidelineValues) ?>;
+
+  var bancalValues = <?= json_encode($bancalValues) ?>;
+  var slexValues = <?= json_encode($slexValues) ?>;
+
+  for(var i = 0; i < bancalValues.length; i++)
+  {
+    var dataMap = new Map("2", i);
+    bancalValues_array.push(dataMap);
+  }
+
+  for(var i = 0; i < slexValues.length; i++)
+  {
+    var dataMap = new Map("1", i);
+    slexValues_array.push(dataMap);
+  }
+
+  //alert(JSON.stringify(bancalValues[0].concentration_value));
+  //alert(bancalValues_array[0].concentration_value);
+
+  //alert(JSON.stringify(slexValues[0].concentration_value));
+  /*
+  for(var i = 0; i < slexValues.length; i++)
+  {
+    var e_id = JSON.stringify(slexValues[i].concentration_value);
+    alert(e_id);
+  }*/
+
+  function Map (determiner, indexI) {
 
     this.p_airqualiy = goodAir;
     this.p_aqi_status = "Good";
 
     if(determiner == "2"){
-      this.m_id = <?= $bancalMap->m_id ?>;
-      this.a_id = <?= $bancalMap->a_id ?>;
-      this.e_id = <?= $bancalMap->e_id ?>;
-      this.contentration_value = <?= $bancalMap->concentration_value ?>;
-      this.timestamp = <?= $bancalMap->timestamp ?>;
-      this.e_name = "<?= $bancalMap->e_name ?>";
+      this.m_id = JSON.stringify(bancalValues[indexI].m_id);
+      this.a_id = JSON.stringify(bancalValues[indexI].a_id);
+      this.e_id = JSON.stringify(bancalValues[indexI].e_id);
+      this.concentration_value = JSON.stringify(bancalValues[indexI].concentration_value);
+      this.timestamp = JSON.stringify(bancalValues[indexI].timestamp);
+      this.e_name = JSON.stringify(bancalValues[indexI].e_name);
     }
 
     else if(determiner == "1") {
-      this.m_id =  <?= $slexMap->m_id ?>;
-      this.a_id = <?= $slexMap->a_id ?>;
-      this.e_id = <?= $slexMap->e_id ?>;
-      this.contentration_value = <?= $slexMap->concentration_value ?>;
-      this.timestamp = <?= $slexMap->timestamp ?>;
-      this.e_name = "<?= $slexMap->e_name ?>";
+      this.m_id =  JSON.stringify(slexValues[indexI].m_id);
+      this.a_id = JSON.stringify(slexValues[indexI].a_id);
+      this.e_id = JSON.stringify(slexValues[indexI].e_id);
+      this.concentration_value =JSON.stringify(slexValues[indexI].concentration_value);
+      this.timestamp = JSON.stringify(slexValues[indexI].timestamp);
+      this.e_name = JSON.stringify(slexValues[indexI].e_name);
     }
 
     //alert(JSON.stringify(guidelineValues[10].description));
 
+    /*
     for(var i = 0; i < guidelineValues.length; i++)
     {
       var e_id = JSON.stringify(guidelineValues[i].e_id);
@@ -162,7 +190,7 @@ if($slexMap->e_id == "")
       {
 
       }
-    }
+    }*/
 
 
     /*
@@ -344,8 +372,8 @@ if($slexMap->e_id == "")
     }*/
   }
 
-  var bancalMap = new Map("2");
-  var slexMap =  new Map("1");
+  //var bancalMap = new Map("2");
+  //var slexMap =  new Map("1");
 
   /*
   var item_array = [];
