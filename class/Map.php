@@ -11,6 +11,7 @@ class Map{
 
   var $m_id = "";
   var $a_id = "";
+  var $e_id = "";
   var $e_prevalent_name = "";
   var $prevalent_concentration_value = "";
   var $timestamp = "";
@@ -19,6 +20,12 @@ class Map{
 }
 
 require_once 'public/include/db_connect.php';
+
+$bancalValues = array();
+$slexValues = array();
+
+$bancalMap = new Map();
+$slexMap = new Map();
 
 date_default_timezone_set('Asia/Manila');
 $date_now = date("Y/m/d H");
@@ -29,7 +36,6 @@ $result =  mysqli_query($con,$sql);
 
 while($row=mysqli_fetch_assoc($result))
 {
-
   if($row['a_id'] == "2") // BANCAL
   {
     $bancalMap = new Map();
@@ -40,6 +46,8 @@ while($row=mysqli_fetch_assoc($result))
     $bancalMap->e_name = $row['e_name'];
     $bancalMap->concentration_value = $row['concentration_value'];
     $bancalMap->timestamp = $row['e_id'];
+
+    array_push($bancalValues, $bancalMap);
   }
 
   else if($row['a_id'] == "1") // SLEX
@@ -52,8 +60,16 @@ while($row=mysqli_fetch_assoc($result))
     $slexMap->e_name = $row['e_name'];
     $slexMap->concentration_value = $row['concentration_value'];
     $slexMap->timestamp = $row['e_id'];
+
+    array_push($slexValues, $slexMap);
   }
 }
+
+echo $bancalValues[0]->concentration_value;
+/*
+foreach ($bancalValues as $car) {
+    echo $car->e_name;
+}*/
 
 $sql = "SELECT * FROM PSCSGP";
 $result =  mysqli_query($con,$sql);
@@ -330,5 +346,13 @@ if($slexMap->e_id == "")
 
   var bancalMap = new Map("2");
   var slexMap =  new Map("1");
+
+  /*
+  var item_array = [];
+  var TryMap = new Map("1");
+
+  item_array.push(TryMap);
+  item_array.push(TryMap);
+  */
 
 </script>

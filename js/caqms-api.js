@@ -115,7 +115,7 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
-        document.getElementById("element1").innerHTML =  'hi';
+        //document.getElementById("element1").innerHTML =  item_array[0].p_aqi_status;
     }
     var slexZoom=new google.maps.LatLng(14.32274,121.071688);
     //noinspection JSAnnotator
@@ -130,7 +130,7 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
-        document.getElementById("element1").innerHTML =  'hello';
+        //document.getElementById("element1").innerHTML =  item_array[0].p_aqi_status;
     }
 
     var area = getUrlParameter('area');
