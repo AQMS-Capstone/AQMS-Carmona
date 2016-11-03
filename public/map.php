@@ -7,7 +7,6 @@
  */
 
  $data = "";
-
  if(isset($_GET["area"]))
     {
         $data = $_GET["area"];
@@ -44,25 +43,19 @@
             </div>
 
             <div class="row">
-                    <div class="col s12 m12">
-                        <div class="carousel carousel-slider">
-
-                             <div class="carousel-item black-text" href="#one!">
-                                <div class="scroll">
-                                    <table>
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Current</th>
-                                        <th></th>
-                                        <th>Min</th>
-                                        <th>Max</th>
-                                    </tr>
+                <div class="col s12 m12">
+                    <div class="scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Current</th>
+                                    <th></th>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
                                     </thead>
-
-
-
-                                    <tbody>
+                                <tbody>
 
                                       <?php
                                       if(isset($_GET["area"]))
@@ -94,91 +87,20 @@
                                             }
                                       }
                                       ?>
-                                    <!--
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_1">CO</td>
-                                        <td class="elementCurrent" id="concentration_value_1">NaN</td>
-                                        <td><div id="chart1_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_2">SO2</td>
-                                        <td class="elementCurrent" id="concentration_value_2">NaN</td>
-                                        <td><div id="chart2_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_3">NO2</td>
-                                        <td class="elementCurrent" id="concentration_value_3">NaN</td>
-                                        <td><div id="chart3_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_4">O3</td>
-                                        <td class="elementCurrent" id="concentration_value_4">NaN</td>
-                                        <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_5">Pb</td>
-                                        <td class="elementCurrent" id="concentration_value_5">NaN</td>
-                                        <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_6">PM 10</td>
-                                        <td class="elementCurrent" id="concentration_value_6">NaN</td>
-                                        <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="elementName" id="e_symbol_7">TSP</td>
-                                        <td class="elementCurrent" id="concentration_value_7">NaN</td>
-                                        <td><div id="chart#_div"></div></td>
-                                        <td class="elementMin">NaN</td>
-                                        <td class="elementMax">NaN</td>
-                                    </tr>
-                                  -->
-                                    </tbody>
-                                </table>
-                                </div>
-                            </div>
-
-                            <!--
-                            <div class="carousel-item black-text-text" href="#two!">
-                                <div class="row">
-                                    <div class="col s12 m12">
-                                        <p><h5>Synthesis</h5></p>
-                                    </div>
-                                    <div class="col s12 m12">
-                                        <p>The burning of fossil fuels to power industries and vehicles is a major cause of pollution.
-                                            Generating electrical power through thermal power stations releases huge amounts of carbon dioxide into the atmosphere.</p>
-                                    </div>
-                                </div>
-                            </div>
-                          -->
-                    </div>
+                                </tbody>
+                        </table>
                 </div>
-
             </div>
 
-            <!--
-            <div class="center-align">
-                <a id ="prevItem" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_left</i></a>
-                <a id ="nextItem" class="waves-effect waves-teal"><i class="material-icons">keyboard_arrow_right</i></a>
-            </div>
-          -->
         </div>
         <div id="plotOption" class="center-align">
             <div class="divider"></div>
             <div class="card-action">
-                <a href="daily.php">VIEW MORE</a>
+                <form action="daily.php">
+                    <button class="waves-effect orange-text btn-flat" type="submit" name="e_id" value="element-to-be-submitted">VIEW MORE</button>
+
+                </form>
+
             </div>
         </div>
 

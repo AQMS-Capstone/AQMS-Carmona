@@ -37,6 +37,16 @@
 <?php  include('public/header.php'); ?>
 
 <div id="content-holder">
+    <div class="row">
+        <div class="col s3">
+
+        </div>
+
+        <div class="col s9">
+
+        </div>
+    </div>
+
 
 </div>
 
