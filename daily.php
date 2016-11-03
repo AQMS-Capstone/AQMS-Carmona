@@ -37,16 +37,92 @@
 <?php  include('public/header.php'); ?>
 
 <div id="content-holder">
-    <div class="row">
-        <div class="col s3">
 
+    <div class="container">
+        <div class="row">
+            <div class="col s4">
+                <div class="card" style="min-height: 528px;">
+                    <div class="card-image">
+                        <img id="" src="res/images/area/slex_carmona-exit.jpg">
+
+                    </div>
+                    <div class="card-content">
+                        <h5 id="">SLEX, Carmona Exit</h5>
+
+                        <p><b>Prevalent Air Pollutant: </b> <span id="">NaN</span></p>
+                        <p><b>AQI: </b><span id="">NaN</span></p>
+                        <p><b>Time Updated: </b><span id="">NaN</span></p>
+                    </div>
+                    <div class="center">
+                        <div class="divider"></div>
+                        <br>
+                        <a id ="prevArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
+                        <a id ="nextArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                        <br>
+                        <br>
+                    </div>
+                </div>
         </div>
 
-        <div class="col s9">
+            <div class="col s8">
+                <div class="card" style="min-height: 528px;">
+                    <br>
+                    <div id="" class="center yellow" style="padding: 15px;">
+                        <h5 id="">AQI STATUS</h5>
+                    </div>
+                    <div class="carousel carousel-slider">
 
+                        <div class="card-content carousel-item">
+                        <ul class="tabs">
+                            <li class="tab col s3"><a class="active" href="#synthesis">Synthesis</a></li>
+                            <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>
+                            <li class="tab col s3"><a href="#cautionary">Cautionary</a></li>
+                        </ul>
+                        <br>
+
+                        <div id="synthesis" class="col s12">EXPLANATION TEXT HERE 1</div>
+                        <div id="health-effects" class="col s12">EXPLANATION TEXT HERE 2</div>
+                        <div id="cautionary" class="col s12">EXPLANATION TEXT HERE 3</div>
+
+                        <br>
+                    </div>
+
+                        <div class="card-content carousel-item">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th> </th>
+                                    <th> </th>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr>
+                                    <td>E_ID</td>
+                                    <td>GRAPH HERE</td>
+                                    <td>000</td>
+                                    <td>999</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="center">
+                        <div class="divider"></div>
+                        <br>
+                        <a id ="prevStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
+                        <a id ="nextStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 
 </div>
 
@@ -63,10 +139,5 @@
 <script src="js/init.js"></script>
 
 
-<script type="text/javascript">
-    $( document ).ready(function(){
-        $("#legends").remove();
-    })
-</script>
 </body>
 </html>

@@ -124,18 +124,9 @@ nav  ul.black-text a{
 .row-no-after{
     content: none;
 }
+.img-circle {
+    border-radius: 50%;
 
-.carousel.carousel-slider{
-    max-height: 190px;
-}
-.carousel .indicators .indicator-item{
-    background-color: #616161;
-}
-.carousel .indicators .indicator-item.active{
-    background-color: #212121;
-}
-.carousel .indicators{
-   margin: 0 0 10px 10px;
 }
 #AQIStat, #AQIStat-reports{
     background-color: #00acc1;
