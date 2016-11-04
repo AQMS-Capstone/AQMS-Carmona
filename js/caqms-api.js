@@ -4,135 +4,32 @@ var bancal=new google.maps.LatLng(14.283559,121.007561);
 var slex=new google.maps.LatLng(14.322350,121.062300);
 
 var zoomSize = 13;
-//Air Quality Color Indicator
-var goodAir = "#2196F3";
-var moderateAir = "#FFEB3B";
-var unhealthy1Air = "#FF9800";
-var unhealthy2Air = "#f44336";
-var veryUnhealthyAir = "#9C27B0";
-var hazardoussAir = "#b71c1c";
 
-//ETO UNG BABAGUHIN , LALAGYAN NG CONDITION
 
-//var bancalAirQuality = moderateAir;
-//var slexAirQuality = unhealthy2Air;
-//var bancalAQI = 54;
-//var slexAQI = 152;
+var bancalAQIStatus = prevalentValues_bancal_array[0].p_aqi_status;
+var bancalAirQuality = prevalentValues_bancal_array[0].p_airqualiy;
+var bancalAQI = parseInt(prevalentValues_bancal_array[0].concentration_value);
+var bancalprevalentPollutant = prevalentValues_bancal_array[0].e_name;
 
-var bancalAirQuality = "";
-var slexAirQuality = "";
+var slexAQIStatus = prevalentValues_slex_array[0].p_aqi_status;
+var slexAirQuality = prevalentValues_slex_array[0].p_airqualiy;
+var slexAQI = parseInt(prevalentValues_slex_array[0].concentration_value);
+var slexprevalentPollutant = prevalentValues_slex_array[0].e_name;
 
-//We can optimize this code once we put the values in DB
-switch(bancalPrevalentPollutant)
-{
-  case 0: // TSP
-    if(bancalAQIValue >= 0 && bancalAQIValue <= 80){
-      bancalAirQuality = goodAir;
-    }else if(bancalAQIValue >= 81 && bancalAQIValue <= 230){
-      bancalAirQuality = moderateAir;
-    }else if(bancalAQIValue >= 231 && bancalAQIValue <= 349){
-      bancalAirQuality = unhealthy1Air;
-    }else if(bancalAQIValue >= 350 && bancalAQIValue <= 599){
-      bancalAirQuality = unhealthy2Air;
-    }else if(bancalAQIValue >= 600 && bancalAQIValue <= 899){
-      bancalAirQuality = veryUnhealthyAir;
-    }else if(bancalAQIValue >= 900){
-      bancalAirQuality = hazardoussAir;
-    }else {
-      bancalAirQuality = hazardoussAir;
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
     }
-    break;
-
-  case 1: // PM 10
-    if(bancalAQIValue >= 0 && bancalAQIValue <= 54){
-      bancalAirQuality = goodAir;
-    }else if(bancalAQIValue >= 55 && bancalAQIValue <= 154){
-      bancalAirQuality = moderateAir;
-    }else if(bancalAQIValue >= 155 && bancalAQIValue <= 254){
-      bancalAirQuality = unhealthy1Air;
-    }else if(bancalAQIValue >= 255 && bancalAQIValue <= 354){
-      bancalAirQuality = unhealthy2Air;
-    }else if(bancalAQIValue >= 355 && bancalAQIValue <= 424){
-      bancalAirQuality = veryUnhealthyAir;
-    }else if(bancalAQIValue >= 425 && bancalAQIValue <= 504){
-      bancalAirQuality = hazardoussAir;
-    }
-    break;
-
-    case 2: // SO2
-      if(bancalAQIValue >= 0.000 && bancalAQIValue <= 0.034){
-        bancalAirQuality = goodAir;
-      }else if(bancalAQIValue >= 0.035 && bancalAQIValue <= 0.144){
-        bancalAirQuality = moderateAir;
-      }else if(bancalAQIValue >= 0.145 && bancalAQIValue <= 0.224){
-        bancalAirQuality = unhealthy1Air;
-      }else if(bancalAQIValue >= 0.225 && bancalAQIValue <= 0.304){
-        bancalAirQuality = unhealthy2Air;
-      }else if(bancalAQIValue >= 0.305 && bancalAQIValue <= 0.604){
-        bancalAirQuality = veryUnhealthyAir;
-      }else if(bancalAQIValue >= 0.605 && bancalAQIValue <= 0.804){
-        bancalAirQuality = hazardoussAir;
-      }
-      break;
-
-  case 3: // O3
-
-    if(bancalAQIValue > 0.375){ // O3 1hr
-      if(bancalAQIValue >= 0.000 && bancalAQIValue <= 0.124){
-
-      }else if(bancalAQIValue >= 0.125 && bancalAQIValue <= 0.164){
-        bancalAirQuality = unhealthy1Air;
-      }else if(bancalAQIValue >= 0.165 && bancalAQIValue <= 0.204){
-        bancalAirQuality = unhealthy2Air;
-      }else if(bancalAQIValue >= 0.205 && bancalAQIValue <= 0.404){
-        bancalAirQuality = veryUnhealthyAir;
-      }else if(bancalAQIValue >= 0.405 && bancalAQIValue <= 0.504){
-        bancalAirQuality = hazardoussAir;
-      }
-    }
-
-    else { // O3 8 hr
-      if(bancalAQIValue >= 0.000 && bancalAQIValue <= 0.064){
-        bancalAirQuality = goodAir;
-      }else if(bancalAQIValue >= 0.065 && bancalAQIValue <= 0.084){
-        bancalAirQuality = moderateAir;
-      }else if(bancalAQIValue >= 0.085 && bancalAQIValue <= 0.104){
-        bancalAirQuality = unhealthy1Air;
-      }else if(bancalAQIValue >= 0.105 && bancalAQIValue <= 0.124){
-        bancalAirQuality = unhealthy2Air;
-      }else if(bancalAQIValue >= 0.125 && bancalAQIValue <= 0.374){
-        bancalAirQuality = veryUnhealthyAir;
-      }
-    }
-    break;
-
-  case 4: // CO
-    if(bancalAQIValue >= 0.0 && bancalAQIValue <= 4.4){
-      bancalAirQuality = goodAir;
-    }else if(bancalAQIValue >= 4.5 && bancalAQIValue <= 9.4){
-      bancalAirQuality = moderateAir;
-    }else if(bancalAQIValue >= 9.5 && bancalAQIValue <= 12.4){
-      bancalAirQuality = unhealthy1Air;
-    }else if(bancalAQIValue >= 12.5 && bancalAQIValue <= 15.4){
-      bancalAirQuality = unhealthy2Air;
-    }else if(bancalAQIValue >= 15.5 && bancalAQIValue <= 30.4){
-      bancalAirQuality = veryUnhealthyAir;
-    }else if(bancalAQIValue >= 30.5 && bancalAQIValue <= 40.4){
-      bancalAirQuality = hazardoussAir;
-    }
-    break;
-
-  case 5: // NO2
-    if(bancalAQIValue >= 0.00 && bancalAQIValue <= 0.64){
-
-    }else if(bancalAQIValue >= 1.25 && bancalAQIValue <= 1.64){
-      bancalAirQuality = hazardoussAir;
-    }
-    break;
-}
-
-var bancalAQI = bancalAQIValue;
-var slexAQI = slexAQIValue;
+};
 
 function initialize()
 {
@@ -187,53 +84,113 @@ function initialize()
     var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
     google.maps.event.addListener(bancalMarker,'click',function() {
-       GetBancalStatus();
+        GetBancalStatus();
     });
 
     google.maps.event.addListener(slexMarker,'click',function() {
         GetSLEXStatus();
     });
 
-    google.maps.event.addListener(map, 'dragend', function() { document.getElementById("zoneStatus").style.visibility = 'hidden'; } );
+    google.maps.event.addListener(map, 'dragend', function() { $("#zoneStatus").hide(); } );
 
-    document.getElementById("drpBancal").onclick = function(){
-        GetBancalStatus();
-    };
-
-    document.getElementById("drpSLEX").onclick = function(){
-        GetSLEXStatus();
-    };
 
     zoneBancal.setMap(map);
     zoneSLEX.setMap(map);
     bancalMarker.setMap(map);
     slexMarker.setMap(map);
 
-    var bancalZoom=new google.maps.LatLng(14.2816712,121.0147383);
+    var bancalZoom=new google.maps.LatLng(14.283969,121.015671);
     function GetBancalStatus() {
         map.setZoom(16);
         map.setCenter(bancalZoom);
 
-        document.getElementById("zoneStatus").style.visibility = 'visible';
+        $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = bancalAirQuality;
         document.getElementById("zoneName").innerHTML = 'Bancal, Carmona, Cavite';
+        document.getElementById("prevalentPollutant").innerHTML = bancalprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = bancalAQI;
-        document.getElementById("aqiText").innerHTML = 'Moderate';
+        document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
+
+        for(var i = 0; i < bancalValues_array.length; i++)
+        {
+            var elementName = "e_symbol_" + (i+1);
+            var conentrationName = "concentration_value_" + (i+1);
+
+            document.getElementById(elementName).innerHTML =  bancalValues_array[i].e_symbol;
+            document.getElementById(conentrationName).innerHTML =  bancalValues_array[i].concentration_value;
+        }
+
+        /*
+         document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
+         document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
+         document.getElementById("e_symbol_3").innerHTML =  bancalValues_array[2].e_symbol;
+         document.getElementById("e_symbol_4").innerHTML =  bancalValues_array[3].e_symbol;
+         document.getElementById("e_symbol_5").innerHTML =  bancalValues_array[4].e_symbol;
+         document.getElementById("e_symbol_6").innerHTML =  bancalValues_array[5].e_symbol;
+         document.getElementById("e_symbol_7").innerHTML =  bancalValues_array[6].e_symbol;
+
+         document.getElementById("concentration_value_1").innerHTML =  slexValues_array[0].e_symbol;
+         document.getElementById("concentration_value_2").innerHTML =  slexValues_array[1].e_symbol;
+         document.getElementById("concentration_value_3").innerHTML =  slexValues_array[2].e_symbol;
+         document.getElementById("concentration_value_4").innerHTML =  slexValues_array[3].e_symbol;
+         document.getElementById("concentration_value_5").innerHTML =  slexValues_array[4].e_symbol;
+         document.getElementById("concentration_value_6").innerHTML =  slexValues_array[5].e_symbol;
+         document.getElementById("concentration_value_7").innerHTML =  slexValues_array[6].e_symbol;
+         */
     }
-    var slexZoom=new google.maps.LatLng(14.3203282,121.0711943);
+    var slexZoom=new google.maps.LatLng(14.32274,121.071688);
     //noinspection JSAnnotator
     function GetSLEXStatus() {
         map.setZoom(16);
         map.setCenter(slexZoom);
 
-        document.getElementById("zoneStatus").style.visibility = 'visible';
+        $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = slexAirQuality;
         document.getElementById("zoneName").innerHTML = 'SLEX Carmona Exit, Cavite';
+        document.getElementById("prevalentPollutant").innerHTML = slexprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = slexAQI;
-        document.getElementById("aqiText").innerHTML = 'Unhealthy';
+        document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
+
+        for(var i = 0; i < slexValues_array.length; i++)
+        {
+            var elementName = "e_symbol_" + (i+1);
+            var conentrationName = "concentration_value_" + (i+1);
+
+            document.getElementById(elementName).innerHTML =  slexValues_array[i].e_symbol;
+            document.getElementById(conentrationName).innerHTML =  slexValues_array[i].concentration_value;
+        }
+
+        /*
+         document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
+         document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
+         document.getElementById("e_symbol_3").innerHTML =  bancalValues_array[2].e_symbol;
+         document.getElementById("e_symbol_4").innerHTML =  bancalValues_array[3].e_symbol;
+         document.getElementById("e_symbol_5").innerHTML =  bancalValues_array[4].e_symbol;
+         document.getElementById("e_symbol_6").innerHTML =  bancalValues_array[5].e_symbol;
+         document.getElementById("e_symbol_7").innerHTML =  bancalValues_array[6].e_symbol;
+
+         document.getElementById("concentration_value_1").innerHTML =  bancalValues_array[0].e_symbol;
+         document.getElementById("concentration_value_2").innerHTML =  bancalValues_array[1].e_symbol;
+         document.getElementById("concentration_value_3").innerHTML =  bancalValues_array[2].e_symbol;
+         document.getElementById("concentration_value_4").innerHTML =  bancalValues_array[3].e_symbol;
+         document.getElementById("concentration_value_5").innerHTML =  bancalValues_array[4].e_symbol;
+         document.getElementById("concentration_value_6").innerHTML =  bancalValues_array[5].e_symbol;
+         document.getElementById("concentration_value_7").innerHTML =  bancalValues_array[6].e_symbol;
+         */
     }
+
+    var area = getUrlParameter('area');
+    if(area!=null){
+        if(area=="SLEX"){
+            GetSLEXStatus();
+        }
+        else if(area="Bancal"){
+            GetBancalStatus();
+        }
+    }
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
