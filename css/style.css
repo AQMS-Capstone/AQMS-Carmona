@@ -1,77 +1,57 @@
-html,body
-{
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-}
+body{
 
-.navbar {
-    margin-bottom: 0!important;
-    border: 0;
-    border-radius: 0;
 }
-
-.nav.navbar-nav li a {
-    color: white;
-}
-
-.shadow{
-    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2)
-}
-
-.navbar-collapse.in{
-    overflow: visible !important;
-}
-
-.nav{
-    padding-left: 15px;
-}
-
-.navbar-brand {
-    padding: 0px;
-    padding-top: 10px;
-}
-
-.navbar-brand>img {
-    margin-top: 15px;
-    padding: 0;
-    height: 100%;
-    width: auto;
-}
-
-.brand-centered {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-}
-
-.brand-centered .navbar-brand {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-toggle{
-    background-color: white;
-    z-index: 3;
-}
-
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
-    background-color: transparent;
-}
-
-.dropdown-menu{
+.nav-wrapper{
     background-color: #009688;
-    border:0;
-    top: 200%;
+}
+.margin-5{
+    margin: 5px 5px;
+}
+.brand-logo{
+    margin-top: 5px;
+    height: 50px;
+}
+.scroll{
+    height:50%;
+    width:100%;
+    transition: overflow 2s;
+    overflow:hidden;
+}
+.scroll:hover{
+    height:50%;
+    width:100%;
+    overflow:auto;
+}
+.scroll::-webkit-scrollbar-track
+{
+
+    background-color: #F5F5F5;
 }
 
-.glyphicon{
-    top: 0;
+.scroll::-webkit-scrollbar
+{
+    width: 8px;
+    background-color: #F5F5F5;
 }
+
+.scroll::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 150, 136, 0.3);
+    background-color: #009688;
+}
+
+.elementName, .elementCurrent{
+    font-weight: bold;
+}
+.elementMin{
+    color: #2196F3;
+}
+.elementMax{
+    color: #b71c1c;
+}
+
+
+
 
 .labels {
     color: #212121;
@@ -83,305 +63,99 @@ html,body
     width: 40px;
 }
 
-.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
-    background-color: #00897B;
+nav{
+    height: 60px;
+    line-height: 60px;
+}
+footer.page-footer .footer-copyright{
+    background-color: #009688
 }
 
-@media (min-width: 768px) {
-
-    .navbar-centered .navbar-nav {
-        float: none;
-        text-align: center;
-    }
-    .navbar-centered .navbar-nav > li {
-        float: none;
-    }
-    .navbar-centered .nav > li {
-        display: inline;
-    }
-    .navbar-centered .nav > li > a {
-        display: inline-block;
-    }
-
+#legends nav ul li{
+    margin: 0 5px 0 5px;
 }
-
-.mobile-card {
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    border-radius: 5px;
-    text-align: center;
-    padding: 15px 0px;
-    width: 100%;
-    height: auto;
-}
-
-@media (max-width: 768px){
-    .navbar-default .navbar-nav .open .dropdown-menu>li>a{
-        color: white;
-    }
-}
-
-td img{
-    width: 100%;
-    display: block;
-}
-
-table{
-    max-width: 400px;
-    width: 100% !important;
-}
-
-.card-float {
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 0px;
-    display: inline-block;
-    overflow: hidden;
-    z-index: 2;
-    position: absolute;
-    right:0;
-
-
-    padding: 15px 0px;
-    width: 60%;
-    height:100%;
-}
-
-.card{
-    background-color: white;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-    border-color: #BDBDBD;
-}
-
-.container{
-    padding-left: 0px;
-    padding-right: 0px;
-}
-.AQIStat{
-    width: 100%;
-    border-radius: 0;
-    font-size: xx-large;
-    text-align: center;
-    padding: 0px 0px;
-}
-
-.card-content{
-    padding: 0px 15px;
-}
-
-.table{
-    font-size: x-small;
-    width: auto;
-    margin-bottom: 0px!important;
-}
-
-.map-container {
+.centered-nav{
+    float: right;
     position: relative;
-    padding-bottom: 40%;
-    padding-top: 30px;
-    height: 0;
-    z-index: 1 ;
+    left: -22%;
 }
 
-.mapAPI{
+.centered-nav.nav-status{
+    float: right;
+    position: relative;
+    left: -16%;
+
+}
+.parallax-css{
+    -webkit-filter: grayscale(80%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(80%);
+}
+
+.stroke-white{
+    text-shadow:
+            -1px -1px 0 #ffffff,
+            1px -1px 0 #ffffff,
+            -1px 1px 0 #ffffff,
+            1px 1px 0 #ffffff;
+}
+nav.navbar-fixed {
+    height: 45px;
+    line-height: 45px;
+}
+
+.material-icons{
+    vertical-align: text-bottom;
+}
+
+nav  ul.black-text a{
+    color: #444;
+}
+
+.page-footer{
+    border-top:solid;
+    border-color: #e0e0e0;
+    border-width: 1px;
+}
+
+#googleMap{
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-}
-
-.footer-fixed {
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    background-color: #009688;
-    z-index: 3;
-    display: inline-block;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    margin:0 auto;
-}
-
-.footer {
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    background-color: #009688;
-    z-index: 3;
-    display: inline-block;
-    width: 100%;
-
-    bottom:0;
-    text-align: center;
-    margin:0 auto;
-}
-
-.footer-fixed ul li, .footer ul li{
-    display:inline-block!important;
-    padding: 5px;
-}
-
-.footer-fixed ul li, .footer ul li a{
-    color: white!important;
-    text-decoration: none;
-}
-
-
-.header1 {
-    background-image: url('../assets/data/banner1.jpg');
-    background-repeat: no-repeat;
-    margin-bottom: 0;
-}
-
-.header-fade {
-    background-color: rgba(38,50,56,0.6);
-}
-
-.content-image{
-    display: block;
-    margin: auto;
-    width: 100%;
-}
-
-.content-p{
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
-}
-
-.header-content {
-    text-align: center;
-    vertical-align: middle;
-    color: white;
-}
-
-.header-content h1, h2, p{
-    font-family: "Roboto", Times, serif;
-}
-
-p.thick {
-    font-weight: bold;
-}
-
-p.thicker{
-    font-weight: 400;
-}
-
-.sumports-header{
-    font-size: 25px;
-}
-
-.sumports{
-    font-size: 20px;
-}
-
-/* carousel */
-#quote-carousel
-{
-    padding: 0 10px 30px 10px;
-}
-
-/* Control buttons  */
-#quote-carousel .carousel-control
-{
-    background: none;
-    color: #222;
-    font-size: 2.3em;
-    text-shadow: none;
-    margin-top: 30px;
-}
-/* Previous button  */
-#quote-carousel .carousel-control.left
-{
-    top: 50%;
-    position: absolute;
-    left: -12px;
-}
-/* Next button  */
-#quote-carousel .carousel-control.right
-{
-    top: 50%;
-    position: absolute;
-    right: -12px !important;
-}
-/* Changes the position of the indicators */
-#quote-carousel .carousel-indicators
-{
-    right: 50%;
-    top: auto;
+    top: 164px;
+    left: 0px;
+    right: 0px;
     bottom: 0px;
-    margin-right: -19px;
-}
-/* Changes the color of the indicators */
-#quote-carousel .carousel-indicators li
-{
-    background: #c0c0c0;
-}
-#quote-carousel .carousel-indicators .active
-{
-    background: #009688;
-}
-#quote-carousel img
-{
-
-}
-/* End carousel */
-
-.item blockquote {
-    border-left: none;
-    margin: 0;
 }
 
-.item blockquote img {
-    margin-bottom: 10px;
+.float-card{
+    position: absolute;
+    right: 0;
+    margin: 0.5rem 0.5rem 1rem 0;
+    z-index: 997;
+    width: 50%;
+    max-height: 100%;
 }
-
-.item blockquote p:before {
-    content: "\f10d";
-    font-family: 'Fontawesome';
-    float: left;
-    margin-right: 10px;
+.row-no-after{
+    content: none;
 }
+.img-circle {
+    border-radius: 50%;
 
+}
+#AQIStat, #AQIStat-reports{
+    background-color: #00acc1;
+    border-radius: 2px;
+}
+.tabs .tab a{
+    color: #009688;
 
-
-/**
-  MEDIA QUERIES
-*/
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-    #quote-carousel
-    {
-        margin-bottom: 0;
-        padding: 0 40px 30px 40px;
-    }
+}
+.tabs .tab a:hover{
+    color: #B2DFDB;
 
 }
 
-/* Small devices (tablets, up to 768px) */
-@media (max-width: 768px) {
-
-    /* Make the indicators larger for easier clicking with fingers/thumb on mobile */
-
-    #quote-carousel .carousel-indicators {
-
-        bottom: -20px !important;
-    }
-    #quote-carousel .carousel-indicators li {
-
-        display: inline-block;
-        margin: 0px 5px;
-        width: 15px;
-        height: 15px;
-    }
-    #quote-carousel .carousel-indicators li.active {
-        margin: 0px 5px;
-        width: 20px;
-        height: 20px;
-    }
+.tabs .indicator{
+    background-color: #009688;
+}
+td, th{
+    padding: 12px 5px;
 }
