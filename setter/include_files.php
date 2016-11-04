@@ -8,7 +8,7 @@
 
   else if($choice == "Home")
   {
-    //include("../class/Map.php");
+    include("../class/Map.php");
     include("../public/map.php");
   }
 ?>
