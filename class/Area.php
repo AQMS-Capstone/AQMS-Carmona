@@ -1,6 +1,6 @@
 <?php
-class Area{
-    var $id;
-    var $name;
-}
+    class Area{
+        var $id;
+        var $name;
+    }
 ?>

@@ -68,7 +68,11 @@ nav{
     line-height: 60px;
 }
 footer.page-footer .footer-copyright{
-    background-color: #e0e0e0;
+    background-color: #009688
+}
+
+#legends nav ul li{
+    margin: 0 5px 0 5px;
 }
 .centered-nav{
     float: right;
@@ -107,6 +111,11 @@ nav  ul.black-text a{
     color: #444;
 }
 
+.page-footer{
+    border-top:solid;
+    border-color: #e0e0e0;
+    border-width: 1px;
+}
 
 #googleMap{
     position: absolute;

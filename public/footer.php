@@ -7,7 +7,6 @@
  */?>
 
 <footer class="page-footer white black-text">
-    <div class="divider"></div>
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
@@ -27,8 +26,7 @@
     </div>
     <div class="footer-copyright black-text">
         <div class="container">
-            <span>© 2016 Copyright AQMS-Carmona</span>
-            <a class="black-text text-lighten-4 right" href="#!">More Links</a>
+            <span class="white-text">© 2016 Copyright AQMS-Carmona</span>
         </div>
     </div>
 </footer>

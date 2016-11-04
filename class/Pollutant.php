@@ -1,6 +1,6 @@
 <?php
-class Pollutant{
-  protected $id;
-  protected $name;
-}
+    class Pollutant{
+      protected $id;
+      protected $name;
+    }
 ?>

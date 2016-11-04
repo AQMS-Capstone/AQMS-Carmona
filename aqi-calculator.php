@@ -37,6 +37,80 @@
 <?php  include('public/header.php'); ?>
 
 <div id="content-holder">
+    <div class="section">
+        <br><br>
+        <h2 class="header center orange-text">AQI Calculator - US EPA Scale converter</h2>
+        <div class="row center">
+            <h6 class="header col s12">The above calculator is based on the work from the US EPA Air Now calculator, available at <a href="https://airnow.gov">airnow.gov</a></h6>
+        </div>
+    </div>
+
+    <div class="section no-pad-bot">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <form>
+                        <div class="input-field col s8">
+                            <select>
+                                <option value="" disabled selected>Select a pollutant</option>
+                                <option value="1">CO</option>
+                                <option value="2">O3</option>
+                                <option value="3">SO2</option>
+                            </select>
+                            <label>Pollutant</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <input id="concentration" type="number" class="validate">
+                            <label for="number">Concentration</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <label id="unit">µg/m3</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="row">
+                <div class="col s4">
+                    <div class="card" style="min-height: 328px;">
+                        <div class="card-content">
+                            <div class="card-title teal-text"><b>Sensitive Groups</b></div>
+                            <p>
+                                People with respiratory or heart disease, the elderly and children are the groups most at risk.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="card" style="min-height: 328px;">
+                        <div class="card-content">
+                            <div class="card-title teal-text"><b>Health Effects</b></div>
+                            <p>
+                                Serious aggravation of heart or lung disease and premature mortality in persons with cardiopulmonary disease and the elderly;
+                                serious risk of respiratory effects in general population.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="card" style="min-height: 328px;">
+                        <div class="card-content">
+                            <div class="card-title teal-text"><b>Sensitive Groups</b></div>
+                            <p>
+                                Everyone should avoid any outdoor exertion;
+                                people with respiratory or heart disease, the elderly and children should remain indoors.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -44,19 +118,9 @@
 <?php  include('public/footer.php'); ?>
 
 
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
-<script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="js/graph.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.js"></script>
+<script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
 
-
-<script type="text/javascript">
-    $( document ).ready(function(){
-        $("#legends").remove();
-    })
-</script>
 </body>
 </html>

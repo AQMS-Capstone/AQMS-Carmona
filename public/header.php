@@ -40,12 +40,12 @@
         <nav class="navbar-fixed">
             <div class="nav-wrapper white">
                 <ul id="nav-mobile" class="centered-nav nav-status hide-on-med-and-down black-text">
-                    <li><a style="color: #2196F3;"><span class="material-icons">cloud</span> Good</a></li>
-                    <li><a style="color: #FFEB3B;"><span class="material-icons">cloud</span> Fair</a></li>
-                    <li><a style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups</a></li>
-                    <li><a style="color: #f44336;"><span class="material-icons">cloud</span> Very Unhealthy</a></li>
-                    <li><a style="color: #9C27B0;"><span class="material-icons">cloud</span> Acutely Unhealthy</a></li>
-                    <li><a style="color: #b71c1c;"><span class="material-icons">cloud</span> Emergency</a></li>
+                    <li style="color: #2196F3;"><span class="material-icons">cloud</span> Good</li>
+                    <li style="color: #FFEB3B;"><span class="material-icons">cloud</span> Fair</li>
+                    <li style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups</li>
+                    <li style="color: #f44336;"><span class="material-icons">cloud</span> Very Unhealthy</li>
+                    <li style="color: #9C27B0;"><span class="material-icons">cloud</span> Acutely Unhealthy</a></li>
+                    <li style="color: #b71c1c;"><span class="material-icons">cloud</span> Emergency</li>
                 </ul>
             </div>
         </nav>
