@@ -61,7 +61,7 @@
                             <label>Pollutant</label>
                         </div>
                         <div class="input-field col s2">
-                            <input id="concentration" type="number" class="validate">
+                            <input id="concentration" type="number" class="validate" value="0">
                             <label for="number">Concentration</label>
                         </div>
                         <div class="input-field col s2">
@@ -72,7 +72,7 @@
             </div>
             <div class="divider"></div>
             <div class="row">
-                <div class="col s4">
+                <div class="col s12 m4 l4">
                     <div class="card" style="min-height: 328px;">
                         <div class="card-content">
                             <div class="card-title teal-text"><b>Sensitive Groups</b></div>
@@ -83,7 +83,7 @@
 
                     </div>
                 </div>
-                <div class="col s4">
+                <div class="col s12 m4 l4">
                     <div class="card" style="min-height: 328px;">
                         <div class="card-content">
                             <div class="card-title teal-text"><b>Health Effects</b></div>
@@ -95,7 +95,7 @@
 
                     </div>
                 </div>
-                <div class="col s4">
+                <div class="col s12 m4 l4">
                     <div class="card" style="min-height: 328px;">
                         <div class="card-content">
                             <div class="card-title teal-text"><b>Sensitive Groups</b></div>
