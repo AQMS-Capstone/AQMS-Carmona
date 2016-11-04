@@ -10,17 +10,17 @@
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
-                <h5>Footer Content</h5>
-                <p class="text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                <h5 class="teal-text"><b>AQMS - Carmona</b></h5>
+                <p class="text-lighten-4">Take care of your body. It's the only place you have to live in. Know the air that you are breathing.</p>
             </div>
             <div class="col l4 offset-l2 s12">
-                <h5>Links</h5>
+                <h5 class="teal-text">Links</h5>
                 <ul>
-                    <li><a class="text-lighten-3" href="index.php">Home</a></li>
-                    <li><a class="text-lighten-3" href="daily.php">Daily Reports</a></li>
-                    <li><a class="text-lighten-3" href="history.php">HIstory Reports</a></li>
-                    <li><a class="text-lighten-3" href="aqi-calculator.php">AQI Calculator</a></li>
-                    <li><a class="text-lighten-3" href="about.php">About Us</a></li>
+                    <li><a class="orange-text" href="index.php">Home</a></li>
+                    <li><a class="orange-text" href="daily.php">Daily Reports</a></li>
+                    <li><a class="orange-text" href="history.php">HIstory Reports</a></li>
+                    <li><a class="orange-text" href="aqi-calculator.php">AQI Calculator</a></li>
+                    <li><a class="orange-text" href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>

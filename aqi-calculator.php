@@ -39,12 +39,13 @@
 <div id="content-holder">
     <div class="section">
         <br><br>
-        <h2 class="header center orange-text">AQI Calculator - US EPA Scale converter</h2>
+        <h2 class="header center teal-text"><b>AQI Calculator - US EPA Scale Converter</b></h2>
         <div class="row center">
-            <h6 class="header col s12">The above calculator is based on the work from the US EPA Air Now calculator, available at <a href="https://airnow.gov">airnow.gov</a></h6>
+            <h6 class="header col s12">The above calculator is based on the work from the US EPA Air Now calculator, available at <a class="orange-text" href="https://airnow.gov" target="_blank">airnow.gov</a></h6>
         </div>
     </div>
-
+    <br>
+    <br>
     <div class="section no-pad-bot">
         <div class="container">
             <div class="row">

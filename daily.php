@@ -37,6 +37,8 @@
 <?php  include('public/header.php'); ?>
 
 <div id="content-holder">
+    <br>
+    <br>
     <div class="section no-pad-bot">
         <div class="container">
             <div class="row">
@@ -47,7 +49,7 @@
 
                         </div>
                         <div class="card-content">
-                            <h5><b id="">SLEX, Carmona Exit</b></h5>
+                            <h5 class="teal-text"><b id="">SLEX, Carmona Exit</b></h5>
 
                             <p><b>Prevalent Air Pollutant: </b> <span id="">NaN</span></p>
                             <p><b>AQI: </b><span id="">NaN</span></p>
@@ -123,8 +125,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 
