@@ -16,10 +16,11 @@
             <div class="col l4 offset-l2 s12">
                 <h5>Links</h5>
                 <ul>
-                    <li><a class="text-lighten-3" href="#!">Link 1</a></li>
-                    <li><a class="text-lighten-3" href="#!">Link 2</a></li>
-                    <li><a class="text-lighten-3" href="#!">Link 3</a></li>
-                    <li><a class="text-lighten-3" href="#!">Link 4</a></li>
+                    <li><a class="text-lighten-3" href="index.php">Home</a></li>
+                    <li><a class="text-lighten-3" href="daily.php">Daily Reports</a></li>
+                    <li><a class="text-lighten-3" href="history.php">HIstory Reports</a></li>
+                    <li><a class="text-lighten-3" href="aqi-calculator.php">AQI Calculator</a></li>
+                    <li><a class="text-lighten-3" href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>
