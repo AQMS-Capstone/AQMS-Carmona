@@ -39,16 +39,131 @@
 
 <div id="content-holder">
 
+   <div class="section no-pad-bot">
+        <div class="container">
+            <div class="row">
+                <div class="col s6">
+                    <form>
+                        <div class="input-field col s12">
+                            <select>
+                                <option value="" disabled selected>Select an area</option>
+                                <option value="1">SLEX, Carmona Exit</option>
+                                <option value="2">Bancal</option>
+                                <option value="3">All</option>
+                            </select>
+                            <label>Area</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <select>
+                                <option value="" disabled selected>Select a pollutant</option>
+                                <option value="1">CO</option>
+                                <option value="2">Bancal</option>
+                                <option value="3">All</option>
+                            </select>
+                            <label>Pollutant</label>
+                        </div>
+
+                        <div class="input-field col s4">
+                            <input id="year" type="number" min="2000" max="3000" class="validate">
+                            <label for="year">Year</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="month" type="number" min="1" max="12" class="validate">
+                            <label for="month">Month</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="day" type="number" min="1" max="31" class="validate">
+                            <label for="day">Day</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light" type="submit">Generate
+                                <i class="material-icons right">library_books</i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col s6">
+                    <div class="card">
+                        <div class="card-content">
+                            <h6><b>Area: </b><span>SLEX, Carmona Exit,Cavite</span></h6>
+                            <h6><b>Generated on: </b><span>2016-01-01 00:00</span></h6>
+
+                            <a id="btnDownload" class="waves-effect orange-text btn-flat" style="padding-left: 5px; padding-right: 5px;"><i class="material-icons right">get_app</i>Download</a>
+                            <a id="btnPrint" class="waves-effect orange-text btn-flat" style="padding-left: 5px; padding-right: 5px;"><i class="material-icons right">print</i>Print</a>
+
+                            <div class="carousel carousel-slider">
+                                <div class="card-content carousel-item" style="padding-left: 5px; padding-right: 5px;">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Area</th>
+                                            <th>Pollutant</th>
+                                            <th>Value</th>
+                                            <th>Time Stamp</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr>
+                                            <td>A_ID</td>
+                                            <td>E_ID</td>
+                                            <td>000</td>
+                                            <td>2016-01-01 00:00</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-content carousel-item" style="padding-left: 5px; padding-right: 5px;">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th> </th>
+                                            <th>E_1</th>
+                                            <th>E_2</th>
+                                            <th>E_3</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr id="max">
+                                            <th>Max</th>
+                                            <td>999</td>
+                                            <td>999</td>
+                                            <td>999</td>
+                                        </tr>
+
+                                        <tr id="min">
+                                            <th>Min</th>
+                                            <td>000</td>
+                                            <td>000</td>
+                                            <td>000</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="center">
+                                <div class="divider"></div>
+                                <br>
+                                <a id ="prevStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
+                                <a id ="nextStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <?php  include('public/footer.php'); ?>
 
 
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
-<script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="js/graph.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>

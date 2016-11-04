@@ -18,7 +18,7 @@
 
 
     <div>
-        <nav id="nav">
+        <nav id="nav" role="navigation">
             <div class="nav-wrapper">
                 <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                     <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>

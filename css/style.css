@@ -1,5 +1,5 @@
 body{
-    background-color: #E0E0E0;
+
 }
 .nav-wrapper{
     background-color: #009688;
@@ -66,6 +66,9 @@ body{
 nav{
     height: 60px;
     line-height: 60px;
+}
+footer.page-footer .footer-copyright{
+    background-color: #e0e0e0;
 }
 .centered-nav{
     float: right;
