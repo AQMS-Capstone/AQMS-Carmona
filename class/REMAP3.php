@@ -46,8 +46,6 @@
     }
   }
 
-  $bancal_co_values = array();
-
   $carbon_monoxide_ave = 0;
   $carbon_monoxide_ctr = 0;
 
@@ -71,21 +69,42 @@
   $bancalAveraged = array();
   $slexAveraged = array();
 
-  $hour_value = 8;
-
   for($i = 0; $i < count($bancalAllDayValues_array); $i++)
   {
     //$hour_value = date("H");
     //2016-05-11 08:00:00
 
     $data_hour_value = substr($bancalAllDayValues_array[$i]->timestamp, 11, -6);
+    $hour_value = 10;
+
     if($data_hour_value <= $hour_value)
     {
       switch($bancalAllDayValues_array[$i]->e_id)
       {
           case 1: // CO
-          array_push($bancal_co_values, $bancalAllDayValues_array[$i]);
-          //array_push($bancal_co_values, $bancalAllDayValues_array);
+
+          //echo "WHAT IS: ".(($hour_value % 8))."<br/>";
+
+          //if(($hour_value % 8) == 1 && ($data_hour_value % 8))
+
+          $data_hour_value2 = substr($bancalAllDayValues_array[$i - 1]->timestamp, 11, -6);
+
+          if(($data_hour_value2 % 8) == 1 && $data_hour_value2 == $hour_value)
+          {
+            $carbon_monoxide_ave = 0;
+            $carbon_monoxide_ctr = 0;
+
+            echo "HAPPENED";
+            //echo "VALIDATION IS: ".(08 % 8)."<br/>";
+            //echo "2 HOUR VALUE IS: ".$data_hour_value."<br/>";
+
+            //echo "2 AVE IS: ".$bancalAllDayValues_array[$i]->concentration_value."<br/>";
+          }
+
+          $carbon_monoxide_ave += $bancalAllDayValues_array[$i]->concentration_value;
+          $carbon_monoxide_ctr++;
+
+          //echo "2 AVE IS: ".$bancalAllDayValues_array[$i]->concentration_value."<br/>";
 
           break;
 
@@ -149,22 +168,8 @@
     $tsp_ave /= $tsp_ctr;
   }
 
-  $myCtr = 0;
-
-  for($i = 0; $i < count($bancal_co_values); $i++)
-  {
-    $data_hour_value = substr($bancalAllDayValues_array[$i]->timestamp, 11, -6);
-
-    if(($i % 8) == 1 && $i == ($data_hour_value + 1))
-    {
-      $myCtr = 0;
-    }
-
-    $myCtr++;
-  }
-
-  echo "CTR IS: ".$myCtr."<br/>";
-  //echo "AVERAGE IS: ".$carbon_monoxide_ave."<br/>";
+  echo "CTR IS: ".$carbon_monoxide_ctr."<br/>";
+  echo "AVERAGE IS: ".$carbon_monoxide_ave."<br/>";
 
   $bancalThisHourValues_array = array();
   $slexThisHourValues_array = array();
