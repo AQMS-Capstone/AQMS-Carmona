@@ -19,7 +19,7 @@ function createGraph(data_pollutant, chartNames)
       value = parseInt(JSON.stringify(data_pollutant[i]).replace(/"/g, ''));
     }
 
-    data.addRow([{v: [i, 0, 0], f: ''}, value]);
+    data.addRow([{v: [i + 1, 0, 0], f: ''}, value]);
   }
 
   var options = {
