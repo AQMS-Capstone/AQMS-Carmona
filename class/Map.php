@@ -492,7 +492,7 @@
   $bancal_tsp_aqi_values = array();
   */
 
-  $bancal_min_max_values = [[min($bancal_co_aqi_values),max($bancal_co_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_no2_aqi_values)],[min($bancal_no2_aqi_values), max($bancal_o3_aqi_values)],[min($bancal_o3_aqi_values), max($bancal_o3_1_aqi_values)],[min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)], [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]];
+  $bancal_min_max_values = [[min($bancal_co_aqi_values),max($bancal_co_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)],[min($bancal_no2_aqi_values), max($bancal_no2_aqi_values)],[min($bancal_o3_aqi_values), max($bancal_o3_aqi_values)],[min($bancal_o3_1_aqi_values), max($bancal_o3_1_aqi_values)],[min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)], [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]];
 
   /*
   $bancal_co_aqi_values = array();

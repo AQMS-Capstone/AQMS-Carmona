@@ -20,15 +20,15 @@ if(bancal_prevalent_value >= 0 && bancal_prevalent_value <= 50){
 }else if(bancal_prevalent_value >= 101 && bancal_prevalent_value <= 150)
 {
   bancalAirQuality = unhealthyAir;
-  bancalAQIStatus = "Unhealthy for sensitive groups";
+  bancalAQIStatus = "Unhealthy for Sensitive Groups";
 }else if(bancal_prevalent_value >= 151 && bancal_prevalent_value <= 200)
 {
   bancalAirQuality = veryUnhealthyAir;
-  bancalAQIStatus = "Very unhealthy";
+  bancalAQIStatus = "Very Unhealthy";
 }else if(bancal_prevalent_value >= 201 && bancal_prevalent_value <= 300)
 {
   bancalAirQuality = acutelyUnhealthyAir;
-  bancalAQIStatus = "Acutely unhealthy";
+  bancalAQIStatus = "Acutely Unhealthy";
 }else if(bancal_prevalent_value >= 301 && bancal_prevalent_value <= 400)
 {
   bancalAirQuality = emergencyAir;
