@@ -19,12 +19,7 @@ if(isset($_POST['btnSubmit'])){
     {
       //$date_now = date("Y-m-d");
       $time_now = date("Y-m-d H:i:s", strtotime($row['timestamp'])+3600);
-      //$date_now = date("H:i:s", strtotime($row['timestamp']));
-      //$date_now = $date_now.' '.$row['timestamp'];
-      echo $time_now;
     }
-
-
     $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$E_ID', '$CValue', '$time_now')";
 
     if (!mysqli_query($con,$query))
