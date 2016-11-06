@@ -18,8 +18,18 @@ if(isset($_POST['btnSubmit'])){
     while($row = mysqli_fetch_array($result))
     {
       //$date_now = date("Y-m-d");
-      $time_now = date("Y-m-d H:i:s", strtotime($row['timestamp'])+3600);
+        if(!empty($result)){
+            $time_now = date("Y-m-d H:i:s", strtotime($row['timestamp'])+3600);
+        }
+        else{
+          //echo "missing";
+          break;
+        }
+
+
     }
+
+    /*
     $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$E_ID', '$CValue', '$time_now')";
 
     if (!mysqli_query($con,$query))
@@ -31,8 +41,9 @@ if(isset($_POST['btnSubmit'])){
     {
       $statusMessage = "New record added successfully.";
     }
+    */
     mysqli_close($con);
-
+    echo $time_now;
   }
 
 }

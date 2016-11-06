@@ -5,6 +5,7 @@ require_once 'public/include/db_connect.php';
 
 
 $areaIndex = 0;
+
 $area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal Junction, Carmona, Cavite', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
 //$area = $_GET[$areaArray];
 if(isset($_POST['btnGenerate'])){
@@ -65,14 +66,15 @@ function BasicTable($header, $data)
 // Page header
 function Header()
 {
-  $g_time = "MM/DD/YYYY 00:00:00";
+    date_default_timezone_set("Asia/Manila");
+    $g_time = date("l, m-d-Y G:i");
     // Logo
     $this->Image('res/header.png',10,6,190);
     $this->Image('res/Logo1.png',10,6,32);
     // Arial bold 15
     // Move to the right
 
-    $this->Cell(120);
+    $this->Cell(118);
     // Title
     $this->SetFont('Arial', 'B', 10);
     $this->SetTextColor(255,255,255);
