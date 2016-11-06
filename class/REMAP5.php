@@ -170,11 +170,11 @@
 
     if($data_hour_value <= $hour_value)
     {
-      if(count($bancal_so2_values) == 24 && $data_date_tomorrow == $data_tomorrow)
+      if(count($bancal_co_values) == 24 && $data_date_tomorrow == $data_tomorrow)
       {
-        //echo "VALUES ARE: ".$bancal_so2_values[$i]->concentration_value."<br/>";
-        //$sulfur_dioxide_ave += $bancal_so2_values[$i]->concentration_value;
-        //$sulfur_dioxide_ctr++;
+        //echo "VALUES ARE: ".$bancal_co_values[$i]->concentration_value."<br/>";
+        //$carbon_monoxide_ave += $bancal_co_values[$i]->concentration_value;
+        //$carbon_monoxide_ctr++;
       }
 
       else
@@ -188,29 +188,14 @@
 
   for($i = 0; $i < count($bancal_no2_values); $i++) // 1 hr - ppm
   {
-    $hour_value = $vonn_controller;
-    $data_date_tomorrow = substr($bancal_no2_values[$i]->timestamp, 0, -9);
-    $data_hour_value = substr($bancal_no2_values[$i]->timestamp, 11, -6);
 
-    if($data_hour_value <= $hour_value)
-    {
-      if(count($bancal_no2_values) == 24 && $data_date_tomorrow == $data_tomorrow)
-      {
-        //echo "NO VALUES ARE: ".$bancal_no2_values[$i]->concentration_value."<br/>";
-        //$nitrogen_dioxide_ave = $bancal_no2_values[$i]->concentration_value;
-      }
-
-      else
-      {
-        //echo "NO VALUES ARE: ".$bancal_no2_values[$i]->concentration_value."<br/>";
-        $nitrogen_dioxide_ave = $bancal_no2_values[$i]->concentration_value;
-      }
-    }
+      echo "NO VALUES ARE: ".$bancal_no2_values[$i]->concentration_value."<br/>";
+      $nitrogen_dioxide_ave = $bancal_no2_values[$i]->concentration_value;
   }
 
   for($i = 0; $i < count($bancal_o3_values); $i++) // 8 hr - ppm
   {
-    $hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_o3_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_o3_values[$i]->timestamp, 11, -6);
 
@@ -218,8 +203,8 @@
     {
       if(count($bancal_o3_values) == 24 && $data_date_tomorrow == $data_tomorrow)
       {
-        //$ozone_8_ave += $bancal_o3_values[$i]->concentration_value;
-        //$ozone_8_ctr++;
+        $ozone_8_ave += $bancal_o3_values[$i]->concentration_value;
+        $ozone_8_ctr++;
       }
 
       else
@@ -232,7 +217,6 @@
             $ozone_8_ctr = 0;
           }
 
-          //echo "O3 - 8 VALUES ARE: ".$bancal_o3_values[$i]->timestamp."<br/>";
           $ozone_8_ave += $bancal_o3_values[$i]->concentration_value;
           $ozone_8_ctr++;
         }
@@ -242,71 +226,32 @@
 
   for($i = 0; $i < count($bancal_o3_values); $i++) // 1 hr - ppm
   {
-    //$hour_value = date("H");
-    $hour_value = $vonn_controller;
-    $data_date_tomorrow = substr($bancal_o3_values[$i]->timestamp, 0, -9);
-    $data_hour_value = substr($bancal_o3_values[$i]->timestamp, 11, -6);
-
-    if($data_hour_value <= $hour_value)
-    {
-      if(count($bancal_o3_values) == 24 && $data_date_tomorrow == $data_tomorrow)
-      {
-        //$ozone_1_ave = $bancal_o3_values[$i]->concentration_value;
-      }
-
-      else
-      {
-        //echo "O3 - 1 VALUES ARE: ".$bancal_o3_values[$i]->concentration_value."<br/>";
-        $ozone_1_ave = $bancal_o3_values[$i]->concentration_value;
-      }
-    }
+      $ozone_1_ave = $bancal_o3_values[$i]->concentration_value;
   }
 
   for($i = 0; $i < count($bancal_pm10_values); $i++) // 24hr - ppm
   {
-    $hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_pm10_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_pm10_values[$i]->timestamp, 11, -6);
 
     if($data_hour_value <= $hour_value)
     {
-      if(count($bancal_pm10_values) == 24 && $data_date_tomorrow == $data_tomorrow)
-      {
-        //echo "pm VALUES ARE: ".$bancal_pm10_values[$i]->concentration_value."<br/>";
-        //$pm_10_ave += $bancal_pm10_values[$i]->concentration_value;
-        //$pm_10_ctr++;
-      }
-
-      else
-      {
-        //echo "PM 10 VALUES ARE: ".$bancal_pm10_values[$i]->concentration_value."<br/>";
-        $pm_10_ave += $bancal_pm10_values[$i]->concentration_value;
-        $pm_10_ctr++;
-      }
+      $pm_10_ave += $bancal_pm10_values[$i]->concentration_value;
+      $pm_10_ctr++;
     }
   }
 
   for($i = 0; $i < count($bancal_tsp_values); $i++) // 24hr - ppm
   {
-    $hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_tsp_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_tsp_values[$i]->timestamp, 11, -6);
 
     if($data_hour_value <= $hour_value)
     {
-      if(count($bancal_tsp_values) == 24 && $data_date_tomorrow == $data_tomorrow)
-      {
-        //echo "tsp VALUES ARE: ".$bancal_pm10_values[$i]->concentration_value."<br/>";
-        //$tsp_ave += $bancal_pm10_values[$i]->concentration_value;
-        //$tsp_ctr++;
-      }
-
-      else
-      {
-        echo "TSP VALUES ARE: ".$bancal_tsp_values[$i]->concentration_value."<br/>";
-        $tsp_ave += $bancal_tsp_values[$i]->concentration_value;
-        $tsp_ctr++;
-      }
+      $tsp_ave += $bancal_tsp_values[$i]->concentration_value;
+      $tsp_ctr++;
     }
   }
 
