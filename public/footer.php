@@ -20,7 +20,7 @@
                     <li><a class="orange-text" href="daily.php">Daily Reports</a></li>
                     <li><a class="orange-text" href="history.php">HIstory Reports</a></li>
                     <li><a class="orange-text" href="aqi-calculator.php">AQI Calculator</a></li>
-                    <li><a class="orange-text" href="about.php">About Us</a></li>
+                    <li><a class="orange-text" href="about.php">About</a></li>
                 </ul>
             </div>
         </div>

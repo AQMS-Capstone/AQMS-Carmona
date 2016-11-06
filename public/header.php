@@ -26,7 +26,7 @@
                     <li><a href="daily.php" id=""><span class="material-icons">access_time</span> Daily</a></li>
                     <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>
                     <li><a href="aqi-calculator.php"id=""><span class="material-icons">timeline</span> AQI Calculator</a></li>
-                    <li><a href="about.php"id="about-tab"><span class="material-icons">email</span> About Us</a></li>
+                    <li><a href="about.php"id="about-tab"><span class="material-icons">email</span> About</a></li>
                 </ul>
             </div>
         </nav>

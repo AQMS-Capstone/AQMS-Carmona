@@ -38,7 +38,18 @@
 
 <div id="content-holder">
 
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 
 
 <?php  include('public/footer.php'); ?>
