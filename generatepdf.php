@@ -1,10 +1,17 @@
 <?php
 
-require '/lib/fpdf.php';
+require_once '/lib/fpdf.php';
 
 
+$areaIndex = 0;
+$area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal Junction, Carmona, Cavite', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
+//$area = $_GET[$areaArray];
+if(isset($_POST['btnGenerate'])){
+  $areaIndex = $_POST['drpArea'];
+}
 
-$a_name = "SLEX Carmona Exit, Carmona, Cavite";
+
+$a_name = $area[$areaIndex];
 $h_synthesis = "People, should limit outdoor exertion.  People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible.  Unnecessary trips should be postponed. Motor vehicle use may be restricted.  Industrial activities may be curtailed.";
 $aqi_index = 30;
 $prevalent_air_pollutant_symbol = "CO";
@@ -57,18 +64,18 @@ function BasicTable($header, $data)
 // Page header
 function Header()
 {
-  $a_id = 0;
+  $g_time = "MM/DD/YYYY 00:00:00";
     // Logo
     $this->Image('res/header.png',10,6,190);
     $this->Image('res/Logo1.png',10,6,32);
     // Arial bold 15
     // Move to the right
 
-    $this->Cell(165);
+    $this->Cell(120);
     // Title
     $this->SetFont('Arial', 'B', 10);
     $this->SetTextColor(255,255,255);
-    $this->Cell(30,15,'Area ID:'.' '.$a_id,0,0);
+    $this->Cell(30,15,'Generated on:'.' '.$g_time,0,0);
     // Line break
     $this->Ln(20);
 }
@@ -94,15 +101,16 @@ if($aqi_index<=25){
 }
 else if($aqi_index>=26 || $aqi_index<=51){
   $aqi_status = "Fair";
-  $red = 10;
-  $blue = 25;
-  $green = 80;
+  $red = 200;
+  $blue = 20;
+  $green = 180;
 }
 
 // Instanciation of inherited class
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
+$pdf->SetTitle("AQMS Monitoring - Generated Report");
 
 $pdf->SetFont('Times','B',16);
 $pdf->Cell(0,5, $a_name);
@@ -137,7 +145,6 @@ $pdf->Ln(20);
 
 //Table
 $pdf->SetTextColor(0,0,0);
-$header = array('Element', 'Element Symbol', 'Concentration Value', 'Timestamp');
 $data = $pdf->LoadData('countries.txt');
 $pdf->SetFont('Arial','',14);
 $pdf->BasicTable($header,$data);

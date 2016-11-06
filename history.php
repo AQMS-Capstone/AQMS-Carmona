@@ -10,6 +10,17 @@
 //$slexPrevalentPollutant = 3;
 //$bancalAQIValue = 40;
 //$slexAQIValue = 10;
+
+if(isset($_POST['btnGenerate'])){
+  $area = $_POST["drpArea"];
+
+  /*session_start();
+  if(!empty($areaArray)){
+    $_SESSION['area'] = $areaArray;
+      redirect_to("../generatepdf.php");
+    }*/
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +55,9 @@
         <div class="container">
             <div class="row">
                 <div class="col s6">
-                    <form>
+                    <form method = "post" action="generatepdf.php">
                         <div class="input-field col s12">
-                            <select>
+                            <select name = "drpArea">
                                 <option value="" disabled selected>Select an area</option>
                                 <option value="1">SLEX, Carmona Exit</option>
                                 <option value="2">Bancal</option>
@@ -54,8 +65,8 @@
                             </select>
                             <label>Area</label>
                         </div>
-                        <div class="input-field col s12">
-                            <select>
+                        <div  class="input-field col s12">
+                            <select name = "drpPollutant">
                                 <option value="" disabled selected>Select a pollutant</option>
                                 <option value="1">CO</option>
                                 <option value="2">Bancal</option>
@@ -78,7 +89,7 @@
                         </div>
 
                         <div class="input-field col s12">
-                            <button class="btn waves-effect waves-light" type="submit">Generate
+                            <button class="btn waves-effect waves-light" type="submit" name="btnGenerate">Generate
                                 <i class="material-icons right">library_books</i>
                             </button>
                         </div>

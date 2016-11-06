@@ -1,4 +1,5 @@
-Laurenth;Kristhel;Macapagal;Roxas
-Kristjan;Renascence;Voluntate;Mariano
-Vonn;Christian;Que;Mesina
-Lyle;Vince;Dela;Cuesta
+Carbon Monoxide;CO;####;yyyy/mm/dd 00:00:00
+Nitrogen Dioxide;NO2;####;yyyy/mm/dd 00:00:00
+Sulfur Dioxode;SO2;####;yyyy/mm/dd 00:00:00
+Ozone;O3;####;yyyy/mm/dd 00:00:00
+Particulate Matter 10;PM10;####;yyyy/mm/dd 00:00:00
