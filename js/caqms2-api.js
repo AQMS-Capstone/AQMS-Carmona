@@ -5,50 +5,16 @@ var slex=new google.maps.LatLng(14.322350,121.062300);
 
 var zoomSize = 13;
 
-var bancalAQIStatus = "";
-var bancalAirQuality = "";
-var bancalAQI = bancal_prevalent_value;
-var bancalprevalentPollutant = pollutant_labels[bancal_prevalentIndex];
 
-if(bancal_prevalent_value >= 0 && bancal_prevalent_value <= 50){
-  bancalAirQuality = goodAir;
-  bancalAQIStatus = "Good";
-}else if(bancal_prevalent_value >= 51 && bancal_prevalent_value <= 100)
-{
-  bancalAirQuality = fairAir;
-  bancalAQIStatus = "Fair";
-}else if(bancal_prevalent_value >= 101 && bancal_prevalent_value <= 150)
-{
-  bancalAirQuality = unhealthyAir;
-  bancalAQIStatus = "Unhealthy for sensitive groups";
-}else if(bancal_prevalent_value >= 151 && bancal_prevalent_value <= 200)
-{
-  bancalAirQuality = veryUnhealthyAir;
-  bancalAQIStatus = "Very unhealthy";
-}else if(bancal_prevalent_value >= 201 && bancal_prevalent_value <= 300)
-{
-  bancalAirQuality = acutelyUnhealthyAir;
-  bancalAQIStatus = "Acutely unhealthy";
-}else if(bancal_prevalent_value >= 301 && bancal_prevalent_value <= 400)
-{
-  bancalAirQuality = emergencyAir;
-  bancalAQIStatus = "Emergency";
-}
+var bancalAQIStatus = prevalentValues_bancal_array[0].p_aqi_status;
+var bancalAirQuality = prevalentValues_bancal_array[0].p_airqualiy;
+var bancalAQI = parseInt(prevalentValues_bancal_array[0].concentration_value);
+var bancalprevalentPollutant = prevalentValues_bancal_array[0].e_name;
 
-var slexAQIStatus = goodAir;
-var slexAirQuality = "Good";
-var slexAQI = 21;
-var slexprevalentPollutant = "CO";
-
-//var bancalAQIStatus = prevalentValues_bancal_array[0].p_aqi_status;
-//var bancalAirQuality = prevalentValues_bancal_array[0].p_airqualiy;
-//var bancalAQI = parseInt(prevalentValues_bancal_array[0].concentration_value);
-//var bancalprevalentPollutant = prevalentValues_bancal_array[0].e_name;
-
-//var slexAQIStatus = prevalentValues_slex_array[0].p_aqi_status;
-//var slexAirQuality = prevalentValues_slex_array[0].p_airqualiy;
-//var slexAQI = parseInt(prevalentValues_slex_array[0].concentration_value);
-//var slexprevalentPollutant = prevalentValues_slex_array[0].e_name;
+var slexAQIStatus = prevalentValues_slex_array[0].p_aqi_status;
+var slexAirQuality = prevalentValues_slex_array[0].p_airqualiy;
+var slexAQI = parseInt(prevalentValues_slex_array[0].concentration_value);
+var slexprevalentPollutant = prevalentValues_slex_array[0].e_name;
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -146,10 +112,6 @@ function initialize()
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
 
-        document.getElementById("e_symbol_1").innerHTML =  "HI";
-        document.getElementById("concentration_value_1").innerHTML =  "2";
-
-        /*
         for(var i = 0; i < bancalValues_array.length; i++)
         {
             var elementName = "e_symbol_" + (i+1);
@@ -158,7 +120,6 @@ function initialize()
             document.getElementById(elementName).innerHTML =  bancalValues_array[i].e_symbol;
             document.getElementById(conentrationName).innerHTML =  bancalValues_array[i].concentration_value;
         }
-        */
 
         /*
          document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
@@ -192,10 +153,6 @@ function initialize()
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
 
-        document.getElementById("e_symbol_1").innerHTML =  "HI";
-        document.getElementById("concentration_value_1").innerHTML =  "2";
-
-        /*
         for(var i = 0; i < slexValues_array.length; i++)
         {
             var elementName = "e_symbol_" + (i+1);
@@ -204,7 +161,6 @@ function initialize()
             document.getElementById(elementName).innerHTML =  slexValues_array[i].e_symbol;
             document.getElementById(conentrationName).innerHTML =  slexValues_array[i].concentration_value;
         }
-        */
 
         /*
          document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;

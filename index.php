@@ -5,7 +5,7 @@
  * Date: 8/13/2016
  * Time: 7:00 PM
  */
-//include("class/Map.php");
+include("class/Map.php");
 //$bancalPrevalentPollutant = 0;
 //$slexPrevalentPollutant = 3;
 //$bancalAQIValue = 40;

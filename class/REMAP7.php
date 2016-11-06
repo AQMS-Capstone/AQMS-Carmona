@@ -1,6 +1,6 @@
 <?php
 
-  require_once 'public/include/db_connect.php';
+  require_once '../public/include/db_connect.php';
 
   class Map{
 
@@ -300,7 +300,7 @@
 
       else
       {
-        //echo "TSP VALUES ARE: ".$bancal_tsp_values[$i]->concentration_value."<br/>";
+        echo "TSP VALUES ARE: ".$bancal_tsp_values[$i]->concentration_value."<br/>";
         $tsp_ave += $bancal_tsp_values[$i]->concentration_value;
         $tsp_ctr++;
       }
@@ -346,7 +346,7 @@
   //echo "AVERAGE IS: ".$carbon_monoxide_ave."<br/>";
 
   $carbon_monoxide_aqi = 0;
-  $sulfur_dioxide_aqi = 0;
+  $sulfur_dioxide_aqi = 0.000;
   $nitrogen_dioxide_aqi = 0;
   $ozone_8_aqi = 0;
   $ozone_1_aqi = 0;
@@ -364,67 +364,164 @@
 
   $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
 
-  //echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
+  echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
   $carbon_monoxide_aqi = round(calculateAQI($co_guideline_values, $carbon_monoxide_ave, 1, $aqi_values));
-  //echo "CO AQI: ".$carbon_monoxide_aqi."<br/>";
+  echo "CO AQI: ".$carbon_monoxide_aqi."<br/>";
 
-  //echo "<br/>";
+  echo "<br/>";
 
-  //echo "SO2 AVE IS: ".floorDec($sulfur_dioxide_ave, $precision = 3)."<br/>";
+  echo "SO2 AVE IS: ".floorDec($sulfur_dioxide_ave, $precision = 3)."<br/>";
   $sulfur_dioxide_aqi = round(calculateAQI($sufur_guideline_values, $sulfur_dioxide_ave, 3, $aqi_values));
-  //echo "SO2 AQI: ".$sulfur_dioxide_aqi."<br/>";
+  echo "SO2 AQI: ".$sulfur_dioxide_aqi."<br/>";
 
-  //echo "<br/>";
+  echo "<br/>";
 
-  //echo "NO2 AVE IS: ".floorDec($nitrogen_dioxide_ave, $precision = 2)."<br/>";
+  echo "NO2 AVE IS: ".floorDec($nitrogen_dioxide_ave, $precision = 2)."<br/>";
   $nitrogen_dioxide_aqi = round(calculateAQI($no2_guideline_values, $nitrogen_dioxide_ave, 2, $aqi_values));
-  //echo "NO2 AQI: ".$nitrogen_dioxide_aqi."<br/>";
+  echo "NO2 AQI: ".$nitrogen_dioxide_aqi."<br/>";
 
-  //echo "<br/>";
+  echo "<br/>";
 
-  //echo "O3 - 8 AVE IS: ".floorDec($ozone_8_ave, $precision = 3)."<br/>";
+  echo "O3 - 8 AVE IS: ".floorDec($ozone_8_ave, $precision = 3)."<br/>";
   $ozone_8_aqi = round(calculateAQI($ozone_guideline_values_8, $ozone_8_ave, 3, $aqi_values));
-  //echo "O3-8 AQI: ".$ozone_8_aqi."<br/>";
+  echo "O3-8 AQI: ".$ozone_8_aqi."<br/>";
 
-  //echo "<br/>";
+  echo "<br/>";
 
-  //echo "03 1 AVE IS: ".floorDec($ozone_1_ave, $precision = 3)."<br/>";
+  echo "03 1 AVE IS: ".floorDec($ozone_1_ave, $precision = 3)."<br/>";
   $ozone_1_aqi = round(calculateAQI($ozone_guideline_values_1, $ozone_1_ave, 3, $aqi_values));
-  //echo "O3-1 AQI: ".$ozone_1_aqi."<br/>";
+  echo "O3-1 AQI: ".$ozone_1_aqi."<br/>";
 
-  //echo "<br/>";
+  echo "<br/>";
 
-  //echo "PM 10 AVE IS: ".floorDec($pm_10_ave, $precision = 0)."<br/>";
+  echo "PM 10 AVE IS: ".floorDec($pm_10_ave, $precision = 0)."<br/>";
   $pm_10_aqi = round(calculateAQI($pm_10_guideline_values, $pm_10_ave, 2, $aqi_values));
-  //echo "PM 10 AQI: ".$pm_10_aqi."<br/>";
+  echo "PM 10 AQI: ".$pm_10_aqi."<br/>";
 
-  //echo "<br/>";
+  echo "<br/>";
 
-  //echo "TSP AVE IS: ".floorDec($tsp_ave, $precision = 0)."<br/>";
+  echo "TSP AVE IS: ".floorDec($tsp_ave, $precision = 0)."<br/>";
   $tsp_aqi = round(calculateAQI($tsp_guideline_values, $tsp_ave, 2, $aqi_values));
-  //echo "TSP AQI: ".$tsp_aqi."<br/>";
+  echo "TSP AQI: ".$tsp_aqi."<br/>";
 
-  $bancal_aqi_values = array();
 
-  array_push($bancal_aqi_values, $carbon_monoxide_aqi);
-  array_push($bancal_aqi_values, $sulfur_dioxide_aqi);
-  array_push($bancal_aqi_values, $nitrogen_dioxide_aqi);
 
-  if($ozone_8_aqi >= $ozone_1_aqi)
+
+
+
+  //echo "Pb AQI: ".$lead_aqi."<br/>";
+
+
+
+
+
+  /*
+  echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
+
+  for($x = 0; $x < count($co_guideline_values); $x++)
   {
-    array_push($bancal_aqi_values, $ozone_8_aqi);
+    $roundedValue = floorDec($carbon_monoxide_ave, $precision = 1);
+
+    if($roundedValue >= $co_guideline_values[$x][0] && $roundedValue <= $co_guideline_values[$x][1])
+    {
+      $carbon_monoxide_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($co_guideline_values[$x][1] - $co_guideline_values[$x][0])) * ($roundedValue - $co_guideline_values[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
   }
 
-  else
+  echo "SO2 AVE IS: ".floorDec($sulfur_dioxide_ave, $precision = 3)."<br/>";
+
+  for($x = 0; $x < count($sufur_guideline_values); $x++)
   {
-    array_push($bancal_aqi_values, $ozone_1_aqi);
+    $roundedValue = floorDec($sulfur_dioxide_ave, $precision = 3);
+
+    if($roundedValue >= $sufur_guideline_values[$x][0] && $roundedValue <= $sufur_guideline_values[$x][1])
+    {
+      $sulfur_dioxide_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($sufur_guideline_values[$x][1] - $sufur_guideline_values[$x][0])) * ($roundedValue - $sufur_guideline_values[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
   }
 
-  array_push($bancal_aqi_values, $pm_10_aqi);
-  array_push($bancal_aqi_values, $tsp_aqi);
+  echo "NO2 AVE IS: ".floorDec($nitrogen_dioxide_ave, $precision = 2)."<br/>";
 
-  $bancal_prevalentIndex = array_keys($bancal_aqi_values, max($bancal_aqi_values));
-  //echo $max[0];
+  for($x = 0; $x < count($no2_guideline_values); $x++)
+  {
+    $roundedValue = floorDec($nitrogen_dioxide_ave, $precision = 2);
+
+    if($roundedValue >= $no2_guideline_values[$x][0] && $roundedValue <= $no2_guideline_values[$x][1] && $no2_guideline_values[$x][0] != -1 && $no2_guideline_values[$x][1] != -1)
+    {
+      $nitrogen_dioxide_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($no2_guideline_values[$x][1] - $no2_guideline_values[$x][0])) * ($roundedValue - $no2_guideline_values[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
+  }
+
+  echo "O3 8 AVE IS: ".floorDec($ozone_8_ave, $precision = 3)."<br/>";
+
+  for($x = 0; $x < count($ozone_guideline_values_8); $x++)
+  {
+    $roundedValue = floorDec($ozone_8_ave, $precision = 3);
+
+    if($roundedValue >= $ozone_guideline_values_8[$x][0] && $roundedValue <= $ozone_guideline_values_8[$x][1])
+    {
+      $ozone_8_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($ozone_guideline_values_8[$x][1] - $ozone_guideline_values_8[$x][0])) * ($roundedValue - $ozone_guideline_values_8[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
+  }
+
+  echo "O3 1 AVE IS: ".floorDec($ozone_1_ave, $precision = 3)."<br/>";
+
+  for($x = 0; $x < count($ozone_guideline_values_1); $x++)
+  {
+    $roundedValue = floorDec($ozone_1_ave, $precision = 3);
+
+    if($roundedValue >= $ozone_guideline_values_1[$x][0] && $roundedValue <= $ozone_guideline_values_1[$x][1])
+    {
+      $ozone_1_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($ozone_guideline_values_1[$x][1] - $ozone_guideline_values_1[$x][0])) * ($roundedValue - $ozone_guideline_values_1[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
+  }
+
+  echo "PM 10 AVE IS: ".floorDec($pm_10_ave, $precision = 0)."<br/>";
+
+  for($x = 0; $x < count($pm_10_guideline_values); $x++)
+  {
+    $roundedValue = floorDec($pm_10_ave, $precision = 0);
+
+    if($roundedValue >= $pm_10_guideline_values[$x][0] && $roundedValue <= $pm_10_guideline_values[$x][1])
+    {
+      $pm_10_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($pm_10_guideline_values[$x][1] - $pm_10_guideline_values[$x][0])) * ($roundedValue - $pm_10_guideline_values[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
+  }
+
+  echo "TSP AVE IS: ".floorDec($tsp_ave, $precision = 0)."<br/>";
+
+  for($x = 0; $x < count($tsp_guideline_values); $x++)
+  {
+    $roundedValue = floorDec($tsp_ave, $precision = 0);
+
+    if($roundedValue >= $tsp_guideline_values[$x][0] && $roundedValue <= $tsp_guideline_values[$x][1])
+    {
+      $tsp_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($tsp_guideline_values[$x][1] - $tsp_guideline_values[$x][0])) * ($roundedValue - $tsp_guideline_values[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
+  }
+  */
+
+
+
+  /*
+  for($x = 0; $x < count($co_guideline_values); $x++)
+  {
+    $roundedValue = floorDec($carbon_monoxide_ave, $precision = 1);
+
+    if($roundedValue >= $co_guideline_values[$x][0] && $roundedValue <= $co_guideline_values[$x][1])
+    {
+      $carbon_monoxide_aqi = round((($aqi_values[$x][1] - $aqi_values[$x][0])/($co_guideline_values[$x][1] - $co_guideline_values[$x][0])) * ($roundedValue - $co_guideline_values[$x][0]) + $aqi_values[$x][0]);
+      break;
+    }
+  }
+  */
 
   function calculateAQI($gv, $ave, $prec, $aqi_val)
   {
@@ -454,22 +551,3 @@
     return floatval(substr($val, 0, $numPointPosition + $precision + 1));
 }
 ?>
-
-<script type="text/javascript">
-
-  var pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone", "Particulate Matter 10", "Totally Suspended Particles"];
-  var goodAir = "#2196F3";
-  var fairAir = "#FFEB3B";
-  var unhealthyAir = "#FF9800";
-  var veryUnhealthyAir = "#f44336";
-  var acutelyUnhealthyAir = "#9C27B0";
-  var emergencyAir = "#b71c1c";
-
-  var bancal_aqi_values = <?= json_encode($bancal_aqi_values) ?>;
-  var bancal_prevalentIndex = <?= $bancal_prevalentIndex[0] ?>;
-
-  var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
-
-  //alert(JSON.stringify(bancal_aqi_values));
-  //alert(JSON.stringify(bancal_prevalentIndex));
-</script>
