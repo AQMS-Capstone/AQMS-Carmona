@@ -20,6 +20,8 @@
   $date_tomorrow = date("Y-m-d", strtotime('tomorrow'));
   $date_tomorrow = $date_tomorrow." 00:00:00";
 
+  $date_gathered = date("Y-m-d H")." 00:00";
+
   //$date_now = "2016-11-05";
 
   $bancalAllDayValues_array = array();
@@ -123,12 +125,24 @@
   //$hour_value = 24;
   $data_tomorrow = date("Y-m-d", strtotime('tomorrow'));
 
-  $vonn_controller = 23;
+  $vonn_controller = 17;
+
+  $bancal_co_aqi_values = array();
+
+  $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
+  $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
+  $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
+  $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
+  $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
+  $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
+  $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
+
+  $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
 
   for($i = 0; $i < count($bancal_co_values); $i++) // 8hr - ppm
   {
-    $hour_value = $vonn_controller;
-    //$hour_value = date("H");
+    //$hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_co_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_co_values[$i]->timestamp, 11, -6);
 
@@ -154,6 +168,10 @@
 
           $carbon_monoxide_ave += $bancal_co_values[$i]->concentration_value;
           $carbon_monoxide_ctr++;
+
+          $co_ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
+          $aqi_value = round(calculateAQI($co_guideline_values, $co_ave, 1, $aqi_values));
+          array_push($bancal_co_aqi_values, $aqi_value);
         }
       }
     }
@@ -161,7 +179,8 @@
 
   for($i = 0; $i < count($bancal_so2_values); $i++) // 24hr - ppm
   {
-    $hour_value = $vonn_controller;
+    //$hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_so2_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_so2_values[$i]->timestamp, 11, -6);
 
@@ -185,7 +204,8 @@
 
   for($i = 0; $i < count($bancal_no2_values); $i++) // 1 hr - ppm
   {
-    $hour_value = $vonn_controller;
+    //$hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_no2_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_no2_values[$i]->timestamp, 11, -6);
 
@@ -207,7 +227,8 @@
 
   for($i = 0; $i < count($bancal_o3_values); $i++) // 8 hr - ppm
   {
-    $hour_value = $vonn_controller;
+    //$hour_value = $vonn_controller;
+    $hour_value = date("H");
     $data_date_tomorrow = substr($bancal_o3_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_o3_values[$i]->timestamp, 11, -6);
 
@@ -239,8 +260,8 @@
 
   for($i = 0; $i < count($bancal_o3_values); $i++) // 1 hr - ppm
   {
-    //$hour_value = date("H");
-    $hour_value = $vonn_controller;
+    $hour_value = date("H");
+    //$hour_value = $vonn_controller;
     $data_date_tomorrow = substr($bancal_o3_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_o3_values[$i]->timestamp, 11, -6);
 
@@ -261,7 +282,8 @@
 
   for($i = 0; $i < count($bancal_pm10_values); $i++) // 24hr - ppm
   {
-    $hour_value = $vonn_controller;
+    $hour_value = date("H");
+    //$hour_value = $vonn_controller;
     $data_date_tomorrow = substr($bancal_pm10_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_pm10_values[$i]->timestamp, 11, -6);
 
@@ -285,7 +307,8 @@
 
   for($i = 0; $i < count($bancal_tsp_values); $i++) // 24hr - ppm
   {
-    $hour_value = $vonn_controller;
+    $hour_value = date("H");
+    //$hour_value = $vonn_controller;
     $data_date_tomorrow = substr($bancal_tsp_values[$i]->timestamp, 0, -9);
     $data_hour_value = substr($bancal_tsp_values[$i]->timestamp, 11, -6);
 
@@ -354,15 +377,7 @@
   $pm_10_aqi = 0;
   $tsp_aqi = 0;
 
-  $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
-  $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
-  $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
-  $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
-  $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
 
-  $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
 
   //echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
   $carbon_monoxide_aqi = round(calculateAQI($co_guideline_values, $carbon_monoxide_ave, 1, $aqi_values));
@@ -426,6 +441,25 @@
   $bancal_prevalentIndex = array_keys($bancal_aqi_values, max($bancal_aqi_values));
   //echo $max[0];
 
+  /*
+  $bancal_co_values = array();
+  $bancal_so2_values = array();
+  $bancal_no2_values = array();
+  $bancal_o3_values = array();
+  $bancal_pb_values = array();
+  $bancal_pm10_values = array();
+  $bancal_tsp_values = array();
+  */
+
+  /*
+  $bancal_co_aqi_values = array();
+
+  for($x = 0 ; $x < count($bancal_co_values); i++)
+  {
+
+  }
+  */
+
   function calculateAQI($gv, $ave, $prec, $aqi_val)
   {
     $aqi = 0;
@@ -458,6 +492,8 @@
 <script type="text/javascript">
 
   var pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone", "Particulate Matter 10", "Totally Suspended Particles"];
+  var pollutant_symbols = ["CO", "SO2", "NO2", "O3", "PM 10", "TSP"];
+
   var goodAir = "#2196F3";
   var fairAir = "#FFEB3B";
   var unhealthyAir = "#FF9800";
@@ -465,10 +501,14 @@
   var acutelyUnhealthyAir = "#9C27B0";
   var emergencyAir = "#b71c1c";
 
+  var date_gathered = <?= json_encode($date_gathered) ?>;
+
   var bancal_aqi_values = <?= json_encode($bancal_aqi_values) ?>;
   var bancal_prevalentIndex = <?= $bancal_prevalentIndex[0] ?>;
 
   var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
+
+  var bancal_co_aqi_values = <?= json_encode($bancal_co_aqi_values) ?>;
 
   //alert(JSON.stringify(bancal_aqi_values));
   //alert(JSON.stringify(bancal_prevalentIndex));

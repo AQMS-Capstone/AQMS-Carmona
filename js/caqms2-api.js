@@ -106,7 +106,7 @@ function initialize()
 
         $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = bancalAirQuality;
-        document.getElementById("zoneName").innerHTML = 'Bancal, Carmona, Cavite';
+        document.getElementById("zoneName").innerHTML = 'Bancal Carmona, Cavite';
         document.getElementById("prevalentPollutant").innerHTML = bancalprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;

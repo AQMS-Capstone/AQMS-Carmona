@@ -34,7 +34,7 @@ if(isset($_GET["area"]))
                                 <b>Prevalant Air Pollutant: </b> <span id="prevalentPollutant">Prevalant Air Pollutant</span>
                             </div>
                             <div class="col s12">
-                                <span id="timeUpdated">DateToday TimeToday</span>
+                              <b>Time updated: </b>  <span id="timeUpdated">DateToday TimeToday</span>
                             </div>
                         </div>
                     </div>
@@ -57,6 +57,7 @@ if(isset($_GET["area"]))
                             </thead>
                             <tbody>
 
+                              <!--
                               <tr>
                               <td class="elementName" id="e_symbol_1">NaN</td>
                               <td class="elementCurrent" id="concentration_value_1">NaN</td>
@@ -64,9 +65,9 @@ if(isset($_GET["area"]))
                               <td class="elementMin">NaN</td>
                               <td class="elementMax">NaN</td>
                               </tr>
-
+                            -->
                             <?php
-                            /*
+
                             if(isset($_GET["area"]))
                             {
                                 $data = $_GET["area"];
@@ -74,12 +75,12 @@ if(isset($_GET["area"]))
 
                                 if($data == "SLEX")
                                 {
-                                    $untilValue = count($slexValues);
+                                    $untilValue = count($bancal_aqi_values);
                                 }
 
                                 else if($data == "Bancal")
                                 {
-                                    $untilValue = count($bancalValues);
+                                    $untilValue = count($bancal_aqi_values);
                                 }
 
                                 for ($x = 0; $x < $untilValue; $x++) {
@@ -95,7 +96,7 @@ if(isset($_GET["area"]))
                                     echo "</tr>";
                                 }
                             }
-                            */
+
                             ?>
                             </tbody>
                         </table>

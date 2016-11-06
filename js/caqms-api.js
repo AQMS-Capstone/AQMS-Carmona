@@ -140,26 +140,23 @@ function initialize()
 
         $("#zoneStatus").show();
         document.getElementById("AQIStat").style.backgroundColor = bancalAirQuality;
-        document.getElementById("zoneName").innerHTML = 'Bancal, Carmona, Cavite';
+        document.getElementById("zoneName").innerHTML = 'Bancal Carmona, Cavite';
         document.getElementById("prevalentPollutant").innerHTML = bancalprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
-        document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
+        document.getElementById("timeUpdated").innerHTML = date_gathered;
 
-        document.getElementById("e_symbol_1").innerHTML =  "HI";
-        document.getElementById("concentration_value_1").innerHTML =  "2";
+        //document.getElementById("e_symbol_1").innerHTML =  "HII";
+        //document.getElementById("concentration_value_1").innerHTML =  "5";
 
-        /*
-        for(var i = 0; i < bancalValues_array.length; i++)
+        for(var i = 0; i < bancal_aqi_values.length; i++)
         {
             var elementName = "e_symbol_" + (i+1);
             var conentrationName = "concentration_value_" + (i+1);
 
-            document.getElementById(elementName).innerHTML =  bancalValues_array[i].e_symbol;
-            document.getElementById(conentrationName).innerHTML =  bancalValues_array[i].concentration_value;
+            document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+            document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
         }
-        */
-
         /*
          document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
          document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
@@ -190,10 +187,21 @@ function initialize()
         document.getElementById("prevalentPollutant").innerHTML = slexprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
-        document.getElementById("timeUpdated").innerHTML =  days[d.getDay()] + " " +d.getHours() + ":" + d.getMinutes();
+        document.getElementById("timeUpdated").innerHTML =  date_gathered;
 
-        document.getElementById("e_symbol_1").innerHTML =  "HI";
-        document.getElementById("concentration_value_1").innerHTML =  "2";
+        //document.getElementById("e_symbol_1").innerHTML =  "HI";
+        //document.getElementById("concentration_value_1").innerHTML =  "7";
+
+        //alert(bancal_aqi_values[0]);
+
+        for(var i = 0; i < bancal_aqi_values.length; i++)
+        {
+            var elementName = "e_symbol_" + (i+1);
+            var conentrationName = "concentration_value_" + (i+1);
+
+            document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+            document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
+        }
 
         /*
         for(var i = 0; i < slexValues_array.length; i++)

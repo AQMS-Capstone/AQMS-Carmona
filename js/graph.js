@@ -10,6 +10,38 @@ function drawBasic() {
     data.addColumn('timeofday', 'Time of Day');
     data.addColumn('number', 'AQI Level');
 
+    for(var i = 0 ; i < 24 ; i ++)
+    {
+      var value = 0;
+
+      if(i < bancal_co_aqi_values.length)
+      {
+        value = parseInt(JSON.stringify(bancal_co_aqi_values[i]).replace(/"/g, ''));
+      }
+
+      data.addRow([{v: [i, 0, 0], f: ''}, value]);
+    }
+
+    /*
+    for(var i = 0 ; i < bancal_co_values.length ; i ++)
+    {
+      //2016-14-21 05;
+      var datestamp = JSON.stringify(bancal_co_values[i].timestamp).replace(/"/g, '');
+      datestamp = parseInt(datestamp.slice(11, 13));
+      var value = 0;
+
+      if((i + 1) == datestamp)
+      {
+        var value = parseInt(JSON.stringify(bancal_co_values[i].concentration_value).replace(/"/g, ''));
+      }
+
+      alert(value);
+
+      data.addRow([{v: [datestamp, 0, 0], f: ''}, value]);
+    }
+    */
+
+    /*
     data.addRows([
         [{v: [1, 0, 0], f: ''}, 45],
         [{v: [2, 0, 0], f: ''}, 45],
@@ -37,6 +69,7 @@ function drawBasic() {
         [{v: [23, 0, 0], f: ''}, 52],
         [{v: [24, 0, 0], f: ''}, 49],
     ]);
+    */
 
     var options = {
         width: 400,
