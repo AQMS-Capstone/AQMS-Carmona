@@ -24,22 +24,20 @@ function createGraph(data_pollutant, chartNames)
 
   var options = {
       width: 400,
-      height: 50,
-      //height: 23,
+      height: 75,
       hAxis: {
-          format: 'H:mm',
+          format: 'HH',
           viewWindow: {
               min: [1, 00, 0],
               max: [24, 00, 0]
           },
-          gridlines:{ color:'transparent' },
+          gridlines:{ color:'transparent', count:17},
       },
       vAxis:{gridlines:{ color:'transparent' }
       , textPosition: 'none'
       },
       legend: {position: 'none'},
       bar: {groupWidth: '90%'},
-      enableInteractivity: false,
   };
 
   var chart = new google.visualization.ColumnChart(

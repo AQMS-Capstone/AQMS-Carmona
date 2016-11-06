@@ -12,15 +12,17 @@ body{
     height: 50px;
 }
 .scroll{
-    height:50%;
+    height:200px;
     width:100%;
-    transition: overflow 2s;
     overflow:hidden;
 }
+
 .scroll:hover{
-    height:50%;
-    width:100%;
-    overflow:auto;
+    overflow-y: scroll;
+}
+
+form {
+    margin-bottom: 0;
 }
 .scroll::-webkit-scrollbar-track
 {
@@ -157,5 +159,5 @@ nav  ul.black-text a{
     background-color: #009688;
 }
 td, th{
-    padding: 12px 5px;
+    padding: 0px 5px;
 }

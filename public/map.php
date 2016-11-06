@@ -57,15 +57,6 @@ if(isset($_GET["area"]))
                             </thead>
                             <tbody>
 
-                              <!--
-                              <tr>
-                              <td class="elementName" id="e_symbol_1">NaN</td>
-                              <td class="elementCurrent" id="concentration_value_1">NaN</td>
-                              <td><div id="chart1_div"></div></td>
-                              <td class="elementMin">NaN</td>
-                              <td class="elementMax">NaN</td>
-                              </tr>
-                            -->
                             <?php
 
                             if(isset($_GET["area"]))
@@ -109,12 +100,9 @@ if(isset($_GET["area"]))
             </div>
             <div id="plotOption" class="center-align">
                 <div class="divider"></div>
-                <div class="card-action">
                     <form action="daily.php">
                         <button class="waves-effect orange-text btn-flat" type="submit" name="e_id" value="element-to-be-submitted">VIEW MORE</button>
-
                     </form>
-
                 </div>
             </div>
 
