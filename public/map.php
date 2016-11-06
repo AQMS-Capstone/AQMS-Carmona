@@ -21,13 +21,13 @@ if(isset($_GET["area"]))
                     <span class="center-align">
                         <h6 class="margin-5">AQI</h6>
                         <h2 class="margin-5" id="aqiNum">12345</h2>
-                        <h5 class="margin-5" id="aqiText">AQI Status</h5>
                     </span>
                 </div>
                 <div class="center-align">
                     <div class="col s12 m8">
                         <div class="row-no-after">
                             <div class="col s12">
+                                <h5 class="margin-5" style="font-weight: bold;" id="aqiText">AQI Status</h5>
                                 <span class="card-title"><b id="zoneName">Zone Name</b></span>
                             </div>
                             <div id="AQIStat_txt" class="col s12">
