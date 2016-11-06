@@ -145,6 +145,7 @@ $pdf->Ln(20);
 
 //Table
 $pdf->SetTextColor(0,0,0);
+$header = array('Pollutant', 'Symbol', 'Value', 'Timestamp');
 $data = $pdf->LoadData('countries.txt');
 $pdf->SetFont('Arial','',14);
 $pdf->BasicTable($header,$data);
