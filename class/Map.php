@@ -492,7 +492,25 @@
   $bancal_tsp_aqi_values = array();
   */
 
-  $bancal_min_max_values = [[min($bancal_co_aqi_values),max($bancal_co_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)],[min($bancal_no2_aqi_values), max($bancal_no2_aqi_values)],[min($bancal_o3_aqi_values), max($bancal_o3_aqi_values)],[min($bancal_o3_1_aqi_values), max($bancal_o3_1_aqi_values)],[min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)], [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]];
+  //$bancal_min_max_values = [[min($bancal_co_aqi_values),max($bancal_co_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)],[min($bancal_no2_aqi_values), max($bancal_no2_aqi_values)],[min($bancal_o3_aqi_values), max($bancal_o3_aqi_values)],[min($bancal_o3_1_aqi_values), max($bancal_o3_1_aqi_values)],[min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)], [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]];
+
+  $bancal_min_max_values = array();
+
+  if(count($bancal_co_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_co_aqi_values),max($bancal_co_aqi_values)]);
+  }if(count($bancal_so2_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)]);
+  }if(count($bancal_no2_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_no2_aqi_values), max($bancal_no2_aqi_values)]);
+  }if(count($bancal_o3_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_o3_aqi_values), max($bancal_o3_aqi_values)]);
+  }if(count($bancal_o3_1_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_o3_1_aqi_values), max($bancal_o3_1_aqi_values)]);
+  }if(count($bancal_pm10_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)]);
+  }if(count($bancal_tsp_aqi_values) > 0){
+    array_push($bancal_tsp_aqi_values, [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]);
+  }
 
   /*
   $bancal_co_aqi_values = array();
@@ -550,6 +568,9 @@
   var veryUnhealthyAir = "#f44336";
   var acutelyUnhealthyAir = "#9C27B0";
   var emergencyAir = "#b71c1c";
+  var otherAir = "#212121";
+
+  var bancalAllDayValues_array = <?= json_encode($bancalAllDayValues_array) ?>;
 
   var date_gathered = <?= json_encode($date_gathered) ?>;
 

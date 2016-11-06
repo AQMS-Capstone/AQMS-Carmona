@@ -10,29 +10,40 @@ var bancalAirQuality = "";
 var bancalAQI = bancal_prevalent_value;
 var bancalprevalentPollutant = pollutant_labels[bancal_prevalentIndex];
 
-if(bancal_prevalent_value >= 0 && bancal_prevalent_value <= 50){
-  bancalAirQuality = goodAir;
-  bancalAQIStatus = "Good";
-}else if(bancal_prevalent_value >= 51 && bancal_prevalent_value <= 100)
+if(bancalAllDayValues_array.length == 0)
 {
-  bancalAirQuality = fairAir;
-  bancalAQIStatus = "Fair";
-}else if(bancal_prevalent_value >= 101 && bancal_prevalent_value <= 150)
-{
-  bancalAirQuality = unhealthyAir;
-  bancalAQIStatus = "Unhealthy for Sensitive Groups";
-}else if(bancal_prevalent_value >= 151 && bancal_prevalent_value <= 200)
-{
-  bancalAirQuality = veryUnhealthyAir;
-  bancalAQIStatus = "Very Unhealthy";
-}else if(bancal_prevalent_value >= 201 && bancal_prevalent_value <= 300)
-{
-  bancalAirQuality = acutelyUnhealthyAir;
-  bancalAQIStatus = "Acutely Unhealthy";
-}else if(bancal_prevalent_value >= 301 && bancal_prevalent_value <= 400)
-{
-  bancalAirQuality = emergencyAir;
-  bancalAQIStatus = "Emergency";
+  bancalAirQuality = otherAir;
+  bancalAQIStatus = "Not Enough Data";
+}
+
+else {
+  if(bancal_prevalent_value >= 0 && bancal_prevalent_value <= 50){
+    bancalAirQuality = goodAir;
+    bancalAQIStatus = "Good";
+  }else if(bancal_prevalent_value >= 51 && bancal_prevalent_value <= 100)
+  {
+    bancalAirQuality = fairAir;
+    bancalAQIStatus = "Fair";
+  }else if(bancal_prevalent_value >= 101 && bancal_prevalent_value <= 150)
+  {
+    bancalAirQuality = unhealthyAir;
+    bancalAQIStatus = "Unhealthy for Sensitive Groups";
+  }else if(bancal_prevalent_value >= 151 && bancal_prevalent_value <= 200)
+  {
+    bancalAirQuality = veryUnhealthyAir;
+    bancalAQIStatus = "Very Unhealthy";
+  }else if(bancal_prevalent_value >= 201 && bancal_prevalent_value <= 300)
+  {
+    bancalAirQuality = acutelyUnhealthyAir;
+    bancalAQIStatus = "Acutely Unhealthy";
+  }else if(bancal_prevalent_value >= 301 && bancal_prevalent_value <= 400)
+  {
+    bancalAirQuality = emergencyAir;
+    bancalAQIStatus = "Emergency";
+  }else {
+    bancalAirQuality = otherAir;
+    bancalAQIStatus = "Not Enough Data";
+  }
 }
 
 var slexAQIStatus = goodAir;
