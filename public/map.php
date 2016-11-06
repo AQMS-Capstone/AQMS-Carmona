@@ -86,13 +86,16 @@ if(isset($_GET["area"]))
                                 for ($x = 0; $x < $untilValue; $x++) {
                                     $elementName = "e_symbol_".($x+1);
                                     $conentrationName = "concentration_value_".($x+1);
+                                    $chartName = "chart_div_".($x+1);
+                                    $elementNameMin = "aqi_min_".($x+1);
+                                    $elementNameMax = "aqi_max_".($x+1);
 
                                     echo "<tr>";
                                     echo "<td class='elementName' id='$elementName'>NaN</td>";
                                     echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                    echo "<td><div id='chart1_div'></div></td>";
-                                    echo "<td class='elementMin'>NaN</td>";
-                                    echo "<td class='elementMax'>NaN</td>";
+                                    echo "<td><div id='$chartName'></div></td>";
+                                    echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
+                                    echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
                                     echo "</tr>";
                                 }
                             }

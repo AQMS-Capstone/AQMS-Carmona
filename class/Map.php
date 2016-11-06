@@ -128,6 +128,12 @@
   $vonn_controller = 17;
 
   $bancal_co_aqi_values = array();
+  $bancal_so2_aqi_values = array();
+  $bancal_no2_aqi_values = array();
+  $bancal_o3_aqi_values = array();
+  $bancal_o3_1_aqi_values = array();
+  $bancal_pm10_aqi_values = array();
+  $bancal_tsp_aqi_values = array();
 
   $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
   $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
@@ -169,8 +175,8 @@
           $carbon_monoxide_ave += $bancal_co_values[$i]->concentration_value;
           $carbon_monoxide_ctr++;
 
-          $co_ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
-          $aqi_value = round(calculateAQI($co_guideline_values, $co_ave, 1, $aqi_values));
+          $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
+          $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
           array_push($bancal_co_aqi_values, $aqi_value);
         }
       }
@@ -198,6 +204,10 @@
         //echo "SO VALUES ARE: ".$bancal_so2_values[$i]->concentration_value."<br/>";
         $sulfur_dioxide_ave += $bancal_so2_values[$i]->concentration_value;
         $sulfur_dioxide_ctr++;
+
+        $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
+        $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
+        array_push($bancal_so2_aqi_values, $aqi_value);
       }
     }
   }
@@ -221,6 +231,10 @@
       {
         //echo "NO VALUES ARE: ".$bancal_no2_values[$i]->concentration_value."<br/>";
         $nitrogen_dioxide_ave = $bancal_no2_values[$i]->concentration_value;
+
+        $ave = $nitrogen_dioxide_ave;
+        $aqi_value = round(calculateAQI($no2_guideline_values, $ave, 2, $aqi_values));
+        array_push($bancal_no2_aqi_values, $aqi_value);
       }
     }
   }
@@ -253,6 +267,10 @@
           //echo "O3 - 8 VALUES ARE: ".$bancal_o3_values[$i]->timestamp."<br/>";
           $ozone_8_ave += $bancal_o3_values[$i]->concentration_value;
           $ozone_8_ctr++;
+
+          $ave = $ozone_8_ave / $ozone_8_ctr;
+          $aqi_value = round(calculateAQI($ozone_guideline_values_8, $ave, 3, $aqi_values));
+          array_push($bancal_o3_aqi_values, $aqi_value);
         }
       }
     }
@@ -276,6 +294,10 @@
       {
         //echo "O3 - 1 VALUES ARE: ".$bancal_o3_values[$i]->concentration_value."<br/>";
         $ozone_1_ave = $bancal_o3_values[$i]->concentration_value;
+
+        $ave = $ozone_1_ave;
+        $aqi_value = round(calculateAQI($ozone_guideline_values_1, $ave, 3, $aqi_values));
+        array_push($bancal_o3_1_aqi_values, $aqi_value);
       }
     }
   }
@@ -301,6 +323,10 @@
         //echo "PM 10 VALUES ARE: ".$bancal_pm10_values[$i]->concentration_value."<br/>";
         $pm_10_ave += $bancal_pm10_values[$i]->concentration_value;
         $pm_10_ctr++;
+
+        $ave = $pm_10_ave / $pm_10_ctr;
+        $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 0, $aqi_values));
+        array_push($bancal_pm10_aqi_values, $aqi_value);
       }
     }
   }
@@ -326,6 +352,10 @@
         //echo "TSP VALUES ARE: ".$bancal_tsp_values[$i]->concentration_value."<br/>";
         $tsp_ave += $bancal_tsp_values[$i]->concentration_value;
         $tsp_ctr++;
+
+        $ave = $tsp_ave / $tsp_ctr;
+        $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
+        array_push($bancal_tsp_aqi_values, $aqi_value);
       }
     }
   }
@@ -368,6 +398,17 @@
   //echo "AVE IS: ".$carbon_monoxide_ave."<br/>";
   //echo "AVERAGE IS: ".$carbon_monoxide_ave."<br/>";
 
+  /*
+  $bancal_co_values = array();
+  $bancal_so2_values = array();
+  $bancal_no2_values = array();
+  $bancal_o3_values = array();
+  $bancal_pb_values = array();
+  $bancal_pm10_values = array();
+  $bancal_tsp_values = array();
+  */
+
+
   $carbon_monoxide_aqi = 0;
   $sulfur_dioxide_aqi = 0;
   $nitrogen_dioxide_aqi = 0;
@@ -376,8 +417,6 @@
   $lead_aqi = 0; // None
   $pm_10_aqi = 0;
   $tsp_aqi = 0;
-
-
 
   //echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
   $carbon_monoxide_aqi = round(calculateAQI($co_guideline_values, $carbon_monoxide_ave, 1, $aqi_values));
@@ -424,7 +463,8 @@
   array_push($bancal_aqi_values, $carbon_monoxide_aqi);
   array_push($bancal_aqi_values, $sulfur_dioxide_aqi);
   array_push($bancal_aqi_values, $nitrogen_dioxide_aqi);
-
+  array_push($bancal_aqi_values, $ozone_8_aqi);
+  /*
   if($ozone_8_aqi >= $ozone_1_aqi)
   {
     array_push($bancal_aqi_values, $ozone_8_aqi);
@@ -433,8 +473,9 @@
   else
   {
     array_push($bancal_aqi_values, $ozone_1_aqi);
-  }
+  }*/
 
+  array_push($bancal_aqi_values, $ozone_1_aqi);
   array_push($bancal_aqi_values, $pm_10_aqi);
   array_push($bancal_aqi_values, $tsp_aqi);
 
@@ -442,14 +483,16 @@
   //echo $max[0];
 
   /*
-  $bancal_co_values = array();
-  $bancal_so2_values = array();
-  $bancal_no2_values = array();
-  $bancal_o3_values = array();
-  $bancal_pb_values = array();
-  $bancal_pm10_values = array();
-  $bancal_tsp_values = array();
+  $bancal_co_aqi_values = array();
+  $bancal_so2_aqi_values = array();
+  $bancal_no2_aqi_values = array();
+  $bancal_o3_aqi_values = array();
+  $bancal_o3_1_aqi_values = array();
+  $bancal_pm10_aqi_values = array();
+  $bancal_tsp_aqi_values = array();
   */
+
+  $bancal_min_max_values = [[min($bancal_co_aqi_values),max($bancal_co_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_no2_aqi_values)],[min($bancal_no2_aqi_values), max($bancal_o3_aqi_values)],[min($bancal_o3_aqi_values), max($bancal_o3_1_aqi_values)],[min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)], [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]];
 
   /*
   $bancal_co_aqi_values = array();
@@ -459,6 +502,13 @@
 
   }
   */
+
+  $area_chosen_name = "hii";
+
+  if(isset($_GET["area"]))
+  {
+      $area_chosen_name = $_GET["area"];
+  }
 
   function calculateAQI($gv, $ave, $prec, $aqi_val)
   {
@@ -491,8 +541,8 @@
 
 <script type="text/javascript">
 
-  var pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone", "Particulate Matter 10", "Totally Suspended Particles"];
-  var pollutant_symbols = ["CO", "SO2", "NO2", "O3", "PM 10", "TSP"];
+  var pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone 8 Hr", "Ozone 1 Hr", "Particulate Matter 10", "Totally Suspended Particles"];
+  var pollutant_symbols = ["CO", "SO2", "NO2", "O3 (8)", "O3 (1)","PM 10", "TSP"];
 
   var goodAir = "#2196F3";
   var fairAir = "#FFEB3B";
@@ -509,6 +559,18 @@
   var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
 
   var bancal_co_aqi_values = <?= json_encode($bancal_co_aqi_values) ?>;
+  var bancal_so2_aqi_values = <?= json_encode($bancal_so2_aqi_values) ?>;
+  var bancal_no2_aqi_values = <?= json_encode($bancal_no2_aqi_values) ?>;
+  var bancal_o3_aqi_values = <?= json_encode($bancal_o3_aqi_values) ?>;
+  var bancal_o3_1_aqi_values = <?= json_encode($bancal_o3_1_aqi_values) ?>;
+  var bancal_pm10_aqi_values = <?= json_encode($bancal_pm10_aqi_values) ?>;
+  var bancal_tsp_aqi_values = <?= json_encode($bancal_tsp_aqi_values) ?>;
+
+  var bancal_min_max_values = <?= json_encode($bancal_min_max_values) ?>;
+
+  var area_chosen = "<?= $area_chosen_name ?>";
+
+  //alert(area_chosen);
 
   //alert(JSON.stringify(bancal_aqi_values));
   //alert(JSON.stringify(bancal_prevalentIndex));

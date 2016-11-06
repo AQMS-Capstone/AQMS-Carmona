@@ -4,22 +4,78 @@
 google.charts.load('current', {packages: ['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawBasic);
 
+function createGraph(data_pollutant, chartNames)
+{
+  var data = new google.visualization.DataTable();
+  data.addColumn('timeofday', 'Time of Day');
+  data.addColumn('number', 'AQI Level');
+
+  for(var i = 0 ; i < 24 ; i ++)
+  {
+    var value = 0;
+
+    if(i < data_pollutant.length)
+    {
+      value = parseInt(JSON.stringify(data_pollutant[i]).replace(/"/g, ''));
+    }
+
+    data.addRow([{v: [i, 0, 0], f: ''}, value]);
+  }
+
+  var options = {
+      width: 400,
+      height: 50,
+      //height: 23,
+      hAxis: {
+          format: 'H:mm',
+          viewWindow: {
+              min: [1, 00, 0],
+              max: [24, 00, 0]
+          },
+          gridlines:{ color:'transparent' },
+      },
+      vAxis:{gridlines:{ color:'transparent' }
+      , textPosition: 'none'
+      },
+      legend: {position: 'none'},
+      bar: {groupWidth: '90%'},
+      enableInteractivity: false,
+  };
+
+  var chart = new google.visualization.ColumnChart(
+      document.getElementById(chartNames));
+
+  chart.draw(data, options);
+}
+
 function drawBasic() {
 
-    var data = new google.visualization.DataTable();
-    data.addColumn('timeofday', 'Time of Day');
-    data.addColumn('number', 'AQI Level');
+    var array_draw = [];
 
-    for(var i = 0 ; i < 24 ; i ++)
+    if(area_chosen == "Bancal")
     {
-      var value = 0;
+      array_draw.push(bancal_co_aqi_values);
+      array_draw.push(bancal_so2_aqi_values);
+      array_draw.push(bancal_no2_aqi_values);
+      array_draw.push(bancal_o3_aqi_values);
+      array_draw.push(bancal_o3_1_aqi_values);
+      array_draw.push(bancal_pm10_aqi_values);
+      array_draw.push(bancal_tsp_aqi_values);
+    }else
+    {
+      array_draw.push(bancal_co_aqi_values);
+      array_draw.push(bancal_so2_aqi_values);
+      array_draw.push(bancal_no2_aqi_values);
+      array_draw.push(bancal_o3_aqi_values);
+      array_draw.push(bancal_o3_1_aqi_values);
+      array_draw.push(bancal_pm10_aqi_values);
+      array_draw.push(bancal_tsp_aqi_values);
+    }
 
-      if(i < bancal_co_aqi_values.length)
-      {
-        value = parseInt(JSON.stringify(bancal_co_aqi_values[i]).replace(/"/g, ''));
-      }
-
-      data.addRow([{v: [i, 0, 0], f: ''}, value]);
+    for(var i = 0 ; i < 7; i ++)
+    {
+      var chartNames = "chart_div_" + (i+1);
+      createGraph(array_draw[i], chartNames);
     }
 
     /*
@@ -71,37 +127,16 @@ function drawBasic() {
     ]);
     */
 
-    var options = {
-        width: 400,
-        height: 23,
-        hAxis: {
-            format: 'H:mm',
-            viewWindow: {
-                min: [1, 00, 0],
-                max: [24, 00, 0]
-            },
-            gridlines:{ color:'transparent' },
-        },
-        vAxis:{gridlines:{ color:'transparent' }
-        , textPosition: 'none'
-        },
-        legend: {position: 'none'},
-        bar: {groupWidth: '90%'},
-        enableInteractivity: false,
-    };
 
-    var chart1 = new google.visualization.ColumnChart(
-        document.getElementById('chart1_div'));
-
-    chart1.draw(data, options);
-
+    /*
     var chart2 = new google.visualization.ColumnChart(
-        document.getElementById('chart2_div'));
+        document.getElementById('chart_div_2'));
 
     chart2.draw(data, options);
 
     var chart3 = new google.visualization.ColumnChart(
-        document.getElementById('chart3_div'));
+        document.getElementById('chart_div_3'));
 
     chart3.draw(data, options);
+    */
 }
