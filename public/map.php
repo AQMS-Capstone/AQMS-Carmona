@@ -13,7 +13,7 @@ if(isset($_GET["area"]))
 }
 ?>
 <div id="home">
-
+    <div id="googleMap"></div>
     <div id="zoneStatus" class="card float-card">
         <div class="card-content black-text">
             <div class="row">
@@ -116,5 +116,5 @@ if(isset($_GET["area"]))
 
         </div>
 
-        <div id="googleMap"></div>
+
     </div>
