@@ -34,10 +34,11 @@ function createGraph(data_pollutant, chartNames)
           gridlines:{ color:'transparent', count:17},
       },
       vAxis:{gridlines:{ color:'transparent' }
-      , textPosition: 'none'
+      ,
       },
       legend: {position: 'none'},
       bar: {groupWidth: '90%'},
+
   };
 
   var chart = new google.visualization.ColumnChart(
