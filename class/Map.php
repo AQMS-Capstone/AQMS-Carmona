@@ -587,6 +587,8 @@
   var bancal_pm10_aqi_values = <?= json_encode($bancal_pm10_aqi_values) ?>;
   var bancal_tsp_aqi_values = <?= json_encode($bancal_tsp_aqi_values) ?>;
 
+  //alert(JSON.stringify(bancal_o3_aqi_values));
+
   var bancal_min_max_values = <?= json_encode($bancal_min_max_values) ?>;
 
   var area_chosen = "<?= $area_chosen_name ?>";
