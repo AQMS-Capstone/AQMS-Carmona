@@ -66,12 +66,14 @@ if(isset($_GET["area"]))
 
                                 if($data == "SLEX")
                                 {
-                                    $untilValue = count($bancal_aqi_values);
+                                    //$untilValue = count($bancal_aqi_values);
+                                    $untilValue = count($bancalAllDayValues_array);
                                 }
 
                                 else if($data == "Bancal")
                                 {
-                                    $untilValue = count($bancal_aqi_values);
+                                    //$untilValue = count($bancal_aqi_values);
+                                    $untilValue = count($bancalAllDayValues_array);
                                 }
 
                                 for ($x = 0; $x < $untilValue; $x++) {

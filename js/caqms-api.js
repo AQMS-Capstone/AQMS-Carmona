@@ -14,6 +14,7 @@ if(bancalAllDayValues_array.length == 0)
 {
   bancalAirQuality = otherAir;
   bancalAQIStatus = "Not Enough Data";
+  bancalprevalentPollutant = "Not Enough Data";
 }
 
 else {
@@ -163,18 +164,21 @@ function initialize()
         //document.getElementById("e_symbol_1").innerHTML =  "HII";
         //document.getElementById("concentration_value_1").innerHTML =  "5";
 
-        for(var i = 0; i < bancal_aqi_values.length; i++)
+        if(bancalAllDayValues_array.length > 0)
         {
-            var elementName = "e_symbol_" + (i+1);
-            var conentrationName = "concentration_value_" + (i+1);
-            var elementMin = "aqi_min_" + (i+1);
-            var elementMax = "aqi_max_" + (i+1);
+          for(var i = 0; i < bancal_aqi_values.length; i++)
+          {
+              var elementName = "e_symbol_" + (i+1);
+              var conentrationName = "concentration_value_" + (i+1);
+              var elementMin = "aqi_min_" + (i+1);
+              var elementMax = "aqi_max_" + (i+1);
 
-            document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
-            document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
+              document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+              document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
 
-            document.getElementById(elementMin).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
-            document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
+              document.getElementById(elementMin).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
+              document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
+          }
         }
         /*
          document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
