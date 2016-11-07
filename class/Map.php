@@ -295,7 +295,7 @@
 
     if($checker)
     {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_co_aqi_values)),max($bancal_co_aqi_values)]);
+      array_push($bancal_min_max_values, [min(array_filter($bancal_co_aqi_values, function($v) { return $v >= 0; })),max($bancal_co_aqi_values)]);
     }
 
     else

@@ -211,7 +211,7 @@ function initialize()
                   document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
                 }
 
-                var minValue = parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''))
+                var minValue = parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
 
                 if(minValue == -1)
                 {
