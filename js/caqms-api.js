@@ -211,7 +211,18 @@ function initialize()
                   document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
                 }
 
-                document.getElementById(elementMin).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
+                var minValue = parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''))
+
+                if(minValue == -1)
+                {
+                    document.getElementById(elementMin).innerHTML =  0;
+                }
+
+                else {
+                    document.getElementById(elementMin).innerHTML = minValue;
+                }
+
+
                 document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
             }
           }
