@@ -145,132 +145,41 @@
 
   $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
 
-  $bancal_aqi_values = array();
-
-  //array_push($bancal_aqi_values, $carbon_monoxide_aqi);
-  //array_push($bancal_aqi_values, $sulfur_dioxide_aqi);
-  //array_push($bancal_aqi_values, $nitrogen_dioxide_aqi);
-  //array_push($bancal_aqi_values, $ozone_8_aqi);
-  //array_push($bancal_aqi_values, $ozone_1_aqi);
-  //array_push($bancal_aqi_values, $pm_10_aqi);
-  //array_push($bancal_aqi_values, $tsp_aqi);
-
-  for($i = 0; $i < 24; $i++)
+  for($i = 0; $i < count($bancal_co_values); $i++) // 8hr - ppm
   {
-    $check = false;
-    $index = 0;
+    //$hour_value = $vonn_controller;
+    $hour_value = date("H");
+    $data_date_tomorrow = substr($bancal_co_values[$i]->timestamp, 0, -9);
+    $data_hour_value = substr($bancal_co_values[$i]->timestamp, 11, -6);
 
-    for($k = 0; $k < count($bancal_co_values); $k++)
+    if($data_hour_value <= $hour_value)
     {
-      $data_hour_value = substr($bancal_co_values[$k]->timestamp, 11, -6);
-
-      if($data_hour_value == 0)
+      if(count($bancal_co_values) == 24 && $data_date_tomorrow == $data_tomorrow)
       {
-        $check = true;
-        $index = $k;
-        break;
+        //echo "VALUES ARE: ".$bancal_co_values[$i]->concentration_value."<br/>";
+        //$carbon_monoxide_ave += $bancal_co_values[$i]->concentration_value;
+        //$carbon_monoxide_ctr++;
       }
 
-      else if(($i + 1) == $data_hour_value)
+      else
       {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check)
-    {
-      $hour_value = 8;
-      //$hour_value = date("H");
-      $data_date_tomorrow = substr($bancal_co_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_co_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value)
-      {
-        //if(count($bancal_co_values) == 24 && $data_date_tomorrow == $data_tomorrow)
-        if($data_hour_value == 0)
-        {
-          if($i == 23)
-          {
-            //echo "VALUES ARE: ".$bancal_co_values[$i]->concentration_value."<br/>";
-            $carbon_monoxide_ave += $bancal_co_values[$index]->concentration_value;
-            $carbon_monoxide_ctr++;
-
-            $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
-            $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
-
-            if($aqi_value > 400)
-            {
-              $aqi_value = 0;
-            }
-
-            if($data_hour_value == $hour_value)
-            {
-              array_push($bancal_aqi_values,$aqi_value);
-            }
-
-            array_push($bancal_co_aqi_values, $aqi_value);
-          }
-
-          else
-          {
-            array_push($bancal_co_aqi_values, 0);
-          }
-        }
-
-        else if($data_hour_value > 0)
+        //echo "VALUES ARE: ".$bancal_co_values[$i]->concentration_value."<br/>";
+        if($data_hour_value > 0)
         {
           if((($i + 1) % 8) == 1)
           {
-            //echo "HI";
             $carbon_monoxide_ctr = 0;
             $carbon_monoxide_ave = 0;
           }
 
-          else
-          {
-            //echo "VALUES ARE: ".$bancal_co_values[$index]->concentration_value."<br/>";
-            $carbon_monoxide_ave += $bancal_co_values[$index]->concentration_value;
-            $carbon_monoxide_ctr++;
-          }
+          $carbon_monoxide_ave += $bancal_co_values[$i]->concentration_value;
+          $carbon_monoxide_ctr++;
 
-          if($carbon_monoxide_ctr>0)
-          {
-            $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
-          }else {
-            $ave = $carbon_monoxide_ave;
-          }
+          $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
           $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
-
-          if($aqi_value > 400)
-          {
-            $aqi_value = 0;
-          }
-
-          //echo $data_hour_value."<br/>";
-          //echo $hour_value."<br/>";
-
-          if($data_hour_value == $hour_value)
-          {
-            //secho "YES";
-            array_push($bancal_aqi_values,$aqi_value);
-          }
-
           array_push($bancal_co_aqi_values, $aqi_value);
         }
       }
-    }
-
-    else
-    {
-      if((($i + 1) % 8) == 1 && $i > 0)
-      {
-        $carbon_monoxide_ctr = 0;
-        $carbon_monoxide_ave = 0;
-      }
-
-      array_push($bancal_co_aqi_values, 0);
     }
   }
 
@@ -509,9 +418,9 @@
   $pm_10_aqi = 0;
   $tsp_aqi = 0;
 
-  echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
+  //echo "CO AVE IS: ".floorDec($carbon_monoxide_ave, $precision = 1)."<br/>";
   $carbon_monoxide_aqi = round(calculateAQI($co_guideline_values, $carbon_monoxide_ave, 1, $aqi_values));
-  echo "CO AQI: ".$carbon_monoxide_aqi."<br/>";
+  //echo "CO AQI: ".$carbon_monoxide_aqi."<br/>";
 
   //echo "<br/>";
 
@@ -549,14 +458,28 @@
   $tsp_aqi = round(calculateAQI($tsp_guideline_values, $tsp_ave, 2, $aqi_values));
   //echo "TSP AQI: ".$tsp_aqi."<br/>";
 
-  if(count($bancal_aqi_values) > 0 )
+  $bancal_aqi_values = array();
+
+  array_push($bancal_aqi_values, $carbon_monoxide_aqi);
+  array_push($bancal_aqi_values, $sulfur_dioxide_aqi);
+  array_push($bancal_aqi_values, $nitrogen_dioxide_aqi);
+  array_push($bancal_aqi_values, $ozone_8_aqi);
+  /*
+  if($ozone_8_aqi >= $ozone_1_aqi)
   {
-    $bancal_prevalentIndex = array_keys($bancal_aqi_values, max($bancal_aqi_values));
+    array_push($bancal_aqi_values, $ozone_8_aqi);
   }
 
-  else {
-    $bancal_prevalentIndex = "0";
-  }
+  else
+  {
+    array_push($bancal_aqi_values, $ozone_1_aqi);
+  }*/
+
+  array_push($bancal_aqi_values, $ozone_1_aqi);
+  array_push($bancal_aqi_values, $pm_10_aqi);
+  array_push($bancal_aqi_values, $tsp_aqi);
+
+  $bancal_prevalentIndex = array_keys($bancal_aqi_values, max($bancal_aqi_values));
   //echo $max[0];
 
   /*
@@ -572,37 +495,10 @@
   //$bancal_min_max_values = [[min($bancal_co_aqi_values),max($bancal_co_aqi_values)],[min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)],[min($bancal_no2_aqi_values), max($bancal_no2_aqi_values)],[min($bancal_o3_aqi_values), max($bancal_o3_aqi_values)],[min($bancal_o3_1_aqi_values), max($bancal_o3_1_aqi_values)],[min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)], [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]];
 
   $bancal_min_max_values = array();
-  //error_reporting(E_ERROR | E_PARSE);
 
   if(count($bancal_co_aqi_values) > 0){
-
-    $checker = false;
-
-    for($x = 0 ; $x < count($bancal_co_aqi_values); $x++)
-    {
-      if($bancal_co_aqi_values[$x][0] == 0)
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($bancal_min_max_values, [min($bancal_co_aqi_values),max($bancal_co_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_co_aqi_values)),max($bancal_co_aqi_values)]);
-    }
-
-  }else {
-    array_push($bancal_min_max_values, [0,0]);
-  }
-
-  /*
-  if(count($bancal_so2_aqi_values) > 0){
+    array_push($bancal_min_max_values, [min($bancal_co_aqi_values),max($bancal_co_aqi_values)]);
+  }if(count($bancal_so2_aqi_values) > 0){
     array_push($bancal_min_max_values, [min($bancal_so2_aqi_values), max($bancal_so2_aqi_values)]);
   }if(count($bancal_no2_aqi_values) > 0){
     array_push($bancal_min_max_values, [min($bancal_no2_aqi_values), max($bancal_no2_aqi_values)]);
@@ -614,7 +510,7 @@
     array_push($bancal_min_max_values, [min($bancal_pm10_aqi_values), max($bancal_pm10_aqi_values)]);
   }if(count($bancal_tsp_aqi_values) > 0){
     array_push($bancal_tsp_aqi_values, [min($bancal_tsp_aqi_values), max($bancal_tsp_aqi_values)]);
-  }*/
+  }
 
   /*
   $bancal_co_aqi_values = array();
@@ -625,12 +521,7 @@
   }
   */
 
-  if(count($bancal_aqi_values) == 0)
-  {
-    array_push($bancal_aqi_values, 0);
-  }
-
-  $area_chosen_name = "";
+  $area_chosen_name = "hii";
 
   if(isset($_GET["area"]))
   {
@@ -702,7 +593,7 @@
 
   var area_chosen = "<?= $area_chosen_name ?>";
 
-  //alert(bancal_co_aqi_values);
+  //alert(area_chosen);
 
   //alert(JSON.stringify(bancal_aqi_values));
   //alert(JSON.stringify(bancal_prevalentIndex));

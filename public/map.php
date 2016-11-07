@@ -76,7 +76,8 @@ if(isset($_GET["area"]))
                                     $untilValue = count($bancalAllDayValues_array);
                                 }
 
-                                for ($x = 0; $x < $untilValue; $x++) {
+                                for ($x = 0; $x < 1; $x++) {
+                                //for ($x = 0; $x < $untilValue; $x++) {
                                     $elementName = "e_symbol_".($x+1);
                                     $conentrationName = "concentration_value_".($x+1);
                                     $chartName = "chart_div_".($x+1);
