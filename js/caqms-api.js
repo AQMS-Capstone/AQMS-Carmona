@@ -5,47 +5,59 @@ var slex=new google.maps.LatLng(14.322350,121.062300);
 
 var zoomSize = 13;
 
+// --------- SET VALUES FOR BANCAL --------- //
+
 var bancalAQIStatus = "";
 var bancalAirQuality = "";
-var bancalAQI = bancal_prevalent_value;
-var bancalprevalentPollutant = pollutant_labels[bancal_prevalentIndex];
+var bancalAQI = "";
+var bancalprevalentPollutant = "";
 
 if(bancalAllDayValues_array.length == 0)
 {
+  bancalAQI = "-";
+  bancalprevalentPollutant = "-";
   bancalAirQuality = otherAir;
-  bancalAQIStatus = "Not Enough Data";
-  bancalprevalentPollutant = "Not Enough Data";
+  bancalAQIStatus = "No Available Data";
+  bancal_date_gathered = "-";
 }
 
 else {
-  if(bancal_prevalent_value >= 0 && bancal_prevalent_value <= 50){
+  bancalAQI = bancal_prevalent_value;
+  bancalprevalentPollutant = pollutant_labels[bancal_prevalentIndex];
+
+  if(bancalAQI >= 0 && bancalAQI <= 50){
     bancalAirQuality = goodAir;
     bancalAQIStatus = "Good";
-  }else if(bancal_prevalent_value >= 51 && bancal_prevalent_value <= 100)
+  }else if(bancalAQI >= 51 && bancalAQI <= 100)
   {
     bancalAirQuality = fairAir;
     bancalAQIStatus = "Fair";
-  }else if(bancal_prevalent_value >= 101 && bancal_prevalent_value <= 150)
+  }else if(bancalAQI >= 101 && bancalAQI <= 150)
   {
     bancalAirQuality = unhealthyAir;
     bancalAQIStatus = "Unhealthy for Sensitive Groups";
-  }else if(bancal_prevalent_value >= 151 && bancal_prevalent_value <= 200)
+  }else if(bancalAQI >= 151 && bancalAQI <= 200)
   {
     bancalAirQuality = veryUnhealthyAir;
     bancalAQIStatus = "Very Unhealthy";
-  }else if(bancal_prevalent_value >= 201 && bancal_prevalent_value <= 300)
+  }else if(bancalAQI >= 201 && bancalAQI <= 300)
   {
     bancalAirQuality = acutelyUnhealthyAir;
     bancalAQIStatus = "Acutely Unhealthy";
-  }else if(bancal_prevalent_value >= 301 && bancal_prevalent_value <= 400)
+  }else if(bancalAQI >= 301 && bancalAQI <= 400)
   {
     bancalAirQuality = emergencyAir;
     bancalAQIStatus = "Emergency";
-  }else {
+  }else if(bancalAQI == -1){
+    bancalAQI = "-";
+    bancalprevalentPollutant = "-";
     bancalAirQuality = otherAir;
-    bancalAQIStatus = "Not Enough Data";
+    bancalAQIStatus = "No Available Data";
+    bancal_date_gathered = "-";
   }
 }
+
+// --------- SET VALUES FOR SLEX --------- //
 
 var slexAQIStatus = goodAir;
 var slexAirQuality = "Good";
@@ -159,26 +171,49 @@ function initialize()
         document.getElementById("prevalentPollutant").innerHTML = bancalprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
-        document.getElementById("timeUpdated").innerHTML = date_gathered;
+        document.getElementById("timeUpdated").innerHTML = bancal_date_gathered;
 
         //document.getElementById("e_symbol_1").innerHTML =  "HII";
         //document.getElementById("concentration_value_1").innerHTML =  "5";
 
-        if(bancalAllDayValues_array.length > 0)
+        //alert(bancalAllDayValues_array.length);
+
+        if(bancalAllDayValues_array.length != 0)
+        //if(bancal_prevalent_value != -1 && bancalAllDayValues_array.length != 0) // --------- CHECK IF DB VALUES FOR BANCAL IS EMPTY AND IF PREVALENT VALUE IS NOT EQUAL TO 0 --------- //
         {
-          for(var i = 0; i < 1; i++)
-          //for(var i = 0; i < bancal_aqi_values.length; i++)
+          for(var i = 0; i < bancal_aqi_values.length; i++)
           {
-              var elementName = "e_symbol_" + (i+1);
-              var conentrationName = "concentration_value_" + (i+1);
-              var elementMin = "aqi_min_" + (i+1);
-              var elementMax = "aqi_max_" + (i+1);
+              var maxValue = 0;
 
-              document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
-              document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
+              switch(i)
+              {
+                case 0:
+                  maxValue = Math.max(parseInt(bancal_co_max));
+                break;
+              }
 
-              document.getElementById(elementMin).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
-              document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
+              if(maxValue > -1)
+              {
+                var elementName = "e_symbol_" + (i+1);
+                var conentrationName = "concentration_value_" + (i+1);
+                var elementMin = "aqi_min_" + (i+1);
+                var elementMax = "aqi_max_" + (i+1);
+
+                document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+
+                if(bancal_aqi_values[i] == -1)
+                {
+                  document.getElementById(conentrationName).innerHTML = "-";
+                }
+
+                else
+                {
+                  document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
+                }
+
+                document.getElementById(elementMin).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
+                document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
+            }
           }
         }
         /*
@@ -212,7 +247,7 @@ function initialize()
         document.getElementById("prevalentPollutant").innerHTML = slexprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
-        document.getElementById("timeUpdated").innerHTML =  date_gathered;
+        document.getElementById("timeUpdated").innerHTML =  bancal_date_gathered;
 
         //document.getElementById("e_symbol_1").innerHTML =  "HI";
         //document.getElementById("concentration_value_1").innerHTML =  "7";

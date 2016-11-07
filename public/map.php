@@ -62,36 +62,61 @@ if(isset($_GET["area"]))
                             if(isset($_GET["area"]))
                             {
                                 $data = $_GET["area"];
-                                $untilValue = 0;
+                                $untilValue = array();
 
                                 if($data == "SLEX")
                                 {
                                     //$untilValue = count($bancal_aqi_values);
-                                    $untilValue = count($bancalAllDayValues_array);
+                                    //$untilValue = count($bancal_aqi_values);
+
+                                    $untilValue = $bancal_aqi_values;
                                 }
 
                                 else if($data == "Bancal")
                                 {
                                     //$untilValue = count($bancal_aqi_values);
-                                    $untilValue = count($bancalAllDayValues_array);
+                                    //$untilValue = count($bancal_aqi_values);
+
+                                    $untilValue = $bancal_aqi_values;
                                 }
 
-                                for ($x = 0; $x < 1; $x++) {
-                                //for ($x = 0; $x < $untilValue; $x++) {
-                                    $elementName = "e_symbol_".($x+1);
-                                    $conentrationName = "concentration_value_".($x+1);
-                                    $chartName = "chart_div_".($x+1);
-                                    $elementNameMin = "aqi_min_".($x+1);
-                                    $elementNameMax = "aqi_max_".($x+1);
+                                //echo $bancal_prevalentIndex[0];
 
-                                    echo "<tr>";
-                                    echo "<td class='elementName' id='$elementName'>NaN</td>";
-                                    echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                    echo "<td><div id='$chartName'></div></td>";
-                                    echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
-                                    echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
-                                    echo "</tr>";
-                                }
+                                if(count($bancalAllDayValues_array) != 0)
+                                //if($bancal_aqi_values[$bancal_prevalentIndex[0]] != -1 && count($bancalAllDayValues_array) != 0)
+                                {
+                                  //for ($x = 0; $x < 1; $x++) {
+                                  for ($x = 0; $x < count($untilValue); $x++) {
+                                    //if($untilValue[$x] > -1)
+                                    //{
+                                      $maxValue = 0;
+
+                                      switch($x)
+                                      {
+                                        case 0:
+                                            $maxValue = $bancal_co_max;
+                                        break;
+                                      }
+
+                                      if($maxValue > -1)
+                                      {
+                                        $elementName = "e_symbol_".($x+1);
+                                        $conentrationName = "concentration_value_".($x+1);
+                                        $chartName = "chart_div_".($x+1);
+                                        $elementNameMin = "aqi_min_".($x+1);
+                                        $elementNameMax = "aqi_max_".($x+1);
+
+                                        echo "<tr>";
+                                        echo "<td class='elementName' id='$elementName'>NaN</td>";
+                                        echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                        echo "<td><div id='$chartName'></div></td>";
+                                        echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
+                                        echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
+                                        echo "</tr>";
+                                      }
+                                    //}
+                                  }
+                              }
                             }
 
                             ?>

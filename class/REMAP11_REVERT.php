@@ -161,6 +161,7 @@
   //array_push($bancal_aqi_values, $tsp_aqi);
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
+
   for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   {
     $index_24 = -1;
@@ -175,14 +176,14 @@
     {
       $data_hour_value = substr($bancal_co_values[$k]->timestamp, 11, -6);
 
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      if($i == 23 && $data_hour_value == 0)
       {
         $check_24 = true;
         $index_24 = $k;
         break;
       }
 
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+      else if(($i + 1) == $data_hour_value)
       {
         $check = true;
         $index = $k;
@@ -190,9 +191,10 @@
       }
     }
 
-      $hour_value = 18 ; // < --------- CURRENT HOUR --------- >
+      $hour_value = 1 ;
+      //$hour_value = date("H");
 
-      if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      if($check_24 && $hour_value == 0)
       {
         $data_date_tomorrow = substr($bancal_co_values[$index_24]->timestamp, 0, -9);
         $data_hour_value = substr($bancal_co_values[$index_24]->timestamp, 11, -6);
@@ -217,7 +219,7 @@
         array_push($bancal_co_aqi_values, $aqi_value);
       }
 
-      else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
+      else if($check)
       {
         $data_date_tomorrow = substr($bancal_co_values[$index]->timestamp, 0, -9);
         $data_hour_value = substr($bancal_co_values[$index]->timestamp, 11, -6);
@@ -246,24 +248,22 @@
           {
             array_push($bancal_aqi_values,$aqi_value);
             $bancal_date_gathered = $bancal_co_values[$index]->timestamp;
+            //$prev_hour_value = $hour_value;
           }
 
           array_push($bancal_co_aqi_values, $aqi_value);
         }
-
-        else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
+        else
         {
-          array_push($bancal_co_aqi_values, -1);
+          array_push($bancal_co_aqi_values, 0);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
-        array_push($bancal_co_aqi_values, -1);
+        array_push($bancal_co_aqi_values, 0);
       }
   }
-
-  $bancal_co_max = max($bancal_co_aqi_values);
 
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
 
@@ -313,7 +313,7 @@
 
   if(count($bancal_aqi_values) == 0)
   {
-    array_push($bancal_aqi_values, -1);
+    array_push($bancal_aqi_values, 0);
   }
 
   // --------- GET USER CHOSEN AREA --------- //
@@ -377,7 +377,7 @@
   var bancalAllDayValues_array = <?= json_encode($bancalAllDayValues_array) ?>;
   var bancal_aqi_values = <?= json_encode($bancal_aqi_values) ?>;
   var bancal_prevalentIndex = <?= $bancal_prevalentIndex[0] ?>;
-    var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
+  var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
   var bancal_min_max_values = <?= json_encode($bancal_min_max_values) ?>;
 
   var bancal_date_gathered = <?= json_encode($bancal_date_gathered) ?>;
@@ -389,8 +389,6 @@
   var bancal_o3_1_aqi_values = <?= json_encode($bancal_o3_1_aqi_values) ?>;
   var bancal_pm10_aqi_values = <?= json_encode($bancal_pm10_aqi_values) ?>;
   var bancal_tsp_aqi_values = <?= json_encode($bancal_tsp_aqi_values) ?>;
-
-  var bancal_co_max = <?= json_encode($bancal_co_max) ?>;
 
   var area_chosen = "<?= $area_chosen_name ?>";;
 </script>
