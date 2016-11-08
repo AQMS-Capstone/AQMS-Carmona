@@ -87,6 +87,7 @@ if(isset($_GET["area"]))
                                 {
                                   //for ($x = 0; $x < 1; $x++) {
                                   for ($x = 0; $x < count($untilValue); $x++) {
+                                  //for ($x = 0; $x < 2; $x++) {
                                     //if($untilValue[$x] > -1)
                                     //{
                                       $maxValue = 0;
@@ -95,6 +96,10 @@ if(isset($_GET["area"]))
                                       {
                                         case 0:
                                             $maxValue = $bancal_co_max;
+                                        break;
+
+                                        case 1:
+                                            $maxValue = $bancal_so2_max;
                                         break;
                                       }
 

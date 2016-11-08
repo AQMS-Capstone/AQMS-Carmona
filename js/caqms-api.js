@@ -182,6 +182,7 @@ function initialize()
         //if(bancal_prevalent_value != -1 && bancalAllDayValues_array.length != 0) // --------- CHECK IF DB VALUES FOR BANCAL IS EMPTY AND IF PREVALENT VALUE IS NOT EQUAL TO 0 --------- //
         {
           for(var i = 0; i < bancal_aqi_values.length; i++)
+          //for(var i = 0; i < 2; i++)
           {
               var maxValue = 0;
 
@@ -190,10 +191,16 @@ function initialize()
                 case 0:
                   maxValue = Math.max(parseInt(bancal_co_max));
                 break;
+
+                case 1:
+                  maxValue = Math.max(parseInt(bancal_so2_max));
+                break;
               }
 
               if(maxValue > -1)
               {
+                //alert(maxValue);
+
                 var elementName = "e_symbol_" + (i+1);
                 var conentrationName = "concentration_value_" + (i+1);
                 var elementMin = "aqi_min_" + (i+1);

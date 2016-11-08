@@ -160,6 +160,8 @@
   //array_push($bancal_aqi_values, $pm_10_aqi);
   //array_push($bancal_aqi_values, $tsp_aqi);
 
+  $hour_value = 15 ; // < --------- CURRENT HOUR --------- >
+
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
   for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   {
@@ -190,8 +192,6 @@
       }
     }
 
-      $hour_value = 18 ; // < --------- CURRENT HOUR --------- >
-
       if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
       {
         $data_date_tomorrow = substr($bancal_co_values[$index_24]->timestamp, 0, -9);
@@ -210,7 +210,7 @@
 
         if($data_hour_value == $hour_value)
         {
-          array_push($bancal_aqi_values,$aqi_value);
+          //array_push($bancal_aqi_values,$aqi_value);
           $bancal_date_gathered = $bancal_co_values[$index_24]->timestamp;
         }
 
@@ -244,7 +244,7 @@
 
           if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
           {
-            array_push($bancal_aqi_values,$aqi_value);
+            //array_push($bancal_aqi_values,$aqi_value);
             $bancal_date_gathered = $bancal_co_values[$index]->timestamp;
           }
 
@@ -263,18 +263,103 @@
       }
   }
 
-  $bancal_co_max = max($bancal_co_aqi_values);
-
-  // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
-
-  if(count($bancal_aqi_values) > 0 )
+  // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
+  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   {
-    $bancal_prevalentIndex = array_keys($bancal_aqi_values, max($bancal_aqi_values));
+    $index_24 = -1;
+    $check_24 = false;
+
+    $check = false;
+    $index = 0;
+
+    for($k = 0; $k < count($bancal_so2_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
+    {
+      $data_hour_value = substr($bancal_so2_values[$k]->timestamp, 11, -6);
+
+      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      {
+        $check_24 = true;
+        $index_24 = $k;
+        break;
+      }
+
+      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+      {
+        $check = true;
+        $index = $k;
+        break;
+      }
+    }
+
+    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+    {
+      $data_date_tomorrow = substr($bancal_so2_values[$index_24]->timestamp, 0, -9);
+      $data_hour_value = substr($bancal_so2_values[$index_24]->timestamp, 11, -6);
+
+      $sulfur_dioxide_ave = $bancal_so2_values[$index_24]->concentration_value;
+
+      $ave = $sulfur_dioxide_ave;
+      $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
+
+      if($aqi_value > 400)
+      {
+        $aqi_value = 0;
+      }
+
+      if($data_hour_value == $hour_value)
+      {
+        //array_push($bancal_aqi_values,$aqi_value);
+        $bancal_date_gathered = $bancal_so2_values[$index_24]->timestamp;
+      }
+
+      array_push($bancal_so2_aqi_values, $aqi_value);
+    }
+
+    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
+    {
+      $data_date_tomorrow = substr($bancal_so2_values[$index]->timestamp, 0, -9);
+      $data_hour_value = substr($bancal_so2_values[$index]->timestamp, 11, -6);
+
+      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
+      {
+        if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
+        {
+          $sulfur_dioxide_ave = 0;
+        }
+
+        $sulfur_dioxide_ave = $bancal_so2_values[$index]->concentration_value;
+
+        $aqi_value = round(calculateAQI($sufur_guideline_values, $sulfur_dioxide_ave, 3, $aqi_values));
+
+        //echo $sulfur_dioxide_ave." | ";
+
+        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
+        {
+          //echo $aqi_value." | ";
+          //array_push($bancal_aqi_values,$aqi_value); // THIS
+          $bancal_date_gathered = $bancal_so2_values[$index]->timestamp;
+        }
+
+        array_push($bancal_so2_aqi_values, $aqi_value);
+      }
+
+      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
+      {
+        array_push($bancal_so2_aqi_values, -1);
+      }
+    }
+
+    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
+    {
+      array_push($bancal_so2_aqi_values, -1);
+    }
   }
 
-  else {
-    $bancal_prevalentIndex = "0";
-  }
+
+  // --------- TO SUPPORT VALIDATIONS IN CAQMS-API.JS --------- //
+
+  $bancal_co_max = max($bancal_co_aqi_values);
+  $bancal_so2_max = max($bancal_so2_aqi_values);
 
   // --------- GET MIN AND MAX VALUES OF EACH POLLUTANT --------- //
 
@@ -309,12 +394,96 @@
     array_push($bancal_min_max_values, [0,0]);
   }
 
+  if(count($bancal_so2_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
+  {
+    $checker = false;
+
+    for($x = 0 ; $x < count($bancal_so2_aqi_values); $x++)
+    {
+      if($bancal_so2_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
+      {
+        $checker = true;
+        break;
+      }
+    }
+
+    if($checker)
+    {
+      array_push($bancal_min_max_values, [min(array_filter($bancal_so2_aqi_values, function($v) { return $v >= 0; })),max($bancal_so2_aqi_values)]);
+    }
+
+    else
+    {
+      array_push($bancal_min_max_values, [min($bancal_so2_aqi_values),max($bancal_so2_aqi_values)]);
+    }
+  }
+
+  else  // < --------- FILL IN VALUES WITH 0 --------- >
+  {
+    array_push($bancal_min_max_values, [0,0]);
+  }
+
   // --------- SET DEFAULT VALUE IF NO DATA IN DB --------- //
 
-  if(count($bancal_aqi_values) == 0)
+  //echo $hour_value;
+
+  if(count($bancal_co_max) >= 0)
+  {
+    array_push($bancal_aqi_values, $bancal_co_aqi_values[$hour_value-1]);
+  }
+
+  else
+  {
+    array_push($bancal_aqi_values, $bancal_co_aqi_values[-1]);
+  }
+
+  if(count($bancal_so2_max) >= 0)
+  {
+    array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
+  }
+
+  else
+  {
+    array_push($bancal_aqi_values, $bancal_so2_aqi_values[-1]);
+  }
+
+  // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
+
+  if(count($bancal_aqi_values) > 0 )
+  {
+    $bancal_prevalentIndex = array_keys($bancal_aqi_values, max($bancal_aqi_values));
+  }
+
+  else {
+    $bancal_prevalentIndex = "0";
+  }
+
+  //echo $bancal_so2_aqi_values[$hour_value-1];
+  //echo $bancal_co_aqi_values[$hour_value-1];
+
+  //array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
+
+  //array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
+
+  /*
+  if($bancal_co_max < 0)
   {
     array_push($bancal_aqi_values, -1);
   }
+
+  if($bancal_so2_max < 0)
+  {
+    array_push($bancal_aqi_values, -1);
+  }
+  */
+
+  /*
+  for($x = 0 ; $x < count($bancal_aqi_values) ; $x++)
+  {
+    echo "E: ".$bancal_aqi_values[$x]." | ";
+  }*/
+
+
 
   // --------- GET USER CHOSEN AREA --------- //
 
@@ -377,7 +546,7 @@
   var bancalAllDayValues_array = <?= json_encode($bancalAllDayValues_array) ?>;
   var bancal_aqi_values = <?= json_encode($bancal_aqi_values) ?>;
   var bancal_prevalentIndex = <?= $bancal_prevalentIndex[0] ?>;
-    var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
+  var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
   var bancal_min_max_values = <?= json_encode($bancal_min_max_values) ?>;
 
   var bancal_date_gathered = <?= json_encode($bancal_date_gathered) ?>;
@@ -391,6 +560,7 @@
   var bancal_tsp_aqi_values = <?= json_encode($bancal_tsp_aqi_values) ?>;
 
   var bancal_co_max = <?= json_encode($bancal_co_max) ?>;
+  var bancal_so2_max = <?= json_encode($bancal_so2_max) ?>;
 
   var area_chosen = "<?= $area_chosen_name ?>";;
 </script>
