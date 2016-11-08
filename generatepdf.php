@@ -20,11 +20,11 @@ if(isset($_POST['btnGenerate'])){
   $areaIndex = $_POST['drpArea'];
   $pollutantIndex = $_POST['drpPollutant'];
   $loc = strtolower($area[$areaIndex]);
-  if($pollutantIndex == 2){
+  if($pollutantIndex == 3){
     $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
               WHERE area_name = '$loc' ORDER BY timestamp";
-  }else{
+  }else if($pollutantIndex == 1){
     $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
               WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' ORDER BY timestamp";
@@ -50,8 +50,17 @@ if(isset($_POST['btnGenerate'])){
 
 
 $a_name = $area[$areaIndex];
-$h_synthesis = "People, should limit outdoor exertion.  People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible.  Unnecessary trips should be postponed. Motor vehicle use may be restricted.  Industrial activities may be curtailed.";
 $aqi_index = $sampol1[2];
+if($aqi_index < 25){
+  $h_synthesis = "The air is nice, you're good to go!";
+}
+else if($aqi_index > 25 || $aqi_index <50){
+  $h_synthesis = "The air is somewhat nice :D";
+}
+else{
+  $h_synthesis = "People, should limit outdoor exertion.  People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible.  Unnecessary trips should be postponed. Motor vehicle use may be restricted.  Industrial activities may be curtailed.";
+
+}
 $prevalent_air_pollutant_symbol = $sampol1[1];
 $prevalent_air_pollutant = $sampol1[0];
 $aqi_status = "";
@@ -65,16 +74,6 @@ $green = 130;
 
 class PDF extends FPDF
 {
-
-  function LoadData($file)
-{
-    // Read file lines
-    $lines = file($file);
-    $data = array();
-    foreach($lines as $line)
-        $data[] = explode(';',trim($line));
-    return $data;
-}
 
 // Simple table
 function BasicTable($header, $sampol)
@@ -184,8 +183,8 @@ $pdf->Ln(20);
 
 //Table
 $pdf->SetTextColor(0,0,0);
-$header = array('Pollutant', 'Symbol', 'Averaged Values', 'Timestamp');
-$data = $pdf->LoadData('countries.txt');
+$header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
+//$data = $pdf->LoadData('countries.txt');
 $pdf->SetFont('Arial','',14);
 $pdf->BasicTable($header,$ugachme);
 $pdf->Ln(8);
