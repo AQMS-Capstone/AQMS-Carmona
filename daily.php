@@ -6,7 +6,7 @@
  * Time: 7:00 PM
  */
 
-include("class/Map.php");
+//include("class/Map.php");
 ?>
 
 <!DOCTYPE html>
@@ -40,11 +40,10 @@ include("class/Map.php");
                 <div class="col s4">
                     <div class="card" style="min-height: 528px;">
                         <div class="card-image">
-                            <img id="" src="res/images/area/slex_carmona-exit.jpg">
-
+                            <img id="zoneImg" src="res/images/area/slex_carmona-exit.jpg">
                         </div>
                         <div class="card-content">
-                            <h5 class="teal-text"><b id="zoneName">SLEX, Carmona Exit</b></h5>
+                            <h5 class="teal-text"><b id="zoneName">Zone Name</b></h5>
 
                             <p><b>Prevalent Air Pollutant: </b> <span id="">NaN</span></p>
                             <p><b>AQI: </b><span id="">NaN</span></p>
