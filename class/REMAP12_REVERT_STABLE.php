@@ -152,7 +152,15 @@
 
   $bancal_aqi_values = array();
 
-  $hour_value = 0 ; // < --------- CURRENT HOUR --------- >
+  //array_push($bancal_aqi_values, $carbon_monoxide_aqi);
+  //array_push($bancal_aqi_values, $sulfur_dioxide_aqi);
+  //array_push($bancal_aqi_values, $nitrogen_dioxide_aqi);
+  //array_push($bancal_aqi_values, $ozone_8_aqi);
+  //array_push($bancal_aqi_values, $ozone_1_aqi);
+  //array_push($bancal_aqi_values, $pm_10_aqi);
+  //array_push($bancal_aqi_values, $tsp_aqi);
+
+  $hour_value = 15 ; // < --------- CURRENT HOUR --------- >
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
   for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
@@ -197,7 +205,7 @@
 
         if($aqi_value > 400)
         {
-          $aqi_value = -1;
+          $aqi_value = 0;
         }
 
         if($data_hour_value == $hour_value)
@@ -233,11 +241,6 @@
           }
 
           $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
-
-          if($aqi_value > 400)
-          {
-            $aqi_value = -1;
-          }
 
           if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
           {
@@ -293,10 +296,9 @@
       $data_date_tomorrow = substr($bancal_so2_values[$index_24]->timestamp, 0, -9);
       $data_hour_value = substr($bancal_so2_values[$index_24]->timestamp, 11, -6);
 
-      $sulfur_dioxide_ave += $bancal_so2_values[$index_24]->concentration_value;
-      $sulfur_dioxide_ctr++;
+      $sulfur_dioxide_ave = $bancal_so2_values[$index_24]->concentration_value;
 
-      $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
+      $ave = $sulfur_dioxide_ave;
       $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
 
       if($aqi_value > 400)
@@ -320,19 +322,21 @@
 
       if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
       {
-        $sulfur_dioxide_ave += $bancal_so2_values[$index]->concentration_value;
-        $sulfur_dioxide_ctr++;
-
-        $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
-        $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
-
-        if($aqi_value > 400)
+        if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
         {
-          $aqi_value = 0;
+          $sulfur_dioxide_ave = 0;
         }
+
+        $sulfur_dioxide_ave = $bancal_so2_values[$index]->concentration_value;
+
+        $aqi_value = round(calculateAQI($sufur_guideline_values, $sulfur_dioxide_ave, 3, $aqi_values));
+
+        //echo $sulfur_dioxide_ave." | ";
 
         if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
         {
+          //echo $aqi_value." | ";
+          //array_push($bancal_aqi_values,$aqi_value); // THIS
           $bancal_date_gathered = $bancal_so2_values[$index]->timestamp;
         }
 
@@ -350,8 +354,6 @@
       array_push($bancal_so2_aqi_values, -1);
     }
   }
-
-  // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
 
 
   // --------- TO SUPPORT VALIDATIONS IN CAQMS-API.JS --------- //
@@ -427,15 +429,7 @@
 
   if(count($bancal_co_max) >= 0)
   {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_co_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_co_aqi_values[$hour_value-1]);
-    }
+    array_push($bancal_aqi_values, $bancal_co_aqi_values[$hour_value-1]);
   }
 
   else
@@ -445,15 +439,7 @@
 
   if(count($bancal_so2_max) >= 0)
   {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_so2_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
-    }
+    array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
   }
 
   else
@@ -471,6 +457,33 @@
   else {
     $bancal_prevalentIndex = "0";
   }
+
+  //echo $bancal_so2_aqi_values[$hour_value-1];
+  //echo $bancal_co_aqi_values[$hour_value-1];
+
+  //array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
+
+  //array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
+
+  /*
+  if($bancal_co_max < 0)
+  {
+    array_push($bancal_aqi_values, -1);
+  }
+
+  if($bancal_so2_max < 0)
+  {
+    array_push($bancal_aqi_values, -1);
+  }
+  */
+
+  /*
+  for($x = 0 ; $x < count($bancal_aqi_values) ; $x++)
+  {
+    echo "E: ".$bancal_aqi_values[$x]." | ";
+  }*/
+
+
 
   // --------- GET USER CHOSEN AREA --------- //
 
