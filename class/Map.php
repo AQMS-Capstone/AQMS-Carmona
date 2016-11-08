@@ -152,7 +152,7 @@
 
   $bancal_aqi_values = array();
 
-  $hour_value = 0 ; // < --------- CURRENT HOUR --------- >
+  $hour_value = date("H"); ; // < --------- CURRENT HOUR --------- >
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
   for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
