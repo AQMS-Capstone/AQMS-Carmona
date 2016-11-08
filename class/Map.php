@@ -1085,6 +1085,35 @@
 
   // --------- SLEX --------- //
 
+  // --------- DECLARE AVERAGE VARIABLES, CTR, AND GUIDELINES --------- //
+
+  $carbon_monoxide_ave = 0;
+  $carbon_monoxide_ctr = 0;
+
+  $sulfur_dioxide_ave = 0;
+  $sulfur_dioxide_ctr = 0;
+
+  $nitrogen_dioxide_ave = 0;
+  $nitrogen_dioxide_ctr = 0;
+
+  $ozone_8_ave = 0;
+  $ozone_8_ctr = 0;
+
+  $ozone_1_ctr = 0;
+  $ozone_1_ave = 0;
+
+  $ozone_8_ctr = 0;
+  $ozone_8_ave = 0;
+
+  $lead_ave = 0; // None
+  $lead_ctr = 0;
+
+  $pm_10_ave = 0;
+  $pm_10_ctr = 0;
+
+  $tsp_ave = 0;
+  $tsp_ctr = 0;
+
   $slex_co_aqi_values = array();
   $slex_so2_aqi_values = array();
   $slex_no2_aqi_values = array();
