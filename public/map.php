@@ -101,6 +101,18 @@ if(isset($_GET["area"]))
                                         case 1:
                                             $maxValue = $bancal_so2_max;
                                         break;
+
+                                        case 2:
+                                            $maxValue = $bancal_no2_max;
+                                        break;
+
+                                        case 3:
+                                            $maxValue = $bancal_o3_max;
+                                        break;
+
+                                        case 4:
+                                            $maxValue = $bancal_pm10_max;
+                                        break;
                                       }
 
                                       if($maxValue > -1)

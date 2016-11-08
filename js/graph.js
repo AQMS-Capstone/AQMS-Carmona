@@ -62,7 +62,6 @@ function drawBasic() {
       array_draw.push(bancal_so2_aqi_values);
       array_draw.push(bancal_no2_aqi_values);
       array_draw.push(bancal_o3_aqi_values);
-      array_draw.push(bancal_o3_1_aqi_values);
       array_draw.push(bancal_pm10_aqi_values);
       array_draw.push(bancal_tsp_aqi_values);
     }else
@@ -70,8 +69,7 @@ function drawBasic() {
       array_draw.push(bancal_co_aqi_values);
       array_draw.push(bancal_so2_aqi_values);
       array_draw.push(bancal_no2_aqi_values);
-      array_draw.push(bancal_o3_aqi_values);
-      array_draw.push(bancal_o3_1_aqi_values);
+      array_draw.push(bancal_o3_aqi_values); 
       array_draw.push(bancal_pm10_aqi_values);
       array_draw.push(bancal_tsp_aqi_values);
     }
