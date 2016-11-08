@@ -13,7 +13,7 @@
 
 if(isset($_POST['btnGenerate'])){
   $area = $_POST["drpArea"];
-
+  $pollutant = $_POST["drpPollutant"];
   /*session_start();
   if(!empty($areaArray)){
     $_SESSION['area'] = $areaArray;

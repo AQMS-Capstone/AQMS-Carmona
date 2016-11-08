@@ -6,11 +6,7 @@ require_once 'public/include/db_connect.php';
 
 $areaIndex = 0;
 $pollutantIndex = 0;
-$column_ename = "";
-$column_esym = "";
-$column_cValue = 0.0;
-$column_timestamp = "";
-$number_of_rows = 0;
+
 $area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal Junction, Carmona, Cavite', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
 $pollutant = array('Select a pollutant', 'CO', 'All');
 //$area = $_GET[$areaArray];
@@ -19,34 +15,9 @@ if(isset($_POST['btnGenerate'])){
   $pollutantIndex = $_POST['drpPollutant'];
 
   $query = "SELECT e_name, e_symbol, concentration_value, timestamp
-                FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                WHERE area_name = '$area[$areaIndex]' and MASTER.e_id = '$pollutantIndex' ORDER BY timestamp";
-
-  $result =  mysqli_query($con,$query);
-
-while($row = mysqli_fetch_assoc($result))
-  {
-    $e_name = $row["e_name"];
-    $e_sym = substr($row["e_symbol"],0,20);
-    $cValue = $row["concentration_value"];
-    $timestamp = $row["timestamp"];
-
-
-    $column_ename = $column_ename.$e_name."\n";
-    $column_esym = $column_esym.$e_sym."\n";
-    $column_cValue = $column_cValue.$cValue."\n";
-    $column_timestamp = $column_timestamp.$timestamp."\n";
-
-  }
-
-  $sql = "SELECT count(1) FROM master";
-  $result = mysqli_query($con, $sql);
-  $row = mysqli_fetch_assoc($result);
-
-  $number_of_rows = $row[0];
-  mysqli_close($con);
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
+              WHERE area_name = '$area[$areaIndex]' and MASTER.e_id = '$pollutantIndex' ORDER BY timestamp";
 }
-
 
 
 $a_name = $area[$areaIndex];
@@ -62,7 +33,7 @@ $red = 0;
 $blue = 0;
 $green = 130;
 
-/*
+
 class PDF extends FPDF
 {
 
@@ -130,7 +101,7 @@ function Footer()
     $this->Cell(150);
     $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
 }
-}*/
+}
 
 if($aqi_index<=25){
   $aqi_status = "Good";
@@ -146,7 +117,7 @@ else if($aqi_index>=26 || $aqi_index<=51){
 }
 
 // Instanciation of inherited class
-$pdf = new FPDF();
+$pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetTitle("AQMS Monitoring - Generated Report");
@@ -155,54 +126,8 @@ $pdf->SetFont('Times','B',16);
 $pdf->Cell(0,5, $a_name);
 $pdf->Ln(20);
 
-//Fields Name position
-$Y_Fields_Name_position = 20;
-//Table position, under Fields Name
-$Y_Table_Position = 26;
-
-//First create each Field Name
-//Gray color filling each Field Name box
-$pdf->SetFillColor(232,232,232);
-//Bold Font for Field Name
-$pdf->SetFont('Arial','B',12);
-$pdf->SetY($Y_Fields_Name_position);
-$pdf->SetX(45);
-$pdf->Cell(50,6,'ELEMENT',1,0,'C',1);
-$pdf->SetX(95);
-$pdf->Cell(20,6,'SYMBOL',1,0,'C',1);
-$pdf->SetX(115);
-$pdf->Cell(30,6,'CVALUE',1,0,'C',1);
-$pdf->SetX(145);
-$pdf->Cell(30,6,'TIMESTAMP',1,0,'C',1);
-$pdf->Ln();
-
-$pdf->SetFont('Arial','',12);
-$pdf->SetY($Y_Table_Position);
-$pdf->SetX(45);
-$pdf->MultiCell(50,6,$column_ename,1);
-$pdf->SetY($Y_Table_Position);
-$pdf->SetX(95);
-$pdf->MultiCell(20,6,$column_esym,1);
-$pdf->SetY($Y_Table_Position);
-$pdf->SetX(115);
-$pdf->MultiCell(30,6,$column_cValue,1,'R');
-$pdf->SetY($Y_Table_Position);
-$pdf->SetX(145);
-$pdf->MultiCell(30,6,$column_timestamp,1,'R');
-
-$i = 0;
-$pdf->SetY($Y_Table_Position);
-while ($i < $number_of_rows)
-{
-    $pdf->SetX(45);
-    $pdf->MultiCell(120,6,'',1);
-    $i = $i +1;
-}
-
-echo $number_of_rows;
-
 //AQI index
-/*
+
 $pdf->SetFillColor($red,$green,$blue);
 $pdf->SetTextColor(255,255,255);
 $pdf->Rect( 10,  39,  65,  44 ,'F');
@@ -241,7 +166,7 @@ $pdf->SetFont('Times','B',18);
 $pdf->Cell(0,10, 'Synthesis');
 $pdf->Ln(10);
 $pdf->SetFont('Times','',12);
-$pdf->MultiCell(0,5,$h_synthesis);*/
+$pdf->MultiCell(0,5,$h_synthesis);
 
 
 $pdf->Output();
