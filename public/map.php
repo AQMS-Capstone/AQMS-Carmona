@@ -28,7 +28,7 @@ if(isset($_GET["area"]))
                         <div class="row-no-after">
                             <div class="col s12">
                                 <h5 class="margin-5" style="font-weight: bold;" id="aqiText">AQI Status</h5>
-                                <span class="card-title"><b id="zoneName">Zone Name</b></span>
+                                <span class="card-title"><b class="teal-text" id="zoneName">Zone Name</b></span>
                             </div>
                             <div id="AQIStat_txt" class="col s12">
                                 <b>Prevalant Air Pollutant: </b> <span id="prevalentPollutant">Prevalant Air Pollutant</span>
@@ -211,7 +211,7 @@ if(isset($_GET["area"]))
             <div id="plotOption" class="center-align">
                 <div class="divider"></div>
                     <form action="daily.php">
-                        <a class="waves-effect orange-text btn-flat" href="daily.php?area=<?php echo "$data"?>" name="e_id" value="element-to-be-submitted">VIEW MORE</a>
+                        <a class="waves-effect orange-text btn-flat" href="daily.php?area=<?php echo "$data"?>" style="width:100%">VIEW MORE</a>
                     </form>
                 </div>
             </div>

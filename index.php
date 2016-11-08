@@ -34,7 +34,7 @@ include("class/Map.php");
 <body>
 
 
-<?php  include('public/header.php'); ?>
+<?php  include('public/_header.php'); ?>
 
 <div id="content-holder">
   <?php include('public/map.php'); ?>

@@ -34,7 +34,7 @@
 <body>
 
 
-<?php  include('public/header.php'); ?>
+<?php  include('public/_header.php'); ?>
 
 <div id="content-holder">
 
@@ -52,7 +52,7 @@
 
 
 
-<?php  include('public/footer.php'); ?>
+<?php  include('public/_footer.php'); ?>
 
 
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>

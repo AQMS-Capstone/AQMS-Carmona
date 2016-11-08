@@ -45,7 +45,7 @@ if(isset($_POST['btnGenerate'])){
 <body>
 
 
-<?php  include('public/header.php'); ?>
+<?php  include('public/_header.php'); ?>
 
 
 <div id="content-holder">
@@ -173,7 +173,7 @@ if(isset($_POST['btnGenerate'])){
 </div>
 
 
-<?php  include('public/footer.php'); ?>
+<?php  include('public/_footer.php'); ?>
 
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

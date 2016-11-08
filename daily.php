@@ -5,9 +5,6 @@
  * Date: 8/13/2016
  * Time: 7:00 PM
  */
-
-//include("class/Map.php");
-
 include("class/Map.php");
 ?>
 
@@ -31,7 +28,7 @@ include("class/Map.php");
 </head>
 
 <body>
-<?php  include('public/header.php'); ?>
+<?php  include('public/_header.php'); ?>
 
 <div id="content-holder">
     <br>
@@ -40,18 +37,18 @@ include("class/Map.php");
         <div class="container">
             <div class="row">
                 <div class="col s4">
-                    <div class="card" style="min-height: 555px;">
+                    <div class="card" style="min-height: 576px;">
                         <div class="card-image">
                             <img id="zoneImg" src="res/images/area/slex_carmona-exit.jpg">
                         </div>
                         <div class="card-content">
                             <h5 class="teal-text"><b id="zoneName">Zone Name</b></h5>
 
-                            <p><b>Prevalent Air Pollutant: </b> <span id="">NaN</span></p>
-                            <p><b>AQI: </b><span id="">NaN</span></p>
-                            <p><b>Time Updated: </b><span id="">NaN</span></p>
+                            <p><b>Prevalent Air Pollutant: </b> <p id="prevalentPollutant">NaN</p></p>
+                            <p><b>AQI: </b><span id="aqiNum">NaN</span></p>
+                            <p><b>Time Updated: </b><span id="timeUpdated">NaN</span></p>
                         </div>
-                        <div class="center">
+                        <div class="center bottom">
                             <div class="divider"></div>
                             <br>
                             <a id ="prevArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
@@ -63,10 +60,10 @@ include("class/Map.php");
                 </div>
 
                 <div class="col s8">
-                    <div class="card" style="min-height: 555px;">
+                    <div class="card" style="min-height: 576px;">
 
-                        <div id="" class="center yellow" style="padding: 15px;">
-                            <h5 id="">AQI STATUS</h5>
+                        <div id="AQIStat" class="center" style="padding: 15px;">
+                            <h5><b id="aqiText">NaN</b></h5>
                         </div>
                         <div class="carousel carousel-slider">
 
@@ -78,9 +75,9 @@ include("class/Map.php");
                                 </ul>
                                 <br>
 
-                                <div id="synthesis" class="col s12">EXPLANATION TEXT HERE 1</div>
-                                <div id="health-effects" class="col s12">EXPLANATION TEXT HERE 2</div>
-                                <div id="cautionary" class="col s12">EXPLANATION TEXT HERE 3</div>
+                                <div id="synthesis" class="col s12"> </div>
+                                <div id="health-effects" class="col s12"> </div>
+                                <div id="cautionary" class="col s12"> </div>
 
                                 <br>
                             </div>
@@ -109,11 +106,12 @@ include("class/Map.php");
 
                         </div>
 
-                        <div class="center">
+                        <div class="center bottom">
                             <div class="divider"></div>
                             <br>
                             <a id ="prevStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
                             <a id ="nextStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                            <br>
                             <br>
                         </div>
                     </div>
@@ -124,7 +122,7 @@ include("class/Map.php");
 </div>
 
 
-<?php  include('public/footer.php'); ?>
+<?php  include('public/_footer.php'); ?>
 
 
 <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
@@ -133,6 +131,7 @@ include("class/Map.php");
 <script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
 <script src="js/daily.js"></script>
+<script src="js/aqi-calculator.js"></script>
 
 </body>
 </html>
