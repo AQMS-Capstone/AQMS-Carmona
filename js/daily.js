@@ -23,6 +23,7 @@ var area = getUrlParameter('area');
 
 $( document ).ready(function(){
 
+
     if(area!=null){
         if(area=="SLEX"){
             GetSLEXStatus();
@@ -30,6 +31,9 @@ $( document ).ready(function(){
         else if(area="Bancal"){
             GetBancalStatus();
         }
+    }
+    else {
+        GetBancalStatus();
     }
 })
 
@@ -42,3 +46,21 @@ function GetSLEXStatus() {
     $("#zoneName").text('SLEX Carmona Exit, Cavite');
     $("#zoneImg").attr("src","res/images/area/slex_carmona-exit.jpg");
 }
+
+$("#prevArea").click(function () {
+    if(area=="Bancal"){
+        location.href = "daily.php?area=SLEX";
+    }
+    else if(area=="SLEX"){
+        location.href = "daily.php?area=Bancal";
+    }
+})
+
+$("#nextArea").click(function () {
+    if(area=="Bancal"){
+        location.href = "daily.php?area=SLEX";
+    }
+    else if(area=="SLEX"){
+        location.href = "daily.php?area=Bancal";
+    }
+})

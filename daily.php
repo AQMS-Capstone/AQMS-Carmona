@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s4">
-                    <div class="card" style="min-height: 528px;">
+                    <div class="card" style="min-height: 555px;">
                         <div class="card-image">
                             <img id="zoneImg" src="res/images/area/slex_carmona-exit.jpg">
                         </div>
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="col s8">
-                    <div class="card" style="min-height: 528px;">
+                    <div class="card" style="min-height: 555px;">
 
                         <div id="" class="center yellow" style="padding: 15px;">
                             <h5 id="">AQI STATUS</h5>
