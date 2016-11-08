@@ -59,10 +59,55 @@ else {
 
 // --------- SET VALUES FOR SLEX --------- //
 
-var slexAQIStatus = goodAir;
-var slexAirQuality = "Good";
-var slexAQI = 21;
-var slexprevalentPollutant = "CO";
+var slexAQIStatus = "";
+var slexAirQuality = "";
+var slexAQI = "";
+var slexprevalentPollutant = "";
+
+if(slexAllDayValues_array.length == 0 || slex_aqi_values.length == 0)
+{
+  slexAQI = "-";
+  slexprevalentPollutant = "-";
+  slexAirQuality = otherAir;
+  slexAQIStatus = "No Available Data";
+  slex_date_gathered = "-";
+}
+
+else {
+  slexAQI = slex_prevalent_value;
+  slexprevalentPollutant = pollutant_labels[slex_prevalentIndex];
+
+  if(slexAQI >= 0 && slexAQI <= 50){
+    slexAirQuality = goodAir;
+    slexAQIStatus = "Good";
+  }else if(slexAQI >= 51 && slexAQI <= 100)
+  {
+    slexAirQuality = fairAir;
+    slexAQIStatus = "Fair";
+  }else if(slexAQI >= 101 && slexAQI <= 150)
+  {
+    slexAirQuality = unhealthyAir;
+    slexAQIStatus = "Unhealthy for Sensitive Groups";
+  }else if(slexAQI >= 151 && slexAQI <= 200)
+  {
+    slexAirQuality = veryUnhealthyAir;
+    slexAQIStatus = "Very Unhealthy";
+  }else if(slexAQI >= 201 && slexAQI <= 300)
+  {
+    slexAirQuality = acutelyUnhealthyAir;
+    slexAQIStatus = "Acutely Unhealthy";
+  }else if(slexAQI >= 301 && slexAQI <= 400)
+  {
+    slexAirQuality = emergencyAir;
+    slexAQIStatus = "Emergency";
+  }else if(slexAQI == -1){
+    slexAQI = "-";
+    slexprevalentPollutant = "-";
+    slexAirQuality = otherAir;
+    slexAQIStatus = "No Available Data";
+    slex_date_gathered = "-";
+  }
+}
 
 //var bancalAQIStatus = prevalentValues_bancal_array[0].p_aqi_status;
 //var bancalAirQuality = prevalentValues_bancal_array[0].p_airqualiy;
@@ -281,26 +326,84 @@ function initialize()
         document.getElementById("prevalentPollutant").innerHTML = slexprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
-        document.getElementById("timeUpdated").innerHTML =  bancal_date_gathered;
+        document.getElementById("timeUpdated").innerHTML =  slex_date_gathered;
 
         //document.getElementById("e_symbol_1").innerHTML =  "HI";
         //document.getElementById("concentration_value_1").innerHTML =  "7";
 
         //alert(bancal_aqi_values[0]);
 
-        for(var i = 0; i < bancal_aqi_values.length; i++)
+        if(slexAllDayValues_array.length != 0)
+        //if(slex_prevalent_value != -1 && slexAllDayValues_array.length != 0) // --------- CHECK IF DB VALUES FOR slex IS EMPTY AND IF PREVALENT VALUE IS NOT EQUAL TO 0 --------- //
         {
-            var elementName = "e_symbol_" + (i+1);
-            var conentrationName = "concentration_value_" + (i+1);
+          for(var i = 0; i < slex_aqi_values.length; i++)
+          //for(var i = 0; i < 2; i++)
+          {
+              var maxValue = 0;
 
-            var elementMin = "aqi_min_" + (i+1);
-            var elementMax = "aqi_max_" + (i+1);
+              switch(i)
+              {
+                case 0:
+                  maxValue = Math.max(parseInt(slex_co_max));
+                break;
 
-            document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
-            document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
+                case 1:
+                  maxValue = Math.max(parseInt(slex_so2_max));
+                break;
 
-            document.getElementById(elementMin).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
-            document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
+                case 2:
+                  maxValue = Math.max(parseInt(slex_no2_max));
+                break;
+
+                case 3:
+                  maxValue = Math.max(parseInt(slex_o3_max));
+                break;
+
+                case 4:
+                  maxValue = Math.max(parseInt(slex_pm10_max));
+                break;
+
+                case 5:
+                  maxValue = Math.max(parseInt(slex_tsp_max));
+                break;
+              }
+
+              if(maxValue > -1)
+              {
+                //alert(maxValue);
+
+                var elementName = "e_symbol_" + (i+1);
+                var conentrationName = "concentration_value_" + (i+1);
+                var elementMin = "aqi_min_" + (i+1);
+                var elementMax = "aqi_max_" + (i+1);
+
+                document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+
+                if(slex_aqi_values[i] == -1)
+                {
+                  document.getElementById(conentrationName).innerHTML = "-";
+                }
+
+                else
+                {
+                  document.getElementById(conentrationName).innerHTML =  slex_aqi_values[i];
+                }
+
+                var minValue = parseInt(JSON.stringify(slex_min_max_values[i][0]).replace(/"/g, ''));
+
+                if(minValue == -1)
+                {
+                    document.getElementById(elementMin).innerHTML =  0;
+                }
+
+                else {
+                    document.getElementById(elementMin).innerHTML = minValue;
+                }
+
+
+                document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(slex_min_max_values[i][1]).replace(/"/g, ''));
+            }
+          }
         }
 
         /*

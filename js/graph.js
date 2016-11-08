@@ -64,21 +64,101 @@ function drawBasic() {
       array_draw.push(bancal_o3_aqi_values);
       array_draw.push(bancal_pm10_aqi_values);
       array_draw.push(bancal_tsp_aqi_values);
-    }else
-    {
-      array_draw.push(bancal_co_aqi_values);
-      array_draw.push(bancal_so2_aqi_values);
-      array_draw.push(bancal_no2_aqi_values);
-      array_draw.push(bancal_o3_aqi_values); 
-      array_draw.push(bancal_pm10_aqi_values);
-      array_draw.push(bancal_tsp_aqi_values);
+
+      if(bancalAllDayValues_array.length != 0)
+      {
+        for(var i = 0 ; i < bancal_aqi_values.length; i++)
+        {
+          var maxValue = 0;
+
+          switch(i)
+          {
+            case 0:
+              maxValue = Math.max(parseInt(bancal_co_max));
+            break;
+
+            case 1:
+              maxValue = Math.max(parseInt(bancal_so2_max));
+            break;
+
+            case 2:
+              maxValue = Math.max(parseInt(bancal_no2_max));
+            break;
+
+            case 3:
+              maxValue = Math.max(parseInt(bancal_o3_max));
+            break;
+
+            case 4:
+              maxValue = Math.max(parseInt(bancal_pm10_max));
+            break;
+
+            case 5:
+              maxValue = Math.max(parseInt(bancal_tsp_max));
+            break;
+          }
+
+          if(maxValue > -1)
+          {
+            var chartNames = "chart_div_" + (i+1);
+            createGraph(array_draw[i], chartNames);
+          }
+        }
+      }
     }
 
-    for(var i = 0 ; i < 7; i ++)
+    else
     {
-      var chartNames = "chart_div_" + (i+1);
-      createGraph(array_draw[i], chartNames);
+      array_draw.push(slex_co_aqi_values);
+      array_draw.push(slex_so2_aqi_values);
+      array_draw.push(slex_no2_aqi_values);
+      array_draw.push(slex_o3_aqi_values);
+      array_draw.push(slex_pm10_aqi_values);
+      array_draw.push(slex_tsp_aqi_values);
+
+      if(slexAllDayValues_array.length != 0)
+      {
+        for(var i = 0 ; i < slexAllDayValues_array.length; i++)
+        {
+          var maxValue = 0;
+
+          switch(i)
+          {
+            case 0:
+              maxValue = Math.max(parseInt(slex_co_max));
+            break;
+
+            case 1:
+              maxValue = Math.max(parseInt(slex_so2_max));
+            break;
+
+            case 2:
+              maxValue = Math.max(parseInt(slex_no2_max));
+            break;
+
+            case 3:
+              maxValue = Math.max(parseInt(slex_o3_max));
+            break;
+
+            case 4:
+              maxValue = Math.max(parseInt(slex_pm10_max));
+            break;
+
+            case 5:
+              maxValue = Math.max(parseInt(slex_tsp_max));
+            break;
+          }
+
+          if(maxValue > -1)
+          {
+            var chartNames = "chart_div_" + (i+1);
+            createGraph(array_draw[i], chartNames);
+          }
+        }
+      }
     }
+
+
 
     /*
     for(var i = 0 ; i < bancal_co_values.length ; i ++)
