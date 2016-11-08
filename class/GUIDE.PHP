@@ -38,6 +38,14 @@ $bancal_o3_1_aqi_values = array();
 $bancal_pm10_aqi_values = array();
 $bancal_tsp_aqi_values = array();
 
+$bancal_co_values = array();
+$bancal_so2_values = array();
+$bancal_no2_values = array();
+$bancal_o3_values = array();
+$bancal_pb_values = array();
+$bancal_pm10_values = array();
+$bancal_tsp_values = array();
+
 $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
 $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
 $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
@@ -49,5 +57,4 @@ $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899]
 $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
 
 $bancal_aqi_values = array();
-
 ?>

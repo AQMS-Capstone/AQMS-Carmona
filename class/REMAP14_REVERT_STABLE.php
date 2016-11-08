@@ -551,6 +551,11 @@
     }
   }
 
+  else
+  {
+    //array_push($bancal_aqi_values, $bancal_co_aqi_values[-1]);
+  }
+
   if($bancal_so2_max >= 0)
   {
     if($hour_value == 0)
@@ -564,6 +569,11 @@
     }
   }
 
+  else
+  {
+    //array_push($bancal_aqi_values, $bancal_so2_aqi_values[-1]);
+  }
+
   if($bancal_no2_max >= 0)
   {
     if($hour_value == 0)
@@ -575,6 +585,11 @@
     {
       array_push($bancal_aqi_values, $bancal_no2_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    //array_push($bancal_aqi_values, "-1");
   }
 
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
@@ -648,7 +663,6 @@
 
   var bancalAllDayValues_array = <?= json_encode($bancalAllDayValues_array) ?>;
   var bancal_aqi_values = <?= json_encode($bancal_aqi_values) ?>;
-
   var bancal_prevalentIndex = <?= $bancal_prevalentIndex[0] ?>;
   var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
   var bancal_min_max_values = <?= json_encode($bancal_min_max_values) ?>;

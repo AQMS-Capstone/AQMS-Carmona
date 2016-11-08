@@ -12,7 +12,7 @@ var bancalAirQuality = "";
 var bancalAQI = "";
 var bancalprevalentPollutant = "";
 
-if(bancalAllDayValues_array.length == 0)
+if(bancalAllDayValues_array.length == 0 || bancal_aqi_values.length == 0)
 {
   bancalAQI = "-";
   bancalprevalentPollutant = "-";
