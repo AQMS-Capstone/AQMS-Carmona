@@ -609,7 +609,7 @@
         $pm_10_ctr++;
 
         $ave = $pm_10_ave / $pm_10_ctr;
-        $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 3, $aqi_values));
+        $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 0, $aqi_values));
 
         if($aqi_value > 400)
         {
@@ -636,6 +636,98 @@
     }
   }
 
+  // --------- EXCRETE VALUES FROM TSP --------- //
+
+  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
+  {
+    $index_24 = -1;
+    $check_24 = false;
+
+    $check = false;
+    $index = 0;
+
+    for($k = 0; $k < count($bancal_tsp_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
+    {
+      $data_hour_value = substr($bancal_tsp_values[$k]->timestamp, 11, -6);
+
+      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      {
+        $check_24 = true;
+        $index_24 = $k;
+        break;
+      }
+
+      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+      {
+        $check = true;
+        $index = $k;
+        break;
+      }
+    }
+
+    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+    {
+      $data_date_tomorrow = substr($bancal_tsp_values[$index_24]->timestamp, 0, -9);
+      $data_hour_value = substr($bancal_tsp_values[$index_24]->timestamp, 11, -6);
+
+      $tsp_ave += $bancal_tsp_values[$index_24]->concentration_value;
+      $tsp_ctr++;
+
+      $ave = $tsp_ave / $tsp_ctr;
+      $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
+
+      if($aqi_value > 400)
+      {
+        $aqi_value = -1;
+      }
+
+      if($data_hour_value == $hour_value)
+      {
+        //array_push($bancal_aqi_values,$aqi_value);
+        $bancal_date_gathered = $bancal_tsp_values[$index_24]->timestamp;
+      }
+
+      array_push($bancal_tsp_aqi_values, $aqi_value);
+    }
+
+    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
+    {
+      $data_date_tomorrow = substr($bancal_tsp_values[$index]->timestamp, 0, -9);
+      $data_hour_value = substr($bancal_tsp_values[$index]->timestamp, 11, -6);
+
+      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
+      {
+        $tsp_ave += $bancal_tsp_values[$index]->concentration_value;
+        $tsp_ctr++;
+
+        $ave = $tsp_ave / $tsp_ctr;
+        $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
+
+        if($aqi_value > 400)
+        {
+          $aqi_value = -1;
+        }
+
+        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
+        {
+          $bancal_date_gathered = $bancal_tsp_values[$index]->timestamp;
+        }
+
+        array_push($bancal_tsp_aqi_values, $aqi_value);
+      }
+
+      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
+      {
+        array_push($bancal_tsp_aqi_values, -1);
+      }
+    }
+
+    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
+    {
+      array_push($bancal_tsp_aqi_values, -1);
+    }
+  }
+
   //echo count($bancal_pm10_aqi_values);
 
   // --------- TO SUPPORT VALIDATIONS IN CAQMS-API.JS --------- //
@@ -645,6 +737,7 @@
   $bancal_no2_max = max($bancal_no2_aqi_values);
   $bancal_o3_max = max($bancal_o3_aqi_values);
   $bancal_pm10_max = max($bancal_pm10_aqi_values);
+  $bancal_tsp_max = max($bancal_tsp_aqi_values);
 
   // --------- GET MIN AND MAX VALUES OF EACH POLLUTANT --------- //
 
@@ -795,6 +888,35 @@
     array_push($bancal_min_max_values, [0,0]);
   }
 
+  if(count($bancal_tsp_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
+  {
+    $checker = false;
+
+    for($x = 0 ; $x < count($bancal_tsp_aqi_values); $x++)
+    {
+      if($bancal_tsp_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
+      {
+        $checker = true;
+        break;
+      }
+    }
+
+    if($checker)
+    {
+      array_push($bancal_min_max_values, [min(array_filter($bancal_tsp_aqi_values, function($v) { return $v >= 0; })),max($bancal_tsp_aqi_values)]);
+    }
+
+    else
+    {
+      array_push($bancal_min_max_values, [min($bancal_tsp_aqi_values),max($bancal_tsp_aqi_values)]);
+    }
+  }
+
+  else  // < --------- FILL IN VALUES WITH 0 --------- >
+  {
+    array_push($bancal_min_max_values, [0,0]);
+  }
+
   // --------- SET DEFAULT VALUE IF NO DATA IN DB --------- //
 
   //echo $hour_value;
@@ -864,6 +986,19 @@
     }
   }
 
+  if($bancal_tsp_max >= 0)
+  {
+    if($hour_value == 0)
+    {
+      array_push($bancal_aqi_values, $bancal_tsp_aqi_values[23]);
+    }
+
+    else
+    {
+      array_push($bancal_aqi_values, $bancal_tsp_aqi_values[$hour_value-1]);
+    }
+  }
+
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
 
   if(count($bancal_aqi_values) > 0 )
@@ -906,8 +1041,38 @@
 
         if($ave > 900)
         {
-          //echo "HOHO";
+          $roundedValue = floorDec($ave, $precision = $prec);
+
+          if($roundedValue >= $gv[$x][0])
+          {
+            //$aqi = round((($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0]);
+            $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+            break;
+          }
+
+          else if($x == count($gv) - 1)
+          {
+            $aqi = -1;
+          }
         }
+
+        else
+        {
+          $roundedValue = floorDec($ave, $precision = $prec);
+
+          if($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1])
+          {
+            //$aqi = round((($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0]);
+            $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+            break;
+          }
+
+          else if($x == count($gv) - 1)
+          {
+            $aqi = -1;
+          }
+        }
+
       }
 
       else
@@ -987,6 +1152,7 @@
   var bancal_no2_max = <?= json_encode($bancal_no2_max) ?>;
   var bancal_o3_max = <?= json_encode($bancal_o3_max) ?>;
   var bancal_pm10_max = <?= json_encode($bancal_pm10_max) ?>;
+  var bancal_tsp_max = <?= json_encode($bancal_tsp_max) ?>;
 
   var area_chosen = "<?= $area_chosen_name ?>";;
 </script>

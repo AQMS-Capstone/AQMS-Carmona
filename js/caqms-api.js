@@ -208,6 +208,9 @@ function initialize()
                   maxValue = Math.max(parseInt(bancal_pm10_max));
                 break;
 
+                case 5:
+                  maxValue = Math.max(parseInt(bancal_tsp_max));
+                break;
               }
 
               if(maxValue > -1)

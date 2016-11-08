@@ -113,6 +113,10 @@ if(isset($_GET["area"]))
                                         case 4:
                                             $maxValue = $bancal_pm10_max;
                                         break;
+
+                                        case 5:
+                                            $maxValue = $bancal_tsp_max;
+                                        break;
                                       }
 
                                       if($maxValue > -1)
