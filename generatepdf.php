@@ -6,25 +6,54 @@ require_once 'public/include/db_connect.php';
 
 $areaIndex = 0;
 $pollutantIndex = 0;
+$prevalent_air_pollutant = "";
+$sampol = array();
+$sampol1 = array();
+$igachu = array();
+$ugachme = array();
+$query = "";
 
-$area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal Junction, Carmona, Cavite', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
+$area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
 $pollutant = array('Select a pollutant', 'CO', 'All');
 //$area = $_GET[$areaArray];
 if(isset($_POST['btnGenerate'])){
   $areaIndex = $_POST['drpArea'];
   $pollutantIndex = $_POST['drpPollutant'];
-
-  $query = "SELECT e_name, e_symbol, concentration_value, timestamp
+  $loc = strtolower($area[$areaIndex]);
+  if($pollutantIndex == 2){
+    $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-              WHERE area_name = '$area[$areaIndex]' and MASTER.e_id = '$pollutantIndex' ORDER BY timestamp";
+              WHERE area_name = '$loc' ORDER BY timestamp";
+  }else{
+    $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
+              WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' ORDER BY timestamp";
+  }
+  $result = mysqli_query($con, $query);
+  while($row = mysqli_fetch_array($result)){
+    array_push($sampol, $row["E_NAME"].';'.$row["E_SYMBOL"].';'.$row["CONCENTRATION_VALUE"].';'. $row["timestamp"]);
+
+
+    array_push($sampol1, $row["E_NAME"]);
+    array_push($sampol1, $row["E_SYMBOL"]);
+    array_push($sampol1, $row["CONCENTRATION_VALUE"]);
+    array_push($sampol1, $row["timestamp"]);
+  }
+
+
+  foreach ($sampol as $line) {
+    # code...
+    $ugachme[] = explode(';', trim($line));
+  }
+
 }
 
 
 $a_name = $area[$areaIndex];
 $h_synthesis = "People, should limit outdoor exertion.  People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible.  Unnecessary trips should be postponed. Motor vehicle use may be restricted.  Industrial activities may be curtailed.";
-$aqi_index = 30;
-$prevalent_air_pollutant_symbol = "Element Symbol";
-$prevalent_air_pollutant = "Element";
+$aqi_index = $sampol1[2];
+$prevalent_air_pollutant_symbol = $sampol1[1];
+$prevalent_air_pollutant = $sampol1[0];
 $aqi_status = "";
 $year = "yyyy";
 $month = "mm";
@@ -48,7 +77,7 @@ class PDF extends FPDF
 }
 
 // Simple table
-function BasicTable($header, $data)
+function BasicTable($header, $sampol)
 {
     // Header
     $this->Cell(5);
@@ -59,7 +88,7 @@ function BasicTable($header, $data)
       }
     $this->Ln();
     // Data
-    foreach($data as $row)
+    foreach($sampol as $row)
     {
       $this->Cell(5);
       $this->SetFont('Arial', '', 10);
@@ -158,7 +187,7 @@ $pdf->SetTextColor(0,0,0);
 $header = array('Pollutant', 'Symbol', 'Averaged Values', 'Timestamp');
 $data = $pdf->LoadData('countries.txt');
 $pdf->SetFont('Arial','',14);
-$pdf->BasicTable($header,$data);
+$pdf->BasicTable($header,$ugachme);
 $pdf->Ln(8);
 
 
