@@ -977,6 +977,11 @@
     }
   }
 
+  else
+  {
+    array_push($bancal_aqi_values, -1);
+  }
+
   if($bancal_so2_max >= 0)
   {
     if($hour_value == 0)
@@ -988,6 +993,11 @@
     {
       array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    array_push($bancal_aqi_values, -1);
   }
 
   if($bancal_no2_max >= 0)
@@ -1003,6 +1013,11 @@
     }
   }
 
+  else
+  {
+    array_push($bancal_aqi_values, -1);
+  }
+
   if($bancal_o3_max >= 0)
   {
     if($hour_value == 0)
@@ -1014,6 +1029,11 @@
     {
       array_push($bancal_aqi_values, $bancal_o3_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    array_push($bancal_aqi_values, -1);
   }
 
   if($bancal_pm10_max >= 0)
@@ -1029,6 +1049,11 @@
     }
   }
 
+  else
+  {
+    array_push($bancal_aqi_values, -1);
+  }
+
   if($bancal_tsp_max >= 0)
   {
     if($hour_value == 0)
@@ -1040,6 +1065,11 @@
     {
       array_push($bancal_aqi_values, $bancal_tsp_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    array_push($bancal_aqi_values, -1);
   }
 
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
@@ -1844,6 +1874,11 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     }
   }
 
+  else
+  {
+    array_push($slex_aqi_values, -1);
+  }
+
   if($slex_so2_max >= 0)
   {
     if($hour_value == 0)
@@ -1855,6 +1890,11 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     {
       array_push($slex_aqi_values, $slex_so2_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    array_push($slex_aqi_values, -1);
   }
 
   if($slex_no2_max >= 0)
@@ -1870,6 +1910,11 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     }
   }
 
+  else
+  {
+    array_push($slex_aqi_values, -1);
+  }
+
   if($slex_o3_max >= 0)
   {
     if($hour_value == 0)
@@ -1881,6 +1926,11 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     {
       array_push($slex_aqi_values, $slex_o3_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    array_push($slex_aqi_values, -1);
   }
 
   if($slex_pm10_max >= 0)
@@ -1896,6 +1946,11 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     }
   }
 
+  else
+  {
+    array_push($slex_aqi_values, -1);
+  }
+
   if($slex_tsp_max >= 0)
   {
     if($hour_value == 0)
@@ -1907,6 +1962,11 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     {
       array_push($slex_aqi_values, $slex_tsp_aqi_values[$hour_value-1]);
     }
+  }
+
+  else
+  {
+    array_push($slex_aqi_values, -1);
   }
 
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
