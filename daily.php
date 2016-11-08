@@ -6,10 +6,7 @@
  * Time: 7:00 PM
  */
 
-//$bancalPrevalentPollutant = 0;
-//$slexPrevalentPollutant = 3;
-//$bancalAQIValue = 40;
-//$slexAQIValue = 10;
+include("class/Map.php");
 ?>
 
 <!DOCTYPE html>
@@ -32,8 +29,6 @@
 </head>
 
 <body>
-
-
 <?php  include('public/header.php'); ?>
 
 <div id="content-holder">
@@ -49,7 +44,7 @@
 
                         </div>
                         <div class="card-content">
-                            <h5 class="teal-text"><b id="">SLEX, Carmona Exit</b></h5>
+                            <h5 class="teal-text"><b id="zoneName">SLEX, Carmona Exit</b></h5>
 
                             <p><b>Prevalent Air Pollutant: </b> <span id="">NaN</span></p>
                             <p><b>AQI: </b><span id="">NaN</span></p>
@@ -131,12 +126,12 @@
 <?php  include('public/footer.php'); ?>
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="js/graph.js"></script>
+<!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+<!--<script src="js/graph.js"></script>-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
-
+<script src="js/daily.js"></script>
 
 </body>
 </html>

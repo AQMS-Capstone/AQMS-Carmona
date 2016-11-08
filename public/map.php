@@ -211,7 +211,7 @@ if(isset($_GET["area"]))
             <div id="plotOption" class="center-align">
                 <div class="divider"></div>
                     <form action="daily.php">
-                        <button class="waves-effect orange-text btn-flat" type="submit" name="e_id" value="element-to-be-submitted">VIEW MORE</button>
+                        <a class="waves-effect orange-text btn-flat" href="daily.php?area=<?php echo "$data"?>" name="e_id" value="element-to-be-submitted">VIEW MORE</a>
                     </form>
                 </div>
             </div>

@@ -18,9 +18,7 @@ if(isset($_POST['btnSubmit'])){
 
     while($row = mysqli_fetch_array($result))
     {
-      //$date_now = date("Y-m-d");
         if(mysql_num_rows($result)==0){
-            //$time_now = date("Y-m-d H:i:s", strtotime($row['timestamp'])+3600);
             echo date("Y-m-d H:i:s", strtotime("00:00:00")+3600);
             break;
         }
@@ -59,11 +57,20 @@ if(isset($_POST['btnSubmit'])){
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Air Quality Monitoring</title>
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
   </head>
   <body>
-    <form class="" action="" method="post">
+    <form action="" method="post">
       <input type="text" name="area" value="" placeholder="Area"><br><br>
       <select name = "element">
           <option value="" disabled selected>Select an Element</option>
@@ -79,5 +86,10 @@ if(isset($_POST['btnSubmit'])){
 
       <input type="submit" name="btnSubmit" value="Insert SQL">
     </form>
+
+    
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.min.js"></script>
+  <script src="js/init.js"></script>
   </body>
 </html>
