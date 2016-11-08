@@ -7,6 +7,8 @@
  */
 
 //include("class/Map.php");
+
+include("class/Map.php");
 ?>
 
 <!DOCTYPE html>

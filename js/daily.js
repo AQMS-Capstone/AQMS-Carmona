@@ -19,16 +19,22 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 var area = getUrlParameter('area');
 
+if(area == null)
+{
+  area = "Bancal";
+  GetBancalStatus();
 
+  alert(bancal_prevalent_value);
+}
 
 $( document ).ready(function(){
-
-
     if(area!=null){
+
         if(area=="SLEX"){
             GetSLEXStatus();
+
         }
-        else if(area="Bancal"){
+        else if(area=="Bancal"){
             GetBancalStatus();
         }
     }
