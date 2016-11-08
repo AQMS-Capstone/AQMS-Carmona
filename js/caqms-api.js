@@ -195,6 +195,19 @@ function initialize()
                 case 1:
                   maxValue = Math.max(parseInt(bancal_so2_max));
                 break;
+
+                case 2:
+                  maxValue = Math.max(parseInt(bancal_no2_max));
+                break;
+
+                case 3:
+                  maxValue = Math.max(parseInt(bancal_o3_max));
+                break;
+
+                case 4:
+                  maxValue = Math.max(parseInt(bancal_pm10_max));
+                break;
+
               }
 
               if(maxValue > -1)
