@@ -2011,7 +2011,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 
   // --------- GET USER CHOSEN AREA --------- //
 
-  $area_chosen_name = "";
+  $area_chosen_name = "Bancal";
 
   if(isset($_GET["area"]))
   {

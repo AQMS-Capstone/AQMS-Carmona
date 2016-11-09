@@ -102,24 +102,24 @@ include("class/Map.php");
                                     if(isset($_GET["area"]))
                                     {
                                         $data = $_GET["area"];
+                                    }
+                                    else{
+                                        $data = "Bancal";
+                                    }
+
                                         $untilValue = array();
 
                                         if($data == "SLEX")
                                         {
-                                            //$untilValue = count($bancal_aqi_values);
-                                            //$untilValue = count($bancal_aqi_values);
 
                                             $untilValue = $slex_aqi_values;
 
                                             if(count($slexAllDayValues_array) != 0)
-                                                //if($slex_aqi_values[$slex_prevalentIndex[0]] != -1 && count($slexAllDayValues_array) != 0)
                                             {
-                                                //for ($x = 0; $x < 1; $x++) {
+
                                                 for ($x = 0; $x < count($untilValue); $x++)
                                                 {
-                                                    //for ($x = 0; $x < 2; $x++) {
-                                                    //if($untilValue[$x] > -1)
-                                                    //{
+
                                                     $maxValue = 0;
 
                                                     switch($x)
@@ -172,20 +172,14 @@ include("class/Map.php");
 
                                         else if($data == "Bancal")
                                         {
-                                            //$untilValue = count($bancal_aqi_values);
-                                            //$untilValue = count($bancal_aqi_values);
-
                                             $untilValue = $bancal_aqi_values;
 
                                             if(count($bancalAllDayValues_array) != 0)
-                                                //if($bancal_aqi_values[$bancal_prevalentIndex[0]] != -1 && count($bancalAllDayValues_array) != 0)
                                             {
-                                                //for ($x = 0; $x < 1; $x++) {
+
                                                 for ($x = 0; $x < count($untilValue); $x++)
                                                 {
-                                                    //for ($x = 0; $x < 2; $x++) {
-                                                    //if($untilValue[$x] > -1)
-                                                    //{
+
                                                     $maxValue = 0;
 
                                                     switch($x)
@@ -236,11 +230,6 @@ include("class/Map.php");
                                             }
                                         }
 
-                                        //echo $bancal_prevalentIndex[0];
-
-
-                                    }
-
                                     ?>
                                     </tbody>
                                 </table>
@@ -259,8 +248,8 @@ include("class/Map.php");
 <?php  include('public/_footer.php'); ?>
 
 
-<!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
-<!--<script src="js/graph.js"></script>-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="js/graph.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
