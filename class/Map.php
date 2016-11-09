@@ -47,8 +47,6 @@
     $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow' ORDER BY TIMESTAMP";
   }
 
-
-  echo $sql;
   $result =  mysqli_query($con,$sql);
 
   while($row=mysqli_fetch_assoc($result))
