@@ -180,7 +180,7 @@ $pdf->Rect( 10,  30,  65,  44 ,'F');
 $pdf->Cell(6);
 
 $pdf->SetFont('helvetica', 'B', 72);
-$pdf->Cell(0,20, $aqi_index);
+$pdf->Cell(0,15, $aqi_index);
 $pdf->Cell(-120);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('helvetica', 'B', 16);
