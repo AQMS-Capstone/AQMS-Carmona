@@ -55,6 +55,74 @@ function GetBancalStatus() {
     $("#AQIStat").css("background-color", AQIAirQuality);
     $("#aqiText").text(AQIStatus);
 
+    if(bancalAllDayValues_array.length != 0)
+    {
+        for(var i = 0; i < bancal_aqi_values.length; i++)
+        {
+            var maxValue = 0;
+
+            switch(i)
+            {
+                case 0:
+                    maxValue = Math.max(parseInt(bancal_co_max));
+                    break;
+
+                case 1:
+                    maxValue = Math.max(parseInt(bancal_so2_max));
+                    break;
+
+                case 2:
+                    maxValue = Math.max(parseInt(bancal_no2_max));
+                    break;
+
+                case 3:
+                    maxValue = Math.max(parseInt(bancal_o3_max));
+                    break;
+
+                case 4:
+                    maxValue = Math.max(parseInt(bancal_pm10_max));
+                    break;
+
+                case 5:
+                    maxValue = Math.max(parseInt(bancal_tsp_max));
+                    break;
+            }
+
+            if(maxValue > -1)
+            {
+                var elementName = "e_symbol_" + (i+1);
+                var conentrationName = "concentration_value_" + (i+1);
+                var elementMin = "aqi_min_" + (i+1);
+                var elementMax = "aqi_max_" + (i+1);
+
+                document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+
+                if(bancal_aqi_values[i] == -1)
+                {
+                    document.getElementById(conentrationName).innerHTML = "-";
+                }
+
+                else
+                {
+                    document.getElementById(conentrationName).innerHTML =  bancal_aqi_values[i];
+                }
+
+                var minValue = parseInt(JSON.stringify(bancal_min_max_values[i][0]).replace(/"/g, ''));
+
+                if(minValue == -1)
+                {
+                    document.getElementById(elementMin).innerHTML =  0;
+                }
+
+                else {
+                    document.getElementById(elementMin).innerHTML = minValue;
+                }
+
+
+                document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(bancal_min_max_values[i][1]).replace(/"/g, ''));
+            }
+        }
+    }
 }
 
 function GetSLEXStatus() {

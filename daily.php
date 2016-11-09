@@ -88,7 +88,188 @@ include("class/Map.php");
 
 
                             <div class="card-content">
+                                <?php
 
+                                if(isset($_GET["area"]))
+                                {
+                                    $data = $_GET["area"];
+                                    $untilValue = array();
+
+                                    if($data == "SLEX")
+                                    {
+                                        $untilValue = $slex_aqi_values;
+
+                                        if(count($slexAllDayValues_array) != 0)
+                                        {
+                                            for ($x = 0; $x < count($untilValue); $x++)
+                                            {
+                                                $maxValue = 0;
+
+                                                switch($x)
+                                                {
+                                                    case 0:
+                                                        $maxValue = $slex_co_max;
+                                                        break;
+
+                                                    case 1:
+                                                        $maxValue = $slex_so2_max;
+                                                        break;
+
+                                                    case 2:
+                                                        $maxValue = $slex_no2_max;
+                                                        break;
+
+                                                    case 3:
+                                                        $maxValue = $slex_o3_max;
+                                                        break;
+
+                                                    case 4:
+                                                        $maxValue = $slex_pm10_max;
+                                                        break;
+
+                                                    case 5:
+                                                        $maxValue = $slex_tsp_max;
+                                                        break;
+                                                }
+
+                                                if($maxValue > -1)
+                                                {
+                                                    $elementName = "e_symbol_".($x+1);
+                                                    $conentrationName = "concentration_value_".($x+1);
+                                                    $chartName = "chart_div_".($x+1);
+                                                    $elementNameMin = "aqi_min_".($x+1);
+                                                    $elementNameMax = "aqi_max_".($x+1);
+
+                                                    echo "<tr>";
+                                                    echo "<td class='elementName' id='$elementName'>NaN</td>";
+                                                    echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                                    echo "<td><div id='$chartName'></div></td>";
+                                                    echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
+                                                    echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    else if($data == "Bancal")
+                                    {
+                                        $untilValue = $bancal_aqi_values;
+
+                                        //echo count($untilValue);
+
+                                        if(count($bancalAllDayValues_array) != 0)
+                                        {
+                                            for ($x = 0; $x < count($untilValue); $x++)
+                                            {
+                                                $maxValue = 0;
+
+                                                switch($x)
+                                                {
+                                                    case 0:
+                                                        $maxValue = $bancal_co_max;
+                                                        break;
+
+                                                    case 1:
+                                                        $maxValue = $bancal_so2_max;
+                                                        break;
+
+                                                    case 2:
+                                                        $maxValue = $bancal_no2_max;
+                                                        break;
+
+                                                    case 3:
+                                                        $maxValue = $bancal_o3_max;
+                                                        break;
+
+                                                    case 4:
+                                                        $maxValue = $bancal_pm10_max;
+                                                        break;
+
+                                                    case 5:
+                                                        $maxValue = $bancal_tsp_max;
+                                                        break;
+                                                }
+
+                                                if($maxValue > -1)
+                                                {
+                                                    $elementName = "e_symbol_".($x+1);
+                                                    $conentrationName = "concentration_value_".($x+1);
+                                                    $chartName = "chart_div_".($x+1);
+                                                    $elementNameMin = "aqi_min_".($x+1);
+                                                    $elementNameMax = "aqi_max_".($x+1);
+
+                                                    echo "<tr>";
+                                                    echo "<td class='elementName' id='$elementName'>NaN</td>";
+                                                    echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                                    echo "<td><div id='$chartName'></div></td>";
+                                                    echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
+                                                    echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    $untilValue = $bancal_aqi_values;
+
+                                    if(count($bancalAllDayValues_array) != 0)
+                                    {
+                                        for ($x = 0; $x < count($untilValue); $x++)
+                                        {
+                                            $maxValue = 0;
+
+                                            switch($x)
+                                            {
+                                                case 0:
+                                                    $maxValue = $bancal_co_max;
+                                                    break;
+
+                                                case 1:
+                                                    $maxValue = $bancal_so2_max;
+                                                    break;
+
+                                                case 2:
+                                                    $maxValue = $bancal_no2_max;
+                                                    break;
+
+                                                case 3:
+                                                    $maxValue = $bancal_o3_max;
+                                                    break;
+
+                                                case 4:
+                                                    $maxValue = $bancal_pm10_max;
+                                                    break;
+
+                                                case 5:
+                                                    $maxValue = $bancal_tsp_max;
+                                                    break;
+                                            }
+
+                                            if($maxValue > -1)
+                                            {
+                                                $elementName = "e_symbol_".($x+1);
+                                                $conentrationName = "concentration_value_".($x+1);
+                                                $chartName = "chart_div_".($x+1);
+                                                $elementNameMin = "aqi_min_".($x+1);
+                                                $elementNameMax = "aqi_max_".($x+1);
+
+                                                echo "<tr>";
+                                                echo "<td class='elementName' id='$elementName'>NaN</td>";
+                                                echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                                echo "<td><div id='$chartName'></div></td>";
+                                                echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
+                                                echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
+                                                echo "</tr>";
+                                            }
+                                        }
+                                    }
+                                }
+
+                                ?>
                             </div>
                         </div>
                     </div>
