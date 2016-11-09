@@ -9,7 +9,7 @@
 ?>
 
     <div>
-        <nav class="z-depth-0">
+        <nav class="z-depth-0" style="height: 70px;">
             <div class="nav-wrapper">
                 <a id="logo" href="index.php"><img class="brand-logo center" src="res/logo.png"> </a>
             </div>
