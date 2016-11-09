@@ -1,25 +1,28 @@
 <?php
 
 
-    function insertPollutant($e_id, $area, $co_value)
+    function insertPollutant($e_id, $area, $co_value,$time)
     {
         include('public/include/db_connect.php');
 
-        $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' ORDER BY timestamp desc limit 1";
-        $result = mysqli_query($con,$query);
 
-        $time_now = "";
 
-        if(mysqli_num_rows($result)==0){
-            $time_now = date("Y-m-d H:i:s", strtotime("00:00:00")+3600);
-        }
-        else{
-            while($row = mysqli_fetch_array($result)) {
-                $time_now = date("Y-m-d H:i:s", strtotime($row['timestamp']) + 3600);
+        if($time=="")
+        {
+            $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' ORDER BY timestamp desc limit 1";
+            $result = mysqli_query($con,$query);
+
+            if(mysqli_num_rows($result)==0){
+                $time = date("Y-m-d H:i:s", strtotime("00:00:00")+3600);
+            }
+            else{
+                while($row = mysqli_fetch_array($result)) {
+                    $time = date("Y-m-d H:i:s", strtotime($row['timestamp']) + 3600);
+                }
             }
         }
 
-        $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$co_value', '$time_now')";
+        $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$co_value', '$time')";
 
         if (!mysqli_query($con,$query))
         {
@@ -34,7 +37,7 @@
     if(isset($_POST['btnSubmit']))
     {
         $area = $_POST['area'];
-
+        $time = $_POST['time'];
         $co_value = $_POST['co_value'];
         $so2_value = $_POST['so2_value'];
         $no2_value = $_POST['no2_value'];
@@ -42,51 +45,37 @@
         $pm10_value = $_POST['pm10_value'];
         $tsp_value = $_POST['tsp_value'];
 
-        if($area == "1")
-        {
-            $area = "slex";
-        }
-
-        else
-        {
-            $area = "bancal";
-        }
-
         if($co_value != null)
         {
             $e_id = '1';
-            insertPollutant($e_id, $area, $co_value);
         }
 
         if($so2_value != null)
         {
             $e_id = '2';
-            insertPollutant($e_id, $area, $so2_value);
         }
 
         if($no2_value != null)
         {
             $e_id = '3';
-            insertPollutant($e_id, $area, $no2_value);
         }
 
         if($o3_value != null)
         {
             $e_id = '4';
-            insertPollutant($e_id, $area, $o3_value);
         }
 
         if($pm10_value != null)
         {
             $e_id = '5';
-            insertPollutant($e_id, $area, $pm10_value);
         }
 
         if($tsp_value != null)
         {
             $e_id = '6';
-            insertPollutant($e_id, $area, $tsp_value);
         }
+
+        insertPollutant($e_id, $area, $co_value,$time);
     }
 
 ?>
@@ -123,7 +112,7 @@
         <br><br>
         <h2 class="header center teal-text"><b>Developer Option</b></h2>
         <div class="row center">
-            <h6 class="header col s12">This page would act as a simulation of the IOT device</h6>
+            <h6 class="header col s12">Proceed with caution! This page would act as a simulation of the IOT device</h6>
         </div>
     </div>
     <br>
@@ -136,11 +125,11 @@
 
                         <div class="input-field col s12">
                             <select id="area" name="area" required>
-                                <option value="" disabled selected>Select a pollutant</option>
-                                <option value="1">SLEX Entrance/Exit Carmona, Cavite</option>
-                                <option value="2">Bancal Carmona, Cavite</option>
+                                <option value="" disabled selected>Select an area</option>
+                                <option value="slex">SLEX Entrance/Exit Carmona, Cavite</option>
+                                <option value="bancal">Bancal Carmona, Cavite</option>
                             </select>
-                            <label>Pollutant</label>
+                            <label>Area</label>
                         </div>
 
                         <div class="input-field col s10">
@@ -162,7 +151,7 @@
 
                         <div class="input-field col s10">
                             <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01" min="0.65" max="1.64">
-                            <label>Nitrogen Dioxide</label>
+                            <label>Nitrogen Oxide</label>
                         </div>
                         <div class="input-field col offset-s1">
                             <label id="unit">ppm</label>
@@ -193,10 +182,12 @@
                         </div>
 
                         <div class="input-field col s12">
+                            <input id="time" name="time" type="text" placeholder="YYYY-MM-DD HH:MM:SS">
+                            <label>Time</label>
+                        </div>
+                        <div class="input-field col s12">
                                 <button class="btn waves-effect waves-light" type="submit" style="width: 100%; margin-top:3%;" name="btnSubmit">Submit</button>
                         </div>
-
-
                     </form>
 
                 </div>
