@@ -1,56 +1,93 @@
 <?php
 
-require_once 'public/include/db_connect.php';
 
-if(isset($_POST['btnSubmit'])){
-  $area = $_POST['area'];
-  $E_ID = -1;
-  $CValue = $_POST['cValue'];
-  $time_now = "";
-
-  if($area == "" || $E_ID == 0 || $CValue == ""){
-    echo "Something's missing";
-  }
-  else{
-    $E_ID = $_POST['element'];
-    $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$E_ID' and area_name='bancal' ORDER BY timestamp desc limit 1";
-    $result = mysqli_query($con,$query);
-
-    while($row = mysqli_fetch_array($result))
+    function insertPollutant($e_id, $area, $co_value)
     {
-        if(mysql_num_rows($result)==0){
-            echo date("Y-m-d H:i:s", strtotime("00:00:00")+3600);
-            break;
+        include('public/include/db_connect.php');
+
+        $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' ORDER BY timestamp desc limit 1";
+        $result = mysqli_query($con,$query);
+
+        $time_now = "";
+
+        if(mysqli_num_rows($result)==0){
+            $time_now = date("Y-m-d H:i:s", strtotime("00:00:00")+3600);
         }
         else{
-          $time_now = date("Y-m-d H:i:s", strtotime($row['timestamp'])+3600);
-          break;
+            while($row = mysqli_fetch_array($result)) {
+                $time_now = date("Y-m-d H:i:s", strtotime($row['timestamp']) + 3600);
+            }
         }
 
+        $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$co_value', '$time_now')";
 
+        if (!mysqli_query($con,$query))
+        {
+            die('Error: ' . mysqli_error($con));
+        }
+
+        else {
+            $statusMessage = "CO record added successfully.";
+        }
     }
-    echo $time_now;
 
-    //echo date("Y-m-d H:00:00");
-
-/*
-    $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$E_ID', '$CValue', '$time_now')";
-
-    if (!mysqli_query($con,$query))
+    if(isset($_POST['btnSubmit']))
     {
-      die('Error: ' . mysqli_error($con));
-    }
+        $area = $_POST['area'];
 
-    else
-    {
-      $statusMessage = "New record added successfully.";
-    }
-*/
-    mysqli_close($con);
-    echo $time_now;
-  }
+        $co_value = $_POST['co_value'];
+        $so2_value = $_POST['so2_value'];
+        $no2_value = $_POST['no2_value'];
+        $o3_value = $_POST['o3_value'];
+        $pm10_value = $_POST['pm10_value'];
+        $tsp_value = $_POST['tsp_value'];
 
-}
+        if($area == "1")
+        {
+            $area = "slex";
+        }
+
+        else
+        {
+            $area = "bancal";
+        }
+
+        if($co_value != null)
+        {
+            $e_id = '1';
+            insertPollutant($e_id, $area, $co_value);
+        }
+
+        if($so2_value != null)
+        {
+            $e_id = '2';
+            insertPollutant($e_id, $area, $so2_value);
+        }
+
+        if($no2_value != null)
+        {
+            $e_id = '3';
+            insertPollutant($e_id, $area, $no2_value);
+        }
+
+        if($o3_value != null)
+        {
+            $e_id = '4';
+            insertPollutant($e_id, $area, $o3_value);
+        }
+
+        if($pm10_value != null)
+        {
+            $e_id = '5';
+            insertPollutant($e_id, $area, $pm10_value);
+        }
+
+        if($tsp_value != null)
+        {
+            $e_id = '6';
+            insertPollutant($e_id, $area, $tsp_value);
+        }
+    }
 
 ?>
 <!DOCTYPE html>
@@ -69,7 +106,14 @@ if(isset($_POST['btnSubmit'])){
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
 
-
+    <script type="text/javascript">
+        $('#co_value').val('');
+        $('#so2_value').val('');
+        $('#no2_value').val('');
+        $('#o3_value').val('');
+        $('#pm10_value').val('');
+        $('#tsp_value').val('');
+    </script>
 </head>
 
 <body>
@@ -88,30 +132,70 @@ if(isset($_POST['btnSubmit'])){
         <div class="container">
             <div class="row">
                 <div class="col s12">
-                    <form>
-                        <div class="input-field col s6">
-                            <select id="pollutant">
+                    <form method="post" action="">
+
+                        <div class="input-field col s12">
+                            <select id="area" name="area" required>
                                 <option value="" disabled selected>Select a pollutant</option>
-                                <option value="1">CO</option>
-                                <option value="2">SO2</option>
-                                <option value="3">NO2</option>
-                                <option value="4">O3</option>
-                                <option value="5">PM10</option>
-                                <option value="6">SO2</option>
-                                <option value="6">TSP</option>
+                                <option value="1">SLEX Entrance/Exit Carmona, Cavite</option>
+                                <option value="2">Bancal Carmona, Cavite</option>
                             </select>
                             <label>Pollutant</label>
                         </div>
-                        <div class="input-field col s2">
-                            <input id="concentration" type="number" class="validate" value="0">
-                            <label for="number">Concentration</label>
+
+                        <div class="input-field col s10">
+                            <input id="co_value" name="co_value" type="number" class="validate" step="0.1" min="0.0" max="40.4">
+                            <label>Carbon Monoxide</label>
                         </div>
-                        <div class="input-field col s2">
-                            <label id="unit">µg/m3</label>
+                        <div class="input-field col offset-s1">
+                            <label id="unit">ppm</label>
                         </div>
-                        <div class="input-field col s2">
-                            <button class="btn waves-effect waves-light" type="submit">Submit</button>
+
+
+                        <div class="input-field col s10">
+                            <input id="so2_value" name="so2_value" type="number" class="validate" step="0.001" min="0.000" max="0.804">
+                            <label>Sulfur Dioxide</label>
                         </div>
+                        <div class="input-field col offset-s1">
+                            <label id="unit">ppm</label>
+                        </div>
+
+                        <div class="input-field col s10">
+                            <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01" min="0.65" max="1.64">
+                            <label>Nitrogen Dioxide</label>
+                        </div>
+                        <div class="input-field col offset-s1">
+                            <label id="unit">ppm</label>
+                        </div>
+
+                        <div class="input-field col s10">
+                            <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001" min="0.000" max="0.504">
+                            <label>Ozone</label>
+                        </div>
+                        <div class="input-field col offset-s1">
+                            <label id="unit">ppm</label>
+                        </div>
+
+                        <div class="input-field col s10">
+                            <input id="pm10_value" name="pm10_value" type="number" class="validate" min="0" max="504">
+                            <label>Particulate Matter 10</label>
+                        </div>
+                        <div class="input-field col offset-s1">
+                            <label id="unit">ug/m3</label>
+                        </div>
+
+                        <div class="input-field col s10">
+                            <input id="tsp_value" name="tsp_value" type="number" class="validate" min="0">
+                            <label>Total Suspended Particles</label>
+                        </div>
+                        <div class="input-field col offset-s1">
+                            <label id="unit">ug/m3</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                                <button class="btn waves-effect waves-light" type="submit" style="width: 100%; margin-top:3%;" name="btnSubmit">Submit</button>
+                        </div>
+
 
                     </form>
 
