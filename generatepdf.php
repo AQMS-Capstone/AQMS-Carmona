@@ -162,7 +162,7 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetTitle("AQMS Monitoring - Generated Report");
 
-$pdf->Ln(13);
+$pdf->Ln(6);
 $pdf->SetFont('helvetica','B',16);
 $pdf->Cell(70);
 $pdf->Cell(0,15,'Area: ');
@@ -180,7 +180,7 @@ $pdf->Rect( 10,  30,  65,  44 ,'F');
 $pdf->Cell(6);
 
 $pdf->SetFont('helvetica', 'B', 72);
-$pdf->Cell(0,15, $aqi_index);
+$pdf->Cell(0,25, $aqi_index);
 $pdf->Cell(-120);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('helvetica', 'B', 16);
@@ -207,7 +207,7 @@ $pdf->Ln(18);
 $pdf->Cell(20);
 $pdf->SetTextColor(255,255,255);
 $pdf->SetFont('helvetica', '', 32);
-$pdf->Cell(0,-45, "ppm");
+$pdf->Cell(0,-40, "ppm");
 $pdf->Ln(-3);
 
 //Details
