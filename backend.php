@@ -48,34 +48,40 @@
         if($co_value != null)
         {
             $e_id = '1';
+            insertPollutant($e_id, $area, $co_value,$time);
         }
 
         if($so2_value != null)
         {
             $e_id = '2';
+            insertPollutant($e_id, $area, $co_value,$time);
         }
 
         if($no2_value != null)
         {
             $e_id = '3';
+            insertPollutant($e_id, $area, $co_value,$time);
         }
 
         if($o3_value != null)
         {
             $e_id = '4';
+            insertPollutant($e_id, $area, $co_value,$time);
         }
 
         if($pm10_value != null)
         {
             $e_id = '5';
+            insertPollutant($e_id, $area, $co_value,$time);
         }
 
         if($tsp_value != null)
         {
             $e_id = '6';
+            insertPollutant($e_id, $area, $co_value,$time);
         }
 
-        insertPollutant($e_id, $area, $co_value,$time);
+
     }
 
 ?>
