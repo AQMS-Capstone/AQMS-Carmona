@@ -1,7 +1,7 @@
 /**
  * Created by Skullpluggery on 10/28/2016.
  */
-google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.load('current', {packages: ['corechart', 'line']});
 google.charts.setOnLoadCallback(drawBasic);
 
 function createGraph(data_pollutant, chartNames)
@@ -38,15 +38,16 @@ function createGraph(data_pollutant, chartNames)
           },
           gridlines:{ color:'transparent', count:17},
       },
-      vAxis:{gridlines:{ color:'transparent' }
+      vAxis:{
+          gridlines:{ color:'transparent' }
       ,
       },
       legend: {position: 'none'},
-      bar: {groupWidth: '90%'},
-
+      pointSize: 3,
+      colors: ['#009688'],
   };
 
-  var chart = new google.visualization.ColumnChart(
+  var chart = new google.visualization.LineChart(
       document.getElementById(chartNames));
 
   chart.draw(data, options);
@@ -158,67 +159,4 @@ function drawBasic() {
       }
     }
 
-
-
-    /*
-    for(var i = 0 ; i < bancal_co_values.length ; i ++)
-    {
-      //2016-14-21 05;
-      var datestamp = JSON.stringify(bancal_co_values[i].timestamp).replace(/"/g, '');
-      datestamp = parseInt(datestamp.slice(11, 13));
-      var value = 0;
-
-      if((i + 1) == datestamp)
-      {
-        var value = parseInt(JSON.stringify(bancal_co_values[i].concentration_value).replace(/"/g, ''));
-      }
-
-      alert(value);
-
-      data.addRow([{v: [datestamp, 0, 0], f: ''}, value]);
-    }
-    */
-
-    /*
-    data.addRows([
-        [{v: [1, 0, 0], f: ''}, 45],
-        [{v: [2, 0, 0], f: ''}, 45],
-        [{v: [3, 0, 0], f: ''}, 48],
-        [{v: [4, 0, 0], f: ''}, 50],
-        [{v: [5, 0, 0], f: ''}, 51],
-        [{v: [6, 0, 0], f: ''}, 50],
-        [{v: [7, 0, 0], f: ''}, 54],
-        [{v: [8, 0, 0], f: ''}, 48],
-        [{v: [9, 0, 0], f: ''}, 48],
-        [{v: [10, 0, 0], f: ''}, 52],
-        [{v: [11, 0, 0], f: ''}, 58],
-        [{v: [12, 0, 0], f: ''}, 55],
-
-        [{v: [13, 0, 0], f: ''}, 58],
-        [{v: [14, 0, 0], f: ''}, 55],
-        [{v: [15, 0, 0], f: ''}, 55],
-        [{v: [16, 0, 0], f: ''}, 48],
-        [{v: [17, 0, 0], f: ''}, 50],
-        [{v: [18, 0, 0], f: ''}, 51],
-        [{v: [19, 0, 0], f: ''}, 50],
-        [{v: [20, 0, 0], f: ''}, 54],
-        [{v: [21, 0, 0], f: ''}, 48],
-        [{v: [22, 0, 0], f: ''}, 48],
-        [{v: [23, 0, 0], f: ''}, 52],
-        [{v: [24, 0, 0], f: ''}, 49],
-    ]);
-    */
-
-
-    /*
-    var chart2 = new google.visualization.ColumnChart(
-        document.getElementById('chart_div_2'));
-
-    chart2.draw(data, options);
-
-    var chart3 = new google.visualization.ColumnChart(
-        document.getElementById('chart_div_3'));
-
-    chart3.draw(data, options);
-    */
 }

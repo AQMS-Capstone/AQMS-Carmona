@@ -86,7 +86,8 @@ include("class/Map.php");
                     <div class="row-no-after">
                         <div class="card" style="min-height: 288px;">
                             <div class="card-content">
-                                <table>
+                                <div class="scroll" style="height:250px;">
+                                 <table>
                                     <thead>
                                     <tr>
                                         <th></th>
@@ -233,6 +234,7 @@ include("class/Map.php");
                                     ?>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
