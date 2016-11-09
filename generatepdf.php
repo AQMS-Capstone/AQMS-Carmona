@@ -254,5 +254,5 @@ $pdf->MultiCell(0,5,$h_synthesis);
 
 
 $pdf->Output();
-
+header('Location: history.php');
   ?>

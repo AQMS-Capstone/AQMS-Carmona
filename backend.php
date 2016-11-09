@@ -32,6 +32,8 @@
         else {
             $statusMessage = "CO record added successfully.";
         }
+
+        header('Location: backend.php');
     }
 
     if(isset($_POST['btnSubmit']))
