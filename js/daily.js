@@ -46,7 +46,7 @@ function GetBancalStatus() {
     $("#zoneName").text('Bancal Carmona, Cavite');
     $("#zoneImg").attr("src","res/images/area/bancal.jpg");
 
-    $("#prevalentPollutant").text(pollutant_labels[bancal_prevalentIndex]);
+    $("#prevalentPollutant").text("("+ pollutant_symbols[bancal_prevalentIndex] + ") " + pollutant_labels[bancal_prevalentIndex]);
     $("#aqiNum").text(bancal_prevalent_value);
     $("#timeUpdated").text(bancal_date_gathered);
 

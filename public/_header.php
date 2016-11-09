@@ -11,7 +11,7 @@
     <div>
         <nav class="z-depth-0">
             <div class="nav-wrapper">
-                <a id="logo" href="#"><img class="brand-logo center" src="res/logo.png"> </a>
+                <a id="logo" href="index.php"><img class="brand-logo center" src="res/logo.png"> </a>
             </div>
         </nav>
     </div>

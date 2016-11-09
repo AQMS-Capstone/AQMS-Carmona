@@ -96,9 +96,9 @@ if(isset($_POST['btnSubmit'])){
                                 <option value="2">SO2</option>
                                 <option value="3">NO2</option>
                                 <option value="4">O3</option>
-                                <option value="5">Pb</option>
-                                <option value="6">PM10</option>
-                                <option value="7">SO2</option>
+                                <option value="5">PM10</option>
+                                <option value="6">SO2</option>
+                                <option value="6">TSP</option>
                             </select>
                             <label>Pollutant</label>
                         </div>
