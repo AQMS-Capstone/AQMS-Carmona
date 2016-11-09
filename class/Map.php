@@ -19,8 +19,15 @@
 
   date_default_timezone_set('Asia/Manila');
   $date_now = date("Y-m-d");
+  $date_now_string = $date_now." 00:00:00";
+
   $date_tomorrow = date("Y-m-d", strtotime('tomorrow'));
   $date_tomorrow = $date_tomorrow." 00:00:00";
+
+  $date_yesterday = date("Y-m-d", strtotime('yesterday'));
+  $date_yesterday_string = $date_yesterday." 00:00:00";
+
+  $hour_value = date("H"); // < --------- CURRENT HOUR --------- >
 
   //$bancal_date_gathered = date("Y-m-d H")." 00:00";
 
@@ -30,8 +37,18 @@
   $bancalAllDayValues_array = array();
   $slexAllDayValues_array = array();
 
-  $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow' ORDER BY TIMESTAMP";
-  //echo $sql;
+  if($hour_value == 0)
+  {
+    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now' ORDER BY TIMESTAMP";
+  }
+
+  else
+  {
+    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow' ORDER BY TIMESTAMP";
+  }
+
+
+  echo $sql;
   $result =  mysqli_query($con,$sql);
 
   while($row=mysqli_fetch_assoc($result))
@@ -194,8 +211,6 @@
   $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
 
   $bancal_aqi_values = array();
-
-  $hour_value = date("H"); ; // < --------- CURRENT HOUR --------- >
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
   for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
@@ -2177,5 +2192,5 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   var slex_pm10_max = <?= json_encode($slex_pm10_max) ?>;
   var slex_tsp_max = <?= json_encode($slex_tsp_max) ?>;
 
-  var area_chosen = "<?= $area_chosen_name ?>";;
+  var area_chosen = "<?= $area_chosen_name ?>";
 </script>
