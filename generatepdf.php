@@ -14,7 +14,7 @@ $ugachme = array();
 $query = "";
 $time_updated = "";
 
-$area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
+$area = array('Select an area', 'SLEX, Cavite', 'Bancal', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
 $pollutant = array('Select a pollutant', 'CO', 'All');
 //$area = $_GET[$areaArray];
 if(isset($_POST['btnGenerate'])){
@@ -88,7 +88,7 @@ function BasicTable($header, $sampol)
     // Header
     $this->Cell(5);
     foreach($header as $col){
-      $this->SetFont('Times', 'B', 12);
+      $this->SetFont('helvetica', 'B', 10);
 
         $this->Cell(45,7,$col,1,0,'C');
       }
@@ -97,7 +97,7 @@ function BasicTable($header, $sampol)
     foreach($sampol as $row)
     {
       $this->Cell(5);
-      $this->SetFont('Arial', '', 10);
+      $this->SetFont('helvetica', '', 10);
         foreach($row as $col)
             $this->Cell(45,6,$col,1,0,'C');
         $this->Ln();
@@ -113,8 +113,8 @@ function Header()
     // Logo
     $this->Image('res/header.png',10,6,190);
     $this->Image('res/Logo1.png',10,6,32);
-    $this->SetFont('Arial', 'B', 18);
-    $this->Cell(38);
+    $this->SetFont('helvetica', 'B', 18);
+    $this->Cell(50);
     $this->SetTextColor(255,255,255);
     $this->Cell(30, 10, 'AQMS Carmona History Report',0,0);
     // Arial bold 15
@@ -122,12 +122,12 @@ function Header()
 
     $this->Cell(48);
     // Title
-    $this->SetFont('Arial', 'B', 8);
-    $this->SetTextColor(255,255,255);
-    $this->Cell(10);
-    $this->Cell(30,20,'Generated on:'.' '.$g_time,0,0);
+    $this->SetFont('helvetica', 'B', 8);
+    $this->SetTextColor(0,0,0);
+    //$this->Cell(10);
+    $this->Cell(30,30,'Generated on:'.' '.$g_time,0,0);
     // Line break
-    $this->Ln(20);
+    $this->Ln(10);
 }
 
 // Page footer
@@ -162,54 +162,70 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetTitle("AQMS Monitoring - Generated Report");
 
-$pdf->SetFont('Times','B',16);
-$pdf->Cell(0,5, $a_name);
-$pdf->Ln(20);
+$pdf->Ln(13);
+$pdf->SetFont('helvetica','B',16);
+$pdf->Cell(70);
+$pdf->Cell(0,15,'Area: ');
+$pdf->SetFont('helvetica','',16);
+$pdf->Cell(-105);
+$pdf->Cell(0,15, $a_name);
+$pdf->Ln(8);
 
 //AQI index
 
 $pdf->SetFillColor($red,$green,$blue);
 $pdf->SetTextColor(255,255,255);
-$pdf->Rect( 10,  39,  65,  44 ,'F');
+$pdf->Rect( 10,  30,  65,  44 ,'F');
 
-$pdf->Cell(20);
+$pdf->Cell(6);
 
-$pdf->SetFont('Times', 'B', 72);
-$pdf->Cell(0,10, $aqi_index);
+$pdf->SetFont('helvetica', 'B', 72);
+$pdf->Cell(0,20, $aqi_index);
 $pdf->Cell(-120);
 $pdf->SetTextColor(0,0,0);
-$pdf->SetFont('Times', 'B', 24);
-$pdf->Cell(0,0, 'Status: '.$aqi_status);
-$pdf->Ln();
+$pdf->SetFont('helvetica', 'B', 16);
+$pdf->Cell(0,10, 'Status: ');
+$pdf->Cell(-100);
+$pdf->SetTextColor(0,0,0);
+$pdf->SetFont('helvetica', '', 16);
+$pdf->Cell(0,10, $aqi_status);
+$pdf->Ln(14);
 $pdf->Cell(70);
-$pdf->SetFont('Times', 'B', 16);
-$pdf->Cell(0,20, 'Prevalent Pollutant: '.$prevalent_air_pollutant.' ('.$prevalent_air_pollutant_symbol.')');
-$pdf->Ln(18);
-$pdf->SetFont('Times', 'B', 16);
+$pdf->SetFont('helvetica', 'B', 16);
+$pdf->Cell(0,-6, 'Prevalent Pollutant: ');
+$pdf->Cell(-65);
+$pdf->SetFont('helvetica', '', 16);
+$pdf->Cell(0,-6, $prevalent_air_pollutant.' ('.$prevalent_air_pollutant_symbol.')');
+$pdf->Ln(15);
+$pdf->SetFont('helvetica', 'B', 16);
 $pdf->Cell(70);
-$pdf->Cell(0,5, 'Time Updated: '.$time_updated);
+$pdf->Cell(0,-23, 'Last Updated: ');
+$pdf->SetFont('helvetica', '', 16);
+$pdf->Cell(-82);
+$pdf->Cell(0,-23, $time_updated);
 $pdf->Ln(18);
 $pdf->Cell(20);
 $pdf->SetTextColor(255,255,255);
-$pdf->SetFont('Times', '', 32);
-$pdf->Cell(0,-30, "ppm");
-$pdf->Ln(20);
+$pdf->SetFont('helvetica', '', 32);
+$pdf->Cell(0,-45, "ppm");
+$pdf->Ln(-3);
 
 //Details
 
 //Table
 $pdf->SetTextColor(0,0,0);
+$pdf->SetFont('helvetica','B',10);
 $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
 //$data = $pdf->LoadData('countries.txt');
-$pdf->SetFont('Arial','',14);
+$pdf->SetFont('helvetica','',14);
 $pdf->BasicTable($header,$ugachme);
 $pdf->Ln(8);
 
 
-$pdf->SetFont('Times','B',18);
+$pdf->SetFont('helvetica','B',18);
 $pdf->Cell(0,10, 'Synthesis');
 $pdf->Ln(10);
-$pdf->SetFont('Times','',12);
+$pdf->SetFont('helvetica','',10);
 $pdf->MultiCell(0,5,$h_synthesis);
 
 
