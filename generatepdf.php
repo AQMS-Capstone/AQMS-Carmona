@@ -7,6 +7,13 @@ require_once 'public/include/db_connect.php';
 $areaIndex = 0;
 $pollutantIndex = 0;
 $prevalent_air_pollutant = "";
+$aqi_status = "";
+$year = "yyyy";
+$month = "mm";
+$day = "dd";
+$red = 0;
+$blue = 0;
+$green = 130;
 $sampol = array();
 $sampol1 = array();
 $igachu = array();
@@ -58,27 +65,56 @@ if(isset($_POST['btnGenerate'])){
 
 $a_name = $area[$areaIndex];
 $aqi_index = $sampol1[2];
-if($aqi_index < 25){
-  $h_synthesis = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. ";
-}
-else if($aqi_index > 25 || $aqi_index <50){
-  $h_synthesis = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. ";
-}
-else{
-  $h_synthesis = "People, should limit outdoor exertion.  People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible.  Unnecessary trips should be postponed. Motor vehicle use may be restricted.  Industrial activities may be curtailed.";
 
+
+if($aqi_index < 26){
+    $aqi_status = "Good";
+    $red = 10;
+    $blue = 80;
+    $green = 25;
+    $h_synthesis = "";
+}
+if($aqi_index > 25 || $aqi_index <50){
+    $aqi_status = "Fair";
+    $red = 200;
+    $blue = 20;
+    $green = 180;
+    $h_synthesis = "";
+}
+if($aqi_index > 49 || $aqi_index <100){
+    $aqi_status = "Unhealthy for Sensitive Groups";
+    $red = 200;
+    $blue = 20;
+    $green = 180;
+    $h_synthesis = "People, should limit outdoor exertion. People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible. Unnecessary trips should be postponed. Motor vehicle use may be restricted. Industrial activities may be curtailed.";
+}
+if($aqi_index > 99 || $aqi_index <251){
+    $aqi_status = "Very Unhealthy";
+    $red = 250;
+    $blue = 0;
+    $green = 0;
+    $h_synthesis = "People should stay indoors and rest as much as possible. Unnecessary trips should be postponed. People should voluntarily restrict the use of vehicles and avoid sources of CO, such as heavy traffic. Smokers should refrain from smoking.";
+
+}
+if($aqi_index > 250 || $aqi_index <351){
+    $aqi_status = "Acutely Unhealthy";
+    $red = 150;
+    $blue = 150;
+    $green = 0;
+    $h_synthesis = "People, should limit outdoor exertion. People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible. Unnecessary trips should be postponed. Motor vehicle use may be restricted. Industrial activities may be curtailed.";
+}
+if($aqi_index>350){
+    $aqi_status = "Emergency";
+    $red = 120;
+    $blue = 0;
+    $green = 0;
+    $h_synthesis = "Everyone should remain indoors, (keeping windows and doors closed unless heat stress is possible). Motor vehicle use should be prohibited except for emergency situations. Industrial activities, except that which is vital for public safety and health, should be curtailed";
 }
 $prevalent_air_pollutant_symbol = $sampol1[1];
 $prevalent_air_pollutant = $sampol1[0];
-$aqi_status = "";
-$year = "yyyy";
-$month = "mm";
-$day = "dd";
-$red = 0;
-$blue = 0;
-$green = 130;
 
 
+//------------------ GENERATING PDF -------------------------
 class PDF extends FPDF
 {
 
@@ -143,18 +179,6 @@ function Footer()
 }
 }
 
-if($aqi_index<=25){
-  $aqi_status = "Good";
-  $red = 10;
-  $blue = 80;
-  $green = 25;
-}
-else if($aqi_index>=26 || $aqi_index<=51){
-  $aqi_status = "Fair";
-  $red = 200;
-  $blue = 20;
-  $green = 180;
-}
 
 // Instanciation of inherited class
 $pdf = new PDF();
@@ -223,7 +247,7 @@ $pdf->Ln(8);
 
 
 $pdf->SetFont('helvetica','B',18);
-$pdf->Cell(0,10, 'Synthesis');
+$pdf->Cell(0,10, 'Cautionary Statement:');
 $pdf->Ln(10);
 $pdf->SetFont('helvetica','',10);
 $pdf->MultiCell(0,5,$h_synthesis);
