@@ -245,10 +245,17 @@ $pdf->SetFont('helvetica','',14);
 $pdf->BasicTable($header,$ugachme);
 $pdf->Ln(8);
 
-
 $pdf->SetFont('helvetica','B',18);
 $pdf->Cell(0,10, 'Cautionary Statement:');
 $pdf->Ln(10);
+$pdf->SetFont('helvetica','',10);
+$pdf->MultiCell(0,5,$h_synthesis);
+$pdf->Ln(8);
+
+
+$pdf->SetFont('helvetica','B',18);
+$pdf->Cell(0,30, 'Cautionary Statement:');
+$pdf->Ln(20);
 $pdf->SetFont('helvetica','',10);
 $pdf->MultiCell(0,5,$h_synthesis);
 
