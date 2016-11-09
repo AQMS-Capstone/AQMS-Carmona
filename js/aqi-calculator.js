@@ -219,9 +219,9 @@ function GetStatement(AQIStatus,element){
                     break;
                 }
                 case "NO2":{
-                    $("#synthesis").text("");
-                    $("#health-effects").text("");
-                    $("#cautionary").text("");
+                    $("#synthesis").text("People with asthma or other respiratory diseases, the elderly, and children are the groups most at risk.");
+                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children, the elderly, and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
+                    $("#cautionary").text("Active children, the elderly, and people with lung disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should avoid prolonged or heavy outdoor exertion.");
                     break;
                 }
                 case "O3":{

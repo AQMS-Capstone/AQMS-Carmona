@@ -31,10 +31,10 @@ if(isset($_GET["area"]))
                                 <span class="card-title"><b class="teal-text" id="zoneName">Zone Name</b></span>
                             </div>
                             <div id="AQIStat_txt" class="col s12">
-                                <b>Prevalant Air Pollutant: </b> <span id="prevalentPollutant">Prevalant Air Pollutant</span>
+                                <b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">Prevalent Air Pollutant</span>
                             </div>
                             <div class="col s12">
-                              <b>Time updated: </b>  <span id="timeUpdated">DateToday TimeToday</span>
+                              <b>Last updated: </b>  <span id="timeUpdated">DateToday TimeToday</span>
                             </div>
                         </div>
                     </div>

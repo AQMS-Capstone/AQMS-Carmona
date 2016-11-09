@@ -37,7 +37,7 @@ include("class/Map.php");
         <div class="container">
             <div class="row">
                 <div class="col s4">
-                    <div class="card" style="min-height: 576px;">
+                    <div class="card" style="min-height: 591px;">
                         <div class="card-image">
                             <img id="zoneImg" src="res/images/area/slex_carmona-exit.jpg">
                         </div>
@@ -46,7 +46,7 @@ include("class/Map.php");
 
                             <p><b>Prevalent Air Pollutant: </b> <p id="prevalentPollutant">NaN</p></p>
                             <p><b>AQI: </b><span id="aqiNum">NaN</span></p>
-                            <p><b>Time Updated: </b><span id="timeUpdated">NaN</span></p>
+                            <p><b>Last Updated: </b><span id="timeUpdated">NaN</span></p>
                         </div>
                         <div class="center bottom">
                             <div class="divider"></div>
@@ -60,14 +60,14 @@ include("class/Map.php");
                 </div>
 
                 <div class="col s8">
-                    <div class="card" style="min-height: 576px;">
+                    <div class="row-no-after">
+                        <div class="card" style="min-height: 288px;">
 
-                        <div id="AQIStat" class="center" style="padding: 15px;">
-                            <h5><b id="aqiText">NaN</b></h5>
-                        </div>
-                        <div class="carousel carousel-slider">
+                            <div id="AQIStat" class="center" style="padding: 15px;">
+                                <h5><b id="aqiText">NaN</b></h5>
+                            </div>
 
-                            <div class="card-content carousel-item">
+                            <div class="card-content">
                                 <ul class="tabs">
                                     <li class="tab col s3"><a class="active" href="#synthesis">Synthesis</a></li>
                                     <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>
@@ -81,40 +81,19 @@ include("class/Map.php");
 
                                 <br>
                             </div>
-
-                            <div class="card-content carousel-item">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th> </th>
-                                        <th> </th>
-                                        <th>Min</th>
-                                        <th>Max</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <tr>
-                                        <td>E_ID</td>
-                                        <td>GRAPH HERE</td>
-                                        <td>000</td>
-                                        <td>999</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-
-                        <div class="center bottom">
-                            <div class="divider"></div>
-                            <br>
-                            <a id ="prevStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
-                            <a id ="nextStatus" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
-                            <br>
-                            <br>
                         </div>
                     </div>
+                    <div class="row-no-after">
+                        <div class="card" style="min-height: 288px;">
+
+
+                            <div class="card-content">
+
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
