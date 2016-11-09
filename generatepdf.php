@@ -12,6 +12,7 @@ $sampol1 = array();
 $igachu = array();
 $ugachme = array();
 $query = "";
+$time_updated = "";
 
 $area = array('Select an area', 'SLEX Carmona Exit, Carmona, Cavite', 'Bancal', 'SLEX Carmona Exit and Bancal Junction, Carmona, Cavite');
 $pollutant = array('Select a pollutant', 'CO', 'All');
@@ -23,11 +24,13 @@ if(isset($_POST['btnGenerate'])){
   if($pollutantIndex == 3){
     $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-              WHERE area_name = '$loc' ORDER BY timestamp";
+              WHERE area_name = '$loc'
+              ORDER BY CONCENTRATION_VALUE DESC";
   }else if($pollutantIndex == 1){
     $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-              WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' ORDER BY timestamp";
+              WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex'
+              ORDER BY concentration_value DESC";
   }
   $result = mysqli_query($con, $query);
   while($row = mysqli_fetch_array($result)){
@@ -40,11 +43,15 @@ if(isset($_POST['btnGenerate'])){
     array_push($sampol1, $row["timestamp"]);
   }
 
+  $time_updated = $sampol1[3];
 
   foreach ($sampol as $line) {
     # code...
     $ugachme[] = explode(';', trim($line));
   }
+
+
+  mysqli_close($con);
 
 }
 
@@ -52,10 +59,10 @@ if(isset($_POST['btnGenerate'])){
 $a_name = $area[$areaIndex];
 $aqi_index = $sampol1[2];
 if($aqi_index < 25){
-  $h_synthesis = "The air is nice, you're good to go!";
+  $h_synthesis = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. ";
 }
 else if($aqi_index > 25 || $aqi_index <50){
-  $h_synthesis = "The air is somewhat nice :D";
+  $h_synthesis = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. ";
 }
 else{
   $h_synthesis = "People, should limit outdoor exertion.  People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible.  Unnecessary trips should be postponed. Motor vehicle use may be restricted.  Industrial activities may be curtailed.";
@@ -106,14 +113,19 @@ function Header()
     // Logo
     $this->Image('res/header.png',10,6,190);
     $this->Image('res/Logo1.png',10,6,32);
+    $this->SetFont('Arial', 'B', 18);
+    $this->Cell(38);
+    $this->SetTextColor(255,255,255);
+    $this->Cell(30, 10, 'AQMS Carmona History Report',0,0);
     // Arial bold 15
     // Move to the right
 
-    $this->Cell(118);
+    $this->Cell(48);
     // Title
-    $this->SetFont('Arial', 'B', 10);
+    $this->SetFont('Arial', 'B', 8);
     $this->SetTextColor(255,255,255);
-    $this->Cell(30,15,'Generated on:'.' '.$g_time,0,0);
+    $this->Cell(10);
+    $this->Cell(30,20,'Generated on:'.' '.$g_time,0,0);
     // Line break
     $this->Ln(20);
 }
@@ -173,10 +185,14 @@ $pdf->Cell(70);
 $pdf->SetFont('Times', 'B', 16);
 $pdf->Cell(0,20, 'Prevalent Pollutant: '.$prevalent_air_pollutant.' ('.$prevalent_air_pollutant_symbol.')');
 $pdf->Ln(18);
-$pdf->Cell(22);
+$pdf->SetFont('Times', 'B', 16);
+$pdf->Cell(70);
+$pdf->Cell(0,5, 'Time Updated: '.$time_updated);
+$pdf->Ln(18);
+$pdf->Cell(20);
 $pdf->SetTextColor(255,255,255);
 $pdf->SetFont('Times', '', 32);
-$pdf->Cell(0,10, "ppm");
+$pdf->Cell(0,-30, "ppm");
 $pdf->Ln(20);
 
 //Details
