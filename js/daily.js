@@ -136,6 +136,76 @@ function GetSLEXStatus() {
     GetAQIDetails(slex_prevalent_value,pollutant_symbols[slex_prevalentIndex]);
     $("#AQIStat").css("background-color", AQIAirQuality);
     $("#aqiText").text(AQIStatus);
+
+    if(slexAllDayValues_array.length != 0)
+    {
+        for(var i = 0; i < slex_aqi_values.length; i++)
+            //for(var i = 0; i < 2; i++)
+        {
+            var maxValue = 0;
+
+            switch(i)
+            {
+                case 0:
+                    maxValue = Math.max(parseInt(slex_co_max));
+                    break;
+
+                case 1:
+                    maxValue = Math.max(parseInt(slex_so2_max));
+                    break;
+
+                case 2:
+                    maxValue = Math.max(parseInt(slex_no2_max));
+                    break;
+
+                case 3:
+                    maxValue = Math.max(parseInt(slex_o3_max));
+                    break;
+
+                case 4:
+                    maxValue = Math.max(parseInt(slex_pm10_max));
+                    break;
+
+                case 5:
+                    maxValue = Math.max(parseInt(slex_tsp_max));
+                    break;
+            }
+
+            if(maxValue > -1)
+            {
+                var elementName = "e_symbol_" + (i+1);
+                var conentrationName = "concentration_value_" + (i+1);
+                var elementMin = "aqi_min_" + (i+1);
+                var elementMax = "aqi_max_" + (i+1);
+
+                document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
+
+                if(slex_aqi_values[i] == -1)
+                {
+                    document.getElementById(conentrationName).innerHTML = "-";
+                }
+
+                else
+                {
+                    document.getElementById(conentrationName).innerHTML =  slex_aqi_values[i];
+                }
+
+                var minValue = parseInt(JSON.stringify(slex_min_max_values[i][0]).replace(/"/g, ''));
+
+                if(minValue == -1)
+                {
+                    document.getElementById(elementMin).innerHTML =  0;
+                }
+
+                else {
+                    document.getElementById(elementMin).innerHTML = minValue;
+                }
+
+
+                document.getElementById(elementMax).innerHTML =  parseInt(JSON.stringify(slex_min_max_values[i][1]).replace(/"/g, ''));
+            }
+        }
+    }
 }
 
 $("#prevArea").click(function () {
