@@ -258,6 +258,8 @@ function initialize()
                 break;
               }
 
+
+
               if(maxValue > -1)
               {
                 //alert(maxValue);

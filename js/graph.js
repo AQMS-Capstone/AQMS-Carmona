@@ -118,7 +118,7 @@ function drawBasic() {
 
       if(slexAllDayValues_array.length != 0)
       {
-        for(var i = 0 ; i < slexAllDayValues_array.length; i++)
+        for(var i = 0 ; i < slex_aqi_values.length; i++)
         {
           var maxValue = 0;
 
