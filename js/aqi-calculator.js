@@ -6,42 +6,36 @@ function GetAQIDetails(AQI,element){
     if(AQI >= 0 && AQI <= 50){
         AQIAirQuality = goodAir;
         AQIStatus = "Good";
-        GetStatement(AQIStatus,element);
     }else if(AQI >= 51 && AQI <= 100)
     {
         AQIAirQuality = fairAir;
         AQIStatus = "Fair";
-        GetStatement(AQIStatus,element);
     }else if(AQI >= 101 && AQI <= 150)
     {
         AQIAirQuality = unhealthyAir;
         AQIStatus = "Unhealthy for Sensitive Groups";
-        GetStatement(AQIStatus,element);
     }else if(AQI >= 151 && AQI <= 200)
     {
         AQIAirQuality = veryUnhealthyAir;
         AQIStatus = "Very Unhealthy";
-        GetStatement(AQIStatus,element);
     }else if(AQI >= 201 && AQI <= 300)
     {
         AQIAirQuality = acutelyUnhealthyAir;
         AQIStatus = "Acutely Unhealthy";
-        GetStatement(AQIStatus,element);
     }else if(AQI >= 301 && AQI <= 400)
     {
         AQIAirQuality = emergencyAir;
         AQIStatus = "Emergency";
-        GetStatement(AQIStatus,element);
     }else if(AQI == -1){
         AQIAirQuality = otherAir;
         AQIStatus = "No Available Data";
-        GetStatement(AQIStatus,element);
     }
     else{
         AQIAirQuality = otherAir;
         AQIStatus = "No Available Data";
-        GetStatement(AQIStatus,element);
     }
+
+    GetStatement(AQIStatus,element);
 }
 
 function GetStatement(AQIStatus,element){

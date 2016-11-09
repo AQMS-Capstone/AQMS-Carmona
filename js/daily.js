@@ -95,6 +95,7 @@ function GetBancalStatus() {
                 var elementMin = "aqi_min_" + (i+1);
                 var elementMax = "aqi_max_" + (i+1);
 
+
                 document.getElementById(elementName).innerHTML =  pollutant_symbols[i];
 
                 if(bancal_aqi_values[i] == -1)
