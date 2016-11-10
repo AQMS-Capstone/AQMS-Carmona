@@ -46,10 +46,19 @@ function GetBancalStatus() {
     $("#zoneName").text('Bancal Carmona, Cavite');
     $("#zoneImg").attr("src","res/images/area/bancal.jpg");
 
-    $("#prevalentPollutant").text("("+ pollutant_symbols[bancal_prevalentIndex] + ") " + pollutant_labels[bancal_prevalentIndex]);
-    $("#aqiNum").text(bancal_prevalent_value);
-    $("#timeUpdated").text(bancal_date_gathered);
+    if(bancal_prevalent_value == -1 || bancalAllDayValues_array.length == 0 || bancal_aqi_values.length == 0)
+    {
+      $("#prevalentPollutant").text("-");
+      $("#aqiNum").text("-");
+      $("#timeUpdated").text("-");
+    }
 
+    else
+    {
+      $("#prevalentPollutant").text("("+ pollutant_symbols[bancal_prevalentIndex] + ") " + pollutant_labels[bancal_prevalentIndex]);
+      $("#aqiNum").text(bancal_prevalent_value);
+      $("#timeUpdated").text(bancal_date_gathered);
+    }
 
     GetAQIDetails(bancal_prevalent_value,pollutant_symbols[bancal_prevalentIndex]);
     $("#AQIStat").css("background-color", AQIAirQuality);
@@ -130,9 +139,19 @@ function GetSLEXStatus() {
     $("#zoneName").text('SLEX Carmona Exit, Cavite');
     $("#zoneImg").attr("src","res/images/area/slex_carmona-exit.jpg");
 
-    $("#prevalentPollutant").text(pollutant_labels[slex_prevalentIndex]);
-    $("#aqiNum").text(slex_prevalent_value);
-    $("#timeUpdated").text(slex_date_gathered);
+    if(slex_prevalent_value == -1 || slexAllDayValues_array.length == 0 || slex_aqi_values.length == 0)
+    {
+      $("#prevalentPollutant").text("-");
+      $("#aqiNum").text("-");
+      $("#timeUpdated").text("-");
+    }
+
+    else
+    {
+      $("#prevalentPollutant").text(pollutant_labels[slex_prevalentIndex]);
+      $("#aqiNum").text(slex_prevalent_value);
+      $("#timeUpdated").text(slex_date_gathered);
+    }
 
     GetAQIDetails(slex_prevalent_value,pollutant_symbols[slex_prevalentIndex]);
     $("#AQIStat").css("background-color", AQIAirQuality);

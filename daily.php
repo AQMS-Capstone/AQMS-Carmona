@@ -46,7 +46,7 @@ include("class/Map.php");
 
                             <p><b>Prevalent Air Pollutant: </b> <p id="prevalentPollutant">NaN</p></p>
                             <p><b>AQI: </b><span id="aqiNum">NaN</span></p>
-                            <p><b>Last Updated: </b><span id="timeUpdated">NaN</span></p>
+                            <p><b>Recorded on: </b><span id="timeUpdated">NaN</span></p>
                         </div>
                         <div class="center bottom">
                             <div class="divider"></div>

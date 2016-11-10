@@ -17,7 +17,7 @@ if(bancalAllDayValues_array.length == 0 || bancal_aqi_values.length == 0)
   bancalAQI = "-";
   bancalprevalentPollutant = "-";
   bancalAirQuality = otherAir;
-  bancalAQIStatus = "No Available Data";
+  bancalAQIStatus = "No Current Data";
   bancal_date_gathered = "-";
 }
 
@@ -52,7 +52,7 @@ else {
     bancalAQI = "-";
     bancalprevalentPollutant = "-";
     bancalAirQuality = otherAir;
-    bancalAQIStatus = "No Available Data";
+    bancalAQIStatus = "No Current Data";
     bancal_date_gathered = "-";
   }
 }
@@ -69,7 +69,7 @@ if(slexAllDayValues_array.length == 0 || slex_aqi_values.length == 0)
   slexAQI = "-";
   slexprevalentPollutant = "-";
   slexAirQuality = otherAir;
-  slexAQIStatus = "No Available Data";
+  slexAQIStatus = "No Current Data";
   slex_date_gathered = "-";
 }
 
@@ -104,7 +104,7 @@ else {
     slexAQI = "-";
     slexprevalentPollutant = "-";
     slexAirQuality = otherAir;
-    slexAQIStatus = "No Available Data";
+    slexAQIStatus = "No Current Data";
     slex_date_gathered = "-";
   }
 }

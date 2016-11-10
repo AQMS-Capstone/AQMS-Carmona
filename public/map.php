@@ -34,7 +34,7 @@ if(isset($_GET["area"]))
                                 <b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">Prevalent Air Pollutant</span>
                             </div>
                             <div class="col s12">
-                              <b>Last updated: </b>  <span id="timeUpdated">DateToday TimeToday</span>
+                              <b>Recorded on: </b>  <span id="timeUpdated">DateToday TimeToday</span>
                             </div>
                         </div>
                     </div>

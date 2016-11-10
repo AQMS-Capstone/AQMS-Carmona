@@ -28,11 +28,11 @@ function GetAQIDetails(AQI,element){
         AQIStatus = "Emergency";
     }else if(AQI == -1){
         AQIAirQuality = otherAir;
-        AQIStatus = "No Available Data";
+        AQIStatus = "No Current Data";
     }
     else{
         AQIAirQuality = otherAir;
-        AQIStatus = "No Available Data";
+        AQIStatus = "No Current Data";
     }
 
     GetStatement(AQIStatus,element);
@@ -41,7 +41,7 @@ function GetAQIDetails(AQI,element){
 function GetStatement(AQIStatus,element){
 
     switch (AQIStatus){
-        case "No Available Data":{
+        case "No Current Data":{
 
             break;
         }
