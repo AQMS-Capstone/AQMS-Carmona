@@ -9,6 +9,9 @@
 if(isset($_POST['btnGenerate'])){
   $area = $_POST["drpArea"];
   $pollutant = $_POST["drpPollutant"];
+    $dateYear = $_POST["txtYear"];
+    $dateDay = $_POST["txtDay"];
+    $dateMonth = $_POST["txtMonth"];
 }
 
 ?>
@@ -60,22 +63,27 @@ if(isset($_POST['btnGenerate'])){
                                 <select name = "drpPollutant">
                                     <option value="" disabled selected>Select a pollutant</option>
                                     <option value="1">CO</option>
-                                    <option value="2">Bancal</option>
-                                    <option value="3">All</option>
+                                    <option value="2">SO2</option>
+                                    <option value="3">NO2</option>
+                                    <option value="4">O3</option>
+                                    <option value="5">Pb</option>
+                                    <option value="6">PM10</option>
+
+                                    <option value="7">All</option>
                                 </select>
                                 <label>Pollutant</label>
                             </div>
 
                             <div class="input-field col s4">
-                                <input id="year" type="number" min="2000" max="3000" class="validate">
+                                <input id="year" type="number" name="txtYear" min="2000" max="3000" class="validate">
                                 <label for="year">Year</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="month" type="number" min="1" max="12" class="validate">
+                                <input id="month" type="number" name="txtMonth" min="1" max="12" class="validate">
                                 <label for="month">Month</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="day" type="number" min="1" max="31" class="validate">
+                                <input id="day" type="number" name="txtDay" min="1" max="31" class="validate">
                                 <label for="day">Day</label>
                             </div>
 
