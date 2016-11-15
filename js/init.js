@@ -42,6 +42,7 @@ function ScrollTo(id){
 }
 flatpickr(".flatpickr", {
     enableTime: true,
+    defaultDate: new Date(),
     wrap: true,
     clickOpens: false // disable opening calendar by clicking on input
 });

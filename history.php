@@ -7,11 +7,11 @@
  */
 
 if(isset($_POST['btnGenerate'])){
+
   $area = $_POST["drpArea"];
   $pollutant = $_POST["drpPollutant"];
-    $dateYear = $_POST["txtYear"];
-    $dateDay = $_POST["txtDay"];
-    $dateMonth = $_POST["txtMonth"];
+    $dateTimeFrom = $_POST["txtDateTimeFrom"];
+    $dateTimeTo = $_POST["txtDateTimeTo"];
 }
 
 ?>
@@ -29,6 +29,7 @@ if(isset($_POST['btnGenerate'])){
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
 
@@ -74,22 +75,42 @@ if(isset($_POST['btnGenerate'])){
                                 <label>Pollutant</label>
                             </div>
 
-                            <div class="input-field col s4">
-                                <input id="year" type="number" name="txtYear" min="2000" max="3000" class="validate">
-                                <label for="year">Year</label>
+                            <div class="input-field s12">
+                                <div class="input-field col s12">
+                                    <p class="flatpickr">
+                                        <label for="time">From</label>
+                                        <input id="txtDateTimeFrom" name="txtDateTimeFrom" class="date col s9"
+                                               placeholder="YYYY-MM-DD HH:MM:SS"
+                                               data-input>
+                                        <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
+                                                class="material-icons">autorenew</span></a>
+                                        <a class="input-button date-btn btn-flat" data-toggle><span
+                                                class="material-icons">date_range</span></a>
+
+                                    </p>
+
+                                </div>
                             </div>
-                            <div class="input-field col s4">
-                                <input id="month" type="number" name="txtMonth" min="1" max="12" class="validate">
-                                <label for="month">Month</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="day" type="number" name="txtDay" min="1" max="31" class="validate">
-                                <label for="day">Day</label>
+                            <div class="input-field s12">
+                                <div class="input-field col s12">
+                                    <p class="flatpickr">
+                                        <label for="time">To</label>
+                                        <input id="txtDateTimeTo" name="txtDateTimeTo" class="date col s9"
+                                               placeholder="YYYY-MM-DD HH:MM:SS"
+                                               data-input>
+                                        <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
+                                                class="material-icons">autorenew</span></a>
+                                        <a class="input-button date-btn btn-flat" data-toggle><span
+                                                class="material-icons">date_range</span></a>
+
+                                    </p>
+
+                                </div>
                             </div>
 
-                            <div class="input-field col s12">
-                                <button class="btn waves-effect waves-light" type="submit" name="btnGenerate">Generate
-                                    <i class="material-icons right">library_books</i>
+                            <div class="input-field center col s12">
+                                <button class="btn waves-effect waves-light" type="submit" name="btnGenerate" style="width: 100%;">
+                                    Generate
                                 </button>
                             </div>
                         </form>
@@ -109,6 +130,7 @@ if(isset($_POST['btnGenerate'])){
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
+<script src="js/flatpickr.min.js"></script>
 <script src="js/init.js"></script>
 
 <script type="text/javascript">

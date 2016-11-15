@@ -159,7 +159,6 @@ nav  ul.black-text a{
     display: inline-block;
     padding: 15px;
     position: relative;
-
 }
 .card, .form-card{
     transition: all 0.3s ease-in;

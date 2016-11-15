@@ -130,12 +130,13 @@ if (isset($_POST['btnSubmit'])) {
                                     </select>
                                     <label>Area</label>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col s6">
                                 <div class="input-field col s10">
-                                    <input id="co_value" name="co_value" type="number" class="validate" step="0.1" min="0.0"
+                                    <input id="co_value" name="co_value" type="number" class="validate" step="0.1"
+                                           min="0.0"
                                            max="40.4">
                                     <label>Carbon Monoxide</label>
                                 </div>
@@ -154,7 +155,8 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
 
                                 <div class="input-field col s10">
-                                    <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01" min="0.65"
+                                    <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01"
+                                           min="0.65"
                                            max="1.64">
                                     <label>Nitrogen Oxide</label>
                                 </div>
@@ -165,7 +167,8 @@ if (isset($_POST['btnSubmit'])) {
 
                             <div class="col s6">
                                 <div class="input-field col s10">
-                                    <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001" min="0.000"
+                                    <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001"
+                                           min="0.000"
                                            max="0.504">
                                     <label>Ozone</label>
                                 </div>
@@ -174,7 +177,8 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
 
                                 <div class="input-field col s10">
-                                    <input id="pm10_value" name="pm10_value" type="number" class="validate" min="0" max="504">
+                                    <input id="pm10_value" name="pm10_value" type="number" class="validate" min="0"
+                                           max="504">
                                     <label>Particulate Matter 10</label>
                                 </div>
                                 <div class="input-field col s2">
@@ -195,11 +199,13 @@ if (isset($_POST['btnSubmit'])) {
                                 <div class="input-field col s12">
                                     <p class="flatpickr">
                                         <label for="time">Time</label>
-                                        <input id="time" name="time" class="date col s11" placeholder="YYYY-MM-DD HH:MM:SS"
+                                        <input id="time" name="time" class="date col s11"
+                                               placeholder="YYYY-MM-DD HH:MM:SS"
                                                data-input>
                                         <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
                                                 class="material-icons">autorenew</span></a>
-                                        <a class="input-button date-btn btn-flat" data-toggle><span class="material-icons">date_range</span></a>
+                                        <a class="input-button date-btn btn-flat" data-toggle><span
+                                                class="material-icons">date_range</span></a>
 
                                     </p>
 
@@ -222,7 +228,7 @@ if (isset($_POST['btnSubmit'])) {
 </div>
 
 </div>
-<?php  include('public/_footer.php'); ?>
+<?php include('public/_footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
