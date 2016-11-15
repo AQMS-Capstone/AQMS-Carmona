@@ -130,6 +130,22 @@ nav  ul.black-text a{
     border-width: 1px;
 }
 
+.date{
+    color: #212121!important;
+    border-bottom: 1px solid #9e9e9e!important;
+    padding: 0!important;
+}
+
+.date-btn{
+    margin-top: 8px;
+    vertical-align:bottom;
+    padding: 5px;
+}
+
+.flatpickr label{
+    top: 0px;
+    font-size: 0.8rem;
+}
 #googleMap{
     position: absolute;
     top: 154px;

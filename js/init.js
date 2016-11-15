@@ -40,3 +40,9 @@ function ScrollTo(id){
             scrollTop: $("#"+id).offset().top},
         'slow');
 }
+flatpickr(".flatpickr", {
+    enableTime: true,
+    wrap: true,
+    clickOpens: false // disable opening calendar by clicking on input
+});
+
