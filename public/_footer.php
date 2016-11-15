@@ -18,7 +18,7 @@
                 <ul>
                     <li><a class="orange-text" href="index.php">Home</a></li>
                     <li><a class="orange-text" href="daily.php">Daily Reports</a></li>
-                    <li><a class="orange-text" href="history.php">HIstory Reports</a></li>
+                    <li><a class="orange-text" href="history.php">History Reports</a></li>
                     <li><a class="orange-text" href="aqi-calculator.php">AQI Calculator</a></li>
                     <li><a class="orange-text" href="about.php">About</a></li>
                 </ul>
