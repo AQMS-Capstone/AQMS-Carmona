@@ -99,6 +99,7 @@ if (isset($_POST['btnSubmit'])) {
 <div id="content-holder">
     <div class="section">
         <br><br>
+        <h1 class="header center teal-text"><span class="material-icons" style="font-size: 2em;">bug_report</span></h1>
         <h2 class="header center teal-text"><b>Developer Option</b></h2>
         <div class="row center">
             <h6 class="header col s12">Proceed with caution! This page would act as a simulation of the IOT device</h6>
@@ -111,86 +112,98 @@ if (isset($_POST['btnSubmit'])) {
             <div class="row">
                 <div class="col s12">
                     <form method="post" action="">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="input-field col s12">
+                                    <select id="area" name="area" required>
+                                        <option value="" disabled selected>Select an area</option>
+                                        <option value="slex">SLEX Entrance/Exit Carmona, Cavite</option>
+                                        <option value="bancal">Bancal Carmona, Cavite</option>
+                                    </select>
+                                    <label>Area</label>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="input-field col s10">
+                                    <input id="co_value" name="co_value" type="number" class="validate" step="0.1" min="0.0"
+                                           max="40.4">
+                                    <label>Carbon Monoxide</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <label id="unit">ppm</label>
+                                </div>
 
-                        <div class="input-field col s12">
-                            <select id="area" name="area" required>
-                                <option value="" disabled selected>Select an area</option>
-                                <option value="slex">SLEX Entrance/Exit Carmona, Cavite</option>
-                                <option value="bancal">Bancal Carmona, Cavite</option>
-                            </select>
-                            <label>Area</label>
+
+                                <div class="input-field col s10">
+                                    <input id="so2_value" name="so2_value" type="number" class="validate" step="0.001"
+                                           min="0.000" max="0.804">
+                                    <label>Sulfur Dioxide</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <label id="unit">ppm</label>
+                                </div>
+
+                                <div class="input-field col s10">
+                                    <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01" min="0.65"
+                                           max="1.64">
+                                    <label>Nitrogen Oxide</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <label id="unit">ppm</label>
+                                </div>
+                            </div>
+
+                            <div class="col s6">
+                                <div class="input-field col s10">
+                                    <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001" min="0.000"
+                                           max="0.504">
+                                    <label>Ozone</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <label id="unit">ppm</label>
+                                </div>
+
+                                <div class="input-field col s10">
+                                    <input id="pm10_value" name="pm10_value" type="number" class="validate" min="0" max="504">
+                                    <label>Particulate Matter 10</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <label id="unit">ug/m3</label>
+                                </div>
+
+                                <div class="input-field col s10">
+                                    <input id="tsp_value" name="tsp_value" type="number" class="validate" min="0">
+                                    <label>Total Suspended Particles</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <label id="unit">ug/m3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="input-field col s12">
+                                    <p class="flatpickr">
+                                        <label for="time">Time</label>
+                                        <input id="time" name="time" class="date col s11" placeholder="YYYY-MM-DD HH:MM:SS"
+                                               data-input>
+                                        <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
+                                                class="material-icons">autorenew</span></a>
+                                        <a class="input-button date-btn btn-flat" data-toggle><span class="material-icons">date_range</span></a>
+
+                                    </p>
+
+                                </div>
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light" type="submit"
+                                            style="width: 100%; margin-top:3%;" name="btnSubmit">Submit
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="input-field col s10">
-                            <input id="co_value" name="co_value" type="number" class="validate" step="0.1" min="0.0"
-                                   max="40.4">
-                            <label>Carbon Monoxide</label>
-                        </div>
-                        <div class="input-field col offset-s1">
-                            <label id="unit">ppm</label>
-                        </div>
-
-
-                        <div class="input-field col s10">
-                            <input id="so2_value" name="so2_value" type="number" class="validate" step="0.001"
-                                   min="0.000" max="0.804">
-                            <label>Sulfur Dioxide</label>
-                        </div>
-                        <div class="input-field col offset-s1">
-                            <label id="unit">ppm</label>
-                        </div>
-
-                        <div class="input-field col s10">
-                            <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01" min="0.65"
-                                   max="1.64">
-                            <label>Nitrogen Oxide</label>
-                        </div>
-                        <div class="input-field col offset-s1">
-                            <label id="unit">ppm</label>
-                        </div>
-
-                        <div class="input-field col s10">
-                            <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001" min="0.000"
-                                   max="0.504">
-                            <label>Ozone</label>
-                        </div>
-                        <div class="input-field col offset-s1">
-                            <label id="unit">ppm</label>
-                        </div>
-
-                        <div class="input-field col s10">
-                            <input id="pm10_value" name="pm10_value" type="number" class="validate" min="0" max="504">
-                            <label>Particulate Matter 10</label>
-                        </div>
-                        <div class="input-field col offset-s1">
-                            <label id="unit">ug/m3</label>
-                        </div>
-
-                        <div class="input-field col s10">
-                            <input id="tsp_value" name="tsp_value" type="number" class="validate" min="0">
-                            <label>Total Suspended Particles</label>
-                        </div>
-                        <div class="input-field col offset-s1">
-                            <label id="unit">ug/m3</label>
-                        </div>
-
-                        <div class="input-field col s12">
-                            <p class="flatpickr">
-                                <label for="time">Time</label>
-                                <input id="time" name="time" class="date col s9" placeholder="YYYY-MM-DD HH:MM:SS"
-                                       data-input>
-                                <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                        class="material-icons">autorenew</span></a>
-                                <a class="input-button date-btn btn-flat" data-toggle><span class="material-icons">date_range</span></a>
-
-                            </p>
-
-                        </div>
-                        <div class="input-field col s12">
-                            <button class="btn waves-effect waves-light" type="submit"
-                                    style="width: 100%; margin-top:3%;" name="btnSubmit">Submit
-                            </button>
-                        </div>
                     </form>
 
                 </div>
