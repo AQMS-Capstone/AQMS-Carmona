@@ -96,6 +96,14 @@ if (isset($_POST['btnSubmit'])) {
 
 <body>
 
+<div>
+    <nav class="z-depth-1" style="height: 70px;">
+        <div class="nav-wrapper">
+            <a id="logo" href="index.php"><img class="brand-logo center" src="res/logo.png"> </a>
+        </div>
+    </nav>
+</div>
+
 <div id="content-holder">
     <div class="section">
         <br><br>
@@ -214,7 +222,7 @@ if (isset($_POST['btnSubmit'])) {
 </div>
 
 </div>
-
+<?php  include('public/_footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
