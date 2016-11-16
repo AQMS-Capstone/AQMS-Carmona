@@ -197,16 +197,13 @@ if (isset($_POST['btnSubmit'])) {
                         <div class="row">
                             <div class="col s12">
                                 <div class="input-field col s12">
-                                    <p class="flatpickr">
+                                    <p class="flatpickr input-date-time">
                                         <label for="time">Time</label>
                                         <input id="time" name="time" class="date col s11"
-                                               placeholder="YYYY-MM-DD HH:MM:SS"
+                                               placeholder="YYYY-MM-DD"
                                                data-input>
                                         <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons">autorenew</span></a>
-                                        <a class="input-button date-btn btn-flat" data-toggle><span
-                                                class="material-icons">date_range</span></a>
-
+                                                class="material-icons" style="font-size: medium;">highlight_off</span></a>
                                     </p>
 
                                 </div>

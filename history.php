@@ -77,32 +77,26 @@ if(isset($_POST['btnGenerate'])){
 
                             <div class="input-field s12">
                                 <div class="input-field col s12">
-                                    <p class="flatpickr">
+                                    <p class="flatpickr input-date">
                                         <label for="time">From</label>
-                                        <input id="txtDateTimeFrom" name="txtDateTimeFrom" class="date col s9"
-                                               placeholder="YYYY-MM-DD HH:MM:SS"
+                                        <input id="txtDateTimeFrom" name="txtDateTimeFrom" class="date col s11"
+                                               placeholder="YYYY-MM-DD"
                                                data-input>
                                         <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons">autorenew</span></a>
-                                        <a class="input-button date-btn btn-flat" data-toggle><span
-                                                class="material-icons">date_range</span></a>
-
+                                                class="material-icons" style="font-size: medium;">highlight_off</span></a>
                                     </p>
 
                                 </div>
                             </div>
                             <div class="input-field s12">
                                 <div class="input-field col s12">
-                                    <p class="flatpickr">
+                                    <p class="flatpickr input-date">
                                         <label for="time">To</label>
-                                        <input id="txtDateTimeTo" name="txtDateTimeTo" class="date col s9"
-                                               placeholder="YYYY-MM-DD HH:MM:SS"
+                                        <input id="txtDateTimeFrom" name="txtDateTimeFrom" class="date col s11"
+                                               placeholder="YYYY-MM-DD"
                                                data-input>
                                         <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons">autorenew</span></a>
-                                        <a class="input-button date-btn btn-flat" data-toggle><span
-                                                class="material-icons">date_range</span></a>
-
+                                                class="material-icons" style="font-size: medium;">highlight_off</span></a>
                                     </p>
 
                                 </div>

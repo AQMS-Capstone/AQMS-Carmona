@@ -116,9 +116,7 @@ nav.navbar-fixed {
     line-height: 45px;
 }
 
-.material-icons{
-    vertical-align: text-bottom;
-}
+
 
 nav  ul.black-text a{
     color: #444;
@@ -135,13 +133,13 @@ nav  ul.black-text a{
     border-bottom: 1px solid #9e9e9e!important;
     padding: 0!important;
 }
+.input-date{
 
-.date-btn{
-    margin-top: 8px;
-    vertical-align:bottom;
-    padding: 5px;
 }
 
+.input-date-time{
+
+}
 .flatpickr label{
     top: 0px;
     font-size: 0.8rem;
