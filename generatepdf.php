@@ -31,7 +31,7 @@ if (isset($_POST['btnGenerate'])) {
     if ($pollutantIndex == 7) {
         $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-              WHERE area_name = '$loc' and DATE(timestamp) = '$date'
+              WHERE area_name = '$loc' and DATE(timestamp) = DATE('$date')
               ORDER BY CONCENTRATION_VALUE DESC";
 
     } else {
@@ -189,52 +189,38 @@ $pdf->AddPage();
 $pdf->SetTitle("AQMS Monitoring - Generated Report");
 
 $pdf->Ln(6);
-$pdf->SetFont('helvetica', 'B', 14);
-$pdf->Cell(70);
+$pdf->SetFont('helvetica', 'B', 10);
+$pdf->Cell(1);
 $pdf->Cell(0, 15, 'Area: ');
-$pdf->SetFont('helvetica', '', 14);
-$pdf->Cell(-105);
+$pdf->SetFont('helvetica', '', 10);
+$pdf->Cell(-178);
 $pdf->Cell(0, 15, $a_name);
 $pdf->Ln(8);
 
-//AQI index
-
-$pdf->SetFillColor($red, $green, $blue);
-$pdf->SetTextColor(255, 255, 255);
-$pdf->Rect(10, 30, 65, 44, 'F');
-
-$pdf->Cell(6);
-
-$pdf->SetFont('helvetica', 'B', 72);
-$pdf->Cell(0, 25, $aqi_index);
-$pdf->Cell(-120);
+//
+$pdf->Cell(1);
 $pdf->SetTextColor(0, 0, 0);
-$pdf->SetFont('helvetica', 'B', 14);
+$pdf->SetFont('helvetica', 'B', 10);
 $pdf->Cell(0, 10, 'Status: ');
-$pdf->Cell(-100);
+$pdf->Cell(-175);
 $pdf->SetTextColor(0, 0, 0);
-$pdf->SetFont('helvetica', '', 14);
+$pdf->SetFont('helvetica', '', 10);
 $pdf->Cell(0, 10, $aqi_status);
 $pdf->Ln(14);
-$pdf->Cell(70);
-$pdf->SetFont('helvetica', 'B', 14);
+$pdf->Cell(1);
+$pdf->SetFont('helvetica', 'B', 10);
 $pdf->Cell(0, -6, 'Prevalent Pollutant: ');
-$pdf->Cell(-71);
-$pdf->SetFont('helvetica', '', 14);
+$pdf->Cell(-155);
+$pdf->SetFont('helvetica', '', 10);
 $pdf->Cell(0, -6, $prevalent_air_pollutant . ' (' . $prevalent_air_pollutant_symbol . ')');
 $pdf->Ln(15);
-$pdf->SetFont('helvetica', 'B', 14);
-$pdf->Cell(70);
+$pdf->SetFont('helvetica', 'B', 10);
+$pdf->Cell(1);
 $pdf->Cell(0, -23, 'Last Updated: ');
-$pdf->SetFont('helvetica', '', 14);
-$pdf->Cell(-82);
+$pdf->SetFont('helvetica', '', 10);
+$pdf->Cell(-163);
 $pdf->Cell(0, -23, $time_updated);
-$pdf->Ln(18);
-$pdf->Cell(20);
-$pdf->SetTextColor(255, 255, 255);
-$pdf->SetFont('helvetica', '', 32);
-$pdf->Cell(0, -40, "ppm");
-$pdf->Ln(-3);
+$pdf->Ln(1);
 
 //Details
 
@@ -243,28 +229,28 @@ $pdf->SetTextColor(0, 0, 0);
 $pdf->SetFont('helvetica', 'B', 10);
 $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
 //$data = $pdf->LoadData('countries.txt');
-$pdf->SetFont('helvetica', '', 14);
+$pdf->SetFont('helvetica', '', 10);
 $pdf->BasicTable($header, $ugachme);
-$pdf->Ln(8);
+$pdf->Ln(2);
 
-$pdf->SetFont('helvetica', 'B', 18);
+$pdf->SetFont('helvetica', 'B', 10);
 $pdf->Cell(0, 10, 'Synthesis:');
-$pdf->Ln(10);
+$pdf->Ln(8);
 $pdf->SetFont('helvetica', '', 10);
 $pdf->MultiCell(0, 5, $h_synthesis);
-$pdf->Ln(8);
+$pdf->Ln(1);
 
-$pdf->SetFont('helvetica', 'B', 18);
+$pdf->SetFont('helvetica', 'B', 10);
 $pdf->Cell(0, 10, 'Health Effects:');
 $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 10);
 $pdf->MultiCell(0, 5, $h_synthesis);
-$pdf->Ln(8);
+$pdf->Ln(1);
 
 
-$pdf->SetFont('helvetica', 'B', 18);
-$pdf->Cell(0, 30, 'Cautionary Statement:');
-$pdf->Ln(20);
+$pdf->SetFont('helvetica', 'B', 10);
+$pdf->Cell(0, 10, 'Cautionary Statement:');
+$pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 10);
 $pdf->MultiCell(0, 5, $h_synthesis);
 
