@@ -15,6 +15,9 @@ $sampol1 = array();
 $igachu = array();
 $ugachme = array();
 $query = "";
+$synthesis = "";
+$health_Effects = "";
+$c_Statement = "";
 $time_updated = "";
 
 
@@ -35,10 +38,11 @@ try {
               WHERE area_name = '$loc' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
               ORDER BY CONCENTRATION_VALUE DESC";
 
-        } else {
+        }
+        else {
             $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-              WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE($dateFrom) and DATE($dateTo)
+              WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
               ORDER BY concentration_value DESC";
             $result = mysqli_query($con, $query);
         }
@@ -60,38 +64,51 @@ try {
             $ugachme[] = explode(';', trim($line));
         }
     }
-    
+
     $a_name = $area[$areaIndex];
     $aqi_index = $sampol1[2];
+    $prevalent_air_pollutant_symbol = $sampol1[1];
+    $prevalent_air_pollutant = $sampol1[0];
 
 
     if ($aqi_index < 26.0) {
         $aqi_status = "Good";
-        $h_synthesis = "";
+        $c_Statement = "People with asthma are the group most at risk.";
+        $health_Effects = "";
+        $synthesis = "";
     }
-    if ($aqi_index > 25.0 || $aqi_index < 50.0) {
+    else if ($aqi_index > 25.0 && $aqi_index < 50.0) {
         $aqi_status = "Fair";
-        $h_synthesis = "";
+        $c_Statement = "Unusually sensitive people should consider limiting prolonged outdoor exertion";
+        $health_Effects = "";
+        $synthesis = "";
     }
-    if ($aqi_index > 49.0 || $aqi_index < 100.0) {
+    elseif ($aqi_index > 49.0 && $aqi_index < 100.0) {
         $aqi_status = "Unhealthy for Sensitive Groups";
-        $h_synthesis = "People, should limit outdoor exertion. People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible. Unnecessary trips should be postponed. Motor vehicle use may be restricted. Industrial activities may be curtailed.";
+        $c_Statement = "People should limit outdoor exertion. People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible. Unnecessary trips should be postponed. Motor vehicle use may be restricted. Industrial activities may be curtailed.";
+        $health_Effects = "";
+        $synthesis = "";
     }
-    if ($aqi_index > 99.0 || $aqi_index < 251.0) {
+    elseif ($aqi_index > 99.0 && $aqi_index < 251.0) {
         $aqi_status = "Very Unhealthy";
-        $h_synthesis = "People should stay indoors and rest as much as possible. Unnecessary trips should be postponed. People should voluntarily restrict the use of vehicles and avoid sources of CO, such as heavy traffic. Smokers should refrain from smoking.";
+        $c_Statement = "People should stay indoors and rest as much as possible. Unnecessary trips should be postponed. People should voluntarily restrict the use of vehicles and avoid sources of CO, such as heavy traffic. Smokers should refrain from smoking.";
+        $health_Effects = "";
+        $synthesis = "";
 
     }
-    if ($aqi_index > 250.0 || $aqi_index < 351.0) {
+    else if ($aqi_index > 250.0 && $aqi_index < 351.0) {
         $aqi_status = "Acutely Unhealthy";
-        $h_synthesis = "People, should limit outdoor exertion. People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible. Unnecessary trips should be postponed. Motor vehicle use may be restricted. Industrial activities may be curtailed.";
+        $c_Statement = "People, should limit outdoor exertion. People with heart or respiratory disease, such as asthma, should stay indoors and rest as much as possible. Unnecessary trips should be postponed. Motor vehicle use may be restricted. Industrial activities may be curtailed.";
+        $health_Effects = "";
+        $synthesis = "";
     }
-    if ($aqi_index > 350.0) {
+    else  {
         $aqi_status = "Emergency";
-        $h_synthesis = "Everyone should remain indoors, (keeping windows and doors closed unless heat stress is possible). Motor vehicle use should be prohibited except for emergency situations. Industrial activities, except that which is vital for public safety and health, should be curtailed";
+        $c_Statement = "Everyone should remain indoors, (keeping windows and doors closed unless heat stress is possible). Motor vehicle use should be prohibited except for emergency situations. Industrial activities, except that which is vital for public safety and health, should be curtailed";
+        $health_Effects = "";
+        $synthesis = "";
     }
-    $prevalent_air_pollutant_symbol = $sampol1[1];
-    $prevalent_air_pollutant = $sampol1[0];
+
 
 
 //------------------ GENERATING PDF -------------------------
@@ -215,14 +232,14 @@ try {
     $pdf->Cell(0, 10, 'Synthesis:');
     $pdf->Ln(8);
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->MultiCell(0, 5, $h_synthesis);
+    $pdf->MultiCell(0, 5, $synthesis);
     $pdf->Ln(1);
 
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(0, 10, 'Health Effects:');
     $pdf->Ln(10);
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->MultiCell(0, 5, $h_synthesis);
+    $pdf->MultiCell(0, 5, $health_Effects);
     $pdf->Ln(1);
 
 
@@ -230,7 +247,7 @@ try {
     $pdf->Cell(0, 10, 'Cautionary Statement:');
     $pdf->Ln(10);
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->MultiCell(0, 5, $h_synthesis);
+    $pdf->MultiCell(0, 5, $c_Statement);
 
 
     $pdf->Output();
