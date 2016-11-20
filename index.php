@@ -6,10 +6,6 @@
  * Time: 7:00 PM
  */
 include("class/Map.php");
-//$bancalPrevalentPollutant = 0;
-//$slexPrevalentPollutant = 3;
-//$bancalAQIValue = 40;
-//$slexAQIValue = 10;
 ?>
 
 <!DOCTYPE html>

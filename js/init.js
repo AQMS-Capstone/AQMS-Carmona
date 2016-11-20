@@ -40,13 +40,3 @@ function ScrollTo(id){
             scrollTop: $("#"+id).offset().top},
         'slow');
 }
-flatpickr(".input-date-time", {
-    enableTime: true,
-    defaultDate: new Date(),
-    wrap: true
-});
-
-flatpickr(".input-date", {
-    defaultDate: new Date(),
-    wrap: true
-});

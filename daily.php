@@ -257,6 +257,5 @@ include("class/Map.php");
 <script src="js/init.js"></script>
 <script src="js/daily.js"></script>
 <script src="js/aqi-calculator.js"></script>
-
 </body>
 </html>
