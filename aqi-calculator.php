@@ -130,7 +130,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                     <div class="col s12 m4 l4">
                         <div class="card" style="min-height: 328px;">
                             <div class="card-content">
-                                <div class="card-title teal-text"><b>Synthesis</b></div>
+                                <div class="card-title teal-text"><b>Sensitive Groups</b></div>
                                 <p id="synthesis">
                                 </p>
                             </div>
@@ -204,23 +204,23 @@ function GetAQI()
         $aqi = round(calculateAQI($co_guideline_values, $concentration, 1, $aqi_values));
     }
     if ($element == "SO2") {
-        $aqi = round(calculateAQI($sufur_guideline_values, $concentration, 1, $aqi_values));
+        $aqi = round(calculateAQI($sufur_guideline_values, $concentration, 3, $aqi_values));
     }
     if ($element == "NO2") {
-        $aqi = round(calculateAQI($no2_guideline_values, $concentration, 1, $aqi_values));
+        $aqi = round(calculateAQI($no2_guideline_values, $concentration, 2, $aqi_values));
     }
     if ($element == "O3_8") {
-        $aqi = round(calculateAQI($ozone_guideline_values_8, $concentration, 1, $aqi_values));
+        $aqi = round(calculateAQI($ozone_guideline_values_8, $concentration, 3, $aqi_values));
     }
     if ($element == "O3_1") {
-        $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, 1, $aqi_values));
+        $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, 3, $aqi_values));
     }
 
     if ($element == "PM10") {
-        $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, 1, $aqi_values));
+        $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, 0, $aqi_values));
     }
     if ($element == "TSP") {
-        $aqi = round(calculateAQI($tsp_guideline_values, $concentration, 1, $aqi_values));
+        $aqi = round(calculateAQI($tsp_guideline_values, $concentration, 0, $aqi_values));
     }
 
     echo "
