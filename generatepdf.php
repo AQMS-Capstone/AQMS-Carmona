@@ -30,17 +30,20 @@ $slexData1 = array();
 $bancalDataSet = array();
 $slexDataSet = array();
 
+$filename = "";
+
 try {
 
     $area = array('Select an area', 'SLEX', 'Bancal', 'All');
     $pollutant = array('Select a pollutant', 'CO', 'SO2', 'NO2', 'O3', 'Pb', 'PM10', 'TSP', 'All');
-//$area = $_GET[$areaArray];
     if (isset($_POST['btnGenerate'])) {
         $areaIndex = $_POST['drpArea'];
         $pollutantIndex = $_POST['drpPollutant'];
         $dateFrom = $_POST["txtDateTimeFrom"];
         $dateTo = $_POST["txtDateTimeTo"];
         $loc = strtolower($area[$areaIndex]);
+
+        $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
         if($areaIndex == 3) {
             if ($pollutantIndex == 7) {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
@@ -398,13 +401,14 @@ try {
     $pdf->SetFont('helvetica', '', 10);
     $pdf->MultiCell(0, 5, $c_Statement);
 
+    $pdf->Output('I', $filename);
 
-    $pdf->Output();
-    header('Location: history.php');
 }
 catch(Exception $e){
+    session_start();
     header("Location: history.php");
     die();
+
 }
 
 finally{
