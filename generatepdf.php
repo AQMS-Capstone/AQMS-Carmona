@@ -140,10 +140,12 @@ try {
             if ($slexData1[2]>$bancalData1[2]){
                 $prevalent_air_pollutant_symbol = $slexData1[1];
                 $prevalent_air_pollutant = $slexData1[0];
+                $aqi_index = $slexData1[2];
             }
             else{
                 $prevalent_air_pollutant_symbol = $bancalData1[1];
                 $prevalent_air_pollutant = $bancalData1[0];
+                $aqi_index = $bancalData1[2];
             }
 
         }
