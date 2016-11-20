@@ -203,7 +203,8 @@ if (isset($_POST['btnSubmit'])) {
                                                placeholder="YYYY-MM-DD"
                                                data-input>
                                         <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons" style="font-size: medium;">highlight_off</span></a>
+                                                class="material-icons"
+                                                style="font-size: medium;">highlight_off</span></a>
                                     </p>
 
                                 </div>

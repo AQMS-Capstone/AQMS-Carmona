@@ -39,10 +39,8 @@
 <div id="content-holder">
     <div class="section">
         <br><br>
-        <h2 class="header center teal-text"><b>AQI Calculator - US EPA Scale Converter</b></h2>
-        <div class="row center">
-            <h6 class="header col s12">The below calculator is based on the work from the US EPA Air Now calculator, available at <a class="orange-text" href="https://airnow.gov" target="_blank">airnow.gov</a></h6>
-        </div>
+        <h1 class="header center teal-text"><span class="material-icons" style="font-size: 2em;">cloud</span></h1>
+        <h2 class="header center teal-text"><b>AQI Calculator</b></h2>
     </div>
     <br>
     <br>
@@ -55,22 +53,29 @@
                             <select>
                                 <option value="" disabled selected>Select a pollutant</option>
                                 <option value="1">CO</option>
-                                <option value="2">O3</option>
-                                <option value="3">SO2</option>
+                                <option value="2">SO2</option>
+                                <option value="3">NO2</option>
+                                <option value="3">O3</option>
+                                <option value="3">PM10</option>
+                                <option value="3">TSP</option>
                             </select>
                             <label>Pollutant</label>
                         </div>
-                        <div class="input-field col s2">
+                        <div class="input-field col s1">
                             <input id="concentration" type="number" class="validate" value="0">
                             <label for="number">Concentration</label>
                         </div>
-                        <div class="input-field col s2">
+                        <div class="input-field col s1">
                             <label id="unit">µg/m3</label>
+                        </div>
+                        <div class="input-field col s2">
+                          <button class="btn waves-effect waves-light">CALCULATE</button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="divider"></div>
+            <br>
             <div class="row">
                 <div class="col s12 m4 l4">
                     <div class="card" style="min-height: 328px;">

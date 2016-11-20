@@ -79,11 +79,9 @@ if(isset($_POST['btnGenerate'])){
                                 <div class="input-field col s12">
                                     <p class="flatpickr input-date">
                                         <label for="time">From</label>
-                                        <input id="txtDateTimeFrom" name="txtDateTimeFrom" class="date col s11"
+                                        <input id="txtDateTimeFrom" name="txtDateTimeFrom" class="date col s12"
                                                placeholder="YYYY-MM-DD"
                                                data-input>
-                                        <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons" style="font-size: medium;">highlight_off</span></a>
                                     </p>
 
                                 </div>
@@ -92,11 +90,9 @@ if(isset($_POST['btnGenerate'])){
                                 <div class="input-field col s12">
                                     <p class="flatpickr input-date">
                                         <label for="time">To</label>
-                                        <input id="txtDateTimeTo" name="txtDateTimeTo" class="date col s11"
+                                        <input id="txtDateTimeTo" name="txtDateTimeTo" class="date col s12"
                                                placeholder="YYYY-MM-DD"
                                                data-input>
-                                        <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons" style="font-size: medium;">highlight_off</span></a>
                                     </p>
 
                                 </div>
