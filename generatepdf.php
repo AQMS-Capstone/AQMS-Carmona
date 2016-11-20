@@ -49,7 +49,7 @@ try {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = 'bancal' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY CONCENTRATION_VALUE DESC";
+                          ORDER BY TIMESTAMP DESC";
 
                 $result = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result)) {
@@ -65,7 +65,7 @@ try {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = 'slex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY CONCENTRATION_VALUE DESC";
+                          ORDER BY TIMESTAMP DESC";
 
                 $result = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_array($result)) {
@@ -93,7 +93,7 @@ try {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = 'bancal' AND MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY concentration_value DESC";
+                          ORDER BY TIMESTAMP DESC";
                 $result = mysqli_query($con, $query1);
 
                 $result = mysqli_query($con, $query1);
@@ -110,7 +110,7 @@ try {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = 'slex' AND MASTER.e_id = '$pollutantIndex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY CONCENTRATION_VALUE DESC";
+                          ORDER BY TIMESTAMP DESC";
 
                 $result = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_array($result)) {
@@ -157,13 +157,13 @@ try {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$loc' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY CONCENTRATION_VALUE DESC";
+                          ORDER BY TIMESTAMP DESC";
 
             } else {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY concentration_value DESC";
+                          ORDER BY TIMESTAMP DESC";
                 $result = mysqli_query($con, $query);
             }
             $result = mysqli_query($con, $query);
@@ -315,7 +315,7 @@ try {
     $pdf->Ln(8);
 
 //
-    $pdf->Cell(1);
+    /*$pdf->Cell(1);
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(0, 10, 'Status: ');
@@ -329,7 +329,7 @@ try {
     $pdf->Cell(0, -6, 'Prevalent Pollutant: ');
     $pdf->Cell(-155);
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->Cell(0, -6, $prevalent_air_pollutant . ' (' . $prevalent_air_pollutant_symbol . ')');
+    $pdf->Cell(0, -6, $prevalent_air_pollutant . ' (' . $prevalent_air_pollutant_symbol . ')');*/
     $pdf->Ln(15);
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(1);
@@ -392,7 +392,7 @@ try {
     $pdf->Ln(10);
     $pdf->SetFont('helvetica', '', 10);
     $pdf->MultiCell(0, 5, $health_Effects);
-    $pdf->Ln(1);*/
+    $pdf->Ln(1);
 
 
     $pdf->SetFont('helvetica', 'B', 10);
@@ -400,6 +400,7 @@ try {
     $pdf->Ln(10);
     $pdf->SetFont('helvetica', '', 10);
     $pdf->MultiCell(0, 5, $c_Statement);
+    */
 
     $pdf->Output('I', $filename);
 
