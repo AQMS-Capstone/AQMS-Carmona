@@ -102,7 +102,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             <label for="number">Concentration</label>
                         </div>
                         <div class="input-field col s1">
-                            <label id="unit">µg/m3</label>
+                            <label id="unit">unit</label>
                         </div>
                         <div class="input-field col s2">
                             <button class="btn waves-effect waves-light" type="submit" name="submit">CALCULATE</button>
