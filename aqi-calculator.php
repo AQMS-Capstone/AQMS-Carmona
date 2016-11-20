@@ -110,59 +110,61 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                     </form>
                 </div>
             </div>
-            <div class="divider"></div>
-            <br>
-            <div class="row">
-                <div class="col s12">
-                    <div class="card" id="AQIStat">
-                        <div class="card-content center">
-                            <h2 style="margin:0;"><b id="aqiNum">
-                                </b></h2>
-                            <h5><b id="aqiText">
-                                </b></h5>
+
+            <div id="result" hidden>
+                <div class="divider"></div>
+                <br>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card" id="AQIStat">
+                            <div class="card-content center">
+                                <h2 style="margin:0;"><b id="aqiNum">
+                                    </b></h2>
+                                <h5><b id="aqiText">
+                                    </b></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m4 l4">
+                        <div class="card" style="min-height: 328px;">
+                            <div class="card-content">
+                                <div class="card-title teal-text"><b>Synthesis</b></div>
+                                <p id="synthesis">
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col s12 m4 l4">
+                        <div class="card" style="min-height: 328px;">
+                            <div class="card-content">
+                                <div class="card-title teal-text"><b>Health Effects</b></div>
+                                <p id="health-effects">
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col s12 m4 l4">
+                        <div class="card" style="min-height: 328px;">
+                            <div class="card-content">
+                                <div class="card-title teal-text"><b>Cautionary</b></div>
+                                <p id="cautionary">
+                                </p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col s12 m4 l4">
-                    <div class="card" style="min-height: 328px;">
-                        <div class="card-content">
-                            <div class="card-title teal-text"><b>Synthesis</b></div>
-                            <p id="synthesis">
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col s12 m4 l4">
-                    <div class="card" style="min-height: 328px;">
-                        <div class="card-content">
-                            <div class="card-title teal-text"><b>Health Effects</b></div>
-                            <p id="health-effects">
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col s12 m4 l4">
-                    <div class="card" style="min-height: 328px;">
-                        <div class="card-content">
-                            <div class="card-title teal-text"><b>Cautionary</b></div>
-                            <p id="cautionary">
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
 
-</div>
+<br>
+<br>
 
 
 <?php include('public/_footer.php'); ?>
@@ -225,6 +227,7 @@ function GetAQI()
           
           
           <script type='text/javascript'>
+          
              var AQI = \"$aqi\";
              var pollutant = \"$element\";
            
@@ -234,6 +237,7 @@ function GetAQI()
              
              $(\"#AQIStat\").css(\"background-color\", AQIAirQuality);
              $(\"#aqiText\").text(AQIStatus);
+             $(\"#result\").show();
              ScrollTo('calculator');
           </script>
           
