@@ -57,8 +57,8 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
             <div class="row">
                 <div class="col s12">
                     <form method="post">
-                        <div class="input-field col s8">
-                            <select name="element" required>
+                        <div class="input-field col s7">
+                            <select id="element" name="element" required>
                                 <option value="" disabled <?php if ($element == null) {
                                     echo 'selected';
                                 } ?> >Select a pollutant
@@ -94,7 +94,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             </select>
                             <label>Pollutant</label>
                         </div>
-                        <div class="input-field col s1">
+                        <div class="input-field col s2">
                             <input id="concentration" type="number" name="concentration" class="validate"
                                    value="<?php if ($concentration != null) {
                                        echo $concentration;
@@ -171,7 +171,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
-
+<script src="js/aqi-calculator.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#legends").remove();
@@ -222,7 +222,7 @@ function GetAQI()
     }
 
     echo "
-          <script src=\"js/aqi-calculator.js\"></script>
+          
           
           <script type='text/javascript'>
              var AQI = \"$aqi\";

@@ -32,6 +32,8 @@ $("#nextStatus").click(function () {
     $('.carousel').carousel('next');
 })
 
+
+
 function ScrollTo(id){
     // Remove "link" from the ID
     id = id.replace("link", "");

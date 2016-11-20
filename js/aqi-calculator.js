@@ -276,3 +276,73 @@ function GetStatement(AQIStatus,element){
         }
     }
 }
+
+$('select[id=element]').change(function () {
+
+    if($('#element').val() == "CO" || $('#element').val() == "SO2" || $('#element').val() == "NO2" || $('#element').val() == "O3_8" || $('#element').val() == "O3_1" )
+    {
+        if($('#element').val() == "CO")
+        {
+            $("#concentration").attr({
+                "min" : 0.0,
+                "max" : 40.4,
+                "step" : 0.1
+            });
+        }
+
+        if($('#element').val() == "SO2")
+        {
+            $("#concentration").attr({
+                "min" : 0.000,
+                "max" : 0.804,
+                "step" : 0.001
+            });
+        }
+        if($('#element').val() == "NO2")
+        {
+            $("#concentration").attr({
+                "min" : 0.65,
+                "max" : 1.64,
+                "step" : 0.1
+            });
+        }
+        if($('#element').val() == "O3_8")
+        {
+            $("#concentration").attr({
+                "min" : 0.000,
+                "max" : 0.504,
+                "step" : 0.001
+            });
+        }
+        if($('#element').val() == "O3_1")
+        {
+            $("#concentration").attr({
+                "min" : 0.000,
+                "max" : 0.504,
+                "step" : 0.001
+            });
+        }
+
+
+
+        $('#unit').text("ppm");
+    }
+    else{
+        if($('#element').val() == "PM10")
+        {
+            $("#concentration").attr({
+                "min" : 0,
+                "max" : 504,
+                "step" : 1
+            });
+        }
+        if($('#element').val() == "TSP")
+        {
+            $("#concentration").attr({
+                "min" : 0,
+                "step" : 1
+            });
+        }
+        $('#unit').text("ug/m3");
+    }
+});
