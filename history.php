@@ -13,10 +13,10 @@ if(isset($_POST['btnGenerate'])){
     $dateTimeFrom = $_POST["txtDateTimeFrom"];
     $dateTimeTo = $_POST["txtDateTimeTo"];
 }
-    /*session_start(); ?>
+    session_start(); ?>
     <script type="text/javascript">alert('No available data!');</script>
    <?php unset($_SESSION['error']);
-   session_abort();*/
+   session_abort();
 ?>
 
 

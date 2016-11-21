@@ -406,7 +406,7 @@ try {
 
 }
 catch(Exception $e){
-    /*session_start();*/
+    session_start();
     header("Location: history.php");
     die();
 
