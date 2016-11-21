@@ -26,6 +26,10 @@ body{
     margin-top: 10px;
 }
 
+.material-icons{
+    vertical-align: -5px;
+}
+
 form {
     margin-bottom: 0;
 }

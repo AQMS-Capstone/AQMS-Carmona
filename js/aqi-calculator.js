@@ -42,7 +42,6 @@ function GetStatement(AQIStatus,element){
 
     switch (AQIStatus){
         case "No Current Data":{
-
             break;
         }
         case "Good":{
@@ -71,38 +70,34 @@ function GetStatement(AQIStatus,element){
                     $("#cautionary").text("");
                     break;
                 }
-
                 case "O3_8":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("");
                     $("#cautionary").text("");
                     break;
                 }
-
                 case "O3_1":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("");
                     $("#cautionary").text("");
                     break;
                 }
-
                 case "PM 10":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk.");
                     $("#health-effects").text("");
                     $("#cautionary").text("");
                     break;
                 }
-
                 case "TSP":{
-                    $("#synthesis").text("People with respiratory disease, such as asthma, should limit outdoor exertion.");
+                    $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk.");
                     $("#health-effects").text("");
                     $("#cautionary").text("");
-
                     break;
                 }
             }
             break;
         }
+
         case "Fair":{
             switch (element){
                 case "CO":{
@@ -124,43 +119,39 @@ function GetStatement(AQIStatus,element){
                     break;
                 }
                 case "O3":{
-                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk ");
+                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("Unusually sensitive individuals may experience respiratory symptoms.");
                     $("#cautionary").text("Unusually sensitive people should consider limiting prolonged outdoor exertion.");
                     break;
                 }
-
                 case "O3_8":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk ");
                     $("#health-effects").text("Unusually sensitive individuals may experience respiratory symptoms.");
                     $("#cautionary").text("Unusually sensitive people should consider reducing prolonged or heavy outdoor exertion.");
                     break;
                 }
-
                 case "O3_1":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("");
                     $("#cautionary").text("");
                     break;
                 }
-
                 case "PM 10":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk");
-                    $("#health-effects").text("Respiratory symptoms possible in unusually sensitive individuals, possible aggravation of heart or lung disease in people with cardiopulmonary disease and older adults");
+                    $("#health-effects").text("Respiratory symptoms possible in unusually sensitive individuals, possible aggravation of heart or lung disease in people with cardiopulmonary disease and older adults.");
                     $("#cautionary").text("Unusually sensitive people should consider reducing prolonged or heavy exertion.");
                     break;
                 }
-
                 case "TSP":{
-                    $("#synthesis").text("People with respiratory disease, such as asthma, should limit outdoor exertion.");
-                    $("#health-effects").text("");
-                    $("#cautionary").text("");
-
+                    $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk");
+                    $("#health-effects").text("Respiratory symptoms possible in unusually sensitive individuals, possible aggravation of heart or lung disease in people with cardiopulmonary disease and older adults.");
+                    $("#cautionary").text("Unusually sensitive people should consider reducing prolonged or heavy exertion.");
                     break;
                 }
             }
             break;
         }
+
         case "Unhealthy for Sensitive Groups":{
             switch (element){
                 case "CO":{
@@ -182,43 +173,39 @@ function GetStatement(AQIStatus,element){
                     break;
                 }
                 case "O3":{
-                    $("#synthesis").text("Children and people with asthma are the groups most at risk.");
-                    $("#health-effects").text("Increasing likelihood of respiratory symptoms and breathing discomfort in active children and adults and people with respiratory disease, such as asthma.");
-                    $("#cautionary").text("Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.");
+                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
+                    $("#health-effects").text("Increasing likelihood of respiratory symptoms and breathing discomfort in active children and adults and people with lung disease, such as asthma.");
+                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should reduce prolonged or heavy outdoor exertion. ");
                     break;
                 }
-
                 case "O3_8":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("Increasing likelihood of respiratory symptoms and breathing discomfort in active children and adults and people with lung disease, such as asthma.");
                     $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should reduce prolonged or heavy outdoor exertion. ");
                     break;
                 }
-
                 case "O3_1":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("Increasing likelihood of respiratory symptoms and breathing discomfort in active children and adults and people with lung disease, such as asthma.");
                     $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should reduce prolonged or heavy outdoor exertion. ");
                     break;
                 }
-
                 case "PM 10":{
-                    $("#synthesis").text("People with respiratory disease are the group most at risk.");
+                    $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
                     $("#health-effects").text("Increasing likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults.");
                     $("#cautionary").text("People with heart or lung disease, older adults, and children should reduce prolonged or heavy exertion");
                     break;
                 }
-
                 case "TSP":{
-                    $("#synthesis").text("People with respiratory disease, such as asthma, should limit outdoor exertion.");
-                    $("#health-effects").text("");
-                    $("#cautionary").text("");
-
+                    $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
+                    $("#health-effects").text("Increasing likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults.");
+                    $("#cautionary").text("People with heart or lung disease, older adults, and children should reduce prolonged or heavy exertion");
                     break;
                 }
             }
             break;
         }
+
         case "Very Unhealthy":{
             switch (element){
                 case "CO":{
@@ -240,52 +227,50 @@ function GetStatement(AQIStatus,element){
                     break;
                 }
                 case "O3":{
-                    $("#synthesis").text("Children and people with asthma are the groups most at risk.");
-                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with respiratory disease, such as asthma; increasing likelihood of respiratory effects in general population.");
-                    $("#cautionary").text("Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.");
+                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
+                    $("#health-effects").text("Greater likelihood of respiratory symptoms and breathing difficulty in active children and adults and people with lung disease, such as asthma; possible respiratory effects in general population.");
+                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid prolonged or heavy outdoor exertion; everyone else, especially children, should reduce prolonged or heavy outdoor exertion.");
                     break;
                 }
-
                 case "O3_8":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("Greater likelihood of respiratory symptoms and breathing difficulty in active children and adults and people with lung disease, such as asthma; possible respiratory effects in general population.");
                     $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid prolonged or heavy outdoor exertion; everyone else, especially children, should reduce prolonged or heavy outdoor exertion.");
                     break;
                 }
-
                 case "O3_1":{
                     $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
                     $("#health-effects").text("Greater likelihood of respiratory symptoms and breathing difficulty in active children and adults and people with lung disease, such as asthma; possible respiratory effects in general population.");
                     $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid prolonged or heavy outdoor exertion; everyone else, especially children, should reduce prolonged or heavy outdoor exertion.");
                     break;
                 }
-
                 case "PM 10":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
-                    $("#health-effects").text("Increasing likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung  disease and premature mortality in people with cardiopulmonary disease and older adults.");
+                    $("#health-effects").text("Increased aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; increased respiratory effects in general population. ");
                     $("#cautionary").text("People with heart or lung disease, older adults, and children should reduce prolonged or heavy exertion.");
                     break;
                 }
                 case "TSP":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
-                    $("#health-effects").text("Increasing likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung  disease and premature mortality in people with cardiopulmonary disease and older adults.");
+                    $("#health-effects").text("Increased aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; increased respiratory effects in general population. ");
                     $("#cautionary").text("People with heart or lung disease, older adults, and children should reduce prolonged or heavy exertion.");
                     break;
                 }
             }
             break;
         }
+
         case "Acutely Unhealthy":{
             switch (element){
                 case "CO":{
                     $("#synthesis").text("People with heart disease are the group most at risk.");
-                    $("#health-effects").text("Reduced exercise tolerance due to increased cardiovascular symptoms, such as chest pain, in people with heart disease.");
+                    $("#health-effects").text("Significant aggravation of cardiovascular symptoms, such as chest pain, in people with heart disease");
                     $("#cautionary").text("People with heart disease, such as angina, should limit moderate exertion and avoid sources of CO, such as heavy traffic.");
                     break;
                 }
                 case "SO2":{
                     $("#synthesis").text("People with asthma are the group most at risk.");
-                    $("#health-effects").text("Increased respiratory symptoms, such as chest tightness and wheezing in people with asthma; possible aggravation of heart or lung disease.");
+                    $("#health-effects").text("Significant increase in respiratory symptoms, such as wheezing and shortness of breath, in people with asthma; aggravation of heart or lung disease.");
                     $("#cautionary").text("Children, asthmatics, and people with heart or lung disease should limit outdoor exertion.");
                     break;
                 }
@@ -296,43 +281,39 @@ function GetStatement(AQIStatus,element){
                     break;
                 }
                 case "O3":{
-                    $("#synthesis").text("Children and people with asthma are the groups most at risk.");
-                    $("#health-effects").text("Severe respiratory effects and impaired breathing likely in active children and adults and people with respiratory disease, such as asthma; increasingly severe respiratory effects likely in general population.");
-                    $("#cautionary").text("Everyone should avoid all outdoor exertion.");
+                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk ");
+                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
+                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should reduce outdoor exertion.");
                     break;
                 }
-
                 case "O3_8":{
-                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
-                    $("#health-effects").text("Greater likelihood of respiratory symptoms and breathing difficulty in active children and adults and people with lung  disease, such as asthma; possible respiratory effects in general population.");
-                    $("#cautionary").text("People with heart or lung disease, older adults, and children should avoid prolonged or heavy exertion; everyone else should reduce prolonged or heavy exertion.");
+                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk ");
+                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
+                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should reduce outdoor exertion.");
                     break;
                 }
-
                 case "O3_1":{
-                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk.");
-                    $("#health-effects").text("Greater likelihood of respiratory symptoms and breathing difficulty in active children and adults and people with lung  disease, such as asthma; possible respiratory effects in general population.");
-                    $("#cautionary").text("People with heart or lung disease, older adults, and children should avoid prolonged or heavy exertion; everyone else should reduce prolonged or heavy exertion.");
+                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most at risk ");
+                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
+                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should reduce outdoor exertion.");
                     break;
                 }
-
                 case "PM 10":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
-                    $("#health-effects").text("Increased aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; increased respiratory effects in general population. ");
-                    $("#cautionary").text("People with heart or lung disease, older adults, and children should avoid prolonged or heavy exertion; everyone else should reduce prolonged or heavy exertion.");
+                    $("#health-effects").text("Significant aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; significant increase in respiratory effects in general population.");
+                    $("#cautionary").text("People with heart or lung disease, older adults, and children should avoid all physical activity outdoors. Everyone else should avoid prolonged or heavy exertion.");
                     break;
                 }
-
                 case "TSP":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
-                    $("#health-effects").text("Increased aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; increased respiratory effects in general population. ");
-                    $("#cautionary").text("People with heart or lung disease, older adults, and children should avoid prolonged or heavy exertion; everyone else should reduce prolonged or heavy exertion.");
-
+                    $("#health-effects").text("Significant aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; significant increase in respiratory effects in general population.");
+                    $("#cautionary").text("People with heart or lung disease, older adults, and children should avoid all physical activity outdoors. Everyone else should avoid prolonged or heavy exertion.");
                     break;
                 }
             }
             break;
         }
+
         case "Emergency":{
             switch (element){
                 case "CO":{
@@ -356,24 +337,21 @@ function GetStatement(AQIStatus,element){
                 case "O3":{
                     $("#synthesis").text("Children and people with asthma are the groups most at risk.");
                     $("#health-effects").text("Severe respiratory effects and impaired breathing likely in active children and adults and people with respiratory disease, such as asthma; increasingly severe respiratory effects likely in general population.");
-                    $("#cautionary").text("Everyone should avoid all outdoor exertion.");
+                    $("#cautionary").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
                     break;
                 }
-
                 case "O3_8":{
-                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most  at risk ");
-                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
-                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should reduce outdoor exertion.");
+                    $("#synthesis").text("Children and people with asthma are the groups most at risk.");
+                    $("#health-effects").text("Severe respiratory effects and impaired breathing likely in active children and adults and people with respiratory disease, such as asthma; increasingly severe respiratory effects likely in general population.");
+                    $("#cautionary").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
                     break;
                 }
-
                 case "O3_1":{
-                    $("#synthesis").text("People with lung disease, children, older adults, and people who are active outdoors are the groups most  at risk ");
-                    $("#health-effects").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
-                    $("#cautionary").text("Active children and adults, and people with lung disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should reduce outdoor exertion.");
+                    $("#synthesis").text("Children and people with asthma are the groups most at risk.");
+                    $("#health-effects").text("Severe respiratory effects and impaired breathing likely in active children and adults and people with respiratory disease, such as asthma; increasingly severe respiratory effects likely in general population.");
+                    $("#cautionary").text("Increasingly severe symptoms and impaired breathing likely in active children and adults and people with lung disease, such as asthma; increasing likelihood of respiratory effects in general population.");
                     break;
                 }
-
                 case "PM 10":{
                     $("#synthesis").text("People with heart or lung disease, older adults, and children and the groups most at risk ");
                     $("#health-effects").text("Significant aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults; significant increase in respiratory effects in general population. ");

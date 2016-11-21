@@ -190,6 +190,14 @@
   //$hour_value = 24;
   $data_tomorrow = date("Y-m-d", strtotime('tomorrow'));
 
+  $bancal_co_actual_values = array();
+  $bancal_so2_actual_values = array();
+  $bancal_no2_actual_values = array();
+  $bancal_o3_actual_values = array();
+  $bancal_o3_1_actual_values = array();
+  $bancal_pm10_actual_values = array();
+  $bancal_tsp_actual_values = array();
+
   $bancal_co_aqi_values = array();
   $bancal_so2_aqi_values = array();
   $bancal_no2_aqi_values = array();
@@ -263,6 +271,7 @@
         }
 
         array_push($bancal_co_aqi_values, $aqi_value);
+        array_push($bancal_co_actual_values, $ave);
       }
 
       else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -302,17 +311,20 @@
           }
 
           array_push($bancal_co_aqi_values, $aqi_value);
+          array_push($bancal_co_actual_values, $ave);
         }
 
         else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
         {
           array_push($bancal_co_aqi_values, -1);
+          array_push($bancal_co_actual_values, -1);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($bancal_co_aqi_values, -1);
+        array_push($bancal_co_actual_values, -1);
       }
   }
 
@@ -367,6 +379,7 @@
       }
 
       array_push($bancal_so2_aqi_values, $aqi_value);
+      array_push($bancal_so2_actual_values, $ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -393,17 +406,20 @@
         }
 
         array_push($bancal_so2_aqi_values, $aqi_value);
+        array_push($bancal_so2_actual_values, $ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($bancal_so2_aqi_values, -1);
+        array_push($bancal_so2_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($bancal_so2_aqi_values, -1);
+      array_push($bancal_so2_actual_values, -1);
     }
   }
 
@@ -456,6 +472,7 @@
       }
 
       array_push($bancal_no2_aqi_values, $aqi_value);
+      array_push($bancal_no2_actual_values, $nitrogen_dioxide_ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -479,17 +496,20 @@
         }
 
         array_push($bancal_no2_aqi_values, $aqi_value);
+        array_push($bancal_no2_actual_values, $nitrogen_dioxide_ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($bancal_no2_aqi_values, -1);
+        array_push($bancal_no2_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($bancal_no2_aqi_values, -1);
+      array_push($bancal_no2_actual_values, -1);
     }
   }
 
@@ -547,6 +567,7 @@
         }
 
         array_push($bancal_o3_aqi_values, $aqi_value);
+        array_push($bancal_o3_actual_values, $ave);
       }
 
       else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -586,17 +607,20 @@
           }
 
           array_push($bancal_o3_aqi_values, $aqi_value);
+          array_push($bancal_o3_actual_values, $ave);
         }
 
         else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
         {
           array_push($bancal_o3_aqi_values, -1);
+          array_push($bancal_o3_actual_values, -1);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($bancal_o3_aqi_values, -1);
+        array_push($bancal_o3_actual_values, -1);
       }
   }
 
@@ -652,6 +676,7 @@
       }
 
       array_push($bancal_pm10_aqi_values, $aqi_value);
+      array_push($bancal_pm10_actual_values, $ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -678,17 +703,20 @@
         }
 
         array_push($bancal_pm10_aqi_values, $aqi_value);
+        array_push($bancal_pm10_actual_values, $ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($bancal_pm10_aqi_values, -1);
+        array_push($bancal_pm10_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($bancal_pm10_aqi_values, -1);
+      array_push($bancal_pm10_actual_values, -1);
     }
   }
 
@@ -744,6 +772,7 @@
       }
 
       array_push($bancal_tsp_aqi_values, $aqi_value);
+      array_push($bancal_tsp_actual_values, $ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -770,17 +799,20 @@
         }
 
         array_push($bancal_tsp_aqi_values, $aqi_value);
+        array_push($bancal_tsp_actual_values, $ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($bancal_tsp_aqi_values, -1);
+        array_push($bancal_tsp_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($bancal_tsp_aqi_values, -1);
+      array_push($bancal_tsp_actual_values, -1);
     }
   }
 
@@ -1127,6 +1159,14 @@
   $tsp_ave = 0;
   $tsp_ctr = 0;
 
+  $slex_co_actual_values = array();
+  $slex_so2_actual_values = array();
+  $slex_no2_actual_values = array();
+  $slex_o3_actual_values = array();
+  $slex_o3_1_actual_values = array();
+  $slex_pm10_actual_values = array();
+  $slex_tsp_actual_values = array();
+
   $slex_co_aqi_values = array();
   $slex_so2_aqi_values = array();
   $slex_no2_aqi_values = array();
@@ -1189,6 +1229,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
         }
 
         array_push($slex_co_aqi_values, $aqi_value);
+        array_push($slex_co_actual_values, $ave);
       }
 
       else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -1228,17 +1269,20 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
           }
 
           array_push($slex_co_aqi_values, $aqi_value);
+          array_push($slex_co_actual_values, $ave);
         }
 
         else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
         {
           array_push($slex_co_aqi_values, -1);
+          array_push($slex_co_actual_values, -1);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($slex_co_aqi_values, -1);
+        array_push($slex_co_actual_values, -1);
       }
   }
 
@@ -1293,6 +1337,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
       }
 
       array_push($slex_so2_aqi_values, $aqi_value);
+      array_push($slex_so2_actual_values, $ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -1319,17 +1364,20 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
         }
 
         array_push($slex_so2_aqi_values, $aqi_value);
+        array_push($slex_so2_actual_values, $ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($slex_so2_aqi_values, -1);
+        array_push($slex_so2_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($slex_so2_aqi_values, -1);
+      array_push($slex_so2_actual_values, -1);
     }
   }
 
@@ -1382,6 +1430,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
       }
 
       array_push($slex_no2_aqi_values, $aqi_value);
+      array_push($slex_no2_actual_values, $nitrogen_dioxide_ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -1405,17 +1454,20 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
         }
 
         array_push($slex_no2_aqi_values, $aqi_value);
+        array_push($slex_no2_actual_values, $nitrogen_dioxide_ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($slex_no2_aqi_values, -1);
+        array_push($slex_no2_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($slex_no2_aqi_values, -1);
+      array_push($slex_no2_actual_values, -1);
     }
   }
 
@@ -1473,6 +1525,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
         }
 
         array_push($slex_o3_aqi_values, $aqi_value);
+        array_push($slex_o3_actual_values, $ave);
       }
 
       else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -1512,17 +1565,20 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
           }
 
           array_push($slex_o3_aqi_values, $aqi_value);
+          array_push($slex_o3_actual_values, $ave);
         }
 
         else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
         {
           array_push($slex_o3_aqi_values, -1);
+          array_push($slex_o3_actual_values, -1);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($slex_o3_aqi_values, -1);
+        array_push($slex_o3_actual_values, -1);
       }
   }
 
@@ -1578,6 +1634,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
       }
 
       array_push($slex_pm10_aqi_values, $aqi_value);
+      array_push($slex_pm10_actual_values, $ave);
     }
 
     else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
@@ -1604,17 +1661,20 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
         }
 
         array_push($slex_pm10_aqi_values, $aqi_value);
+        array_push($slex_pm10_actual_values, $ave);
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
         array_push($slex_pm10_aqi_values, -1);
+        array_push($slex_pm10_actual_values, -1);
       }
     }
 
     else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
     {
       array_push($slex_pm10_aqi_values, -1);
+      array_push($slex_pm10_actual_values, -1);
     }
   }
 
@@ -2147,6 +2207,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 
   var bancal_prevalentIndex = <?= $bancal_prevalentIndex[0] ?>;
   var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
+  var bancal_prevalent_actual_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
   var bancal_min_max_values = <?= json_encode($bancal_min_max_values) ?>;
 
   var bancal_date_gathered = <?= json_encode($bancal_date_gathered) ?>;
@@ -2158,6 +2219,14 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   var bancal_o3_1_aqi_values = <?= json_encode($bancal_o3_1_aqi_values) ?>;
   var bancal_pm10_aqi_values = <?= json_encode($bancal_pm10_aqi_values) ?>;
   var bancal_tsp_aqi_values = <?= json_encode($bancal_tsp_aqi_values) ?>;
+
+  var bancal_co_actual_values = <?= json_encode($bancal_co_actual_values) ?>;
+  var bancal_so2_actual_values = <?= json_encode($bancal_so2_actual_values) ?>;
+  var bancal_no2_actual_values = <?= json_encode($bancal_no2_actual_values) ?>;
+  var bancal_o3_actual_values = <?= json_encode($bancal_o3_actual_values) ?>;
+  var bancal_o3_1_actual_values = <?= json_encode($bancal_o3_1_actual_values) ?>;
+  var bancal_pm10_actual_values = <?= json_encode($bancal_pm10_actual_values) ?>;
+  var bancal_tsp_actual_values = <?= json_encode($bancal_tsp_actual_values) ?>;
 
   var bancal_co_max = <?= json_encode($bancal_co_max) ?>;
   var bancal_so2_max = <?= json_encode($bancal_so2_max) ?>;
@@ -2182,6 +2251,14 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   var slex_o3_1_aqi_values = <?= json_encode($slex_o3_1_aqi_values) ?>;
   var slex_pm10_aqi_values = <?= json_encode($slex_pm10_aqi_values) ?>;
   var slex_tsp_aqi_values = <?= json_encode($slex_tsp_aqi_values) ?>;
+
+  var slex_co_actual_values = <?= json_encode($slex_co_actual_values) ?>;
+  var slex_so2_actual_values = <?= json_encode($slex_so2_actual_values) ?>;
+  var slex_no2_actual_values = <?= json_encode($slex_no2_actual_values) ?>;
+  var slex_o3_actual_values = <?= json_encode($slex_o3_actual_values) ?>;
+  var slex_o3_1_actual_values = <?= json_encode($slex_o3_1_actual_values) ?>;
+  var slex_pm10_actual_values = <?= json_encode($slex_pm10_actual_values) ?>;
+  var slex_tsp_actual_values = <?= json_encode($slex_tsp_actual_values) ?>;
 
   var slex_co_max = <?= json_encode($slex_co_max) ?>;
   var slex_so2_max = <?= json_encode($slex_so2_max) ?>;
