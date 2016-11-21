@@ -5,13 +5,13 @@
  */
 
 //ONLINE DB
-//define("DB_HOST", "MYSQL5016.myWindowsHosting.com");
-//define("DB_USER", "9fa58a_mtdb");
-//define("DB_PASSWORD", "melotrax123");
-//define("DB_DATABASE", "db_9fa58a_mtdb");
+define("DB_HOST", "localhost");
+define("DB_USER", "mclccisn_aqmsph");
+define("DB_PASSWORD", "AQMS@PH2016");
+define("DB_DATABASE", "aqms");
 
 //LOCAL DB
-define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASSWORD", "");
-define("DB_DATABASE", "aqms");
+//define("DB_HOST", "localhost");
+//define("DB_USER", "root");
+//define("DB_PASSWORD", "");
+//define("DB_DATABASE", "aqms");
