@@ -6,17 +6,90 @@
  * Time: 7:00 PM
  */
 
-if(isset($_POST['btnGenerate'])){
+require_once 'public/include/db_connect.php';
 
-  $area = $_POST["drpArea"];
-  $pollutant = $_POST["drpPollutant"];
+$errorMessage = "";
+$areaName = array('Select an area', 'SLEX', 'Bancal', 'All');
+
+if(isset($_POST["btnGenerate"]))
+{
+    // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
+
+
+    $area = $_POST["drpArea"];
+    $pollutant = $_POST["drpPollutant"];
     $dateTimeFrom = $_POST["txtDateTimeFrom"];
     $dateTimeTo = $_POST["txtDateTimeTo"];
+
+
+if($area == 3) {
+    if ($pollutant == 7) {
+        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
+                          WHERE DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
+                          ORDER BY TIMESTAMP DESC";
+
+        $result = mysqli_query($con, $query);
+        $row = mysqli_num_rows($result);
+
+
+    } else {
+        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
+                          WHERE MASTER.e_id = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
+                          ORDER BY TIMESTAMP DESC";
+        $result = mysqli_query($con, $query);
+
+        $result = mysqli_query($con, $query);
+        $row = mysqli_num_rows($result);
+
+
+    }
 }
-    session_start(); ?>
-    <script type="text/javascript">alert('No available data!');</script>
-   <?php unset($_SESSION['error']);
-   session_abort();
+else{
+    if ($pollutant == 7) {
+        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
+                          WHERE area_name = '$areaName[$area]' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
+                          ORDER BY TIMESTAMP DESC";
+
+    } else {
+        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
+                          WHERE area_name = '$areaName[$area]' and MASTER.e_id = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
+                          ORDER BY TIMESTAMP DESC";
+        $result = mysqli_query($con, $query);
+    }
+    $result = mysqli_query($con, $query);
+    $row = mysqli_num_rows($result);
+
+
+}
+    if($row == 0){
+        $error = true;
+    }else{
+        $error = false; // THEN SET THIS TO TRUE / FALSE OK OK
+    }
+
+
+
+    if($error)
+    {
+        $errorMessage = "No available data!";
+    }
+
+    else {
+
+        session_start();
+
+        $_SESSION['drpArea'] = $_POST["drpArea"];
+        $_SESSION['drpPollutant'] = $_POST["drpPollutant"];
+        $_SESSION['txtDateTimeFrom'] = $_POST["txtDateTimeFrom"];
+        $_SESSION['txtDateTimeTo'] = $_POST["txtDateTimeTo"];
+
+        header("Location: generatepdf.php");
+    }
+}
 ?>
 
 
@@ -36,7 +109,16 @@ if(isset($_POST['btnGenerate'])){
     <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+    <script type ="text/javascript">
+        var errorMessage = "<?= $errorMessage ?>";
 
+        if(errorMessage == "No available data!")
+        {
+            alert(errorMessage);
+        }
+       // alert(errorMessage);
+
+    </script>
 
 </head>
 
@@ -53,9 +135,10 @@ if(isset($_POST['btnGenerate'])){
             <div class="row">
                 <div class="col m6 offset-m3">
                     <div class="form-card z-depth-1">
-                        <form method = "post" action="generatepdf.php">
+                        <form method = "post" action="">
+                        <!--<form method = "post" action="generatepdf.php">-->
                             <div class="input-field col s12">
-                                <select name = "drpArea">
+                                <select name = "drpArea" required>
                                     <option value="" disabled selected>Select an area</option>
                                     <option value="1">SLEX, Carmona Exit</option>
                                     <option value="2">Bancal</option>
@@ -64,7 +147,7 @@ if(isset($_POST['btnGenerate'])){
                                 <label>Area</label>
                             </div>
                             <div  class="input-field col s12">
-                                <select name = "drpPollutant">
+                                <select name = "drpPollutant" required>
                                     <option value="" disabled selected>Select a pollutant</option>
                                     <option value="1">CO</option>
                                     <option value="2">SO2</option>

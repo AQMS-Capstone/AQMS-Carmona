@@ -36,11 +36,20 @@ try {
 
     $area = array('Select an area', 'SLEX', 'Bancal', 'All');
     $pollutant = array('Select a pollutant', 'CO', 'SO2', 'NO2', 'O3', 'Pb', 'PM10', 'TSP', 'All');
-    if (isset($_POST['btnGenerate'])) {
+    //if (isset($_POST['btnGenerate'])) {
+        /*
         $areaIndex = $_POST['drpArea'];
         $pollutantIndex = $_POST['drpPollutant'];
         $dateFrom = $_POST["txtDateTimeFrom"];
         $dateTo = $_POST["txtDateTimeTo"];
+        */
+        session_start();
+
+        $areaIndex = $_SESSION["drpArea"];;
+        $pollutantIndex = $_SESSION["drpPollutant"];
+        $dateFrom = $_SESSION["txtDateTimeFrom"];
+        $dateTo = $_SESSION["txtDateTimeTo"];
+
         $loc = strtolower($area[$areaIndex]);
 
         $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
@@ -191,7 +200,7 @@ try {
         }
 
 
-    }
+    //}
 
     if ($aqi_index < 26.0) {
         $aqi_status = "Good";
@@ -406,8 +415,15 @@ try {
 
 }
 catch(Exception $e){
-    session_start();
+    /*session_start();*/
+
+    /*
+    echo '<script language="javascript">';
+    echo 'alert("Error")';
+    echo '</script>';
+
     header("Location: history.php");
+       */
     die();
 
 }
