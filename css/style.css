@@ -5,9 +5,7 @@ body{
 .nav-wrapper{
     background-color: #009688;
 }
-.margin-5{
-    margin: 5px 5px;
-}
+
 .brand-logo{
     margin-top: 5px;
     height: 50px;
@@ -172,7 +170,8 @@ nav  ul.black-text a{
     margin: 0.5rem 0.5rem 1rem 0;
     z-index: 997;
     width: 50%;
-    max-height: 100%;
+    top: 28%;
+
 }
 .row-no-after{
     content: none;
@@ -181,10 +180,8 @@ nav  ul.black-text a{
     border-radius: 50%;
 
 }
-#AQIStat, #AQIStat-reports{
-    background-color: #00acc1;
-    border-radius: 2px;
-}
+
+
 .tabs .tab a{
     color: #009688;
 

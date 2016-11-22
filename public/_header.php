@@ -23,7 +23,7 @@
             <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                 <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
                 <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span
-                            class="material-icons">location_on</span> Sensors Map<i class="material-icons right">arrow_drop_down</i></a>
+                            class="material-icons">location_on</span> Sensors Map<i class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a>
                 </li>
                 <li><a href="daily.php" id=""><span class="material-icons">access_time</span> Daily</a></li>
                 <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>

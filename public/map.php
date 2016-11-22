@@ -14,21 +14,21 @@ if(isset($_GET["area"]))
 ?>
 <div id="home">
     <div id="googleMap"></div>
-    <div id="zoneStatus" class="card float-card">
+    <div id="zoneStatus" class="card float-card" style="max-height: 445px;">
         <div class="card-content black-text">
             <div class="row">
-                <div id="AQIStat" class="col s12 m4">
+                <div class="col s12 m4">
                     <span class="center-align">
-                        <h6 class="margin-5">AQI</h6>
-                        <h2 class="margin-5" id="aqiNum">12345</h2>
+                        <p><span class="material-icons" style="font-size: 5em;" id="AQIStat">cloud</span></p>
+                        <p style="font-weight: bold; font-size: 2em;">AQI: <span id="aqiNum"></span></p>
                     </span>
                 </div>
-                <div class="center-align">
-                    <div class="col s12 m8">
+                <div  >
+                    <div class="col s12 m7">
                         <div class="row-no-after">
                             <div class="col s12">
-                                <h5 class="margin-5" style="font-weight: bold;" id="aqiText">AQI Status</h5>
-                                <span class="card-title"><b class="teal-text" id="zoneName">Zone Name</b></span>
+                                <h5 class="no-pad-bot" style="font-weight: bold;" id="aqiText">AQI Status</h5>
+                                <span style="font-size: x-large"><b class="teal-text" id="zoneName">Zone Name</b></span>
                             </div>
                             <div id="AQIStat_txt" class="col s12">
                                 <b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">Prevalent Air Pollutant</span>

@@ -211,7 +211,7 @@ function initialize()
 
         $("#zoneStatus").show();
         document.getElementById("aqiText").style.color = bancalAirQuality;
-        document.getElementById("AQIStat").style.backgroundColor = bancalAirQuality;
+        document.getElementById("AQIStat").style.color = bancalAirQuality;
         document.getElementById("zoneName").innerHTML = 'Bancal Carmona, Cavite';
         document.getElementById("prevalentPollutant").innerHTML = bancalprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = bancalAQI;
@@ -323,7 +323,7 @@ function initialize()
 
         $("#zoneStatus").show();
         document.getElementById("aqiText").style.color = slexAirQuality;
-        document.getElementById("AQIStat").style.backgroundColor = slexAirQuality;
+        document.getElementById("AQIStat").style.color = slexAirQuality;
         document.getElementById("zoneName").innerHTML = 'SLEX Carmona Exit, Cavite';
         document.getElementById("prevalentPollutant").innerHTML = slexprevalentPollutant;
         document.getElementById("aqiNum").innerHTML = slexAQI;
