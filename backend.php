@@ -4,8 +4,7 @@
 function insertPollutant($e_id, $area, $co_value, $time)
 {
     include('public/include/db_connect.php');
-
-
+    
     if ($time == "") {
         $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' ORDER BY timestamp desc limit 1";
         $result = mysqli_query($con, $query);
@@ -18,8 +17,6 @@ function insertPollutant($e_id, $area, $co_value, $time)
             }
         }
     }
-
-
 
     else
     {
