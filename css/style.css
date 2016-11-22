@@ -120,7 +120,7 @@ footer.page-footer .footer-copyright{
     .centered-legend{
         float: right;
         position: relative;
-        left: 14%;
+        left: 9%;
     }
     .centered-nav{
         float: right;
@@ -169,6 +169,7 @@ nav  ul.black-text a{
 .input-date-time{
 
 }
+
 .flatpickr label{
     top: 0px;
     font-size: 0.8rem;
