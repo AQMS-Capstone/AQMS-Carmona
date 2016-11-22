@@ -19,6 +19,14 @@ function insertPollutant($e_id, $area, $co_value, $time)
         }
     }
 
+
+
+    else
+    {
+        $date = date("Y-m-d H", strtotime($time));
+        $time = $date.":00:00";
+    }
+
     $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$co_value', '$time')";
 
     if (!mysqli_query($con, $query)) {
@@ -69,8 +77,6 @@ if (isset($_POST['btnSubmit'])) {
         $e_id = '6';
         insertPollutant($e_id, $area, $tsp_value, $time);
     }
-
-
 }
 
 ?>
