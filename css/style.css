@@ -1,5 +1,4 @@
 body{
-    background-color: #e9ebee;
 
 }
 .nav-wrapper{
@@ -15,7 +14,6 @@ body{
     width:100%;
     overflow:hidden;
 }
-
 .scroll:hover{
     overflow-y: scroll;
 }
@@ -90,18 +88,48 @@ footer.page-footer .footer-copyright{
 #legends nav ul li{
     margin: 0 5px 0 5px;
 }
-.centered-nav{
-    float: right;
-    position: relative;
-    left: -22%;
+
+@media only screen and (min-width: 1200px){
+    .centered-legend{
+        float: right;
+        position: relative;
+        left: -22%;
+    }
+    .centered-nav{
+        float: right;
+        position: relative;
+        left: -25%;
+    }
 }
 
-.centered-nav.nav-status{
-    float: right;
-    position: relative;
-    left: -21%;
-
+@media only screen and (min-width: 1500px){
+    .centered-legend{
+        float: right;
+        position: relative;
+        left: 25%;
+    }
+    .centered-nav{
+        float: right;
+        position: relative;
+        left: -25%;
+    }
 }
+
+
+@media only screen and (min-width: 1700px){
+    .centered-legend{
+        float: right;
+        position: relative;
+        left: 14%;
+    }
+    .centered-nav{
+        float: right;
+        position: relative;
+        left: -30%;
+    }
+}
+
+
 .parallax-css{
     -webkit-filter: grayscale(80%); /* Safari 6.0 - 9.0 */
     filter: grayscale(80%);
@@ -170,7 +198,7 @@ nav  ul.black-text a{
     margin: 0.5rem 0.5rem 1rem 0;
     z-index: 997;
     width: 50%;
-    top: 28%;
+    top: 29%;
 
 }
 .row-no-after{

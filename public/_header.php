@@ -42,7 +42,7 @@
 <div id="legends">
     <nav class="navbar-fixed">
         <div class="nav-wrapper white">
-            <ul id="nav-mobile" class="nav-status hide-on-med-and-down black-text centered-nav">
+            <ul class="centered-legend">
                 <li style="color: #2196F3;"><span class="material-icons">cloud</span> Good</li>
                 <li style="color: #FFEB3B;"><span class="material-icons">cloud</span> Fair</li>
                 <li style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups
