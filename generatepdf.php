@@ -57,108 +57,151 @@ try {
             if ($pollutantIndex == 7) {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = 'bancal' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
+                          WHERE DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
                           ORDER BY TIMESTAMP DESC";
 
                 $result = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result)) {
-                    array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
+
+                    if($row["AREA_NAME"] == "bancal"){
+                        array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
 
 
-                    array_push($bancalData1, $row["E_NAME"]);
-                    array_push($bancalData1, $row["E_SYMBOL"]);
-                    array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($bancalData1, $row["timestamp"]);
+                        array_push($bancalData1, $row["E_NAME"]);
+                        array_push($bancalData1, $row["E_SYMBOL"]);
+                        array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
+                        array_push($bancalData1, $row["timestamp"]);
+                    }
+                    else{
+                        array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
+
+
+                        array_push($slexData1, $row["E_NAME"]);
+                        array_push($slexData1, $row["E_SYMBOL"]);
+                        array_push($slexData1, $row["CONCENTRATION_VALUE"]);
+                        array_push($slexData1, $row["timestamp"]);
+                    }
+
                 }
 
-                $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = 'slex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY TIMESTAMP DESC";
-
-                $result = mysqli_query($con, $query);
-                while ($row = mysqli_fetch_array($result)) {
-                    array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
 
 
-                    array_push($slexData1, $row["E_NAME"]);
-                    array_push($slexData1, $row["E_SYMBOL"]);
-                    array_push($slexData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($slexData1, $row["timestamp"]);
+                if(!empty($slexData) && empty($bancalData)){
+                    foreach ($slexData as $line) {
+                        # code...
+                        $slexDataSet[] = explode(';', trim($line));
+                    }
+                }
+                else if(empty($slexData) && !empty($bancalData)){
+                    foreach ($bancalData as $line) {
+                        # code...
+                        $bancalDataSet[] = explode(';', trim($line));
+                    }
+                }
+                else{
+                    foreach ($slexData as $line) {
+                        # code...
+                        $slexDataSet[] = explode(';', trim($line));
+                    }
+
+                    foreach ($bancalData as $line) {
+                        # code...
+                        $bancalDataSet[] = explode(';', trim($line));
+                    }
                 }
 
-                foreach ($bancalData as $line) {
-                    # code...
-                    $bancalDataSet[] = explode(';', trim($line));
-                }
-                foreach ($slexData as $line) {
-                    # code...
-                    $slexDataSet[] = explode(';', trim($line));
-                }
 
 
 
             } else {
-                $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+                $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = 'bancal' AND MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
+                          WHERE MASTER.e_id ='$pollutantIndex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
                           ORDER BY TIMESTAMP DESC";
-                $result = mysqli_query($con, $query1);
 
                 $result = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result)) {
-                    array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
+
+                    if($row["AREA_NAME"] == "bancal"){
+                        array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
 
 
-                    array_push($bancalData1, $row["E_NAME"]);
-                    array_push($bancalData1, $row["E_SYMBOL"]);
-                    array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($bancalData1, $row["timestamp"]);
+                        array_push($bancalData1, $row["E_NAME"]);
+                        array_push($bancalData1, $row["E_SYMBOL"]);
+                        array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
+                        array_push($bancalData1, $row["timestamp"]);
+                    }
+                    else{
+                        array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
+
+
+                        array_push($slexData1, $row["E_NAME"]);
+                        array_push($slexData1, $row["E_SYMBOL"]);
+                        array_push($slexData1, $row["CONCENTRATION_VALUE"]);
+                        array_push($slexData1, $row["timestamp"]);
+                    }
+
                 }
 
-                $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = 'slex' AND MASTER.e_id = '$pollutantIndex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY TIMESTAMP DESC";
-
-                $result = mysqli_query($con, $query);
-                while ($row = mysqli_fetch_array($result)) {
-                    array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
 
 
-                    array_push($slexData1, $row["E_NAME"]);
-                    array_push($slexData1, $row["E_SYMBOL"]);
-                    array_push($slexData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($slexData1, $row["timestamp"]);
+                if(!empty($slexData) && empty($bancalData)){
+                    foreach ($slexData as $line) {
+                        # code...
+                        $slexDataSet[] = explode(';', trim($line));
+                    }
                 }
-                foreach ($bancalData as $line) {
-                    # code...
-                    $bancalDataSet[] = explode(';', trim($line));
+                else if(empty($slexData) && !empty($bancalData)){
+                    foreach ($bancalData as $line) {
+                        # code...
+                        $bancalDataSet[] = explode(';', trim($line));
+                    }
                 }
-                foreach ($slexData as $line) {
-                    # code...
-                    $slexDataSet[] = explode(';', trim($line));
+                else{
+                    foreach ($slexData as $line) {
+                        # code...
+                        $slexDataSet[] = explode(';', trim($line));
+                    }
+
+                    foreach ($bancalData as $line) {
+                        # code...
+                        $bancalDataSet[] = explode(';', trim($line));
+                    }
                 }
 
             }
-            if(strtotime($slexData1[3] > strtotime($bancalData1[3]))){
+            if(count($slexData1) != 0 && count($bancalData1) != 0) {
+                if (strtotime($slexData1[3] > strtotime($bancalData1[3]))) {
+                    $time_updated = $slexData1[3];
+                } else {
+                    $time_updated = $bancalData1[3];
+                }
+
+                $a_name = "SLEX and Bancal, Carmona, Cavite";
+                if ($slexData1[2] > $bancalData1[2]) {
+                    $prevalent_air_pollutant_symbol = $slexData1[1];
+                    $prevalent_air_pollutant = $slexData1[0];
+                    $aqi_index = $slexData1[2];
+                } else {
+                    $prevalent_air_pollutant_symbol = $bancalData1[1];
+                    $prevalent_air_pollutant = $bancalData1[0];
+                    $aqi_index = $bancalData1[2];
+                }
+            }else if(count($slexData1) != 0 && count($bancalData1) == 0){
+                $a_name = "SLEX, Carmona, Cavite";
                 $time_updated = $slexData1[3];
-            }
-            else{
-                $time_updated = $bancalData1[3];
-            }
-
-            $a_name = "SLEX and Bancal, Carmona, Cavite";
-            if ($slexData1[2]>$bancalData1[2]){
                 $prevalent_air_pollutant_symbol = $slexData1[1];
                 $prevalent_air_pollutant = $slexData1[0];
                 $aqi_index = $slexData1[2];
-            }
-            else{
+
+            }else if(count($slexData1) == 0 && count($bancalData1) != 0){
+                $a_name = "Bancal, Carmona, Cavite";
+                $time_updated = $bancalData1[3];
                 $prevalent_air_pollutant_symbol = $bancalData1[1];
                 $prevalent_air_pollutant = $bancalData1[0];
                 $aqi_index = $bancalData1[2];
             }
+
 
         }
         else{
@@ -378,6 +421,23 @@ try {
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $slexDataSet);
         $pdf->Ln(2);
+    }else if(!empty($bancalData) && empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
+//$data = $pdf->LoadData('countries.txt');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable($header, $bancalDataSet);
+        $pdf->Ln(2);
+    }
+    else if(empty($bancalData) && !empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
+//$data = $pdf->LoadData('countries.txt');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable($header, $slexDataSet);
+        $pdf->Ln(2);
     }
     else {
         $pdf->SetTextColor(0, 0, 0);
@@ -429,6 +489,7 @@ catch(Exception $e){
 }
 
 finally{
+    session_destroy();
     mysqli_close($con);
 }
 ?>

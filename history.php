@@ -8,11 +8,12 @@
 
 require_once 'public/include/db_connect.php';
 
-$errorMessage = "";
+$error = false;
 $areaName = array('Select an area', 'SLEX', 'Bancal', 'All');
 
 if(isset($_POST["btnGenerate"]))
 {
+
     // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
 
 
@@ -20,7 +21,6 @@ if(isset($_POST["btnGenerate"]))
     $pollutant = $_POST["drpPollutant"];
     $dateTimeFrom = $_POST["txtDateTimeFrom"];
     $dateTimeTo = $_POST["txtDateTimeTo"];
-
 
 if($area == 3) {
     if ($pollutant == 7) {
@@ -31,7 +31,7 @@ if($area == 3) {
 
         $result = mysqli_query($con, $query);
         $row = mysqli_num_rows($result);
-
+        mysqli_close($con);
 
     } else {
         $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
@@ -43,7 +43,7 @@ if($area == 3) {
         $result = mysqli_query($con, $query);
         $row = mysqli_num_rows($result);
 
-
+        mysqli_close($con);
     }
 }
 else{
@@ -63,15 +63,13 @@ else{
     $result = mysqli_query($con, $query);
     $row = mysqli_num_rows($result);
 
-
+    mysqli_close($con);
 }
     if($row == 0){
         $error = true;
     }else{
         $error = false; // THEN SET THIS TO TRUE / FALSE OK OK
     }
-
-
 
     if($error)
     {
@@ -89,6 +87,8 @@ else{
 
         header("Location: generatepdf.php");
     }
+
+
 }
 ?>
 
