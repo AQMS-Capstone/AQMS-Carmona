@@ -21,6 +21,7 @@ if(isset($_POST["btnGenerate"]))
     $pollutant = $_POST["drpPollutant"];
     $dateTimeFrom = $_POST["txtDateTimeFrom"];
     $dateTimeTo = $_POST["txtDateTimeTo"];
+    $order = $_POST["drpOrder"];
 
 if($area == 3) {
     if ($pollutant == 7) {
@@ -74,6 +75,7 @@ else{
     if($error)
     {
         $errorMessage = "No available data!";
+        $error = false;
     }
 
     else {
@@ -84,8 +86,10 @@ else{
         $_SESSION['drpPollutant'] = $_POST["drpPollutant"];
         $_SESSION['txtDateTimeFrom'] = $_POST["txtDateTimeFrom"];
         $_SESSION['txtDateTimeTo'] = $_POST["txtDateTimeTo"];
+        $_SESSION['drpOrder'] = $_POST["drpOrder"];
 
         header("Location: generatepdf.php");
+
     }
 
 
@@ -115,7 +119,10 @@ else{
         if(errorMessage == "No available data!")
         {
             alert(errorMessage);
+            errorMessage = "";
         }
+
+        errorMessage = "";
        // alert(errorMessage);
 
     </script>
@@ -159,6 +166,16 @@ else{
                                     <option value="7">All</option>
                                 </select>
                                 <label>Pollutant</label>
+                            </div>
+
+                            <div  class="input-field col s12">
+                                <select name = "drpOrder" required>
+                                    <option value="" disabled selected>Select order of data</option>
+                                    <option value="1">Timestamp</option>
+                                    <option value="2">Element</option>
+
+                                </select>
+                                <label>Order By</label>
                             </div>
 
                             <div class="input-field s12">

@@ -31,6 +31,8 @@ $bancalDataSet = array();
 $slexDataSet = array();
 
 $filename = "";
+$orderIndex = 0;
+$order = "";
 
 try {
 
@@ -49,7 +51,12 @@ try {
         $pollutantIndex = $_SESSION["drpPollutant"];
         $dateFrom = $_SESSION["txtDateTimeFrom"];
         $dateTo = $_SESSION["txtDateTimeTo"];
-
+        $orderIndex = $_SESSION["drpOrder"];
+        if($orderIndex <= 1){
+            $order = 'timestamp';
+        }else{
+            $order = 'master.e_id';
+        }
         $loc = strtolower($area[$areaIndex]);
 
         $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
@@ -58,7 +65,7 @@ try {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY TIMESTAMP DESC";
+                          ORDER BY $order DESC";
 
                 $result = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result)) {
@@ -111,13 +118,11 @@ try {
                 }
 
 
-
-
             } else {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE MASTER.e_id ='$pollutantIndex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY TIMESTAMP DESC";
+                          ORDER BY $order DESC";
 
                 $result = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result)) {
@@ -209,13 +214,13 @@ try {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$loc' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY TIMESTAMP DESC";
+                          ORDER BY $order DESC";
 
             } else {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY TIMESTAMP DESC";
+                          ORDER BY $order DESC";
                 $result = mysqli_query($con, $query);
             }
             $result = mysqli_query($con, $query);
@@ -356,7 +361,6 @@ try {
     $pdf->AliasNbPages();
     $pdf->AddPage();
     $pdf->SetTitle("AQMS Monitoring - Generated Report");
-
     $pdf->Ln(6);
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(1);
