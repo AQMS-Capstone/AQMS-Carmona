@@ -133,8 +133,8 @@ else{
    <div class="section no-pad-bot">
         <div class="container">
             <div class="row">
-                <div class="col m6 offset-m3">
-                    <div class="form-card z-depth-1">
+                <div class="col s6 offset-s3">
+                    <div class="form-card z-depth-1" style="width:100%;">
                         <form method = "post" action="">
                         <!--<form method = "post" action="generatepdf.php">-->
                             <div class="input-field col s12">
@@ -191,10 +191,7 @@ else{
                             </div>
                         </form>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>

@@ -20,14 +20,14 @@ if(isset($_GET["area"]))
                 <div class="col s12 m4">
                     <span class="center-align">
                         <p><span class="material-icons" style="font-size: 5em;" id="AQIStat">cloud</span></p>
-                        <p style="font-weight: bold; font-size: 2em;">AQI: <span id="aqiNum"></span></p>
+                        <p style="font-weight: bold; font-size: 1.5em;">AQI: <span id="aqiNum"></span></p>
                     </span>
                 </div>
                 <div  >
                     <div class="col s12 m7">
                         <div class="row-no-after">
                             <div class="col s12">
-                                <h5 class="no-pad-bot" style="font-weight: bold;" id="aqiText">AQI Status</h5>
+                                <p style="font-weight: bold; font-size: 1.5em;" id="aqiText">AQI Status</p>
                                 <span style="font-size: x-large"><b class="teal-text" id="zoneName">Zone Name</b></span>
                             </div>
                             <div id="AQIStat_txt" class="col s12">
@@ -210,7 +210,7 @@ if(isset($_GET["area"]))
             </div>
             <div id="plotOption" class="center-align">
                 <div class="divider"></div>
-                    <form action="daily.php">
+                    <form action="daily.php" style="height: 100%;">
                         <a class="waves-effect orange-text btn-flat" href="daily.php?area=<?php echo "$data"?>" style="width:100%">VIEW MORE</a>
                     </form>
                 </div>

@@ -64,9 +64,6 @@ form {
     color: #b71c1c;
 }
 
-
-
-
 .labels {
     color: #212121;
     background-color: white;
@@ -129,19 +126,6 @@ footer.page-footer .footer-copyright{
     }
 }
 
-
-.parallax-css{
-    -webkit-filter: grayscale(80%); /* Safari 6.0 - 9.0 */
-    filter: grayscale(80%);
-}
-
-.stroke-white{
-    text-shadow:
-            -1px -1px 0 #ffffff,
-            1px -1px 0 #ffffff,
-            -1px 1px 0 #ffffff,
-            1px 1px 0 #ffffff;
-}
 nav.navbar-fixed {
     height: 45px;
     line-height: 45px;
@@ -195,7 +179,7 @@ nav  ul.black-text a{
 
 .float-card{
     position: absolute;
-    right: 0;
+    right: 0.5%;
     margin: 0.5rem 0.5rem 1rem 0;
     z-index: 997;
     width: 50%;
