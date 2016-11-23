@@ -76,7 +76,7 @@
                 <div class="col s9 left-align">
                     <h4>Vonn Mesina</h4>
                     <p>Vonn is an Information Technology major with a specialization in web and mobile development.
-                        He is currently working at Gleent Inc. as a Mobile Developer</p>
+                        He is currently working at Gleent Inc. as an iOS Developer</p>
                 </div>
             </div>
 
