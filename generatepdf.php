@@ -323,12 +323,12 @@ try {
             date_default_timezone_set("Asia/Manila");
             $g_time = date("l, m-d-Y G:i");
             // Logo
-            $this->Image('res/header.png', 10, 6, 190);
-            $this->Image('res/Logo1.png', 10, 6, 32);
+            $this->Image('res/header.png', 10, 3, 190);
+            $this->Image('res/Logo1.png', 10, 3, 32);
             $this->SetFont('helvetica', 'B', 18);
             $this->Cell(50);
             $this->SetTextColor(255, 255, 255);
-            $this->Cell(30, 10, 'AQMS Carmona History Report', 0, 0);
+            $this->Cell(30, 5, 'AQMS Carmona History Report', 0, 0);
             // Arial bold 15
             // Move to the right
 
@@ -339,7 +339,7 @@ try {
             //$this->Cell(10);
             $this->Cell(30, 30, 'Generated on:' . ' ' . $g_time, 0, 0);
             // Line break
-            $this->Ln(10);
+            $this->Ln(20);
         }
 
 // Page footer
@@ -361,7 +361,7 @@ try {
     $pdf->AliasNbPages();
     $pdf->AddPage();
     $pdf->SetTitle("AQMS Monitoring - Generated Report");
-    $pdf->Ln(6);
+    $pdf->Ln(-5);
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(1);
     $pdf->Cell(0, 15, 'Area: ');
