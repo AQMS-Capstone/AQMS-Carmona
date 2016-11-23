@@ -37,15 +37,78 @@
 <?php  include('public/_header.php'); ?>
 
 <div id="content-holder">
-
-    <div class="section">
-        <div class="container">
+    <br>
+    <div class="section white">
+        <div class="row container center">
+            <h3 class="header teal-text">About</h3>
+            <h5 class="teal-text text-lighten-2">Learn about Carmona, Cavite and our Project Team.</h5>
+        </div>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="res/images/parallax/carmona_1.jpg"></div>
+    </div>
+    <div class="section white">
+        <div class="row container center">
+            <h3 class="header teal-text">About</h3>
+            <p class="gray-text text-lighten-3 caption">
+                Carmona is located on the south-eastern part of the province of Cavite, approximately 36 kilometres south of Manila and 24 kilometres from Trece Martires City, Cavite’s provincial capital.
+                It is bounded on the north, east and south by the City of Biñan, Laguna, Municipality of General Mariano Alvarez (GMA) on the north-west and Silang on the south-west.
+                The geographic coordinates of Carmona are about 14.32° latitude and 121.06° longitude.
+            </p>
+        </div>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="res/images/parallax/carmona_2.jpg"></div>
+    </div>
+    <div class="section white">
+        <div class="row container center">
+            <h3 class="header teal-text">Meet the Team</h3>
+            <p class="gray-text text-lighten-3 caption">We are a team of students from Malayan Colleges Laguna.</p>
+            <div class="divider"></div>
+            <br>
+            <br>
             <div class="row">
-                <div class="col s12">
-                    
+                <div class="col s3">
+                    <div>
+                        <img class="img-circle img-small" src="res/images/team/vonn.jpg">
+                    </div>
+                </div>
+                <div class="col s9 left-align">
+                    <h4>Vonn Mesina</h4>
+                    <p>Vonn is an Information Technology major with a specialization in web and mobile development.
+                        He is currently working at Gleent Inc. as a Mobile Developer</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s3">
+                    <div>
+                        <img class="img-circle img-small" src="res/images/team/lyle.jpg">
+                    </div>
+                </div>
+                <div class="col s9 left-align">
+
+                    <h4>Lyle Dela Cuesta</h4>
+                    <p>Lyle is an Information Technology major with a specialization in web and mobile development.
+                        He is currently working at NXP, Philips Inc. as a Front End and Back End Developer</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s3">
+                    <div>
+                        <img class="img-circle img-small" src="res/images/team/kris.jpg">
+                    </div>
+                </div>
+                <div class="col s9 left-align">
+                    <h4>Kris Mariano</h4>
+                    <p>Kris is an Information Technology major with a specialization in web and mobile development.
+                        He is currently working at NXP, Philips Inc. as a Front End and Back End Developer.</p>
                 </div>
             </div>
         </div>
+
+    </div>
     </div>
 
 </div>

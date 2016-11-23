@@ -5,6 +5,7 @@ $( document ).ready(function(){
     $("#zoneStatus").hide();
     $("#reports").hide();
     $('select').material_select();
+    $('.parallax').parallax();
 })
 
 

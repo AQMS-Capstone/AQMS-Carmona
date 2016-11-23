@@ -149,6 +149,16 @@ nav  ul.black-text a{
 .input-date{
 
 }
+.caption{
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.img-small{
+    width: 150px;
+    height: 150px;
+}
 
 .input-date-time{
 
