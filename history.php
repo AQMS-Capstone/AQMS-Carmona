@@ -96,10 +96,9 @@ else{
 }
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="generator" content="HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
