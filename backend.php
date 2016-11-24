@@ -1,10 +1,48 @@
 <?php
 
+$statusMessage = ["", ""];
 
-function insertPollutant($e_id, $area, $co_value, $time)
+function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statusMessage)
 {
     include('public/include/db_connect.php');
-    
+
+    $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
+    $result = mysqli_query($con, $query);
+
+    if($result) {
+
+        if (mysqli_num_rows($result) == 0) {
+            $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$value', '$date_now_string')";
+            if (!mysqli_query($con, $query)) {
+                die('Error: ' . mysqli_error($con));
+            }
+
+            else
+            {
+                if($statusMessage[1] == "") {
+                    $statusMessage[1] = $symbol;
+                }
+                else{
+                    $statusMessage[1] = $statusMessage[0].", ".$symbol;
+                }
+            }
+        }
+
+        else
+        {
+            if($statusMessage[0] == "") {
+                $statusMessage[0] = $symbol;
+            }
+            else{
+                $statusMessage[0] = $statusMessage[0].", ".$symbol;
+            }
+        }
+
+    }
+
+    return $statusMessage;
+
+    /*
     if ($time == "") {
         $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' ORDER BY timestamp desc limit 1";
         $result = mysqli_query($con, $query);
@@ -31,13 +69,19 @@ function insertPollutant($e_id, $area, $co_value, $time)
     } else {
         $statusMessage = "CO record added successfully.";
     }
+    */
 
     header('Location: backend.php');
 }
 
 if (isset($_POST['btnSubmit'])) {
     $area = $_POST['area'];
-    $time = $_POST['time'];
+    //$time = $_POST['time'];
+
+    date_default_timezone_set('Asia/Manila');
+    $date_now = date("Y-m-d");
+    $date_now_string = $date_now." 00:00:00";
+
     $co_value = $_POST['co_value'];
     $so2_value = $_POST['so2_value'];
     $no2_value = $_POST['no2_value'];
@@ -47,32 +91,40 @@ if (isset($_POST['btnSubmit'])) {
 
     if ($co_value != null) {
         $e_id = '1';
-        insertPollutant($e_id, $area, $co_value, $time);
+        $statusMessage = insertPollutant($e_id, $area, $co_value, $date_now_string, "CO", $statusMessage);
     }
 
     if ($so2_value != null) {
         $e_id = '2';
-        insertPollutant($e_id, $area, $so2_value, $time);
+        $statusMessage = insertPollutant($e_id, $area, $so2_value, $date_now_string, "SO2", $statusMessage);
     }
 
     if ($no2_value != null) {
         $e_id = '3';
-        insertPollutant($e_id, $area, $no2_value, $time);
+        $statusMessage = insertPollutant($e_id, $area, $no2_value, $date_now_string, "NO2", $statusMessage);
     }
 
     if ($o3_value != null) {
         $e_id = '4';
-        insertPollutant($e_id, $area, $o3_value, $time);
+        $statusMessage = insertPollutant($e_id, $area, $o3_value, $date_now_string, "O3", $statusMessage);
     }
 
     if ($pm10_value != null) {
         $e_id = '5';
-        insertPollutant($e_id, $area, $pm10_value, $time);
+        $statusMessage = insertPollutant($e_id, $area, $pm10_value, $date_now_string, "PM 10", $statusMessage);
     }
 
     if ($tsp_value != null) {
         $e_id = '6';
-        insertPollutant($e_id, $area, $tsp_value, $time);
+        $statusMessage = insertPollutant($e_id, $area, $tsp_value, $date_now_string, "TSP", $statusMessage);
+    }
+
+    if($statusMessage[0] != "") {
+        $statusMessage[0] = "Values entered for ".$statusMessage[0]." was not inserted because there's already a value for it at this hour. If you wish to edit the data, please go to edit function.";
+    }
+
+    if($statusMessage[1] != ""){
+        $statusMessage[1] = "Values entered for ".$statusMessage[1]." was successfuly inserted.";
     }
 }
 
@@ -111,6 +163,8 @@ if (isset($_POST['btnSubmit'])) {
         <h2 class="header center teal-text"><b>Developer Option</b></h2>
         <div class="row center">
             <h6 class="header col s12">Proceed with caution! This page would act as a simulation of the IOT device</h6>
+            <h6 class="header col s12"><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[0];} ?></h6>
+            <h6 class="header col s12"><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[1];} ?></h6>
         </div>
     </div>
     <br>
@@ -193,7 +247,15 @@ if (isset($_POST['btnSubmit'])) {
                                     <label id="unit">ug/m3</label>
                                 </div>
                             </div>
+                            <div class="col s12">
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light" type="submit"
+                                            style="width: 100%; margin-top:3%;" name="btnSubmit">Submit
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                        <!--
                         <div class="row">
                             <div class="col s12">
                                 <div class="input-field col s12">
@@ -215,7 +277,7 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
                             </div>
                         </div>
-
+                        -->
                     </form>
 
                 </div>
