@@ -49,7 +49,7 @@
     </div>
     <div class="section white">
         <div class="row container center">
-            <h3 class="header teal-text">About</h3>
+            <h3 class="header teal-text">Municipality of Carmona</h3>
             <p class="gray-text text-lighten-3 caption">
                 Carmona is located on the south-eastern part of the province of Cavite, approximately 36 kilometres south of Manila and 24 kilometres from Trece Martires City, Cavite’s provincial capital.
                 It is bounded on the north, east and south by the City of Biñan, Laguna, Municipality of General Mariano Alvarez (GMA) on the north-west and Silang on the south-west.
