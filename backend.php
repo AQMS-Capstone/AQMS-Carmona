@@ -79,8 +79,8 @@ if (isset($_POST['btnSubmit'])) {
     //$time = $_POST['time'];
 
     date_default_timezone_set('Asia/Manila');
-    $date_now = date("Y-m-d");
-    $date_now_string = $date_now." 00:00:00";
+    $date_now = date("Y-m-d H");
+    $date_now_string = $date_now.":00:00";
 
     $co_value = $_POST['co_value'];
     $so2_value = $_POST['so2_value'];
