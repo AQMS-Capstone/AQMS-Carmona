@@ -18,7 +18,7 @@
 
 
 <div>
-    <nav id="nav" role="navigation">
+    <nav id="nav">
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
                 <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
@@ -48,7 +48,7 @@
                 <li style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups
                 </li>
                 <li style="color: #f44336;"><span class="material-icons">cloud</span> Very Unhealthy</li>
-                <li style="color: #9C27B0;"><span class="material-icons">cloud</span> Acutely Unhealthy</a></li>
+                <li style="color: #9C27B0;"><span class="material-icons">cloud</span> Acutely Unhealthy</li>
                 <li style="color: #b71c1c;"><span class="material-icons">cloud</span> Emergency</li>
             </ul>
         </div>

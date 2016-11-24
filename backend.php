@@ -77,22 +77,21 @@ if (isset($_POST['btnSubmit'])) {
 }
 
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 <head>
+    <meta name="generator" content="HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
+    <meta http-equiv="refresh" content="0;URL=/cgi-sys/defaultwebpage.cgi">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Backend - Air Quality Monitoring</title>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon"/>
-
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon"/>
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen">
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
 
 </head>

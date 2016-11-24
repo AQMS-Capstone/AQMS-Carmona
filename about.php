@@ -15,18 +15,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="generator" content="HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
+    <meta http-equiv="refresh" content="0;URL=/cgi-sys/defaultwebpage.cgi">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Air Quality Monitoring</title>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+    <title>About - Air Quality Monitoring System</title>
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon" />
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
 
 </head>
@@ -70,7 +72,7 @@
             <div class="row">
                 <div class="col s3">
                     <div>
-                        <img class="img-circle img-small" src="res/images/team/vonn.jpg">
+                        <a href="https://www.facebook.com/VCMesina" target="_blank"><img class="img-circle img-small" src="res/images/team/vonn.jpg" alt="Vonn"></a>
                     </div>
                 </div>
                 <div class="col s9 left-align">
@@ -83,7 +85,7 @@
             <div class="row">
                 <div class="col s3">
                     <div>
-                        <img class="img-circle img-small" src="res/images/team/lyle.jpg">
+                        <a href="https://www.facebook.com/rairulyle" target="_blank"><img class="img-circle img-small" src="res/images/team/lyle.jpg" alt="Lyle"></a>
                     </div>
                 </div>
                 <div class="col s9 left-align">
@@ -97,7 +99,7 @@
             <div class="row">
                 <div class="col s3">
                     <div>
-                        <img class="img-circle img-small" src="res/images/team/kris.jpg">
+                        <a href="https://www.facebook.com/krismariano30" target="_blank"><img class="img-circle img-small" src="res/images/team/kris.jpg" alt="Kris"></a>
                     </div>
                 </div>
                 <div class="col s9 left-align">
