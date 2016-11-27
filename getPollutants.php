@@ -33,4 +33,6 @@ else
     }
 }
 
+echo  "<option value='All'>All</option>";
+
 mysqli_close($con);

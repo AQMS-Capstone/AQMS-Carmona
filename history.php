@@ -175,8 +175,9 @@ else{
                             </div>
                             <div  class="input-field col s12">
                                 <select name = "drpPollutant" id = "drpPollutant" required>
-                                    <!--
+
                                     <option value="" disabled selected>Select a pollutant</option>
+                                    <!--
                                     <?php
                                         /*
                                         if(isset($_POST['get_option'])){
