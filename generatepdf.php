@@ -5,7 +5,7 @@ require_once 'public/include/db_connect.php';
 
 
 $areaIndex = 0;
-$pollutantIndex = 0;
+$pollutant = "";
 $dateFrom = "";
 $dateTo = "";
 $prevalent_air_pollutant = "";
@@ -48,7 +48,7 @@ try {
         session_start();
 
         $areaIndex = $_SESSION["drpArea"];;
-        $pollutantIndex = $_SESSION["drpPollutant"];
+        $pollutant = $_SESSION["drpPollutant"];
         $dateFrom = $_SESSION["txtDateTimeFrom"];
         $dateTo = $_SESSION["txtDateTimeTo"];
         $orderIndex = $_SESSION["drpOrder"];
@@ -61,7 +61,7 @@ try {
 
         $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
         if($areaIndex == 3) {
-            if ($pollutantIndex == 7) {
+            if ($pollutant == 'All') {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
@@ -121,7 +121,7 @@ try {
             } else {
                 $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE MASTER.e_id ='$pollutantIndex' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
+                          WHERE ELEMENTS.e_symbol = '$pollutant' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
                           ORDER BY $order DESC";
 
                 $result = mysqli_query($con, $query1);
@@ -210,7 +210,7 @@ try {
 
         }
         else{
-            if ($pollutantIndex == 7) {
+            if ($pollutant == 'All') {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$loc' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
@@ -219,7 +219,7 @@ try {
             } else {
                 $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$loc' and MASTER.e_id = '$pollutantIndex' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
+                          WHERE area_name = '$loc' and ELEMENTS.e_symbol = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
                           ORDER BY $order DESC";
                 $result = mysqli_query($con, $query);
             }

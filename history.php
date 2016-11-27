@@ -25,7 +25,7 @@ if(isset($_POST["btnGenerate"]))
     $order = $_POST["drpOrder"];
 
 if($area == 3) {
-    if ($pollutant == 7) {
+    if ($pollutant == 'All') {
         $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
@@ -38,7 +38,7 @@ if($area == 3) {
     } else {
         $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE MASTER.e_id = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
+                          WHERE ELEMENTS.e_symbol = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
                           ORDER BY TIMESTAMP DESC";
         $result = mysqli_query($con, $query);
 
@@ -49,7 +49,7 @@ if($area == 3) {
     }
 }
 else{
-    if ($pollutant == 7) {
+    if ($pollutant == 'All') {
         $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$areaName[$area]' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
@@ -58,7 +58,7 @@ else{
     } else {
         $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$areaName[$area]' and MASTER.e_id = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
+                          WHERE area_name = '$areaName[$area]' and ELEMENTS.e_symbol = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
                           ORDER BY TIMESTAMP DESC";
         $result = mysqli_query($con, $query);
     }

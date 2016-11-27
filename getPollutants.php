@@ -10,7 +10,7 @@ include('public/include/db_connect.php');
 
 
 $area = $_GET['area'];
-
+echo "<option value=\"\" disabled selected>Select a pollutant</option>";
 if($area == "all")
 {
     $query = "SELECT DISTINCT elements.e_symbol as e_symbol FROM MASTER INNER JOIN elements ON master.e_id = elements.e_id ORDER BY elements.e_id";
