@@ -493,7 +493,7 @@ catch(Exception $e){
 }
 
 finally{
-    session_destroy();
+
     mysqli_close($con);
 }
 ?>

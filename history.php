@@ -10,6 +10,7 @@ require_once 'public/include/db_connect.php';
 
 $error = false;
 $areaName = array('Select an area', 'SLEX', 'Bancal', 'All');
+$a_name = "";
 
 if(isset($_POST["btnGenerate"]))
 {
@@ -146,8 +147,9 @@ else{
                             <div class="input-field col s12">
                                 <select name = "drpArea" required>
                                     <option value="" disabled selected>Select an area</option>
-                                    <option value="1">SLEX, Carmona Exit</option>
+                                    <option value="1">SLEX Carmona</option>
                                     <option value="2">Bancal</option>
+
                                     <option value="3">All</option>
                                 </select>
                                 <label>Area</label>
@@ -155,12 +157,23 @@ else{
                             <div  class="input-field col s12">
                                 <select name = "drpPollutant" required>
                                     <option value="" disabled selected>Select a pollutant</option>
-                                    <option value="1">CO</option>
-                                    <option value="2">SO2</option>
-                                    <option value="3">NO2</option>
-                                    <option value="4">O3</option>
-                                    <option value="5">Pb</option>
-                                    <option value="6">PM10</option>
+                                    <?php
+
+                                    $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
+                                              INNER JOIN elements ON master.e_id = elements.e_id
+                                              ORDER BY elements.e_id";
+
+                                    $result = mysqli_query($con, $query);
+                                    $ctr = 1;
+                                    while ($row = mysqli_fetch_array($result)) {
+                                        echo  "<option value=\"{$ctr}\">{$row['e_symbol']}</option>";
+                                        $ctr++;
+                                    }
+
+                                    mysqli_close($con);
+
+                                    ?>
+
 
                                     <option value="7">All</option>
                                 </select>
@@ -169,8 +182,7 @@ else{
 
                             <div  class="input-field col s12">
                                 <select name = "drpOrder" required>
-                                    <option value="" disabled selected>Select order of data</option>
-                                    <option value="1">Timestamp</option>
+                                    <option value="1" selected>Timestamp</option>
                                     <option value="2">Element</option>
 
                                 </select>
