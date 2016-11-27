@@ -113,7 +113,23 @@ else{
     <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type ="text/javascript">
+        
+        function getData(area) {
+            $.ajax({
+                type: 'POST',
+                url: 'history.php',
+                data: {
+                    get_option:area
+                },
+                success: function (response) {
+                    document.getElementById("drpPollutant").innerHTML=response;
+                }
+            });
+        }
+        
+        
         var errorMessage = "<?= $errorMessage ?>";
 
         if(errorMessage == "No available data!")
@@ -145,7 +161,8 @@ else{
                         <form method = "post" action="">
                         <!--<form method = "post" action="generatepdf.php">-->
                             <div class="input-field col s12">
-                                <select name = "drpArea" required>
+                                <!--<select name = "drpArea" id = "drpArea" required onchange="getData(this.value)">-->
+                                <select name = "drpArea" id = "drpArea" required>
                                     <option value="" disabled selected>Select an area</option>
                                     <option value="1">SLEX Carmona</option>
                                     <option value="2">Bancal</option>
@@ -155,27 +172,48 @@ else{
                                 <label>Area</label>
                             </div>
                             <div  class="input-field col s12">
-                                <select name = "drpPollutant" required>
+                                <select name = "drpPollutant" id = "drpPollutant" required>
+                                    <!--
                                     <option value="" disabled selected>Select a pollutant</option>
                                     <?php
+                                        /*
+                                        if(isset($_POST['get_option'])){
 
-                                    $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
+                                            $zone = $_POST['get_option'];
+                                            if($zone == 'Bancal'){
+                                                $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
+                                              INNER JOIN elements ON master.e_id = elements.e_id
+                                              WHERE area_name = 'bancal'
+                                              ORDER BY elements.e_id";
+                                            }
+                                            else if($zone == 'SLEX Carmona'){
+                                                $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
+                                              INNER JOIN elements ON master.e_id = elements.e_id
+                                              WHERE area_name = 'slex'
+                                              ORDER BY elements.e_id";
+                                            }
+                                            else{
+                                                $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
                                               INNER JOIN elements ON master.e_id = elements.e_id
                                               ORDER BY elements.e_id";
+                                            }
 
-                                    $result = mysqli_query($con, $query);
-                                    $ctr = 1;
-                                    while ($row = mysqli_fetch_array($result)) {
-                                        echo  "<option value=\"{$ctr}\">{$row['e_symbol']}</option>";
-                                        $ctr++;
-                                    }
+                                            $result = mysqli_query($con, $query);
+                                            $ctr = 1;
+                                            while ($row = mysqli_fetch_array($result)) {
+                                                echo  "<option value=\"{$ctr}\">{$row['e_symbol']}</option>";
+                                                $ctr++;
+                                            }
 
-                                    mysqli_close($con);
+                                            mysqli_close($con);
 
+                                        }
+                                                */
                                     ?>
 
 
                                     <option value="7">All</option>
+                                    -->
                                 </select>
                                 <label>Pollutant</label>
                             </div>
@@ -235,9 +273,27 @@ else{
 <script src="js/init.js"></script>
 
 <script type="text/javascript">
+
+    var area_name = ["slex", "bancal"];
     $( document ).ready(function(){
         $("#legends").remove();
     })
+
+    $(document).on('change','#drpArea',function(){
+        var val = $(this).val();
+
+        $.ajax({
+            url: 'getPollutants.php',
+            data: {area:area_name[val-1]},
+            type: 'GET',
+            dataType: 'html',
+            success: function(result){
+                alert(result);
+                $('#drpPollutant').html();
+                $('#drpPollutant').html(result);
+            }
+        });
+    });
 </script>
 </body>
 </html>
