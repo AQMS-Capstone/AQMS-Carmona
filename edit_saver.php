@@ -11,8 +11,9 @@ if(isset($_POST['timestamp']) && !empty($_POST['timestamp'])) {
     $timestamp = $_POST['timestamp'];
     $concentration_value = $_POST['concentration_value'];
     $area = $_POST['area'];
+    $e_id = $_POST['e_id'];
 
-    $sql = "UPDATE MASTER SET concentration_value='$concentration_value' WHERE timestamp = '$timestamp' and area_name = '$area'";
+    $sql = "UPDATE MASTER SET concentration_value='$concentration_value' WHERE timestamp = '$timestamp' and area_name = '$area' and e_id = '$e_id'";
 
     if (!mysqli_query($con,$sql))
     {

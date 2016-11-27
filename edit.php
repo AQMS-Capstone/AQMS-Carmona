@@ -35,7 +35,7 @@ echo "
 $timestamp_array = array();
 
 
-$query = "SELECT timestamp, area_name, elements.e_name as e_name, elements.e_symbol as e_symbol, concentration_value FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
+$query = "SELECT timestamp, area_name, elements.e_name as e_name, elements.e_symbol as e_symbol, concentration_value, master.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
 $result = mysqli_query($con, $query);
 
 if($result) {
@@ -149,13 +149,14 @@ if($result) {
                         $value_time = json_encode($row['timestamp']);
                         $value_element = json_encode($row['e_symbol']);
                         $area = json_encode($row['area_name']);
+                        $e_id = json_encode($row['e_id']);
 
                         echo"
                   </div>
                 </div>
                 <div class='modal-footer'>
                     <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Cancel</a>
-                    <button id='btnSave' onclick='myFunction($value_time, $value_element, $identifier_input, $area)' class='modal-action waves-effect waves-green btn-flat'>Save</button>
+                    <button id='btnSave' onclick='myFunction($value_time, $value_element, $identifier_input, $area, $e_id)' class='modal-action waves-effect waves-green btn-flat'>Save</button>
                 </div>
             </div>
             ";
@@ -173,7 +174,7 @@ if($result) {
   <script src='js/materialize.min.js'></script>
   <!--<script src='js/init.js'></script>-->
   <script type='text/javascript'>
-    function myFunction(timestamp, symbol, iden2, area) 
+    function myFunction(timestamp, symbol, iden2, area, e_id) 
     {
         var concentration_value = iden2.value;
             
@@ -242,7 +243,7 @@ if($result) {
             ({
                     type: 'POST',
                     url: 'edit_saver.php',
-                    data: {timestamp: timestamp, concentration_value: concentration_value, area: area}, 
+                    data: {timestamp: timestamp, concentration_value: concentration_value, area: area, e_id: e_id}, 
                     success: function(response)
                       { 
                          if(response == 'Success')
