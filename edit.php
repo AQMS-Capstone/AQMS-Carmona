@@ -144,7 +144,7 @@ if($result) {
                 </div>
                 <div class='modal-footer'>
                     <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Cancel</a>
-                    <button id='btnSave' class='modal-action waves-effect waves-green btn-flat'>Save</button>
+                    <button id='btnSave' onclick='myFunction()' class='modal-action waves-effect waves-green btn-flat'>Save</button>
                 </div>
             </div>
             ";
@@ -162,15 +162,14 @@ if($result) {
   <script src='js/materialize.min.js'></script>
   <!--<script src='js/init.js'></script>-->
   <script type='text/javascript'>
+  function myFunction() {
+    alert('BANO SI VONN... BAOG DIN hehe.');
+}
         $(document).ready(function() {
             $('#example').DataTable( {
                     'order': [[ 3, 'desc']],
                     'columnDefs': [{'className': 'dt-body-center dt-head-center', 'targets': '_all'}],
                 } );
-                
-             $('button').click(function(){
-                alert(this.id); 
-            });
         } );
         
         $(document).on('click', function() {
