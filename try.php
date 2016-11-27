@@ -16,7 +16,7 @@ include('public/include/db_connect.php');
 </head>
 <body>
 <!-- Modal Trigger -->
-<a data-target="modal1" class="btn modal-trigger">Modal</a>
+<button data-target="modal1" class="btn modal-trigger">Modal</button>
 
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
@@ -40,7 +40,6 @@ include('public/include/db_connect.php');
 <!--        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>-->
 <!--    </div>-->
 <!--</div>-->
-
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
