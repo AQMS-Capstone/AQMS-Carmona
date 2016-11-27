@@ -32,6 +32,9 @@ echo "
 <tbody class = 'dt[-head|-body]-center'>
 ";
 
+$timestamp_array = array();
+
+
 $query = "SELECT timestamp, area_name, elements.e_name as e_name, elements.e_symbol as e_symbol, concentration_value FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
 $result = mysqli_query($con, $query);
 
@@ -46,7 +49,11 @@ if($result) {
         $ctr = 0;
         while ($row = mysqli_fetch_array($result)) {
 
+            //array_push($timestamp_array, $row['timestamp']);
+
             $identifier = "ROW_".$ctr;
+            $identifier_input = "I_ROW_".$ctr;
+
             echo "<tr>";
                 echo "<td>".$row['timestamp']."</td>";
                 echo "<td>".$row['area_name']."</td>";
@@ -115,7 +122,7 @@ if($result) {
                         {
                             echo"
                                 <div class='input-field col s10'>
-                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$step'
+                                    <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
                                            min='$min'>
                                     <label>Enter new concentration value</label>
                                 </div>
@@ -129,7 +136,7 @@ if($result) {
                         {
                             echo"
                                 <div class='input-field col s10'>
-                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$step'
+                                    <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
                                            min='$min' max='$max'>
                                     <label>Enter new concentration value</label>
                                 </div>
@@ -139,12 +146,16 @@ if($result) {
                             ";
                         }
 
+                        $value_time = json_encode($row['timestamp']);
+                        $value_element = json_encode($row['e_symbol']);
+                        $area = json_encode($row['area_name']);
+
                         echo"
                   </div>
                 </div>
                 <div class='modal-footer'>
                     <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Cancel</a>
-                    <button id='btnSave' onclick='myFunction()' class='modal-action waves-effect waves-green btn-flat'>Save</button>
+                    <button id='btnSave' onclick='myFunction($value_time, $value_element, $identifier_input, $area)' class='modal-action waves-effect waves-green btn-flat'>Save</button>
                 </div>
             </div>
             ";
@@ -162,13 +173,99 @@ if($result) {
   <script src='js/materialize.min.js'></script>
   <!--<script src='js/init.js'></script>-->
   <script type='text/javascript'>
-  function myFunction() {
-    alert('BANO SI VONN... BAOG DIN hehe.');
-}
+    function myFunction(timestamp, symbol, iden2, area) 
+    {
+        var concentration_value = iden2.value;
+            
+        if(symbol == 'CO'){
+            var step = 0.1;
+            var min = 0.0;
+            var max = 40.4;
+            var unit = 'ppm';
+        }else if(symbol == 'SO2') {
+            var step = 0.001;
+            var min = 0.000;
+            var max = 0.804;
+            var unit = 'ppm';
+        }else if(symbol == 'NO2'){
+            var step = 0.01;
+            var min = 0.65;
+            var max = 1.64;
+            var unit = 'ppm';
+        }else if(symbol == 'O3'){
+            var step = 0.001;
+            var min = 0.000;
+            var max = 0.504;
+            var unit = 'ppm';
+        }else if(symbol == 'PM 10'){
+            var step = 1;
+            var min = 0;
+            var max = 504;
+            var unit = 'ug/m3';
+        }else if(symbol == 'TSP'){
+            var step = 1;
+            var min = 0;
+            var unit = 'ug/m3';
+        }
+        
+        var proceed = false;
+        
+        if(symbol == 'TSP')
+        {
+            if(concentration_value >= min)
+            {
+                proceed = true;
+            }
+            
+            else
+            {
+                proceed = false;
+            }
+        }
+        
+        else
+        {
+            if(concentration_value >= min && concentration_value <= max)
+            {
+                proceed = true;
+            }
+            
+            else
+            {
+                proceed = false;
+            }
+        }
+        
+        if(proceed)
+        {
+            $.ajax
+            ({
+                    type: 'POST',
+                    url: 'edit_saver.php',
+                    data: {timestamp: timestamp, concentration_value: concentration_value, area: area}, 
+                    success: function(response)
+                      { 
+                         if(response == 'Success')
+                         {
+                            document.location.reload();
+                         }
+                         
+                         else
+                         {
+                            alert(response);
+                         }
+                      }
+            });
+        }
+        
+        //document.location.reload()
+    }
+    
         $(document).ready(function() {
             $('#example').DataTable( {
                     'order': [[ 3, 'desc']],
                     'columnDefs': [{'className': 'dt-body-center dt-head-center', 'targets': '_all'}],
+                    stateSave: true
                 } );
         } );
         
@@ -189,8 +286,6 @@ if($result) {
                */
             });
         });
-        
-        
   </script>
 </body>
 </html>
