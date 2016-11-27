@@ -114,11 +114,11 @@ else{
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
-    <!--
+
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type ="text/javascript">
-        
-        function getData(area) {
+
+        /*function getData(area) {
             $.ajax({
                 type: 'POST',
                 url: 'history.php',
@@ -129,7 +129,7 @@ else{
                     document.getElementById("drpPollutant").innerHTML=response;
                 }
             });
-        }
+        }*/
 
 
         var errorMessage = "<?= $errorMessage    ?>";
@@ -137,14 +137,14 @@ else{
         if(errorMessage == "No available data!")
         {
             alert(errorMessage);
-            errorMessage = "";
+            $errorMessage = "";
         }
 
         errorMessage = "";
        // alert(errorMessage);
 
     </script>
-    -->
+
 </head>
 
 <body>
