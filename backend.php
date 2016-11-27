@@ -130,7 +130,7 @@ if (isset($_POST['btnSubmit'])) {
             }
 
             if ($statusMessage[0] != "") {
-                $statusMessage[0] = "Values entered for " . $statusMessage[0] . " was not inserted because there's already a value for you've specified. If you wish to edit the data, please go to edit function.";
+                $statusMessage[0] = "Values entered for " . $statusMessage[0] . " was not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
             }
 
             if ($statusMessage[1] != "") {
