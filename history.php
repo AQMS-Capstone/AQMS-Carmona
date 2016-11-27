@@ -113,6 +113,8 @@ else{
     <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
+
+    <!--
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type ="text/javascript">
         
@@ -128,9 +130,9 @@ else{
                 }
             });
         }
-        
-        
-        var errorMessage = "<?= $errorMessage ?>";
+
+
+        var errorMessage = "<?= $errorMessage    ?>";
 
         if(errorMessage == "No available data!")
         {
@@ -142,7 +144,7 @@ else{
        // alert(errorMessage);
 
     </script>
-
+    -->
 </head>
 
 <body>
@@ -160,7 +162,7 @@ else{
                     <div class="form-card z-depth-1" style="width:100%;">
                         <form method = "post" action="">
                         <!--<form method = "post" action="generatepdf.php">-->
-                            <div class="input-field col s12">
+                            <div id = "woah" class="input-field col s12">
                                 <!--<select name = "drpArea" id = "drpArea" required onchange="getData(this.value)">-->
                                 <select name = "drpArea" id = "drpArea" required>
                                     <option value="" disabled selected>Select an area</option>
@@ -266,34 +268,44 @@ else{
 
 <?php  include('public/_footer.php'); ?>
 
-
+<!--<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/flatpickr.min.js"></script>
 <script src="js/init.js"></script>
 
 <script type="text/javascript">
+    var area_name = ["slex", "bancal", "all"];
 
-    var area_name = ["slex", "bancal"];
     $( document ).ready(function(){
         $("#legends").remove();
+
+        $('select').material_select();
+
+        $(document).on('change','#drpArea',function(){
+            var val = $(this).val();
+
+            $.ajax({
+                url: 'getPollutants.php',
+                data: {area:area_name[val-1]},
+                type: 'GET',
+                dataType: 'html',
+                success: function(result){
+                    var $selectDropdown = $("#drpPollutant").empty().html(' ');
+                    $('#drpPollutant').html(result);
+                    $selectDropdown.trigger('contentChanged');
+                }
+            });
+        });
+
+            $('select').on('contentChanged', function() {
+            // re-initialize (update)
+            $(this).material_select();
+        });
+
     })
 
-    $(document).on('change','#drpArea',function(){
-        var val = $(this).val();
 
-        $.ajax({
-            url: 'getPollutants.php',
-            data: {area:area_name[val-1]},
-            type: 'GET',
-            dataType: 'html',
-            success: function(result){
-                alert(result);
-                $('#drpPollutant').html();
-                $('#drpPollutant').html(result);
-            }
-        });
-    });
 </script>
 </body>
 </html>
