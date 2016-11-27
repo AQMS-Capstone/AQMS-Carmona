@@ -6,7 +6,7 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
 {
     include('public/include/db_connect.php');
 
-    $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
+    $query = "SELECT timestamp FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
     $result = mysqli_query($con, $query);
 
     if($result) {
@@ -23,7 +23,7 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
                     $statusMessage[1] = $symbol;
                 }
                 else{
-                    $statusMessage[1] = $statusMessage[0].", ".$symbol;
+                    $statusMessage[1] = $statusMessage[1].", ".$symbol;
                 }
             }
         }
@@ -76,7 +76,10 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
 
 if (isset($_POST['btnSubmit'])) {
     $area = $_POST['area'];
-    //$time = $_POST['time'];
+    $time = $_POST['time'];
+
+    $date = date("Y-m-d H", strtotime($time));
+    $time = $date.":00:00";
 
     date_default_timezone_set('Asia/Manila');
     $date_now = date("Y-m-d H");
@@ -89,42 +92,53 @@ if (isset($_POST['btnSubmit'])) {
     $pm10_value = $_POST['pm10_value'];
     $tsp_value = $_POST['tsp_value'];
 
-    if ($co_value != null) {
-        $e_id = '1';
-        $statusMessage = insertPollutant($e_id, $area, $co_value, $date_now_string, "CO", $statusMessage);
+    if($co_value == "" && $so2_value == "" && $no2_value == "" && $o3_value == "" && $pm10_value == "" && $tsp_value == "")
+    {
+        echo "<script language = 'javascript'>alert('Input a value for at-least one pollutant. Try again.')</script>";
     }
 
-    if ($so2_value != null) {
-        $e_id = '2';
-        $statusMessage = insertPollutant($e_id, $area, $so2_value, $date_now_string, "SO2", $statusMessage);
-    }
+    else {
+        if (strtotime($time) <= strtotime($date_now_string)) {
+            if ($co_value != null) {
+                $e_id = '1';
+                $statusMessage = insertPollutant($e_id, $area, $co_value, $time, "CO", $statusMessage);
+            }
 
-    if ($no2_value != null) {
-        $e_id = '3';
-        $statusMessage = insertPollutant($e_id, $area, $no2_value, $date_now_string, "NO2", $statusMessage);
-    }
+            if ($so2_value != null) {
+                $e_id = '2';
+                $statusMessage = insertPollutant($e_id, $area, $so2_value, $time, "SO2", $statusMessage);
+            }
 
-    if ($o3_value != null) {
-        $e_id = '4';
-        $statusMessage = insertPollutant($e_id, $area, $o3_value, $date_now_string, "O3", $statusMessage);
-    }
+            if ($no2_value != null) {
+                $e_id = '3';
+                $statusMessage = insertPollutant($e_id, $area, $no2_value, $time, "NO2", $statusMessage);
+            }
 
-    if ($pm10_value != null) {
-        $e_id = '5';
-        $statusMessage = insertPollutant($e_id, $area, $pm10_value, $date_now_string, "PM 10", $statusMessage);
-    }
+            if ($o3_value != null) {
+                $e_id = '4';
+                $statusMessage = insertPollutant($e_id, $area, $o3_value, $time, "O3", $statusMessage);
+            }
 
-    if ($tsp_value != null) {
-        $e_id = '6';
-        $statusMessage = insertPollutant($e_id, $area, $tsp_value, $date_now_string, "TSP", $statusMessage);
-    }
+            if ($pm10_value != null) {
+                $e_id = '5';
+                $statusMessage = insertPollutant($e_id, $area, $pm10_value, $time, "PM 10", $statusMessage);
+            }
 
-    if($statusMessage[0] != "") {
-        $statusMessage[0] = "Values entered for ".$statusMessage[0]." was not inserted because there's already a value for it at this hour. If you wish to edit the data, please go to edit function.";
-    }
+            if ($tsp_value != null) {
+                $e_id = '6';
+                $statusMessage = insertPollutant($e_id, $area, $tsp_value, $time, "TSP", $statusMessage);
+            }
 
-    if($statusMessage[1] != ""){
-        $statusMessage[1] = "Values entered for ".$statusMessage[1]." was successfuly inserted.";
+            if ($statusMessage[0] != "") {
+                $statusMessage[0] = "Values entered for " . $statusMessage[0] . " was not inserted because there's already a value for you've specified. If you wish to edit the data, please go to edit function.";
+            }
+
+            if ($statusMessage[1] != "") {
+                $statusMessage[1] = "Values entered for " . $statusMessage[1] . " was successfuly inserted.";
+            }
+        } else {
+            echo "<script language = 'javascript'>alert('You cannot insert a value for time that is greater than now. Please try again.')</script>";
+        }
     }
 }
 
@@ -247,15 +261,7 @@ if (isset($_POST['btnSubmit'])) {
                                     <label id="unit">ug/m3</label>
                                 </div>
                             </div>
-                            <div class="col s12">
-                                <div class="input-field col s12">
-                                    <button class="btn waves-effect waves-light" type="submit"
-                                            style="width: 100%; margin-top:3%;" name="btnSubmit">Submit
-                                    </button>
-                                </div>
-                            </div>
                         </div>
-                        <!--
                         <div class="row">
                             <div class="col s12">
                                 <div class="input-field col s12">
@@ -264,9 +270,9 @@ if (isset($_POST['btnSubmit'])) {
                                         <input id="time" name="time" class="date col s11"
                                                placeholder="YYYY-MM-DD"
                                                data-input>
-                                        <a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
+                                        <!--<a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
                                                 class="material-icons"
-                                                style="font-size: medium;">highlight_off</span></a>
+                                                style="font-size: medium;">highlight_off</span></a>-->
                                     </p>
 
                                 </div>
@@ -277,7 +283,6 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
                             </div>
                         </div>
-                        -->
                     </form>
 
                 </div>
@@ -295,6 +300,7 @@ if (isset($_POST['btnSubmit'])) {
 <script src="js/flatpickr.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript">
+
     $('#co_value').val('');
     $('#so2_value').val('');
     $('#no2_value').val('');
