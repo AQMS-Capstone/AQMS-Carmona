@@ -6,6 +6,7 @@ $( document ).ready(function(){
     $("#reports").hide();
     $('select').material_select();
     $('.parallax').parallax();
+    $('.modal-trigger').leanModal();
 })
 
 
@@ -15,6 +16,7 @@ $("#reports-tab").click(function () {
     $("#legends").hide();
     $("#reports").show();
 })
+
 
 
 $("#reports-tab").click(function () {
