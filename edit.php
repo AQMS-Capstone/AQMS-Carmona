@@ -90,12 +90,10 @@ if($result) {
                 $max = 0.504;
                 $unit = "ppm";
             }else if($row['e_symbol'] == "PM 10"){
-                $step = 1;
                 $min = 0;
                 $max = 504;
                 $unit = "ug/m3";
             }else if($row['e_symbol'] == "TSP"){
-                $step = 1;
                 $min = 0;
                 $unit = "ug/m3";
             }
@@ -122,8 +120,22 @@ if($result) {
                         {
                             echo"
                                 <div class='input-field col s10'>
-                                    <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
+                                    <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                            min='$min'>
+                                    <label>Enter new concentration value</label>
+                                </div>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$unit</label>
+                                </div>
+                            ";
+                        }
+
+                        else if($row['e_symbol'] == "PM 10")
+                        {
+                            echo"
+                                <div class='input-field col s10'>
+                                    <input id='$identifier_input' name='so2_value' type='number' class='validate'
+                                           min='$min' max='$max'>
                                     <label>Enter new concentration value</label>
                                 </div>
                                 <div class='input-field col s2'>
