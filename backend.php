@@ -110,9 +110,10 @@ if (isset($_POST['btnSubmit'])) {
             echo "<script language = 'javascript'>alert('You cannot insert a value for time that is greater than now. Please try again.')</script>";
         }
     }
+
 }
 
-header("location:backend.php");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -145,12 +146,12 @@ header("location:backend.php");
 <div id="content-holder">
     <div class="section">
         <br><br>
-        <h1 class="header center teal-text"><span class="material-icons" style="font-size: 2em;">bug_report</span></h1>
-        <h2 class="header center teal-text"><b>Developer Option</b></h2>
+        <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">bug_report</span></h1>
+        <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>Developer Option</b></h2>
         <div class="row center">
             <h6 class="header col s12">Proceed with caution! This page would act as a simulation of the IOT device</h6>
-            <h6 class="header col s12 teal-text"><b><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[0];} ?></b></h6>
-            <h6 class="header col s12 teal-text"><b><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[1];} ?></b></h6>
+            <h6 class="header col s12 red-text"><b><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[0];} ?></b></h6>
+            <h6 class="header col s12 teal-text"><b><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[1];}  ?></b></h6>
         </div>
     </div>
     <br>

@@ -163,7 +163,7 @@ nav  ul.black-text a{
 table.dataTable thead th, table.dataTable thead td {
     padding: 15px 5px;
     border-radius: 0px;
-    border-bottom:  1px solid grey;
+    border-bottom:  1px solid #e0e0e0;
 
 }
 
