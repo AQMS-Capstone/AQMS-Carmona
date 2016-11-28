@@ -38,7 +38,7 @@ echo "
 <div class=\"section\">
         <br><br>
         <h1 class=\"header center teal-text\" style=\"margin-bottom: 0; padding-bottom: 0;\"><span class=\"material-icons\" style=\"font-size: 2em;\">cloud</span></h1>
-        <h2 class=\"header center teal-text\" style=\"margin-top: 0; padding-top: 0;\"><b>Edit Concentration Values</b></h2>
+        <h2 class=\"header center teal-text\" style=\"margin-top: 0; padding-top: 0;\"><b>AQMS Concentration Values</b></h2>
         </div>
 <div class='container'>
 <table id='example' class='highlight' width='100%'>
