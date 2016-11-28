@@ -11,6 +11,7 @@ include("class/Map.php");
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +25,11 @@ include("class/Map.php");
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
-
+    <meta property="og:url"                content="http://aqms.mcl-ccis.net/" />
+    <meta property="og:type"               content="system" />
+    <meta property="og:title"              content="Air Quality Monitoring System" />
+    <meta property="og:description"        content="The Air Quality Monitoring System (AQMS) promotes Air Pollution awareness and provide a unified Air Quality information for the municipality of Carmona. " />
+    <meta property="og:image"              content="http://aqms.mcl-ccis.net/res/Icon.jpg" />
 </head>
 
 <body>
