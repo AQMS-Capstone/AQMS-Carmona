@@ -26,7 +26,7 @@ include("class/Map.php");
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
     <meta property="og:url"                content="http://aqms.mcl-ccis.net/" />
-    <meta property="og:type"               content="system" />
+    <meta property="og:type"               content="website" />
     <meta property="og:title"              content="Air Quality Monitoring System" />
     <meta property="og:description"        content="The Air Quality Monitoring System (AQMS) promotes Air Pollution awareness and provide a unified Air Quality information for the municipality of Carmona. " />
     <meta property="og:image"              content="http://aqms.mcl-ccis.net/res/facebook_og.jpg" />
