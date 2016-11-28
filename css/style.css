@@ -160,6 +160,21 @@ nav  ul.black-text a{
     height: 150px;
 }
 
+table.dataTable thead th, table.dataTable thead td {
+    padding: 15px 5px;
+    border-radius: 0px;
+    border-bottom:  1px solid grey;
+
+}
+
+.btn-flat:hover{
+    background-color: transparent;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 0;
+}
+
 .input-date-time{
 
 }

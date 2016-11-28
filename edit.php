@@ -12,24 +12,47 @@ echo "
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset=\"utf-8\">
+    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+    <title>Edit - Air Quality Monitoring System</title>
+    <link rel=\"icon\" href=\"res/favicon.ico\" type=\"image/x-icon\">
+    
      <!-- CSS  -->
-    <link type='text/css' rel='stylesheet' href='css/materialize.min.css'  media='screen,projection'/>
     <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css'>
+    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
+    <link href=\"css/materialize.min.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\">
+    <link href=\"css/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\">
+    
 </head>
 <body>
 
-<table id='example' class='display cell-border' cellspacing='0' width='100%'>
-<thead class = 'dt-head-center'>
-<tr>
+<div>
+    <nav class=\"z-depth-1\" style=\"height: 70px;\">
+        <div class=\"nav-wrapper\">
+            <a id=\"logo\" href=\"index.php\"><img class=\"brand-logo center\" src=\"res/logo.png\"> </a>
+        </div>
+    </nav>
+</div>
+
+<div class=\"section\">
+        <br><br>
+        <h1 class=\"header center teal-text\" style=\"margin-bottom: 0; padding-bottom: 0;\"><span class=\"material-icons\" style=\"font-size: 2em;\">cloud</span></h1>
+        <h2 class=\"header center teal-text\" style=\"margin-top: 0; padding-top: 0;\"><b>Edit Concentration Values</b></h2>
+        </div>
+<div class='container'>
+<table id='example' class='highlight' width='100%'>
+<thead>
+<tr >
     <th data-field='time'>Timestamp</th>
     <th data-field='area'>Area</th>
     <th data-field='pollutant'>Pollutant</th>
     <th data-field='symbol'>Symbol</th>
     <th data-field='value'>Concentration Value</th>
-    <th data-field='function'>Function</th>
+    <th data-field='function'> </th>
 </tr>
 </thead>
-<tbody class = 'dt[-head|-body]-center'>
+<tbody>
 ";
 
 $timestamp_array = array();
@@ -38,30 +61,26 @@ $timestamp_array = array();
 $query = "SELECT timestamp, area_name, elements.e_name as e_name, elements.e_symbol as e_symbol, concentration_value, master.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
 $result = mysqli_query($con, $query);
 
-if($result) {
+if ($result) {
 
     if (mysqli_num_rows($result) == 0) {
         echo "NO DATA";
-    }
-
-    else
-    {
+    } else {
         $ctr = 0;
         while ($row = mysqli_fetch_array($result)) {
 
             //array_push($timestamp_array, $row['timestamp']);
 
-            $identifier = "ROW_".$ctr;
-            $identifier_input = "I_ROW_".$ctr;
+            $identifier = "ROW_" . $ctr;
+            $identifier_input = "I_ROW_" . $ctr;
 
             echo "<tr>";
-                echo "<td>".$row['timestamp']."</td>";
-                echo "<td>".$row['area_name']."</td>";
-                echo "<td>".$row['e_name']."</td>";
-                echo "<td>".$row['e_symbol']."</td>";
-                echo "<td>".$row['concentration_value']."</td>";
-                //echo "<td><button data-target='".$row['timestamp']."' class='btn modal-trigger'>Edit</button></td>";
-                echo "<td><button data-target='".$identifier."' class='btn modal-trigger'>Edit</button></td>";
+            echo "<td>" . $row['timestamp'] . "</td>";
+            echo "<td>" . $row['area_name'] . "</td>";
+            echo "<td>" . $row['e_name'] . "</td>";
+            echo "<td>" . $row['e_symbol'] . "</td>";
+            echo "<td>" . $row['concentration_value'] . "</td>";
+            echo "<td><button data-target='" . $identifier . "' class='waves-effect orange-text btn-flat modal-trigger'>Edit</button></td>";
             echo "</tr>";
 
             $step = 0;
@@ -69,56 +88,55 @@ if($result) {
             $max = 0;
             $unit = "";
 
-            if($row['e_symbol'] == "CO"){
+            if ($row['e_symbol'] == "CO") {
                 $step = 0.1;
                 $min = 0.0;
                 $max = 40.4;
                 $unit = "ppm";
-            }else if($row['e_symbol'] == "SO2") {
+            } else if ($row['e_symbol'] == "SO2") {
                 $step = 0.001;
                 $min = 0.000;
                 $max = 0.804;
                 $unit = "ppm";
-            }else if($row['e_symbol'] == "NO2"){
+            } else if ($row['e_symbol'] == "NO2") {
                 $step = 0.01;
                 $min = 0.65;
                 $max = 1.64;
                 $unit = "ppm";
-            }else if($row['e_symbol'] == "O3"){
+            } else if ($row['e_symbol'] == "O3") {
                 $step = 0.001;
                 $min = 0.000;
                 $max = 0.504;
                 $unit = "ppm";
-            }else if($row['e_symbol'] == "PM 10"){
+            } else if ($row['e_symbol'] == "PM 10") {
                 $min = 0;
                 $max = 504;
                 $unit = "ug/m3";
-            }else if($row['e_symbol'] == "TSP"){
+            } else if ($row['e_symbol'] == "TSP") {
                 $min = 0;
                 $unit = "ug/m3";
             }
 
-            echo"
-            <div id='".$identifier."' class='modal'>
+            echo "
+            <div id='" . $identifier . "' class='modal'>
                 <div class='modal-content'>
                   <h4>Edit concentration value for: </h4>
                   <div class='row'>
                       <div class='col s12'>
                           <p class = 'teal-text col s4'>Timestamp: </p>
-                          <p class = 'col s8'>".$row['timestamp']."</p>
+                          <p class = 'col s8'>" . $row['timestamp'] . "</p>
                           <p class = 'teal-text col s4'>Area Name: </p>
-                          <p class = 'col s8'>".$row['area_name']."</p>
+                          <p class = 'col s8'>" . $row['area_name'] . "</p>
                           <p class = 'teal-text col s4'>Element Name: </p>
-                          <p class = 'col s8'>".$row['e_name']."</p>
+                          <p class = 'col s8'>" . $row['e_name'] . "</p>
                           <p class = 'teal-text col s4'>Element Symbol: </p>
-                          <p class = 'col s8'>".$row['e_symbol']."</p>
+                          <p class = 'col s8'>" . $row['e_symbol'] . "</p>
                           <p class = 'teal-text col s4'>Concentration Value:</p>
-                          <p class = 'col s8'>".$row['concentration_value']."</p>
+                          <p class = 'col s8'>" . $row['concentration_value'] . "</p>
                           ";
 
-                        if($row['e_symbol'] == "TSP")
-                        {
-                            echo"
+            if ($row['e_symbol'] == "TSP") {
+                echo "
                                 <div class='input-field col s10'>
                                     <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                            min='$min'>
@@ -128,11 +146,8 @@ if($result) {
                                     <label id='unit'>$unit</label>
                                 </div>
                             ";
-                        }
-
-                        else if($row['e_symbol'] == "PM 10")
-                        {
-                            echo"
+            } else if ($row['e_symbol'] == "PM 10") {
+                echo "
                                 <div class='input-field col s10'>
                                     <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                            min='$min' max='$max'>
@@ -142,11 +157,8 @@ if($result) {
                                     <label id='unit'>$unit</label>
                                 </div>
                             ";
-                        }
-
-                        else
-                        {
-                            echo"
+            } else {
+                echo "
                                 <div class='input-field col s10'>
                                     <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
                                            min='$min' max='$max'>
@@ -156,14 +168,14 @@ if($result) {
                                     <label id='unit'>$unit</label>
                                 </div>
                             ";
-                        }
+            }
 
-                        $value_time = json_encode($row['timestamp']);
-                        $value_element = json_encode($row['e_symbol']);
-                        $area = json_encode($row['area_name']);
-                        $e_id = json_encode($row['e_id']);
+            $value_time = json_encode($row['timestamp']);
+            $value_element = json_encode($row['e_symbol']);
+            $area = json_encode($row['area_name']);
+            $e_id = json_encode($row['e_id']);
 
-                        echo"
+            echo "
                   </div>
                 </div>
                 <div class='modal-footer'>
@@ -180,6 +192,9 @@ if($result) {
     echo "
 </tbody>
 </table>
+<br><br>
+
+</div>
   
   <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
   <script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
@@ -277,7 +292,7 @@ if($result) {
         $(document).ready(function() {
             $('#example').DataTable( {
                     'order': [[ 3, 'desc']],
-                    'columnDefs': [{'className': 'dt-body-center dt-head-center', 'targets': '_all'}],
+                    'columnDefs': [{'targets': '_all'}],
                     stateSave: true
                 } );
         } );

@@ -42,36 +42,6 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
 
     return $statusMessage;
 
-    /*
-    if ($time == "") {
-        $query = "SELECT timestamp  FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' ORDER BY timestamp desc limit 1";
-        $result = mysqli_query($con, $query);
-
-        if (mysqli_num_rows($result) == 0) {
-            $time = date("Y-m-d H:i:s", strtotime("00:00:00") + 3600);
-        } else {
-            while ($row = mysqli_fetch_array($result)) {
-                $time = date("Y-m-d H:i:s", strtotime($row['timestamp']) + 3600);
-            }
-        }
-    }
-
-    else
-    {
-        $date = date("Y-m-d H", strtotime($time));
-        $time = $date.":00:00";
-    }
-
-    $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$co_value', '$time')";
-
-    if (!mysqli_query($con, $query)) {
-        die('Error: ' . mysqli_error($con));
-    } else {
-        $statusMessage = "CO record added successfully.";
-    }
-    */
-
-    header('Location: backend.php');
 }
 
 if (isset($_POST['btnSubmit'])) {
@@ -142,6 +112,7 @@ if (isset($_POST['btnSubmit'])) {
     }
 }
 
+header("location:backend.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -149,6 +120,7 @@ if (isset($_POST['btnSubmit'])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Backend - Air Quality Monitoring System</title>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -177,8 +149,8 @@ if (isset($_POST['btnSubmit'])) {
         <h2 class="header center teal-text"><b>Developer Option</b></h2>
         <div class="row center">
             <h6 class="header col s12">Proceed with caution! This page would act as a simulation of the IOT device</h6>
-            <h6 class="header col s12"><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[0];} ?></h6>
-            <h6 class="header col s12"><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[1];} ?></h6>
+            <h6 class="header col s12 teal-text"><b><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[0];} ?></b></h6>
+            <h6 class="header col s12 teal-text"><b><?php if (isset($_POST['btnSubmit'])){echo $statusMessage[1];} ?></b></h6>
         </div>
     </div>
     <br>
@@ -267,12 +239,9 @@ if (isset($_POST['btnSubmit'])) {
                                 <div class="input-field col s12">
                                     <p class="flatpickr input-date-time">
                                         <label for="time">Time</label>
-                                        <input id="time" name="time" class="date col s11"
+                                        <input id="time" name="time" class="date col s12"
                                                placeholder="YYYY-MM-DD"
                                                data-input>
-                                        <!--<a title="CLEAR" class="input-button date-btn btn-flat" data-clear><span
-                                                class="material-icons"
-                                                style="font-size: medium;">highlight_off</span></a>-->
                                     </p>
 
                                 </div>
