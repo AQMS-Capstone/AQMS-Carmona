@@ -49,7 +49,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <div id="content-holder">
     <div class="section">
         <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">cloud</span></h1>
-        <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>AQI Calculator</b></h2>
+        <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b id = "txtTitle"></b></h2>
     </div>
     <br id="calculator">
     <div class="section no-pad-bot">
@@ -99,7 +99,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                                    value="<?php if ($concentration != null) {
                                        echo $concentration;
                                    } ?>">
-                            <label for="number">Concentration</label>
+                            <label for="number" id="txtConversion"></label>
                         </div>
                         <div class="input-field col s1">
                             <label id="unit">unit</label>
@@ -175,9 +175,43 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <script src="js/init.js"></script>
 <script src="js/aqi-calculator.js"></script>
 <script type="text/javascript">
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+    var calculator = getUrlParameter('calculator');
+
     $(document).ready(function () {
+
+        if (calculator != null) {
+
+            if (calculator == "ACV") {
+                InitCVCalculator();
+
+            }
+            else if (calculator == "CVA") {
+                InitAQICalculator();
+            }
+        }
+        else {
+            InitAQICalculator();
+        }
+
         $("#legends").remove();
     })
+
 </script>
 
 <?php
@@ -247,8 +281,25 @@ function GetAQI()
     header("location: aqi-calculator.php");
 }
 
+function GetCV(){
+
+}
+
 if (isset($_POST['submit'])) {
-    GetAQI();
+
+    if(isset($_GET["calculator"]))
+    {
+        $data = $_GET["calculator"];
+
+        if($data == "CVA"){
+            GetAQI();
+        }else{
+            GetCV();
+        }
+    }else{
+        GetAQI();
+    }
+
 }
 ?>
 </body>

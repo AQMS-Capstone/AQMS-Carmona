@@ -27,7 +27,8 @@
                 </li>
                 <li><a href="daily.php" id=""><span class="material-icons">access_time</span> Daily</a></li>
                 <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>
-                <li><a href="aqi-calculator.php" id=""><span class="material-icons">timeline</span> AQI Calculator</a>
+                <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown2"><span
+                            class="material-icons">location_on</span>Calculators<i class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a>
                 </li>
                 <li><a href="about.php" id="about-tab"><span class="material-icons">email</span> About</a></li>
             </ul>
@@ -35,6 +36,11 @@
     </nav>
 </div>
 <!-- Dropdown Structure -->
+<ul id="dropdown2" class="dropdown-content">
+    <li><a href="aqi-calculator.php?calculator=CVA" id="drpCVA">AQI Calculator</a></li>
+    <li><a href="aqi-calculator.php?calculator=ACV" id="drpACV">Concentration Value Calculator</a></li>
+</ul>
+
 <ul id="dropdown1" class="dropdown-content">
     <li><a href="index.php?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
     <li><a href="index.php?area=Bancal" id="drpBancal">Bancal</a></li>
