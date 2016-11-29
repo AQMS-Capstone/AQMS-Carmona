@@ -55,7 +55,7 @@ include('public/include/db_connect.php');
 
 $timestamp_array = array();
 
-$query = "SELECT timestamp, area_name, elements.e_name as e_name, elements.e_symbol as e_symbol, concentration_value, master.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
+$query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
 $result = mysqli_query($con, $query);
 
 if ($result) {
