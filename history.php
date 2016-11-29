@@ -68,18 +68,11 @@ else{
     mysqli_close($con);
 }
     if($row == 0){
-        $error = true;
+        //$error = true;
+        echo "<script>alert('No available data')</script>";
+
     }else{
-        $error = false; // THEN SET THIS TO TRUE / FALSE OK OK
-    }
-
-    if($error)
-    {
-        $errorMessage = "No available data!";
-        $error = false;
-    }
-
-    else {
+        //$error = false; // THEN SET THIS TO TRUE / FALSE OK OK
 
         session_start();
 
@@ -93,7 +86,7 @@ else{
 
     }
 
-
+    unset($_POST['btnGenerate']);
 }
 ?>
 
@@ -132,15 +125,15 @@ else{
         }*/
 
 
-        var errorMessage = "<?= $errorMessage    ?>";
-
-        if(errorMessage == "No available data!")
-        {
-            alert(errorMessage);
-            $errorMessage = "";
-        }
-
-        errorMessage = "";
+//        var errorMessage = "<?//= $errorMessage    ?>//";
+//
+//        if(errorMessage == "No available data!")
+//        {
+//            alert(errorMessage);
+//            $errorMessage = "";
+//        }
+//
+//        errorMessage = "";
        // alert(errorMessage);
 
     </script>
@@ -297,6 +290,20 @@ else{
                     $selectDropdown.trigger('contentChanged');
                 }
             });
+        });
+
+        var val = $("#drpArea").val();
+
+        $.ajax({
+            url: 'getPollutants.php',
+            data: {area:area_name[val-1]},
+            type: 'GET',
+            dataType: 'html',
+            success: function(result){
+                var $selectDropdown = $("#drpPollutant").empty().html(' ');
+                $('#drpPollutant').html(result);
+                $selectDropdown.trigger('contentChanged');
+            }
         });
 
             $('select').on('contentChanged', function() {
