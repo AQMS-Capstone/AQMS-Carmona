@@ -1,3 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit - Air Quality Monitoring System</title>
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
+
+    <!-- CSS  -->
+    <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
+
+</head>
+<body>
+
+<div>
+    <nav class="z-depth-1" style="height: 70px;">
+        <div class="nav-wrapper">
+            <a id="logo" href="index.php"><img class="brand-logo center" src="res/logo.png"> </a>
+        </div>
+    </nav>
+</div>
+
+<div class="section">
+    <br><br>
+    <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">cloud</span></h1>
+    <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>AQMS Concentration Values</b></h2>
+</div>
+<div class='container'>
+    <table id='example' class='highlight' width='100%'>
+        <thead>
+        <tr >
+            <th data-field='time'>Timestamp</th>
+            <th data-field='area'>Area</th>
+            <th data-field='pollutant'>Pollutant</th>
+            <th data-field='symbol'>Symbol</th>
+            <th data-field='value'>Concentration Value</th>
+            <th data-field='function'> </th>
+        </tr>
+        </thead>
+        <tbody>
+
 <?php
 /**
  * Created by PhpStorm.
@@ -8,55 +53,7 @@
 
 include('public/include/db_connect.php');
 
-echo "
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset=\"utf-8\">
-    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-    <title>Edit - Air Quality Monitoring System</title>
-    <link rel=\"icon\" href=\"res/favicon.ico\" type=\"image/x-icon\">
-    
-     <!-- CSS  -->
-    <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css'>
-    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
-    <link href=\"css/materialize.min.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\">
-    <link href=\"css/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\">
-    
-</head>
-<body>
-
-<div>
-    <nav class=\"z-depth-1\" style=\"height: 70px;\">
-        <div class=\"nav-wrapper\">
-            <a id=\"logo\" href=\"index.php\"><img class=\"brand-logo center\" src=\"res/logo.png\"> </a>
-        </div>
-    </nav>
-</div>
-
-<div class=\"section\">
-        <br><br>
-        <h1 class=\"header center teal-text\" style=\"margin-bottom: 0; padding-bottom: 0;\"><span class=\"material-icons\" style=\"font-size: 2em;\">cloud</span></h1>
-        <h2 class=\"header center teal-text\" style=\"margin-top: 0; padding-top: 0;\"><b>AQMS Concentration Values</b></h2>
-        </div>
-<div class='container'>
-<table id='example' class='highlight' width='100%'>
-<thead>
-<tr >
-    <th data-field='time'>Timestamp</th>
-    <th data-field='area'>Area</th>
-    <th data-field='pollutant'>Pollutant</th>
-    <th data-field='symbol'>Symbol</th>
-    <th data-field='value'>Concentration Value</th>
-    <th data-field='function'> </th>
-</tr>
-</thead>
-<tbody>
-";
-
 $timestamp_array = array();
-
 
 $query = "SELECT timestamp, area_name, elements.e_name as e_name, elements.e_symbol as e_symbol, concentration_value, master.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
 $result = mysqli_query($con, $query);
@@ -188,23 +185,22 @@ if ($result) {
             $ctr++;
         }
     }
-
-    echo "
-</tbody>
-</table>
-<br><br>
-
+}
+?>
+    </tbody>
+    </table>
+    <br><br>
 </div>
-  
-  <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
-  <script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
-  <script src='js/materialize.min.js'></script>
-  <!--<script src='js/init.js'></script>-->
-  <script type='text/javascript'>
-    function myFunction(timestamp, symbol, iden2, area, e_id) 
+
+<script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
+<script src='js/materialize.min.js'></script>
+<!--<script src='js/init.js'></script>-->
+<script type='text/javascript'>
+    function myFunction(timestamp, symbol, iden2, area, e_id)
     {
         var concentration_value = iden2.value;
-            
+
         if(symbol == 'CO'){
             var step = 0.1;
             var min = 0.0;
@@ -235,87 +231,87 @@ if ($result) {
             var min = 0;
             var unit = 'ug/m3';
         }
-        
+
         var proceed = false;
-        
+
         if(symbol == 'TSP')
         {
             if(concentration_value >= min)
             {
                 proceed = true;
             }
-            
+
             else
             {
                 proceed = false;
             }
         }
-        
+
         else
         {
             if(concentration_value >= min && concentration_value <= max)
             {
                 proceed = true;
             }
-            
+
             else
             {
                 proceed = false;
             }
         }
-        
+
         if(proceed)
         {
             $.ajax
             ({
-                    type: 'POST',
-                    url: 'edit_saver.php',
-                    data: {timestamp: timestamp, concentration_value: concentration_value, area: area, e_id: e_id}, 
-                    success: function(response)
-                      { 
-                         if(response == 'Success')
-                         {
-                            document.location.reload();
-                         }
-                         
-                         else
-                         {
-                            alert(response);
-                         }
-                      }
+                type: 'POST',
+                url: 'edit_saver.php',
+                data: {timestamp: timestamp, concentration_value: concentration_value, area: area, e_id: e_id},
+                success: function(response)
+                {
+                    if(response == 'Success')
+                    {
+                        document.location.reload();
+                    }
+
+                    else
+                    {
+                        alert(response);
+                    }
+                }
             });
         }
-        
+
         //document.location.reload()
     }
-    
-        $(document).ready(function() {
-            $('#example').DataTable( {
-                    'order': [[ 3, 'desc']],
-                    'columnDefs': [{'targets': '_all'}],
-                    stateSave: true
-                } );
+
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            'order': [[ 3, 'desc']],
+            'columnDefs': [{'targets': '_all'}],
+            stateSave: true
         } );
-        
-        $(document).on('click', function() {
-            $('.modal-trigger').leanModal({
-              
-              /*
-              ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                //alert(trigger);
-                //alert(\"Ready\");
-                //console.log(modal, trigger);
-              },
-              
-              complete: function() 
-              { 
-                alert('Closed'); 
-              } 
-               */
-            });
+
+        $('.modal-trigger').leanModal({});
+    } );
+
+    $(document).on('click', function() {
+        $('.modal-trigger').leanModal({
+
+            /*
+             ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+             //alert(trigger);
+             //alert("Ready");
+             //console.log(modal, trigger);
+             },
+
+             complete: function()
+             {
+             alert('Closed');
+             }
+             */
         });
-  </script>
+    });
+</script>
 </body>
 </html>
-";
-}
