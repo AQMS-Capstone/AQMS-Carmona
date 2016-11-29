@@ -12,7 +12,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
-
+    <style>
+        select {
+            background-color: rgba(255,255,255,0.9);
+            width: 100px;
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #f2f2f2;
+            border-radius: 2px;
+            height: 3rem;
+            display: inline;
+        }
+    </style>
 </head>
 <body>
 
