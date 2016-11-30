@@ -88,6 +88,11 @@ footer.page-footer .footer-copyright {
 #legends nav ul li {
     margin: 0 5px 0 5px;
 }
+.img-parallax{
+
+    -webkit-filter: drop-shadow(50px 50px 50px rgba(0,0,0,0.16));
+    filter:         drop-shadow(50px 50px 50px rgba(0,0,0,0.16));
+}
 
 @media only screen and (min-width: 1200px) {
     .centered-legend {
