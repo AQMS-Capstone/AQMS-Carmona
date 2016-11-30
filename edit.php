@@ -14,14 +14,16 @@
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <style>
         select {
-            background-color: rgba(255,255,255,0.9);
             width: 100px;
-            padding: 5px;
-            margin: 5px;
-            border: 1px solid #f2f2f2;
-            border-radius: 2px;
-            height: 3rem;
             display: inline;
+        }
+
+        input[type=search] {
+            width: 150px;
+        }
+
+        .centered-nav {
+            left: -37%;
         }
     </style>
 </head>
@@ -34,98 +36,110 @@
         </div>
     </nav>
 </div>
-
+<div>
+    <nav id="nav">
+        <div class="nav-wrapper">
+            <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
+                <li><a href="backend.php" id="home-tab"><span class="material-icons">bug_report</span> Developer Option</a>
+                </li>
+                <li><a href="edit.php" id=""><span class="material-icons">list</span> Concentration Table</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
 <div class="section">
     <br><br>
-    <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">cloud</span></h1>
-    <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>AQMS Concentration Values</b></h2>
+    <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons"
+                                                                                           style="font-size: 2em;">cloud</span>
+    </h1>
+    <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>AQMS Concentration Table</b></h2>
 </div>
 <div class='container'>
     <table id='example' class='highlight' width='100%'>
         <thead>
-        <tr >
+        <tr>
             <th data-field='time'>Timestamp</th>
             <th data-field='area'>Area</th>
             <th data-field='pollutant'>Pollutant</th>
             <th data-field='symbol'>Symbol</th>
             <th data-field='value'>Concentration Value</th>
-            <th data-field='function'> </th>
+            <th data-field='function'></th>
         </tr>
         </thead>
         <tbody>
 
-<?php
-/**
- * Created by PhpStorm.
- * User: Nostos
- * Date: 25/11/2016
- * Time: 2:05 PM
- */
+        <?php
+        /**
+         * Created by PhpStorm.
+         * User: Nostos
+         * Date: 25/11/2016
+         * Time: 2:05 PM
+         */
 
-include('public/include/db_connect.php');
+        include('public/include/db_connect.php');
 
-$timestamp_array = array();
+        $timestamp_array = array();
 
-$query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
-$result = mysqli_query($con, $query);
+        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ORDER BY TIMESTAMP DESC";
+        $result = mysqli_query($con, $query);
 
-if ($result) {
+        if ($result) {
 
-    if (mysqli_num_rows($result) == 0) {
-        echo "NO DATA";
-    } else {
-        $ctr = 0;
-        while ($row = mysqli_fetch_array($result)) {
+            if (mysqli_num_rows($result) == 0) {
+                echo "NO DATA";
+            } else {
+                $ctr = 0;
+                while ($row = mysqli_fetch_array($result)) {
 
-            //array_push($timestamp_array, $row['timestamp']);
+                    //array_push($timestamp_array, $row['timestamp']);
 
-            $identifier = "ROW_" . $ctr;
-            $identifier_input = "I_ROW_" . $ctr;
+                    $identifier = "ROW_" . $ctr;
+                    $identifier_input = "I_ROW_" . $ctr;
 
-            echo "<tr>";
-            echo "<td>" . $row['timestamp'] . "</td>";
-            echo "<td>" . $row['area_name'] . "</td>";
-            echo "<td>" . $row['e_name'] . "</td>";
-            echo "<td>" . $row['e_symbol'] . "</td>";
-            echo "<td>" . $row['concentration_value'] . "</td>";
-            echo "<td><button data-target='" . $identifier . "' class='waves-effect orange-text btn-flat modal-trigger'>Edit</button></td>";
-            echo "</tr>";
+                    echo "<tr>";
+                    echo "<td>" . $row['timestamp'] . "</td>";
+                    echo "<td>" . $row['area_name'] . "</td>";
+                    echo "<td>" . $row['e_name'] . "</td>";
+                    echo "<td>" . $row['e_symbol'] . "</td>";
+                    echo "<td>" . $row['concentration_value'] . "</td>";
+                    echo "<td><button data-target='" . $identifier . "' class='waves-effect orange-text btn-flat modal-trigger'>Edit</button></td>";
+                    echo "</tr>";
 
-            $step = 0;
-            $min = 0;
-            $max = 0;
-            $unit = "";
+                    $step = 0;
+                    $min = 0;
+                    $max = 0;
+                    $unit = "";
 
-            if ($row['e_symbol'] == "CO") {
-                $step = 0.1;
-                $min = 0.0;
-                $max = 40.4;
-                $unit = "ppm";
-            } else if ($row['e_symbol'] == "SO2") {
-                $step = 0.001;
-                $min = 0.000;
-                $max = 0.804;
-                $unit = "ppm";
-            } else if ($row['e_symbol'] == "NO2") {
-                $step = 0.01;
-                $min = 0.65;
-                $max = 1.64;
-                $unit = "ppm";
-            } else if ($row['e_symbol'] == "O3") {
-                $step = 0.001;
-                $min = 0.000;
-                $max = 0.504;
-                $unit = "ppm";
-            } else if ($row['e_symbol'] == "PM 10") {
-                $min = 0;
-                $max = 504;
-                $unit = "ug/m3";
-            } else if ($row['e_symbol'] == "TSP") {
-                $min = 0;
-                $unit = "ug/m3";
-            }
+                    if ($row['e_symbol'] == "CO") {
+                        $step = 0.1;
+                        $min = 0.0;
+                        $max = 40.4;
+                        $unit = "ppm";
+                    } else if ($row['e_symbol'] == "SO2") {
+                        $step = 0.001;
+                        $min = 0.000;
+                        $max = 0.804;
+                        $unit = "ppm";
+                    } else if ($row['e_symbol'] == "NO2") {
+                        $step = 0.01;
+                        $min = 0.65;
+                        $max = 1.64;
+                        $unit = "ppm";
+                    } else if ($row['e_symbol'] == "O3") {
+                        $step = 0.001;
+                        $min = 0.000;
+                        $max = 0.504;
+                        $unit = "ppm";
+                    } else if ($row['e_symbol'] == "PM 10") {
+                        $min = 0;
+                        $max = 504;
+                        $unit = "ug/m3";
+                    } else if ($row['e_symbol'] == "TSP") {
+                        $min = 0;
+                        $unit = "ug/m3";
+                    }
 
-            echo "
+                    echo "
             <div id='" . $identifier . "' class='modal'>
                 <div class='modal-content'>
                   <h4>Edit concentration value for: </h4>
@@ -143,8 +157,8 @@ if ($result) {
                           <p class = 'col s8'>" . $row['concentration_value'] . "</p>
                           ";
 
-            if ($row['e_symbol'] == "TSP") {
-                echo "
+                    if ($row['e_symbol'] == "TSP") {
+                        echo "
                                 <div class='input-field col s10'>
                                     <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                            min='$min'>
@@ -154,8 +168,8 @@ if ($result) {
                                     <label id='unit'>$unit</label>
                                 </div>
                             ";
-            } else if ($row['e_symbol'] == "PM 10") {
-                echo "
+                    } else if ($row['e_symbol'] == "PM 10") {
+                        echo "
                                 <div class='input-field col s10'>
                                     <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                            min='$min' max='$max'>
@@ -165,8 +179,8 @@ if ($result) {
                                     <label id='unit'>$unit</label>
                                 </div>
                             ";
-            } else {
-                echo "
+                    } else {
+                        echo "
                                 <div class='input-field col s10'>
                                     <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
                                            min='$min' max='$max'>
@@ -176,14 +190,14 @@ if ($result) {
                                     <label id='unit'>$unit</label>
                                 </div>
                             ";
-            }
+                    }
 
-            $value_time = json_encode($row['timestamp']);
-            $value_element = json_encode($row['e_symbol']);
-            $area = json_encode($row['area_name']);
-            $e_id = json_encode($row['e_id']);
+                    $value_time = json_encode($row['timestamp']);
+                    $value_element = json_encode($row['e_symbol']);
+                    $area = json_encode($row['area_name']);
+                    $e_id = json_encode($row['e_id']);
 
-            echo "
+                    echo "
                   </div>
                 </div>
                 <div class='modal-footer'>
@@ -193,51 +207,51 @@ if ($result) {
             </div>
             ";
 
-            $ctr++;
+                    $ctr++;
+                }
+            }
         }
-    }
-}
-?>
-    </tbody>
+        ?>
+        </tbody>
     </table>
     <br><br>
 </div>
 
+<?php include('public/_footer.php'); ?>
 <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
 <script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
 <script src='js/materialize.min.js'></script>
 <!--<script src='js/init.js'></script>-->
 <script type='text/javascript'>
-    function myFunction(timestamp, symbol, iden2, area, e_id)
-    {
+    function myFunction(timestamp, symbol, iden2, area, e_id) {
         var concentration_value = iden2.value;
 
-        if(symbol == 'CO'){
+        if (symbol == 'CO') {
             var step = 0.1;
             var min = 0.0;
             var max = 40.4;
             var unit = 'ppm';
-        }else if(symbol == 'SO2') {
+        } else if (symbol == 'SO2') {
             var step = 0.001;
             var min = 0.000;
             var max = 0.804;
             var unit = 'ppm';
-        }else if(symbol == 'NO2'){
+        } else if (symbol == 'NO2') {
             var step = 0.01;
             var min = 0.65;
             var max = 1.64;
             var unit = 'ppm';
-        }else if(symbol == 'O3'){
+        } else if (symbol == 'O3') {
             var step = 0.001;
             var min = 0.000;
             var max = 0.504;
             var unit = 'ppm';
-        }else if(symbol == 'PM 10'){
+        } else if (symbol == 'PM 10') {
             var step = 1;
             var min = 0;
             var max = 504;
             var unit = 'ug/m3';
-        }else if(symbol == 'TSP'){
+        } else if (symbol == 'TSP') {
             var step = 1;
             var min = 0;
             var unit = 'ug/m3';
@@ -245,48 +259,38 @@ if ($result) {
 
         var proceed = false;
 
-        if(symbol == 'TSP')
-        {
-            if(concentration_value >= min)
-            {
+        if (symbol == 'TSP') {
+            if (concentration_value >= min) {
                 proceed = true;
             }
 
-            else
-            {
+            else {
                 proceed = false;
             }
         }
 
-        else
-        {
-            if(concentration_value >= min && concentration_value <= max)
-            {
+        else {
+            if (concentration_value >= min && concentration_value <= max) {
                 proceed = true;
             }
 
-            else
-            {
+            else {
                 proceed = false;
             }
         }
 
-        if(proceed)
-        {
+        if (proceed) {
             $.ajax
             ({
                 type: 'POST',
                 url: 'edit_saver.php',
                 data: {timestamp: timestamp, concentration_value: concentration_value, area: area, e_id: e_id},
-                success: function(response)
-                {
-                    if(response == 'Success')
-                    {
+                success: function (response) {
+                    if (response == 'Success') {
                         document.location.reload();
                     }
 
-                    else
-                    {
+                    else {
                         alert(response);
                     }
                 }
@@ -296,32 +300,18 @@ if ($result) {
         //document.location.reload()
     }
 
-    $(document).ready(function() {
-        $('#example').DataTable( {
-            'order': [[ 3, 'desc']],
+    $(document).ready(function () {
+        $('#example').DataTable({
+            'order': [[3, 'desc']],
             'columnDefs': [{'targets': '_all'}],
             stateSave: true
-        } );
+        });
 
         $('.modal-trigger').leanModal({});
-    } );
+    });
 
-    $(document).on('click', function() {
-        $('.modal-trigger').leanModal({
-
-            /*
-             ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-             //alert(trigger);
-             //alert("Ready");
-             //console.log(modal, trigger);
-             },
-
-             complete: function()
-             {
-             alert('Closed');
-             }
-             */
-        });
+    $(document).on('click', function () {
+        $('.modal-trigger').leanModal({});
     });
 </script>
 </body>

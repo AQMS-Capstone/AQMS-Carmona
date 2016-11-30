@@ -1,20 +1,23 @@
-body{
+body {
 
 }
-.nav-wrapper{
+
+.nav-wrapper {
     background-color: #009688;
 }
 
-.brand-logo{
+.brand-logo {
     margin-top: 5px;
     height: 50px;
 }
-.scroll{
-    height:200px;
-    width:100%;
-    overflow:hidden;
+
+.scroll {
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
 }
-.scroll:hover{
+
+.scroll:hover {
     overflow-y: scroll;
 }
 
@@ -22,7 +25,7 @@ body{
     margin-top: 10px;
 }
 
-.material-icons{
+.material-icons {
     vertical-align: -5px;
 }
 
@@ -30,37 +33,36 @@ form {
     margin-bottom: 0;
 }
 
-.scroll::-webkit-scrollbar-track
-{
+.scroll::-webkit-scrollbar-track {
     background-color: #F5F5F5;
 }
-.bottom{
+
+.bottom {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
 }
-.scroll::-webkit-scrollbar
-{
+
+.scroll::-webkit-scrollbar {
     width: 8px;
     background-color: #F5F5F5;
 }
 
-.scroll::-webkit-scrollbar-thumb
-{
+.scroll::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 150, 136, 0.3);
     background-color: #009688;
 }
 
-
-
-.elementName, .elementCurrent{
+.elementName, .elementCurrent {
     font-weight: bold;
 }
-.elementMin{
+
+.elementMin {
     color: #2196F3;
 }
-.elementMax{
+
+.elementMax {
     color: #b71c1c;
 }
 
@@ -74,52 +76,55 @@ form {
     width: 40px;
 }
 
-nav{
+nav {
     height: 60px;
     line-height: 60px;
 }
-footer.page-footer .footer-copyright{
+
+footer.page-footer .footer-copyright {
     background-color: #009688
 }
 
-#legends nav ul li{
+#legends nav ul li {
     margin: 0 5px 0 5px;
 }
 
-@media only screen and (min-width: 1200px){
-    .centered-legend{
+@media only screen and (min-width: 1200px) {
+    .centered-legend {
         float: right;
         position: relative;
         left: -22%;
     }
-    .centered-nav{
+
+    .centered-nav {
         float: right;
         position: relative;
         left: -25%;
     }
 }
 
-@media only screen and (min-width: 1500px){
-    .centered-legend{
+@media only screen and (min-width: 1500px) {
+    .centered-legend {
         float: right;
         position: relative;
         left: 25%;
     }
-    .centered-nav{
+
+    .centered-nav {
         float: right;
         position: relative;
         left: -25%;
     }
 }
 
-
-@media only screen and (min-width: 1700px){
-    .centered-legend{
+@media only screen and (min-width: 1700px) {
+    .centered-legend {
         float: right;
         position: relative;
         left: 9%;
     }
-    .centered-nav{
+
+    .centered-nav {
         float: right;
         position: relative;
         left: -30%;
@@ -131,31 +136,38 @@ nav.navbar-fixed {
     line-height: 45px;
 }
 
-nav  ul.black-text a{
+nav ul.black-text a {
     color: #444;
 }
 
-.page-footer{
-    border-top:solid;
+.emphasize-text {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.page-footer {
+    border-top: solid;
     border-color: #e0e0e0;
     border-width: 1px;
 }
 
-.date{
-    color: #212121!important;
-    border-bottom: 1px solid #9e9e9e!important;
-    padding: 0!important;
+.date {
+    color: #212121 !important;
+    border-bottom: 1px solid #9e9e9e !important;
+    padding: 0 !important;
 }
-.input-date{
+
+.input-date {
 
 }
-.caption{
+
+.caption {
     font-size: 1.25rem;
     font-weight: 300;
     margin-bottom: 30px;
 }
 
-.img-small{
+.img-small {
     width: 150px;
     height: 150px;
 }
@@ -163,11 +175,11 @@ nav  ul.black-text a{
 table.dataTable thead th, table.dataTable thead td {
     padding: 15px 5px;
     border-radius: 0px;
-    border-bottom:  1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
 
 }
 
-.btn-flat:hover{
+.btn-flat:hover {
     background-color: transparent;
 }
 
@@ -175,34 +187,36 @@ table.dataTable.no-footer {
     border-bottom: 0;
 }
 
-.input-date-time{
+.input-date-time {
 
 }
 
-.flatpickr label{
+.flatpickr label {
     top: 0px;
     font-size: 0.8rem;
 }
-#googleMap{
+
+#googleMap {
     position: absolute;
     top: 154px;
     left: 0px;
     right: 0px;
     bottom: 0px;
 }
-.form-card{
+
+.form-card {
     background: #fff;
     border-radius: 2px;
     display: inline-block;
     padding: 15px;
     position: relative;
 }
-.card, .form-card{
+
+.card, .form-card {
     transition: all 0.3s ease-in;
 }
 
-
-.float-card{
+.float-card {
     position: absolute;
     right: 0.5%;
     margin: 0.5rem 0.5rem 1rem 0;
@@ -211,27 +225,30 @@ table.dataTable.no-footer {
     top: 29%;
 
 }
-.row-no-after{
+
+.row-no-after {
     content: none;
 }
+
 .img-circle {
     border-radius: 50%;
 
 }
 
-
-.tabs .tab a{
+.tabs .tab a {
     color: #009688;
 
 }
-.tabs .tab a:hover{
+
+.tabs .tab a:hover {
     color: #B2DFDB;
 
 }
 
-.tabs .indicator{
+.tabs .indicator {
     background-color: #009688;
 }
-td, th{
+
+td, th {
     padding: 5px 2px;
 }
