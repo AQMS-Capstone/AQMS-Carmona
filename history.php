@@ -147,12 +147,17 @@ else{
 
 <div id="content-holder">
     <br>
-    <br>
+    <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">library_books</span></h1>
+    <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>History Report</b></h2>
+
+
    <div class="section no-pad-bot">
         <div class="container">
+            <div class="divider"></div>
+            <br>
             <div class="row">
-                <div class="col s6 offset-s3">
-                    <div class="form-card z-depth-1" style="width:100%;">
+                <div class="col s12">
+                    <div>
                         <form method = "post" action="">
                         <!--<form method = "post" action="generatepdf.php">-->
                             <div id = "woah" class="input-field col s12">
@@ -168,48 +173,7 @@ else{
                             </div>
                             <div  class="input-field col s12">
                                 <select name = "drpPollutant" id = "drpPollutant" required>
-
                                     <option value="" disabled selected>Select a pollutant</option>
-                                    <!--
-                                    <?php
-                                        /*
-                                        if(isset($_POST['get_option'])){
-
-                                            $zone = $_POST['get_option'];
-                                            if($zone == 'Bancal'){
-                                                $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
-                                              INNER JOIN elements ON master.e_id = elements.e_id
-                                              WHERE area_name = 'bancal'
-                                              ORDER BY elements.e_id";
-                                            }
-                                            else if($zone == 'SLEX Carmona'){
-                                                $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
-                                              INNER JOIN elements ON master.e_id = elements.e_id
-                                              WHERE area_name = 'slex'
-                                              ORDER BY elements.e_id";
-                                            }
-                                            else{
-                                                $query = "SELECT DISTINCT elements.e_symbol FROM MASTER 
-                                              INNER JOIN elements ON master.e_id = elements.e_id
-                                              ORDER BY elements.e_id";
-                                            }
-
-                                            $result = mysqli_query($con, $query);
-                                            $ctr = 1;
-                                            while ($row = mysqli_fetch_array($result)) {
-                                                echo  "<option value=\"{$ctr}\">{$row['e_symbol']}</option>";
-                                                $ctr++;
-                                            }
-
-                                            mysqli_close($con);
-
-                                        }
-                                                */
-                                    ?>
-
-
-                                    <option value="7">All</option>
-                                    -->
                                 </select>
                                 <label>Pollutant</label>
                             </div>
@@ -257,6 +221,8 @@ else{
             </div>
         </div>
     </div>
+    <br>
+    <br>
 </div>
 
 
