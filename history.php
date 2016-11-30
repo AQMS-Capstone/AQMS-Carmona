@@ -149,7 +149,7 @@ else{
     <br>
     <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">library_books</span></h1>
     <h2 class="header center teal-text" style="margin-top: 0; padding-top: 0;"><b>History Report</b></h2>
-
+    <p class="header center grey-text" style="margin-top: 0; padding-top: 0;">By filling out and submitting this form, the page would generate a PDF file.</p>
 
    <div class="section no-pad-bot">
         <div class="container">
