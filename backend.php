@@ -129,7 +129,11 @@ if (isset($_POST['btnSubmit'])) {
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
-
+    <style>
+        .centered-nav{
+            left: -37%;
+        }
+    </style>
 
 </head>
 
@@ -139,6 +143,18 @@ if (isset($_POST['btnSubmit'])) {
     <nav class="z-depth-1" style="height: 70px;">
         <div class="nav-wrapper">
             <a id="logo" href="index.php"><img class="brand-logo center" src="res/logo.png"> </a>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <nav id="nav">
+        <div class="nav-wrapper">
+            <ul id="nav-mobile" class="centered-nav hide-on-med-and-down">
+                <li><a href="backend.php" id="home-tab"><span class="material-icons">bug_report</span> Developer Option</a>
+                </li>
+                <li><a href="edit.php" id=""><span class="material-icons">list</span> Concentration Table</a></li>
+            </ul>
         </div>
     </nav>
 </div>
