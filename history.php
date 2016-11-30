@@ -212,7 +212,7 @@ else{
                             </div>
 
                             <div class="input-field center col s12">
-                                <button class="btn waves-effect waves-light" type="submit" name="btnGenerate" style="width: 100%;">
+                                <button class="btn btn-large waves-effect waves-light" type="submit" name="btnGenerate" style="width: 100%;">
                                     Generate
                                 </button>
                             </div>
