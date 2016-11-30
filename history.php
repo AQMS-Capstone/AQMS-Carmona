@@ -82,11 +82,12 @@ else{
         $_SESSION['txtDateTimeTo'] = $_POST["txtDateTimeTo"];
         $_SESSION['drpOrder'] = $_POST["drpOrder"];
 
-        header("Location: generatepdf.php");
+
 
     }
 
     unset($_POST['btnGenerate']);
+    header("Location: generatepdf.php");
 }
 ?>
 

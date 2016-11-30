@@ -52,6 +52,15 @@ try {
     $dateFrom = $_SESSION["txtDateTimeFrom"];
     $dateTo = $_SESSION["txtDateTimeTo"];
     $orderIndex = $_SESSION["drpOrder"];
+
+    if(empty($_SESSION['drpArea']))
+    {
+        echo "<script>
+                alert('There are no data available to generate a report');
+                window.location.href='history.php';
+               </script>";
+    }
+
     if($orderIndex <= 1){
         $order = 'timestamp';
     }else{
@@ -493,7 +502,7 @@ catch(Exception $e){
 }
 
 finally{
-
+    session_destroy();
     mysqli_close($con);
 }
 ?>
