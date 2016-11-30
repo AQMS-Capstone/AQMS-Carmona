@@ -209,7 +209,7 @@ function initialize()
         map.setZoom(16);
         map.setCenter(bancalZoom);
 
-        $("#zoneStatus").show(500);
+
         document.getElementById("aqiText").style.color = bancalAirQuality;
         document.getElementById("AQIStat").style.color = bancalAirQuality;
         document.getElementById("zoneName").innerHTML = 'Bancal Carmona, Cavite';
@@ -217,11 +217,6 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = bancalAQI;
         document.getElementById("aqiText").innerHTML = bancalAQIStatus;
         document.getElementById("timeUpdated").innerHTML = bancal_date_gathered;
-
-        //document.getElementById("e_symbol_1").innerHTML =  "HII";
-        //document.getElementById("concentration_value_1").innerHTML =  "5";
-
-        //alert(bancalAllDayValues_array.length);
 
         if(bancalAllDayValues_array.length != 0)
         //if(bancal_prevalent_value != -1 && bancalAllDayValues_array.length != 0) // --------- CHECK IF DB VALUES FOR BANCAL IS EMPTY AND IF PREVALENT VALUE IS NOT EQUAL TO 0 --------- //
@@ -297,23 +292,8 @@ function initialize()
             }
           }
         }
-        /*
-         document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
-         document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
-         document.getElementById("e_symbol_3").innerHTML =  bancalValues_array[2].e_symbol;
-         document.getElementById("e_symbol_4").innerHTML =  bancalValues_array[3].e_symbol;
-         document.getElementById("e_symbol_5").innerHTML =  bancalValues_array[4].e_symbol;
-         document.getElementById("e_symbol_6").innerHTML =  bancalValues_array[5].e_symbol;
-         document.getElementById("e_symbol_7").innerHTML =  bancalValues_array[6].e_symbol;
 
-         document.getElementById("concentration_value_1").innerHTML =  slexValues_array[0].e_symbol;
-         document.getElementById("concentration_value_2").innerHTML =  slexValues_array[1].e_symbol;
-         document.getElementById("concentration_value_3").innerHTML =  slexValues_array[2].e_symbol;
-         document.getElementById("concentration_value_4").innerHTML =  slexValues_array[3].e_symbol;
-         document.getElementById("concentration_value_5").innerHTML =  slexValues_array[4].e_symbol;
-         document.getElementById("concentration_value_6").innerHTML =  slexValues_array[5].e_symbol;
-         document.getElementById("concentration_value_7").innerHTML =  slexValues_array[6].e_symbol;
-         */
+        $("#zoneStatus").show(1000);
     }
     var slexZoom=new google.maps.LatLng(14.32274,121.071688);
     //noinspection JSAnnotator
@@ -321,7 +301,7 @@ function initialize()
         map.setZoom(16);
         map.setCenter(slexZoom);
 
-        $("#zoneStatus").show(500);
+
         document.getElementById("aqiText").style.color = slexAirQuality;
         document.getElementById("AQIStat").style.color = slexAirQuality;
         document.getElementById("zoneName").innerHTML = 'SLEX Carmona Exit, Cavite';
@@ -329,11 +309,6 @@ function initialize()
         document.getElementById("aqiNum").innerHTML = slexAQI;
         document.getElementById("aqiText").innerHTML = slexAQIStatus;
         document.getElementById("timeUpdated").innerHTML =  slex_date_gathered;
-
-        //document.getElementById("e_symbol_1").innerHTML =  "HI";
-        //document.getElementById("concentration_value_1").innerHTML =  "7";
-
-        //alert(bancal_aqi_values[0]);
 
         if(slexAllDayValues_array.length != 0)
         //if(slex_prevalent_value != -1 && slexAllDayValues_array.length != 0) // --------- CHECK IF DB VALUES FOR slex IS EMPTY AND IF PREVALENT VALUE IS NOT EQUAL TO 0 --------- //
@@ -408,34 +383,7 @@ function initialize()
           }
         }
 
-        /*
-        for(var i = 0; i < slexValues_array.length; i++)
-        {
-            var elementName = "e_symbol_" + (i+1);
-            var conentrationName = "concentration_value_" + (i+1);
-
-            document.getElementById(elementName).innerHTML =  slexValues_array[i].e_symbol;
-            document.getElementById(conentrationName).innerHTML =  slexValues_array[i].concentration_value;
-        }
-        */
-
-        /*
-         document.getElementById("e_symbol_1").innerHTML =  bancalValues_array[0].e_symbol;
-         document.getElementById("e_symbol_2").innerHTML =  bancalValues_array[1].e_symbol;
-         document.getElementById("e_symbol_3").innerHTML =  bancalValues_array[2].e_symbol;
-         document.getElementById("e_symbol_4").innerHTML =  bancalValues_array[3].e_symbol;
-         document.getElementById("e_symbol_5").innerHTML =  bancalValues_array[4].e_symbol;
-         document.getElementById("e_symbol_6").innerHTML =  bancalValues_array[5].e_symbol;
-         document.getElementById("e_symbol_7").innerHTML =  bancalValues_array[6].e_symbol;
-
-         document.getElementById("concentration_value_1").innerHTML =  bancalValues_array[0].e_symbol;
-         document.getElementById("concentration_value_2").innerHTML =  bancalValues_array[1].e_symbol;
-         document.getElementById("concentration_value_3").innerHTML =  bancalValues_array[2].e_symbol;
-         document.getElementById("concentration_value_4").innerHTML =  bancalValues_array[3].e_symbol;
-         document.getElementById("concentration_value_5").innerHTML =  bancalValues_array[4].e_symbol;
-         document.getElementById("concentration_value_6").innerHTML =  bancalValues_array[5].e_symbol;
-         document.getElementById("concentration_value_7").innerHTML =  bancalValues_array[6].e_symbol;
-         */
+        $("#zoneStatus").show(1000);
     }
 
     var area = getUrlParameter('area');
