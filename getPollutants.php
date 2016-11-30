@@ -13,7 +13,7 @@ $area = $_GET['area'];
 echo "<option value=\"\" disabled selected>Select a pollutant</option>";
 if($area == "all")
 {
-    $query = "SELECT DISTINCT elements.e_symbol as e_symbol FROM MASTER INNER JOIN elements ON master.e_id = elements.e_id ORDER BY elements.e_id";
+    $query = "SELECT DISTINCT ELEMENTS.e_symbol as e_symbol FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id ORDER BY ELEMENTS.e_id";
     $result = mysqli_query($con, $query);
 
     while ($row = mysqli_fetch_array($result)) {
@@ -24,7 +24,7 @@ if($area == "all")
 
 else
 {
-    $query = "SELECT DISTINCT elements.e_symbol as e_symbol FROM MASTER INNER JOIN elements ON master.e_id = elements.e_id WHERE area_name = '$area' ORDER BY elements.e_id";
+    $query = "SELECT DISTINCT ELEMENTS.e_symbol as e_symbol FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE area_name = '$area' ORDER BY ELEMENTS.e_id";
     $result = mysqli_query($con, $query);
 
     while ($row = mysqli_fetch_array($result)) {
