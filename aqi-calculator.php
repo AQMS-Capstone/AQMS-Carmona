@@ -204,6 +204,10 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
             else if (calculator == "CVA") {
                 InitAQICalculator();
             }
+
+            else{
+                InitAQICalculator();
+            }
         }
         else {
             InitAQICalculator();
