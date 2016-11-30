@@ -18,6 +18,7 @@ $("#reports-tab").click(function () {
 
 
 
+
 $("#reports-tab").click(function () {
     $("#content-holder").load('public/history.php');
 })

@@ -50,7 +50,7 @@
     <nav class="navbar-fixed">
         <div class="nav-wrapper white">
             <ul class="centered-legend">
-                <li style="color: #2196F3;"><span class="material-icons">cloud</span> Good</li>
+                <li style="color: #4CAF50;"><span class="material-icons">cloud</span> Good</li>
                 <li style="color: #FFEB3B;"><span class="material-icons">cloud</span> Fair</li>
                 <li style="color: #FF9800;"><span class="material-icons">cloud</span> Unhealthy for Sensitive Groups
                 </li>
