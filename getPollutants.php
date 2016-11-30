@@ -20,6 +20,10 @@ if($area == "all")
 
         echo  "<option value='".$row['e_symbol']."'>{$row['e_symbol']}</option>";
     }
+
+    if (mysqli_num_rows($result) > 0) {
+        echo  "<option value='All'>All</option>";
+    }
 }
 
 else
@@ -31,8 +35,10 @@ else
 
         echo  "<option value='".$row['e_symbol']."'>{$row['e_symbol']}</option>";
     }
-}
 
-echo  "<option value='All'>All</option>";
+    if (mysqli_num_rows($result) > 0) {
+        echo  "<option value='All'>All</option>";
+    }
+}
 
 mysqli_close($con);
