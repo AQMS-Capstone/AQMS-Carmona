@@ -18,10 +18,10 @@ if(isset($_GET["area"]))
         <div class="card-content black-text">
             <div class="row">
                 <div class="col s12 m4">
-                    <span class="center-align">
+                    <div class="center-align">
                         <p><span class="material-icons" style="font-size: 5em;" id="AQIStat">cloud</span></p>
                         <p style="font-weight: bold; font-size: 1.5em;">AQI: <span id="aqiNum"></span></p>
-                    </span>
+                    </div>
                 </div>
                 <div  >
                     <div class="col s12 m7">

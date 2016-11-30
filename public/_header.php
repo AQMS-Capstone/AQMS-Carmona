@@ -11,7 +11,7 @@
 <div>
     <nav class="z-depth-0" style="height: 70px;">
         <div class="nav-wrapper">
-            <a id="logo" href="index.php"><img class="brand-logo center" src="res/logo.png"> </a>
+            <a id="logo" href="index.php"><img class="brand-logo center" alt="Brand Logo" src="res/logo.png"> </a>
         </div>
     </nav>
 </div>
@@ -25,7 +25,7 @@
                 <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span
                             class="material-icons">location_on</span> Sensors Map<i class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a>
                 </li>
-                <li><a href="daily.php" id=""><span class="material-icons">access_time</span> Daily</a></li>
+                <li><a href="daily.php"><span class="material-icons">access_time</span> Daily</a></li>
                 <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>
 <!--                <li><a href="aqi-calculator.php" id=""><span class="material-icons">timeline</span> AQI Calculator</a>-->
                 <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown2"><span
