@@ -141,8 +141,8 @@
 
                     echo "
             <div id='" . $identifier . "' class='modal'>
-                <div class='modal-content'>
-                  <div class=\"modal-content\" style=\"padding: 16px;\">
+                
+                  <div class=\"modal-content\" style=\"padding: 24px 24px 0px 24px;\">
                     <div class=\"row-no-after\">
                       <div class='col s12'>
                          <div class=\"row\">
@@ -246,12 +246,13 @@
                     echo "
                         </div>
                     </div>
-                  </div>
-                <div class='modal-footer'>
+                
+                
+        </div>
+        <div class='modal-footer'>
                     <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Cancel</a>
                     <button id='btnSave' onclick='myFunction($value_time, $value_element, $identifier_input, $area, $e_id)' class='modal-action waves-effect waves-green btn-flat'>Save</button>
                 </div>
-        </div>
             ";
                     $ctr++;
                 }
