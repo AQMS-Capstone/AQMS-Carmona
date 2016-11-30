@@ -2228,7 +2228,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   var pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone", "Particulate Matter 10", "Totally Suspended Particles"];
   var pollutant_symbols = ["CO", "SO2", "NO2", "O3","PM 10", "TSP"];
 
-  var goodAir = "#2196F3";
+  var goodAir = "#4CAF50";
   var fairAir = "#FFEB3B";
   var unhealthyAir = "#FF9800";
   var veryUnhealthyAir = "#f44336";
