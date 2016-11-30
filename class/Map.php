@@ -110,15 +110,16 @@
             array_push($bancal_o3_values, $bancalAllDayValues_array[$i]);
           break;
 
+          /*
           case 5: // Pb
             array_push($bancal_pb_values, $bancalAllDayValues_array[$i]);
-          break;
+          break;*/
 
-          case 6: // PM 10
+          case 5: // PM 10
             array_push($bancal_pm10_values, $bancalAllDayValues_array[$i]);
           break;
 
-          case 7: // TSP
+          case 6: // TSP
             array_push($bancal_tsp_values, $bancalAllDayValues_array[$i]);
           break;
       }
@@ -144,15 +145,17 @@
             array_push($slex_o3_values, $slexAllDayValues_array[$i]);
           break;
 
+          /*
           case 5: // Pb
             array_push($slex_pb_values, $slexAllDayValues_array[$i]);
           break;
+          */
 
-          case 6: // PM 10
+          case 5: // PM 10
             array_push($slex_pm10_values, $slexAllDayValues_array[$i]);
           break;
 
-          case 7: // TSP
+          case 6: // TSP
             array_push($slex_tsp_values, $slexAllDayValues_array[$i]);
           break;
       }
