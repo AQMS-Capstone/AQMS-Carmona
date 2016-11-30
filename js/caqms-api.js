@@ -44,7 +44,7 @@ else {
   {
     bancalAirQuality = acutelyUnhealthyAir;
     bancalAQIStatus = "Acutely Unhealthy";
-  }else if(bancalAQI >= 301 && bancalAQI <= 400)
+  }else if(bancalAQI >= 301)
   {
     bancalAirQuality = emergencyAir;
     bancalAQIStatus = "Emergency";
@@ -96,7 +96,7 @@ else {
   {
     slexAirQuality = acutelyUnhealthyAir;
     slexAQIStatus = "Acutely Unhealthy";
-  }else if(slexAQI >= 301 && slexAQI <= 400)
+  }else if(slexAQI >= 301)
   {
     slexAirQuality = emergencyAir;
     slexAQIStatus = "Emergency";

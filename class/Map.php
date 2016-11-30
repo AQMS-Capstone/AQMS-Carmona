@@ -763,10 +763,10 @@
       $ave = $tsp_ave / $tsp_ctr;
       $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
 
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
+//      if($aqi_value > 400)
+//      {
+//        $aqi_value = -1;
+//      }
 
       if($data_hour_value == $hour_value)
       {
@@ -791,10 +791,10 @@
         $ave = $tsp_ave / $tsp_ctr;
         $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
 
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
+//        if($aqi_value > 400)
+//        {
+//          $aqi_value = -1;
+//        }
 
         if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
         {
@@ -1721,10 +1721,10 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
       $ave = $tsp_ave / $tsp_ctr;
       $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
 
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
+//      if($aqi_value > 400)
+//      {
+//        $aqi_value = -1;
+//      }
 
       if($data_hour_value == $hour_value)
       {
@@ -1748,10 +1748,10 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
         $ave = $tsp_ave / $tsp_ctr;
         $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
 
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
+//        if($aqi_value > 400)
+//        {
+//          $aqi_value = -1;
+//        }
 
         if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
         {
@@ -2124,6 +2124,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
             $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
             break;
           }
+
 
           else if($x == count($gv) - 1)
           {

@@ -129,7 +129,7 @@ function InitCVCalculator(){
                 "max" : 400,
             });
         }
-        if($('#element').val() == "TSP")
+        if($('#element').val() == "TSP") // CHECK
         {
             $("#concentration").attr({
                 "min" : 0,
@@ -141,39 +141,81 @@ function InitCVCalculator(){
 }
 
 function GetAQIDetails(AQI,element){
-    if(AQI >= 0 && AQI <= 50){
-        AQIAirQuality = goodAir;
-        AQIStatus = "Good";
-    }else if(AQI >= 51 && AQI <= 100)
+    if(element == "TSP")
     {
-        AQIAirQuality = fairAir;
-        AQIStatus = "Fair";
-    }else if(AQI >= 101 && AQI <= 150)
-    {
-        AQIAirQuality = unhealthyAir;
-        AQIStatus = "Unhealthy for Sensitive Groups";
-    }else if(AQI >= 151 && AQI <= 200)
-    {
-        AQIAirQuality = veryUnhealthyAir;
-        AQIStatus = "Very Unhealthy";
-    }else if(AQI >= 201 && AQI <= 300)
-    {
-        AQIAirQuality = acutelyUnhealthyAir;
-        AQIStatus = "Acutely Unhealthy";
-    }else if(AQI >= 301 && AQI <= 400)
-    {
-        AQIAirQuality = emergencyAir;
-        AQIStatus = "Emergency";
-    }else if(AQI == -1){
-        AQIAirQuality = otherAir;
-        AQIStatus = "No Current Data";
-    }
-    else{
-        AQIAirQuality = otherAir;
-        AQIStatus = "No Current Data";
+        if(AQI >= 0 && AQI <= 50){
+            AQIAirQuality = goodAir;
+            AQIStatus = "Good";
+        }else if(AQI >= 51 && AQI <= 100)
+        {
+            AQIAirQuality = fairAir;
+            AQIStatus = "Fair";
+        }else if(AQI >= 101 && AQI <= 150)
+        {
+            AQIAirQuality = unhealthyAir;
+            AQIStatus = "Unhealthy for Sensitive Groups";
+        }else if(AQI >= 151 && AQI <= 200)
+        {
+            AQIAirQuality = veryUnhealthyAir;
+            AQIStatus = "Very Unhealthy";
+        }else if(AQI >= 201 && AQI <= 300)
+        {
+            AQIAirQuality = acutelyUnhealthyAir;
+            AQIStatus = "Acutely Unhealthy";
+        }else if(AQI >= 301 && AQI <= 400)
+        {
+            AQIAirQuality = emergencyAir;
+            AQIStatus = "Emergency";
+        }else if(AQI > 400){
+            AQIAirQuality = emergencyAir;
+            AQIStatus = "Emergency";
+        }else if(AQI == -1){
+            AQIAirQuality = otherAir;
+            AQIStatus = "No Current Data";
+        }
+        else{
+            AQIAirQuality = otherAir;
+            AQIStatus = "No Current Data";
+        }
+
+        GetStatement(AQIStatus,element);
     }
 
-    GetStatement(AQIStatus,element);
+    else{
+        if(AQI >= 0 && AQI <= 50){
+            AQIAirQuality = goodAir;
+            AQIStatus = "Good";
+        }else if(AQI >= 51 && AQI <= 100)
+        {
+            AQIAirQuality = fairAir;
+            AQIStatus = "Fair";
+        }else if(AQI >= 101 && AQI <= 150)
+        {
+            AQIAirQuality = unhealthyAir;
+            AQIStatus = "Unhealthy for Sensitive Groups";
+        }else if(AQI >= 151 && AQI <= 200)
+        {
+            AQIAirQuality = veryUnhealthyAir;
+            AQIStatus = "Very Unhealthy";
+        }else if(AQI >= 201 && AQI <= 300)
+        {
+            AQIAirQuality = acutelyUnhealthyAir;
+            AQIStatus = "Acutely Unhealthy";
+        }else if(AQI >= 301 && AQI <= 400)
+        {
+            AQIAirQuality = emergencyAir;
+            AQIStatus = "Emergency";
+        }else if(AQI == -1){
+            AQIAirQuality = otherAir;
+            AQIStatus = "No Current Data";
+        }
+        else{
+            AQIAirQuality = otherAir;
+            AQIStatus = "No Current Data";
+        }
+
+        GetStatement(AQIStatus,element);
+    }
 }
 
 function GetStatement(AQIStatus,element){
