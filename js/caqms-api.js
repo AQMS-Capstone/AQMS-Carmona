@@ -209,7 +209,7 @@ function initialize()
         map.setZoom(16);
         map.setCenter(bancalZoom);
 
-        $("#zoneStatus").show();
+        $("#zoneStatus").show(500);
         document.getElementById("aqiText").style.color = bancalAirQuality;
         document.getElementById("AQIStat").style.color = bancalAirQuality;
         document.getElementById("zoneName").innerHTML = 'Bancal Carmona, Cavite';
@@ -321,7 +321,7 @@ function initialize()
         map.setZoom(16);
         map.setCenter(slexZoom);
 
-        $("#zoneStatus").show();
+        $("#zoneStatus").show(500);
         document.getElementById("aqiText").style.color = slexAirQuality;
         document.getElementById("AQIStat").style.color = slexAirQuality;
         document.getElementById("zoneName").innerHTML = 'SLEX Carmona Exit, Cavite';

@@ -14,7 +14,7 @@ if(isset($_GET["area"]))
 ?>
 <div id="home">
     <div id="googleMap"></div>
-    <div id="zoneStatus" class="card float-card" style="max-height: 445px;">
+    <div id="zoneStatus" class="card float-card" style="max-height: 445px;" hidden>
         <div class="card-content black-text">
             <div class="row">
                 <div class="col s12 m4">
