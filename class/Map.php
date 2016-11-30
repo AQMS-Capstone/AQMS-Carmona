@@ -2179,6 +2179,36 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     return $aqi;
   }
 
+  function calculateConcentrationValue($gv, $aqi_value, $prec, $aqi_val)
+  {
+    $concentration_value = 0;
+    $roundedValue = round($aqi_value);
+    $index = 0;
+
+    for($x = 0; $x < count($aqi_val); $x++) {
+      if($roundedValue >= $aqi_val[$x][0] && $roundedValue <= $aqi_val[$x][1]) {
+        $index = $x;
+        break;
+      }
+
+      else
+      {
+        $index - -1;
+      }
+    }
+
+    if(index == -1)
+    {
+      return index;
+    }
+
+    else {
+      $concentration_value = ($roundedValue - $aqi_val[$index][0]) * (($gv[$index][1] - $gv[$index][0]) / ($aqi_val[$index][1] - $aqi_val[$index][0])) + $gv[$index][0];
+
+      return floorDec($concentration_value, $precision = $prec);
+    }
+  }
+
   function floorDec($val, $precision = 2) {
     if ($precision < 0) { $precision = 0; }
     $numPointPosition = intval(strpos($val, '.'));

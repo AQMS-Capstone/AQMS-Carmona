@@ -282,7 +282,68 @@ function GetAQI()
 }
 
 function GetCV(){
+    global $co_guideline_values;
+    global $sufur_guideline_values;
+    global $no2_guideline_values;
+    global $ozone_guideline_values_8;
+    global $ozone_guideline_values_1;
+    global $pm_10_guideline_values;
+    global $tsp_guideline_values;
 
+
+    global $aqi_values;
+
+    global $aqi;
+    global $element;
+
+    $concentration = $_POST["concentration"];
+    $element = $_POST["element"];
+
+    $concentration_value = 0;
+
+    if ($element == "CO") {
+        $concentration_value = calculateConcentrationValue($co_guideline_values, $concentration, 1, $aqi_values);
+    }
+    if ($element == "SO2") {
+        $concentration_value = calculateConcentrationValue($sufur_guideline_values, $concentration, 3, $aqi_values);
+    }
+    if ($element == "NO2") {
+        $concentration_value = calculateConcentrationValue($no2_guideline_values, $concentration, 2, $aqi_values);
+    }
+    if ($element == "O3_8") {
+        $concentration_value = calculateConcentrationValue($ozone_guideline_values_8, $concentration, 3, $aqi_values);
+    }
+    if ($element == "O3_1") {
+        $concentration_value = calculateConcentrationValue($ozone_guideline_values_1, $concentration, 3, $aqi_values);
+    }
+    if ($element == "PM10") {
+        $concentration_value = calculateConcentrationValue($pm_10_guideline_values, $concentration, 0, $aqi_values);
+    }
+    if ($element == "TSP") {
+        $concentration_value = calculateConcentrationValue($tsp_guideline_values, $concentration, 0, $aqi_values);
+    }
+
+    echo "
+          
+          
+          <script type='text/javascript'>
+          
+             var AQI = \"$concentration\";
+             var pollutant = \"$element\";
+           
+             GetAQIDetails(AQI,pollutant);
+             
+             $('#aqiNum').text($concentration_value);
+             $(\"#AQIStat\").css(\"background-color\", AQIAirQuality);
+             $(\"#aqiText\").text(AQIStatus);
+             $(\"#result\").show();
+             ScrollTo('calculator');
+          </script>
+          
+          
+    ";
+
+    header("location: aqi-calculator.php");
 }
 
 if (isset($_POST['submit'])) {

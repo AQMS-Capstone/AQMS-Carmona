@@ -89,7 +89,7 @@ function InitCVCalculator(){
 
         $("#concentration").attr({
             "min" : 0,
-            "max" : 500
+            "max" : 400
         });
 
     });
