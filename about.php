@@ -50,6 +50,7 @@
     <div class="section white">
         <div class="row container center">
             <h3 class="header teal-text">Municipality of Carmona</h3>
+            <div class="divider"></div><br>
             <p class="gray-text text-lighten-3 caption">
                 Carmona is located on the south-eastern part of the province of Cavite, approximately 36 kilometres south of Manila and 24 kilometres from Trece Martires City, Cavite’s provincial capital.
                 It is bounded on the north, east and south by the City of Biñan, Laguna, Municipality of General Mariano Alvarez (GMA) on the north-west and Silang on the south-west.
@@ -58,7 +59,7 @@
         </div>
     </div>
     <div class="parallax-container">
-        <div class="center" style="margin-top: 7%">
+        <div class="center" style="margin-top: 7%; margin-left: 7%;">
             <img class="img-parallax" src="res/images/parallax/aqms-cloud.png">
         </div>
 
@@ -68,6 +69,7 @@
     <div class="section white">
         <div class="row container center">
             <h3 class="header teal-text">The Air Quality Monitoring System</h3>
+            <div class="divider"></div><br>
             <p class="gray-text text-lighten-3 caption">
                 AQMS promotes Air Pollution awareness and provides a unified Air Quality information for the municipality of Carmona.
                 The sensors will gather concentration values of the following elements (CO, SO2, NO2, O3, PM10, and TSP), and then the website will provide necessary information such as AQI Graph,
