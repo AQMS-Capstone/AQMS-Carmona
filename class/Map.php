@@ -224,6 +224,13 @@
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
   for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
   {
+    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
+    {
+      //echo "yas: ".$i. " ";
+      $carbon_monoxide_ctr = 0;
+      $carbon_monoxide_ave = 0;
+    }
+
     $index_24 = -1;
     $check_24 = false;
 
@@ -282,14 +289,10 @@
         $data_date_tomorrow = substr($bancal_co_values[$index]->timestamp, 0, -9);
         $data_hour_value = substr($bancal_co_values[$index]->timestamp, 11, -6);
 
+        //echo "yas: ".$i. " ";
+
         if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
         {
-          if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-          {
-            $carbon_monoxide_ctr = 0;
-            $carbon_monoxide_ave = 0;
-          }
-
           $carbon_monoxide_ave += $bancal_co_values[$index]->concentration_value;
           $carbon_monoxide_ctr++;
 
@@ -312,6 +315,8 @@
             //array_push($bancal_aqi_values,$aqi_value);
             $bancal_date_gathered = $bancal_co_values[$index]->timestamp;
           }
+
+          //echo $aqi_value." ";
 
           array_push($bancal_co_aqi_values, $aqi_value);
           array_push($bancal_co_actual_values, $ave);
@@ -526,6 +531,12 @@
     $check = false;
     $index = 0;
 
+    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
+    {
+      $ozone_8_ave = 0;
+      $ozone_8_ctr = 0;
+    }
+
     //$prev_hour_value = 0;
 
     for($k = 0; $k < count($bancal_o3_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
@@ -580,12 +591,6 @@
 
         if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
         {
-          if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-          {
-            $ozone_8_ave = 0;
-            $ozone_8_ctr = 0;
-          }
-
           $ozone_8_ave += $bancal_o3_values[$index]->concentration_value;
           $ozone_8_ctr++;
 
@@ -1188,6 +1193,12 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     $check = false;
     $index = 0;
 
+    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
+    {
+      $carbon_monoxide_ctr = 0;
+      $carbon_monoxide_ave = 0;
+    }
+
     //$prev_hour_value = 0;
 
     for($k = 0; $k < count($slex_co_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
@@ -1242,12 +1253,6 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 
         if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
         {
-          if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-          {
-            $carbon_monoxide_ctr = 0;
-            $carbon_monoxide_ave = 0;
-          }
-
           $carbon_monoxide_ave += $slex_co_values[$index]->concentration_value;
           $carbon_monoxide_ctr++;
 
@@ -1484,6 +1489,12 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     $check = false;
     $index = 0;
 
+    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
+    {
+      $ozone_8_ave = 0;
+      $ozone_8_ctr = 0;
+    }
+
     //$prev_hour_value = 0;
 
     for($k = 0; $k < count($slex_o3_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
@@ -1538,12 +1549,6 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 
         if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
         {
-          if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-          {
-            $ozone_8_ave = 0;
-            $ozone_8_ctr = 0;
-          }
-
           $ozone_8_ave += $slex_o3_values[$index]->concentration_value;
           $ozone_8_ctr++;
 
