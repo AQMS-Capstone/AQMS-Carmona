@@ -101,6 +101,7 @@ function GetElementInfoAQI(){
         {
             $("#concentration").attr({
                 "min" : 0,
+                "max" : 999999,
                 "step" : 1
             });
         }
