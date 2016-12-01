@@ -173,7 +173,11 @@ function InitCVCalculator(){
     $("#txtConversion").text('AQI');
     $("#unit").hide();
 
-    GetElementInfoCV();
+    $('select[id=element]').change(function () {
+
+        GetElementInfoCV();
+    });
+
 }
 
 function GetAQIDetails(AQI,element){
