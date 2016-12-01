@@ -89,7 +89,7 @@ function GetElementInfoAQI(){
         $('#unit').text("ppm");
     }
     else{
-        if($('#element').val() == "PM10")
+        if($('#element').val() == "PM 10")
         {
             $("#concentration").attr({
                 "min" : 0,
@@ -125,7 +125,7 @@ function GetElementInfoCV(){
                 "max" : 400,
             });
         }
-        if($('#element').val() == "PM10")
+        if($('#element').val() == "PM 10")
         {
             $("#concentration").attr({
                 "min" : 0,

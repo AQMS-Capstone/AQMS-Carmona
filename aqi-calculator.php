@@ -83,7 +83,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                                     echo 'selected';
                                 } ?>>(O3) Ozone 1hr
                                 </option>
-                                <option value="PM10" <?php if ($element == "PM10") {
+                                <option value="PM 10" <?php if ($element == "PM10") {
                                     echo 'selected';
                                 } ?>>(PM10) Particulate Matter
                                 </option>
@@ -254,7 +254,7 @@ function GetAQI()
         $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, 3, $aqi_values));
     }
 
-    if ($element == "PM10") {
+    if ($element == "PM 10") {
         $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, 0, $aqi_values));
     }
     if ($element == "TSP") {
@@ -320,7 +320,7 @@ function GetCV(){
     if ($element == "O3_1") {
         $concentration_value = calculateConcentrationValue($ozone_guideline_values_1, $concentration, 3, $aqi_values);
     }
-    if ($element == "PM10") {
+    if ($element == "PM 10") {
         $concentration_value = calculateConcentrationValue($pm_10_guideline_values, $concentration, 0, $aqi_values);
     }
     if ($element == "TSP") {
