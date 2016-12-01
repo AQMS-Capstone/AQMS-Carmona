@@ -64,7 +64,7 @@ try {
     if($orderIndex <= 1){
         $order = 'timestamp';
     }else{
-        $order = 'master.e_id';
+        $order = 'MASTER.e_id';
     }
     $loc = strtolower($area[$areaIndex]);
 
