@@ -2119,7 +2119,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
       {
         //echo "HEHE";
 
-        if($ave > 900)
+        if($ave >= 900)
         {
           $roundedValue = floorDec($ave, $precision = $prec);
 
