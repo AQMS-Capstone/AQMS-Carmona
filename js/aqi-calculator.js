@@ -62,9 +62,9 @@ function GetElementInfoAQI(){
         if($('#element').val() == "NO2")
         {
             $("#concentration").attr({
+                "step" : 0.01,
                 "min" : 0.65,
-                "max" : 1.64,
-                "step" : 0.1
+                "max" : 1.64
             });
         }
         if($('#element').val() == "O3_8")

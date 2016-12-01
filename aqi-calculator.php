@@ -73,7 +73,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                                 </option>
                                 <option value="NO2" <?php if ($element == "NO2") {
                                     echo 'selected';
-                                } ?>>(NO2) Nitrogen Oxide
+                                } ?>>(NO2) Nitrogen Dioxide
                                 </option>
                                 <option value="O3_8" <?php if ($element == "O3_8") {
                                     echo 'selected';
