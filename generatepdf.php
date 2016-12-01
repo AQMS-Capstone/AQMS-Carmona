@@ -37,7 +37,7 @@ $order = "" ;
 try {
 
     $area = array('Select an area', 'SLEX', 'Bancal', 'All');
-    $pollutant = array('Select a pollutant', 'CO', 'SO2', 'NO2', 'O3', 'Pb', 'PM10', 'TSP', 'All');
+    $pollutant = array('Select a pollutant', 'CO', 'SO2', 'NO2', 'O3', 'Pb', 'PM 10', 'TSP', 'All');
     //if (isset($_POST['btnGenerate'])) {
     /*
     $areaIndex = $_POST['drpArea'];

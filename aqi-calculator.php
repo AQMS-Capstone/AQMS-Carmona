@@ -83,7 +83,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                                     echo 'selected';
                                 } ?>>(O3) Ozone 1hr
                                 </option>
-                                <option value="PM 10" <?php if ($element == "PM10") {
+                                <option value="PM 10" <?php if ($element == "PM 10") {
                                     echo 'selected';
                                 } ?>>(PM10) Particulate Matter
                                 </option>
