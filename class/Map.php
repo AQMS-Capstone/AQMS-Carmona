@@ -4,7 +4,7 @@
 
   class Map{
 
-    var $m_id = "";
+    //var $m_id = "";
     var $area_name = "";
     var $e_id = "";
     var $concentration_value = "";
@@ -53,7 +53,7 @@
   {
     $dataClass = new Map();
 
-    $dataClass->m_id = $row['m_id'];
+    //$dataClass->m_id = $row['m_id'];
     $dataClass->area_name = $row['area_name'];
     $dataClass->e_id = $row['e_id'];
     $dataClass->concentration_value = $row['concentration_value'];

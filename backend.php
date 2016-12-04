@@ -12,7 +12,7 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
     if($result) {
 
         if (mysqli_num_rows($result) == 0) {
-            $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$value', '$date_now_string')";
+            $query = "INSERT INTO MASTER (area_name, e_id, concentration_value, timestamp) VALUES ('$area', '$e_id', '$value', '$date_now_string')";
             if (!mysqli_query($con, $query)) {
                 die('Error: ' . mysqli_error($con));
             }
