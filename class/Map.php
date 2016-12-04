@@ -1,10 +1,7 @@
 <?php
 
-  require_once 'public/include/db_connect.php';
+  class Master{
 
-  class Map{
-
-    //var $m_id = "";
     var $area_name = "";
     var $e_id = "";
     var $concentration_value = "";
@@ -12,10 +9,45 @@
     var $e_name = "";
     var $e_symbol = "";
 
-    function Map(){}
+    function Master(){}
   }
 
-  // --------- GET VALUES FROM DB --------- //
+  function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $area)
+  {
+    require 'public/include/db_connect.php';
+
+    $array_holder = array();
+
+    if($hour_value == 0)
+    {
+      $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
+    }
+
+    else
+    {
+      $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
+    }
+
+    $result =  mysqli_query($con,$sql);
+
+    while($row=mysqli_fetch_assoc($result))
+    {
+      $dataClass = new Master();
+
+      $dataClass->area_name = $row['area_name'];
+      $dataClass->e_id = $row['e_id'];
+      $dataClass->concentration_value = $row['concentration_value'];
+      $dataClass->timestamp = $row['timestamp'];
+      $dataClass->e_name = $row['e_name'];
+      $dataClass->e_symbol = $row['e_symbol'];
+
+      array_push($array_holder, $dataClass);
+    }
+
+    return $array_holder;
+  }
+
+  // --------- SERVER TIME --------- //
 
   date_default_timezone_set('Asia/Manila');
   $date_now = date("Y-m-d");
@@ -29,51 +61,21 @@
 
   $hour_value = date("H"); // < --------- CURRENT HOUR --------- >
 
-  //$bancal_date_gathered = date("Y-m-d H")." 00:00";
+  // --------- GUIDELINE VALUES --------- //
+
+  $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
+  $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
+  $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
+  $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
+  $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
+  $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
+  $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
+  $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
+
+  // --------- DECLARATIONS --------- //
 
   $bancal_date_gathered = "";
-  $slex_date_gathered = "";
-
   $bancalAllDayValues_array = array();
-  $slexAllDayValues_array = array();
-
-  if($hour_value == 0)
-  {
-    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now' ORDER BY TIMESTAMP";
-  }
-
-  else
-  {
-    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow' ORDER BY TIMESTAMP";
-  }
-
-  $result =  mysqli_query($con,$sql);
-
-  while($row=mysqli_fetch_assoc($result))
-  {
-    $dataClass = new Map();
-
-    //$dataClass->m_id = $row['m_id'];
-    $dataClass->area_name = $row['area_name'];
-    $dataClass->e_id = $row['e_id'];
-    $dataClass->concentration_value = $row['concentration_value'];
-    $dataClass->timestamp = $row['timestamp'];
-    $dataClass->e_name = $row['e_name'];
-    $dataClass->e_symbol = $row['e_symbol'];
-
-    if($row['area_name'] == "bancal")
-    {
-      array_push($bancalAllDayValues_array, $dataClass);
-    }
-
-    else if($row['area_name'] == "slex")
-    {
-      array_push($slexAllDayValues_array, $dataClass);
-    }
-  }
-
-  // --------- SEPARATE THE VALUES INTO SPECIFIED ARRAYS --------- //
-
   $bancal_co_values = array();
   $bancal_so2_values = array();
   $bancal_no2_values = array();
@@ -81,7 +83,23 @@
   $bancal_pb_values = array();
   $bancal_pm10_values = array();
   $bancal_tsp_values = array();
+  $bancal_co_actual_values = array();
+  $bancal_so2_actual_values = array();
+  $bancal_no2_actual_values = array();
+  $bancal_o3_actual_values = array();
+  $bancal_o3_1_actual_values = array();
+  $bancal_pm10_actual_values = array();
+  $bancal_tsp_actual_values = array();
+  $bancal_co_aqi_values = array();
+  $bancal_so2_aqi_values = array();
+  $bancal_no2_aqi_values = array();
+  $bancal_o3_aqi_values = array();
+  $bancal_o3_1_aqi_values = array();
+  $bancal_pm10_aqi_values = array();
+  $bancal_tsp_aqi_values = array();
 
+  $slex_date_gathered = "";
+  $slexAllDayValues_array = array();
   $slex_co_values = array();
   $slex_so2_values = array();
   $slex_no2_values = array();
@@ -89,6 +107,29 @@
   $slex_pb_values = array();
   $slex_pm10_values = array();
   $slex_tsp_values = array();
+  $slex_co_actual_values = array();
+  $slex_so2_actual_values = array();
+  $slex_no2_actual_values = array();
+  $slex_o3_actual_values = array();
+  $slex_o3_1_actual_values = array();
+  $slex_pm10_actual_values = array();
+  $slex_tsp_actual_values = array();
+  $slex_co_aqi_values = array();
+  $slex_so2_aqi_values = array();
+  $slex_no2_aqi_values = array();
+  $slex_o3_aqi_values = array();
+  $slex_o3_1_aqi_values = array();
+  $slex_pm10_aqi_values = array();
+  $slex_tsp_aqi_values = array();
+
+  $data_container = array();
+
+  // --------- GET VALUES FROM DB --------- //
+
+  $bancalAllDayValues_array = DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, "bancal");
+  $slexAllDayValues_array = DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, "slex");
+
+  // --------- SEPARATE THE VALUES INTO SPECIFIED ARRAYS --------- //
 
   for($i = 0; $i < count($bancalAllDayValues_array); $i++)
   {
@@ -110,11 +151,6 @@
             array_push($bancal_o3_values, $bancalAllDayValues_array[$i]);
           break;
 
-          /*
-          case 5: // Pb
-            array_push($bancal_pb_values, $bancalAllDayValues_array[$i]);
-          break;*/
-
           case 5: // PM 10
             array_push($bancal_pm10_values, $bancalAllDayValues_array[$i]);
           break;
@@ -124,7 +160,6 @@
           break;
       }
   }
-
   for($i = 0; $i < count($slexAllDayValues_array); $i++)
   {
       switch($slexAllDayValues_array[$i]->e_id)
@@ -145,12 +180,6 @@
             array_push($slex_o3_values, $slexAllDayValues_array[$i]);
           break;
 
-          /*
-          case 5: // Pb
-            array_push($slex_pb_values, $slexAllDayValues_array[$i]);
-          break;
-          */
-
           case 5: // PM 10
             array_push($slex_pm10_values, $slexAllDayValues_array[$i]);
           break;
@@ -163,111 +192,65 @@
 
   // --------- DECLARE AVERAGE VARIABLES, CTR, AND GUIDELINES --------- //
 
-  $carbon_monoxide_ave = 0;
-  $carbon_monoxide_ctr = 0;
-
-  $sulfur_dioxide_ave = 0;
-  $sulfur_dioxide_ctr = 0;
-
-  $nitrogen_dioxide_ave = 0;
-  $nitrogen_dioxide_ctr = 0;
-
-  $ozone_8_ave = 0;
-  $ozone_8_ctr = 0;
-
-  $ozone_1_ctr = 0;
-  $ozone_1_ave = 0;
-
-  $ozone_8_ctr = 0;
-  $ozone_8_ave = 0;
-
-  $lead_ave = 0; // None
-  $lead_ctr = 0;
-
-  $pm_10_ave = 0;
-  $pm_10_ctr = 0;
-
-  $tsp_ave = 0;
-  $tsp_ctr = 0;
-
-  //$hour_value = 24;
   $data_tomorrow = date("Y-m-d", strtotime('tomorrow'));
 
-  $bancal_co_actual_values = array();
-  $bancal_so2_actual_values = array();
-  $bancal_no2_actual_values = array();
-  $bancal_o3_actual_values = array();
-  $bancal_o3_1_actual_values = array();
-  $bancal_pm10_actual_values = array();
-  $bancal_tsp_actual_values = array();
-
-  $bancal_co_aqi_values = array();
-  $bancal_so2_aqi_values = array();
-  $bancal_no2_aqi_values = array();
-  $bancal_o3_aqi_values = array();
-  $bancal_o3_1_aqi_values = array();
-  $bancal_pm10_aqi_values = array();
-  $bancal_tsp_aqi_values = array();
-
-  $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
-  $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
-  $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
-  $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
-  $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
-
-  $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
-
-  $bancal_aqi_values = array();
-
-  // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
+  function EightHrAveraging($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
   {
-    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
+    $container = array();
+
+    $aqi_values = array();
+    $actual_values = array();
+    $date_gathered = "";
+
+    $ctr = 0;
+    $ave = 0;
+
+    for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     {
-      //echo "yas: ".$i. " ";
-      $carbon_monoxide_ctr = 0;
-      $carbon_monoxide_ave = 0;
-    }
-
-    $index_24 = -1;
-    $check_24 = false;
-
-    $check = false;
-    $index = 0;
-
-    //$prev_hour_value = 0;
-
-    for($k = 0; $k < count($bancal_co_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($bancal_co_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
       {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
+        //echo "yas: ".$i. " ";
+        $ctr = 0;
+        $ave = 0;
       }
 
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+      $index_24 = -1;
+      $check_24 = false;
+
+      $check = false;
+      $index = 0;
+
+      //$prev_hour_value = 0;
+
+      for($k = 0; $k < count($values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
       {
-        $check = true;
-        $index = $k;
-        break;
+        $data_hour_value = substr($values[$k]->timestamp, 11, -6);
+
+        if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+        {
+          $check_24 = true;
+          $index_24 = $k;
+          break;
+        }
+
+        else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+        {
+          $check = true;
+          $index = $k;
+          break;
+        }
       }
-    }
 
       if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
       {
-        $data_date_tomorrow = substr($bancal_co_values[$index_24]->timestamp, 0, -9);
-        $data_hour_value = substr($bancal_co_values[$index_24]->timestamp, 11, -6);
+        $data_date_tomorrow = substr($values[$index_24]->timestamp, 0, -9);
+        $data_hour_value = substr($values[$index_24]->timestamp, 11, -6);
 
-        $carbon_monoxide_ave += $bancal_co_values[$index_24]->concentration_value;
-        $carbon_monoxide_ctr++;
+        $ave += $values[$index_24]->concentration_value;
+        $ctr++;
 
-        $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
-        $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
+        $ave = $ave / $ctr;
+        $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
         if($aqi_value > 400)
         {
@@ -277,33 +260,31 @@
         if($data_hour_value == $hour_value)
         {
           //array_push($bancal_aqi_values,$aqi_value);
-          $bancal_date_gathered = $bancal_co_values[$index_24]->timestamp;
+          $date_gathered = $values[$index_24]->timestamp;
         }
 
-        array_push($bancal_co_aqi_values, $aqi_value);
-        array_push($bancal_co_actual_values, $ave);
+        array_push($aqi_values, $aqi_value);
+        array_push($actual_values, $ave);
       }
 
       else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
       {
-        $data_date_tomorrow = substr($bancal_co_values[$index]->timestamp, 0, -9);
-        $data_hour_value = substr($bancal_co_values[$index]->timestamp, 11, -6);
-
-        //echo "yas: ".$i. " ";
+        $data_date_tomorrow = substr($values[$index]->timestamp, 0, -9);
+        $data_hour_value = substr($values[$index]->timestamp, 11, -6);
 
         if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
         {
-          $carbon_monoxide_ave += $bancal_co_values[$index]->concentration_value;
-          $carbon_monoxide_ctr++;
+          $ave += $values[$index]->concentration_value;
+          $ctr++;
 
-          if($carbon_monoxide_ctr > 0) // < --------- TO AVOID DIVISION BY 0 --------- >
+          if($ctr > 0) // < --------- TO AVOID DIVISION BY 0 --------- >
           {
-            $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
+            $ave = $ave / $ctr;
           }else {
-            $ave = $carbon_monoxide_ave;
+            $ave = $ave;
           }
 
-          $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
+          $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
           if($aqi_value > 400)
           {
@@ -313,261 +294,83 @@
           if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
           {
             //array_push($bancal_aqi_values,$aqi_value);
-            $bancal_date_gathered = $bancal_co_values[$index]->timestamp;
+            $date_gathered = $values[$index]->timestamp;
           }
 
           //echo $aqi_value." ";
 
-          array_push($bancal_co_aqi_values, $aqi_value);
-          array_push($bancal_co_actual_values, $ave);
+          array_push($aqi_values, $aqi_value);
+          array_push($actual_values, $ave);
         }
 
         else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
         {
-          array_push($bancal_co_aqi_values, -1);
-          array_push($bancal_co_actual_values, -1);
+          array_push($aqi_values, -1);
+          array_push($actual_values, -1);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
-        array_push($bancal_co_aqi_values, -1);
-        array_push($bancal_co_actual_values, -1);
+        array_push($aqi_values, -1);
+        array_push($actual_values, -1);
       }
+    }
+
+    array_push($container, $aqi_values);
+    array_push($container, $actual_values);
+    array_push($container, $date_gathered);
+
+    return $container;
   }
-
-  // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
+  function TwentyFourHrAveraging($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
   {
-    $index_24 = -1;
-    $check_24 = false;
+    $container = array();
 
-    $check = false;
-    $index = 0;
+    $aqi_values = array();
+    $actual_values = array();
+    $date_gathered = "";
 
-    for($k = 0; $k < count($bancal_so2_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
+    $ctr = 0;
+    $ave = 0;
+
+    for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     {
-      $data_hour_value = substr($bancal_so2_values[$k]->timestamp, 11, -6);
+      $index_24 = -1;
+      $check_24 = false;
 
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      $check = false;
+      $index = 0;
+
+      for($k = 0; $k < count($values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
       {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
+        $data_hour_value = substr($values[$k]->timestamp, 11, -6);
 
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_so2_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_so2_values[$index_24]->timestamp, 11, -6);
-
-      $sulfur_dioxide_ave += $bancal_so2_values[$index_24]->concentration_value;
-      $sulfur_dioxide_ctr++;
-
-      $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
-      $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
-
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($bancal_aqi_values,$aqi_value);
-        $bancal_date_gathered = $bancal_so2_values[$index_24]->timestamp;
-      }
-
-      array_push($bancal_so2_aqi_values, $aqi_value);
-      array_push($bancal_so2_actual_values, $ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_so2_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_so2_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $sulfur_dioxide_ave += $bancal_so2_values[$index]->concentration_value;
-        $sulfur_dioxide_ctr++;
-
-        $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
-        $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
-
-        if($aqi_value > 400)
+        if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
         {
-          $aqi_value = -1;
+          $check_24 = true;
+          $index_24 = $k;
+          break;
         }
 
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
+        else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
         {
-          $bancal_date_gathered = $bancal_so2_values[$index]->timestamp;
+          $check = true;
+          $index = $k;
+          break;
         }
-
-        array_push($bancal_so2_aqi_values, $aqi_value);
-        array_push($bancal_so2_actual_values, $ave);
       }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($bancal_so2_aqi_values, -1);
-        array_push($bancal_so2_actual_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($bancal_so2_aqi_values, -1);
-      array_push($bancal_so2_actual_values, -1);
-    }
-  }
-
-  // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
-
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
-
-    $check = false;
-    $index = 0;
-
-    for($k = 0; $k < count($bancal_no2_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($bancal_no2_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_no2_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_no2_values[$index_24]->timestamp, 11, -6);
-
-      $nitrogen_dioxide_ave = $bancal_no2_values[$index_24]->concentration_value;
-      $aqi_value = round(calculateAQI($no2_guideline_values, $nitrogen_dioxide_ave, 2, $aqi_values));
-
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($bancal_aqi_values,$aqi_value);
-        $bancal_date_gathered = $bancal_no2_values[$index_24]->timestamp;
-      }
-
-      array_push($bancal_no2_aqi_values, $aqi_value);
-      array_push($bancal_no2_actual_values, $nitrogen_dioxide_ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_no2_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_no2_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $nitrogen_dioxide_ave = $bancal_no2_values[$index]->concentration_value;
-        $aqi_value = round(calculateAQI($no2_guideline_values, $nitrogen_dioxide_ave, 2, $aqi_values));
-
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
-
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
-        {
-          $bancal_date_gathered = $bancal_no2_values[$index]->timestamp;
-        }
-
-        array_push($bancal_no2_aqi_values, $aqi_value);
-        array_push($bancal_no2_actual_values, $nitrogen_dioxide_ave);
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($bancal_no2_aqi_values, -1);
-        array_push($bancal_no2_actual_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($bancal_no2_aqi_values, -1);
-      array_push($bancal_no2_actual_values, -1);
-    }
-  }
-
-  // --------- EXCRETE VALUES FROM O3 --------- //
-
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
-
-    $check = false;
-    $index = 0;
-
-    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-    {
-      $ozone_8_ave = 0;
-      $ozone_8_ctr = 0;
-    }
-
-    //$prev_hour_value = 0;
-
-    for($k = 0; $k < count($bancal_o3_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($bancal_o3_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
 
       if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
       {
-        $data_date_tomorrow = substr($bancal_o3_values[$index_24]->timestamp, 0, -9);
-        $data_hour_value = substr($bancal_o3_values[$index_24]->timestamp, 11, -6);
+        $data_date_tomorrow = substr($values[$index_24]->timestamp, 0, -9);
+        $data_hour_value = substr($values[$index_24]->timestamp, 11, -6);
 
-        $ozone_8_ave += $bancal_o3_values[$index_24]->concentration_value;
-        $ozone_8_ctr++;
+        $ave += $values[$index_24]->concentration_value;
+        $ctr++;
 
-        $ave = $ozone_8_ave / $ozone_8_ctr;
-        $aqi_value = round(calculateAQI($ozone_guideline_values_8, $ave, 3, $aqi_values));
+        $ave = $ave / $ctr;
+        $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
         if($aqi_value > 400)
         {
@@ -577,31 +380,25 @@
         if($data_hour_value == $hour_value)
         {
           //array_push($bancal_aqi_values,$aqi_value);
-          $bancal_date_gathered = $bancal_o3_values[$index_24]->timestamp;
+          $date_gathered = $values[$index_24]->timestamp;
         }
 
-        array_push($bancal_o3_aqi_values, $aqi_value);
-        array_push($bancal_o3_actual_values, $ave);
+        array_push($aqi_values, $aqi_value);
+        array_push($actual_values, $ave);
       }
 
       else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
       {
-        $data_date_tomorrow = substr($bancal_o3_values[$index]->timestamp, 0, -9);
-        $data_hour_value = substr($bancal_o3_values[$index]->timestamp, 11, -6);
+        $data_date_tomorrow = substr($values[$index]->timestamp, 0, -9);
+        $data_hour_value = substr($values[$index]->timestamp, 11, -6);
 
         if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
         {
-          $ozone_8_ave += $bancal_o3_values[$index]->concentration_value;
-          $ozone_8_ctr++;
+          $ave += $values[$index]->concentration_value;
+          $ctr++;
 
-          if($ozone_8_ctr > 0) // < --------- TO AVOID DIVISION BY 0 --------- >
-          {
-            $ave = $ozone_8_ave / $ozone_8_ctr;
-          }else {
-            $ave = $ozone_8_ave;
-          }
-
-          $aqi_value = round(calculateAQI($ozone_guideline_values_8, $ave, 3, $aqi_values));
+          $ave = $ave / $ctr;
+          $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
           if($aqi_value > 400)
           {
@@ -610,221 +407,199 @@
 
           if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
           {
-            //array_push($bancal_aqi_values,$aqi_value);
-            $bancal_date_gathered = $bancal_o3_values[$index]->timestamp;
+            $date_gathered = $values[$index]->timestamp;
           }
 
-          array_push($bancal_o3_aqi_values, $aqi_value);
-          array_push($bancal_o3_actual_values, $ave);
+          array_push($aqi_values, $aqi_value);
+          array_push($actual_values, $ave);
         }
 
         else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
         {
-          array_push($bancal_o3_aqi_values, -1);
-          array_push($bancal_o3_actual_values, -1);
+          array_push($aqi_values, -1);
+          array_push($actual_values, -1);
         }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
-        array_push($bancal_o3_aqi_values, -1);
-        array_push($bancal_o3_actual_values, -1);
+        array_push($aqi_values, -1);
+        array_push($actual_values, -1);
       }
+    }
+
+    array_push($container, $aqi_values);
+    array_push($container, $actual_values);
+    array_push($container, $date_gathered);
+
+    return $container;
   }
-
-  // --------- EXCRETE VALUES FROM PM 10 --------- //
-
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
+  function OneHrAveraging($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
   {
-    $index_24 = -1;
-    $check_24 = false;
+    $container = array();
 
-    $check = false;
-    $index = 0;
+    $aqi_values = array();
+    $actual_values = array();
+    $date_gathered = "";
 
-    for($k = 0; $k < count($bancal_pm10_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
+    $ave = 0;
+
+    for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     {
-      $data_hour_value = substr($bancal_pm10_values[$k]->timestamp, 11, -6);
+      $index_24 = -1;
+      $check_24 = false;
 
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+      $check = false;
+      $index = 0;
+
+      for($k = 0; $k < count($values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
       {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
+        $data_hour_value = substr($values[$k]->timestamp, 11, -6);
+
+        if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
+        {
+          $check_24 = true;
+          $index_24 = $k;
+          break;
+        }
+
+        else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+        {
+          $check = true;
+          $index = $k;
+          break;
+        }
       }
 
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
+      if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
       {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
+        $data_date_tomorrow = substr($values[$index_24]->timestamp, 0, -9);
+        $data_hour_value = substr($values[$index_24]->timestamp, 11, -6);
 
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_pm10_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_pm10_values[$index_24]->timestamp, 11, -6);
-
-      $pm_10_ave += $bancal_pm10_values[$index_24]->concentration_value;
-      $pm_10_ctr++;
-
-      $ave = $pm_10_ave / $pm_10_ctr;
-      $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 0, $aqi_values));
-
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($bancal_aqi_values,$aqi_value);
-        $bancal_date_gathered = $bancal_pm10_values[$index_24]->timestamp;
-      }
-
-      array_push($bancal_pm10_aqi_values, $aqi_value);
-      array_push($bancal_pm10_actual_values, $ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_pm10_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_pm10_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $pm_10_ave += $bancal_pm10_values[$index]->concentration_value;
-        $pm_10_ctr++;
-
-        $ave = $pm_10_ave / $pm_10_ctr;
-        $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 0, $aqi_values));
+        $ave = $values[$index_24]->concentration_value;
+        $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
         if($aqi_value > 400)
         {
           $aqi_value = -1;
         }
 
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
+        if($data_hour_value == $hour_value)
         {
-          $bancal_date_gathered = $bancal_pm10_values[$index]->timestamp;
+          //array_push($bancal_aqi_values,$aqi_value);
+          $date_gathered = $values[$index_24]->timestamp;
         }
 
-        array_push($bancal_pm10_aqi_values, $aqi_value);
-        array_push($bancal_pm10_actual_values, $ave);
+        array_push($aqi_values, $aqi_value);
+        array_push($actual_values, $ave);
+      }
+
+      else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
+      {
+        $data_date_tomorrow = substr($values[$index]->timestamp, 0, -9);
+        $data_hour_value = substr($values[$index]->timestamp, 11, -6);
+
+        if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
+        {
+          $ave = $values[$index]->concentration_value;
+          $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
+
+          if($aqi_value > 400)
+          {
+            $aqi_value = -1;
+          }
+
+          if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
+          {
+            $date_gathered = $values[$index]->timestamp;
+          }
+
+          array_push($aqi_values, $aqi_value);
+          array_push($actual_values, $ave);
+        }
+
+        else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
+        {
+          array_push($aqi_values, -1);
+          array_push($actual_values, -1);
+        }
       }
 
       else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
       {
-        array_push($bancal_pm10_aqi_values, -1);
-        array_push($bancal_pm10_actual_values, -1);
+        array_push($aqi_values, -1);
+        array_push($actual_values, -1);
       }
     }
 
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($bancal_pm10_aqi_values, -1);
-      array_push($bancal_pm10_actual_values, -1);
-    }
+    array_push($container, $aqi_values);
+    array_push($container, $actual_values);
+    array_push($container, $date_gathered);
+
+    return $container;
   }
 
-  // --------- EXCRETE VALUES FROM TSP --------- //
+  //// --------------------------------------------- BANCAL --------------------------------------------- ////
 
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
+  // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
+  $data_container = EightHrAveraging($bancal_co_values, $hour_value, $co_guideline_values, $aqi_values, 1);
 
-    $check = false;
-    $index = 0;
+  $bancal_co_aqi_values = $data_container[0];
+  $bancal_co_actual_values = $data_container[1];
 
-    for($k = 0; $k < count($bancal_tsp_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($bancal_tsp_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_tsp_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_tsp_values[$index_24]->timestamp, 11, -6);
-
-      $tsp_ave += $bancal_tsp_values[$index_24]->concentration_value;
-      $tsp_ctr++;
-
-      $ave = $tsp_ave / $tsp_ctr;
-      $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
-
-//      if($aqi_value > 400)
-//      {
-//        $aqi_value = -1;
-//      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($bancal_aqi_values,$aqi_value);
-        $bancal_date_gathered = $bancal_tsp_values[$index_24]->timestamp;
-      }
-
-      array_push($bancal_tsp_aqi_values, $aqi_value);
-      array_push($bancal_tsp_actual_values, $ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($bancal_tsp_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($bancal_tsp_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $tsp_ave += $bancal_tsp_values[$index]->concentration_value;
-        $tsp_ctr++;
-
-        $ave = $tsp_ave / $tsp_ctr;
-        $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
-
-//        if($aqi_value > 400)
-//        {
-//          $aqi_value = -1;
-//        }
-
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO BANCAL AQI VALUES --------- >
-        {
-          $bancal_date_gathered = $bancal_tsp_values[$index]->timestamp;
-        }
-
-        array_push($bancal_tsp_aqi_values, $aqi_value);
-        array_push($bancal_tsp_actual_values, $ave);
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($bancal_tsp_aqi_values, -1);
-        array_push($bancal_tsp_actual_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($bancal_tsp_aqi_values, -1);
-      array_push($bancal_tsp_actual_values, -1);
-    }
+  if($data_container[2] != "") {
+    $bancal_date_gathered = $data_container[2];
   }
 
-  //echo count($bancal_pm10_aqi_values);
+  // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
+  $data_container = TwentyFourHrAveraging($bancal_so2_values, $hour_value, $sufur_guideline_values, $aqi_values, 3);
+
+  $bancal_so2_aqi_values = $data_container[0];
+  $bancal_so2_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $bancal_date_gathered = $data_container[2];
+  }
+
+  // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
+
+  $data_container = OneHrAveraging($bancal_no2_values, $hour_value, $no2_guideline_values, $aqi_values, 2);
+
+  $bancal_no2_aqi_values = $data_container[0];
+  $bancal_no2_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $bancal_date_gathered = $data_container[2];
+  }
+
+  // --------- EXCRETE VALUES FROM O3 --------- //
+
+  $data_container = EightHrAveraging($bancal_o3_values, $hour_value, $ozone_guideline_values_8, $aqi_values, 3);
+
+  $bancal_o3_aqi_values = $data_container[0];
+  $bancal_o3_actual_values = $data_container[1];
+
+  if($data_container[2] != "") {
+    $bancal_date_gathered = $data_container[2];
+  }
+
+  // --------- EXCRETE VALUES FROM PM 10 --------- //
+
+  $data_container = TwentyFourHrAveraging($bancal_pm10_values, $hour_value, $pm_10_guideline_values, $aqi_values, 0);
+
+  $bancal_pm10_aqi_values = $data_container[0];
+  $bancal_pm10_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $bancal_date_gathered = $data_container[2];
+  }
+
+  // --------- EXCRETE VALUES FROM TSP --------- // REMEMBER TO COMMENT AQI > 400 IN TSP!!
+
+  $data_container = TwentyFourHrAveraging($bancal_tsp_values, $hour_value, $tsp_guideline_values, $aqi_values, 0);
+
+  $bancal_tsp_aqi_values = $data_container[0];
+  $bancal_tsp_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $bancal_date_gathered = $data_container[2];
+  }
 
   // --------- TO SUPPORT VALIDATIONS IN CAQMS-API.JS --------- //
 
@@ -839,291 +614,90 @@
 
   $bancal_min_max_values = array();
 
-  if(count($bancal_co_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
+  function MinMax($aqi_values)
   {
-    $checker = false;
+    $data_container = array();
 
-    for($x = 0 ; $x < count($bancal_co_aqi_values); $x++)
+    if(count($aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
     {
-      if($bancal_co_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
+      $checker = false;
+
+      for($x = 0 ; $x < count($aqi_values); $x++)
       {
-        $checker = true;
-        break;
+        if($aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
+        {
+          $checker = true;
+          break;
+        }
+      }
+
+      if($checker)
+      {
+        $data_container = [min(array_filter($aqi_values, function($v) { return $v >= 0; })),max($aqi_values)];
+        //array_push($data_container, [min(array_filter($aqi_values, function($v) { return $v >= 0; })),max($aqi_values)]);
+      }
+
+      else
+      {
+        $data_container = [min($aqi_values),max($aqi_values)];
+        //array_push($data_container, [min($aqi_values),max($aqi_values)]);
       }
     }
 
-    if($checker)
+    else  // < --------- FILL IN VALUES WITH 0 --------- >
     {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_co_aqi_values, function($v) { return $v >= 0; })),max($bancal_co_aqi_values)]);
+      $data_container = [0,0];
+      //array_push($data_container, [0,0]);
     }
 
-    else
-    {
-      array_push($bancal_min_max_values, [min($bancal_co_aqi_values),max($bancal_co_aqi_values)]);
-    }
+    return $data_container;
   }
 
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($bancal_min_max_values, [0,0]);
-  }
-
-  if(count($bancal_so2_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($bancal_so2_aqi_values); $x++)
-    {
-      if($bancal_so2_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_so2_aqi_values, function($v) { return $v >= 0; })),max($bancal_so2_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($bancal_min_max_values, [min($bancal_so2_aqi_values),max($bancal_so2_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($bancal_min_max_values, [0,0]);
-  }
-
-  if(count($bancal_no2_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($bancal_no2_aqi_values); $x++)
-    {
-      if($bancal_no2_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_no2_aqi_values, function($v) { return $v >= 0; })),max($bancal_no2_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($bancal_min_max_values, [min($bancal_no2_aqi_values),max($bancal_no2_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($bancal_min_max_values, [0,0]);
-  }
-
-  if(count($bancal_o3_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($bancal_o3_aqi_values); $x++)
-    {
-      if($bancal_o3_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_o3_aqi_values, function($v) { return $v >= 0; })),max($bancal_o3_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($bancal_min_max_values, [min($bancal_o3_aqi_values),max($bancal_o3_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($bancal_min_max_values, [0,0]);
-  }
-
-  if(count($bancal_pm10_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($bancal_pm10_aqi_values); $x++)
-    {
-      if($bancal_pm10_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_pm10_aqi_values, function($v) { return $v >= 0; })),max($bancal_pm10_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($bancal_min_max_values, [min($bancal_pm10_aqi_values),max($bancal_pm10_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($bancal_min_max_values, [0,0]);
-  }
-
-  if(count($bancal_tsp_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($bancal_tsp_aqi_values); $x++)
-    {
-      if($bancal_tsp_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($bancal_min_max_values, [min(array_filter($bancal_tsp_aqi_values, function($v) { return $v >= 0; })),max($bancal_tsp_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($bancal_min_max_values, [min($bancal_tsp_aqi_values),max($bancal_tsp_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($bancal_min_max_values, [0,0]);
-  }
+  array_push($bancal_min_max_values, MinMax($bancal_co_aqi_values));
+  array_push($bancal_min_max_values, MinMax($bancal_so2_aqi_values));
+  array_push($bancal_min_max_values, MinMax($bancal_no2_aqi_values));
+  array_push($bancal_min_max_values, MinMax($bancal_o3_aqi_values));
+  array_push($bancal_min_max_values, MinMax($bancal_pm10_aqi_values));
+  array_push($bancal_min_max_values, MinMax($bancal_tsp_aqi_values));
 
   // --------- SET DEFAULT VALUE IF NO DATA IN DB --------- //
 
-  //echo $hour_value;
+  $bancal_aqi_values = array();
 
-  if($bancal_co_max >= 0)
+  function AQIValues($max_value, $hour_value, $pollutant_aqi_values)
   {
-    if($hour_value == 0)
+    $data_container = 0;
+
+    if($max_value >= 0)
     {
-      array_push($bancal_aqi_values, $bancal_co_aqi_values[23]);
+      if($hour_value == 0)
+      {
+        $data_container = $pollutant_aqi_values[23];
+        //array_push($area_aqi_values, $pollutant_aqi_values[23]);
+      }
+
+      else
+      {
+        $data_container = $pollutant_aqi_values[$hour_value-1];
+        //array_push($area_aqi_values, $pollutant_aqi_values[$hour_value-1]);
+      }
     }
 
     else
     {
-      array_push($bancal_aqi_values, $bancal_co_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($bancal_aqi_values, -1);
-  }
-
-  if($bancal_so2_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_so2_aqi_values[23]);
+      $data_container = -1;
+      //array_push($area_aqi_values, -1);
     }
 
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_so2_aqi_values[$hour_value-1]);
-    }
+    return $data_container;
   }
 
-  else
-  {
-    array_push($bancal_aqi_values, -1);
-  }
-
-  if($bancal_no2_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_no2_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_no2_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($bancal_aqi_values, -1);
-  }
-
-  if($bancal_o3_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_o3_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_o3_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($bancal_aqi_values, -1);
-  }
-
-  if($bancal_pm10_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_pm10_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_pm10_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($bancal_aqi_values, -1);
-  }
-
-  if($bancal_tsp_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($bancal_aqi_values, $bancal_tsp_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($bancal_aqi_values, $bancal_tsp_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($bancal_aqi_values, -1);
-  }
+  array_push($bancal_aqi_values, AQIValues($bancal_co_max, $hour_value, $bancal_co_aqi_values));
+  array_push($bancal_aqi_values, AQIValues($bancal_so2_max, $hour_value, $bancal_so2_aqi_values));
+  array_push($bancal_aqi_values, AQIValues($bancal_no2_max, $hour_value, $bancal_no2_aqi_values));
+  array_push($bancal_aqi_values, AQIValues($bancal_o3_max, $hour_value, $bancal_o3_aqi_values));
+  array_push($bancal_aqi_values, AQIValues($bancal_pm10_max, $hour_value, $bancal_pm10_aqi_values));
+  array_push($bancal_aqi_values, AQIValues($bancal_tsp_max, $hour_value, $bancal_tsp_aqi_values));
 
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
 
@@ -1136,649 +710,67 @@
     $bancal_prevalentIndex = "0";
   }
 
-  // --------- SLEX --------- //
+  //// --------------------------------------------- SLEX --------------------------------------------- ////
 
-  // --------- DECLARE AVERAGE VARIABLES, CTR, AND GUIDELINES --------- //
+  // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
+  $data_container = EightHrAveraging($slex_co_values, $hour_value, $co_guideline_values, $aqi_values, 1);
 
-  $carbon_monoxide_ave = 0;
-  $carbon_monoxide_ctr = 0;
+  $slex_co_aqi_values = $data_container[0];
+  $slex_co_actual_values = $data_container[1];
 
-  $sulfur_dioxide_ave = 0;
-  $sulfur_dioxide_ctr = 0;
-
-  $nitrogen_dioxide_ave = 0;
-  $nitrogen_dioxide_ctr = 0;
-
-  $ozone_8_ave = 0;
-  $ozone_8_ctr = 0;
-
-  $ozone_1_ctr = 0;
-  $ozone_1_ave = 0;
-
-  $ozone_8_ctr = 0;
-  $ozone_8_ave = 0;
-
-  $lead_ave = 0; // None
-  $lead_ctr = 0;
-
-  $pm_10_ave = 0;
-  $pm_10_ctr = 0;
-
-  $tsp_ave = 0;
-  $tsp_ctr = 0;
-
-  $slex_co_actual_values = array();
-  $slex_so2_actual_values = array();
-  $slex_no2_actual_values = array();
-  $slex_o3_actual_values = array();
-  $slex_o3_1_actual_values = array();
-  $slex_pm10_actual_values = array();
-  $slex_tsp_actual_values = array();
-
-  $slex_co_aqi_values = array();
-  $slex_so2_aqi_values = array();
-  $slex_no2_aqi_values = array();
-  $slex_o3_aqi_values = array();
-  $slex_o3_1_aqi_values = array();
-  $slex_pm10_aqi_values = array();
-  $slex_tsp_aqi_values = array();
-
-  $slex_aqi_values = array();
-
-for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
-
-    $check = false;
-    $index = 0;
-
-    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-    {
-      $carbon_monoxide_ctr = 0;
-      $carbon_monoxide_ave = 0;
-    }
-
-    //$prev_hour_value = 0;
-
-    for($k = 0; $k < count($slex_co_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($slex_co_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-      if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $data_date_tomorrow = substr($slex_co_values[$index_24]->timestamp, 0, -9);
-        $data_hour_value = substr($slex_co_values[$index_24]->timestamp, 11, -6);
-
-        $carbon_monoxide_ave += $slex_co_values[$index_24]->concentration_value;
-        $carbon_monoxide_ctr++;
-
-        $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
-        $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
-
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
-
-        if($data_hour_value == $hour_value)
-        {
-          //array_push($slex_aqi_values,$aqi_value);
-          $slex_date_gathered = $slex_co_values[$index_24]->timestamp;
-        }
-
-        array_push($slex_co_aqi_values, $aqi_value);
-        array_push($slex_co_actual_values, $ave);
-      }
-
-      else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-      {
-        $data_date_tomorrow = substr($slex_co_values[$index]->timestamp, 0, -9);
-        $data_hour_value = substr($slex_co_values[$index]->timestamp, 11, -6);
-
-        if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-        {
-          $carbon_monoxide_ave += $slex_co_values[$index]->concentration_value;
-          $carbon_monoxide_ctr++;
-
-          if($carbon_monoxide_ctr > 0) // < --------- TO AVOID DIVISION BY 0 --------- >
-          {
-            $ave = $carbon_monoxide_ave / $carbon_monoxide_ctr;
-          }else {
-            $ave = $carbon_monoxide_ave;
-          }
-
-          $aqi_value = round(calculateAQI($co_guideline_values, $ave, 1, $aqi_values));
-
-          if($aqi_value > 400)
-          {
-            $aqi_value = -1;
-          }
-
-          if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
-          {
-            //array_push($slex_aqi_values,$aqi_value);
-            $slex_date_gathered = $slex_co_values[$index]->timestamp;
-          }
-
-          array_push($slex_co_aqi_values, $aqi_value);
-          array_push($slex_co_actual_values, $ave);
-        }
-
-        else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-        {
-          array_push($slex_co_aqi_values, -1);
-          array_push($slex_co_actual_values, -1);
-        }
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($slex_co_aqi_values, -1);
-        array_push($slex_co_actual_values, -1);
-      }
+  if($data_container[2] != "") {
+    $slex_date_gathered = $data_container[2];
   }
 
   // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
+  $data_container = TwentyFourHrAveraging($slex_so2_values, $hour_value, $sufur_guideline_values, $aqi_values, 3);
 
-    $check = false;
-    $index = 0;
-
-    for($k = 0; $k < count($slex_so2_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($slex_so2_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_so2_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_so2_values[$index_24]->timestamp, 11, -6);
-
-      $sulfur_dioxide_ave += $slex_so2_values[$index_24]->concentration_value;
-      $sulfur_dioxide_ctr++;
-
-      $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
-      $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
-
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($slex_aqi_values,$aqi_value);
-        $slex_date_gathered = $slex_so2_values[$index_24]->timestamp;
-      }
-
-      array_push($slex_so2_aqi_values, $aqi_value);
-      array_push($slex_so2_actual_values, $ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_so2_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_so2_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $sulfur_dioxide_ave += $slex_so2_values[$index]->concentration_value;
-        $sulfur_dioxide_ctr++;
-
-        $ave = $sulfur_dioxide_ave / $sulfur_dioxide_ctr;
-        $aqi_value = round(calculateAQI($sufur_guideline_values, $ave, 3, $aqi_values));
-
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
-
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
-        {
-          $slex_date_gathered = $slex_so2_values[$index]->timestamp;
-        }
-
-        array_push($slex_so2_aqi_values, $aqi_value);
-        array_push($slex_so2_actual_values, $ave);
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($slex_so2_aqi_values, -1);
-        array_push($slex_so2_actual_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($slex_so2_aqi_values, -1);
-      array_push($slex_so2_actual_values, -1);
-    }
+  $slex_so2_aqi_values = $data_container[0];
+  $slex_so2_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $slex_date_gathered = $data_container[2];
   }
 
   // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
 
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
+  $data_container = OneHrAveraging($slex_no2_values, $hour_value, $no2_guideline_values, $aqi_values, 2);
 
-    $check = false;
-    $index = 0;
-
-    for($k = 0; $k < count($slex_no2_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($slex_no2_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_no2_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_no2_values[$index_24]->timestamp, 11, -6);
-
-      $nitrogen_dioxide_ave = $slex_no2_values[$index_24]->concentration_value;
-      $aqi_value = round(calculateAQI($no2_guideline_values, $nitrogen_dioxide_ave, 2, $aqi_values));
-
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($slex_aqi_values,$aqi_value);
-        $slex_date_gathered = $slex_no2_values[$index_24]->timestamp;
-      }
-
-      array_push($slex_no2_aqi_values, $aqi_value);
-      array_push($slex_no2_actual_values, $nitrogen_dioxide_ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_no2_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_no2_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $nitrogen_dioxide_ave = $slex_no2_values[$index]->concentration_value;
-        $aqi_value = round(calculateAQI($no2_guideline_values, $nitrogen_dioxide_ave, 2, $aqi_values));
-
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
-
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
-        {
-          $slex_date_gathered = $slex_no2_values[$index]->timestamp;
-        }
-
-        array_push($slex_no2_aqi_values, $aqi_value);
-        array_push($slex_no2_actual_values, $nitrogen_dioxide_ave);
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($slex_no2_aqi_values, -1);
-        array_push($slex_no2_actual_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($slex_no2_aqi_values, -1);
-      array_push($slex_no2_actual_values, -1);
-    }
+  $slex_no2_aqi_values = $data_container[0];
+  $slex_no2_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $slex_date_gathered = $data_container[2];
   }
 
   // --------- EXCRETE VALUES FROM O3 --------- //
 
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
+  $data_container = EightHrAveraging($slex_o3_values, $hour_value, $ozone_guideline_values_8, $aqi_values, 3);
 
-    $check = false;
-    $index = 0;
+  $slex_o3_aqi_values = $data_container[0];
+  $slex_o3_actual_values = $data_container[1];
 
-    if((($i + 1) % 8) == 1) // < --------- 8HR AVERAGING WILL ENTAIL RESETTING OF AVERAGE VALUES TO 0 --------- >
-    {
-      $ozone_8_ave = 0;
-      $ozone_8_ctr = 0;
-    }
-
-    //$prev_hour_value = 0;
-
-    for($k = 0; $k < count($slex_o3_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($slex_o3_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-      if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $data_date_tomorrow = substr($slex_o3_values[$index_24]->timestamp, 0, -9);
-        $data_hour_value = substr($slex_o3_values[$index_24]->timestamp, 11, -6);
-
-        $ozone_8_ave += $slex_o3_values[$index_24]->concentration_value;
-        $ozone_8_ctr++;
-
-        $ave = $ozone_8_ave / $ozone_8_ctr;
-        $aqi_value = round(calculateAQI($ozone_guideline_values_8, $ave, 3, $aqi_values));
-
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
-
-        if($data_hour_value == $hour_value)
-        {
-          //array_push($slex_aqi_values,$aqi_value);
-          $slex_date_gathered = $slex_o3_values[$index_24]->timestamp;
-        }
-
-        array_push($slex_o3_aqi_values, $aqi_value);
-        array_push($slex_o3_actual_values, $ave);
-      }
-
-      else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-      {
-        $data_date_tomorrow = substr($slex_o3_values[$index]->timestamp, 0, -9);
-        $data_hour_value = substr($slex_o3_values[$index]->timestamp, 11, -6);
-
-        if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-        {
-          $ozone_8_ave += $slex_o3_values[$index]->concentration_value;
-          $ozone_8_ctr++;
-
-          if($ozone_8_ctr > 0) // < --------- TO AVOID DIVISION BY 0 --------- >
-          {
-            $ave = $ozone_8_ave / $ozone_8_ctr;
-          }else {
-            $ave = $ozone_8_ave;
-          }
-
-          $aqi_value = round(calculateAQI($ozone_guideline_values_8, $ave, 3, $aqi_values));
-
-          if($aqi_value > 400)
-          {
-            $aqi_value = -1;
-          }
-
-          if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
-          {
-            //array_push($slex_aqi_values,$aqi_value);
-            $slex_date_gathered = $slex_o3_values[$index]->timestamp;
-          }
-
-          array_push($slex_o3_aqi_values, $aqi_value);
-          array_push($slex_o3_actual_values, $ave);
-        }
-
-        else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-        {
-          array_push($slex_o3_aqi_values, -1);
-          array_push($slex_o3_actual_values, -1);
-        }
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($slex_o3_aqi_values, -1);
-        array_push($slex_o3_actual_values, -1);
-      }
+  if($data_container[2] != "") {
+    $slex_date_gathered = $data_container[2];
   }
 
   // --------- EXCRETE VALUES FROM PM 10 --------- //
 
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
+  $data_container = TwentyFourHrAveraging($slex_pm10_values, $hour_value, $pm_10_guideline_values, $aqi_values, 0);
 
-    $check = false;
-    $index = 0;
-
-    for($k = 0; $k < count($slex_pm10_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($slex_pm10_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_pm10_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_pm10_values[$index_24]->timestamp, 11, -6);
-
-      $pm_10_ave += $slex_pm10_values[$index_24]->concentration_value;
-      $pm_10_ctr++;
-
-      $ave = $pm_10_ave / $pm_10_ctr;
-      $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 0, $aqi_values));
-
-      if($aqi_value > 400)
-      {
-        $aqi_value = -1;
-      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($slex_aqi_values,$aqi_value);
-        $slex_date_gathered = $slex_pm10_values[$index_24]->timestamp;
-      }
-
-      array_push($slex_pm10_aqi_values, $aqi_value);
-      array_push($slex_pm10_actual_values, $ave);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_pm10_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_pm10_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $pm_10_ave += $slex_pm10_values[$index]->concentration_value;
-        $pm_10_ctr++;
-
-        $ave = $pm_10_ave / $pm_10_ctr;
-        $aqi_value = round(calculateAQI($pm_10_guideline_values, $ave, 0, $aqi_values));
-
-        if($aqi_value > 400)
-        {
-          $aqi_value = -1;
-        }
-
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
-        {
-          $slex_date_gathered = $slex_pm10_values[$index]->timestamp;
-        }
-
-        array_push($slex_pm10_aqi_values, $aqi_value);
-        array_push($slex_pm10_actual_values, $ave);
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($slex_pm10_aqi_values, -1);
-        array_push($slex_pm10_actual_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($slex_pm10_aqi_values, -1);
-      array_push($slex_pm10_actual_values, -1);
-    }
+  $slex_pm10_aqi_values = $data_container[0];
+  $slex_pm10_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $slex_date_gathered = $data_container[2];
   }
 
-  // --------- EXCRETE VALUES FROM TSP --------- //
+  // --------- EXCRETE VALUES FROM TSP --------- // REMEMBER TO COMMENT AQI > 400 IN TSP!!
 
-  for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
-  {
-    $index_24 = -1;
-    $check_24 = false;
+  $data_container = TwentyFourHrAveraging($slex_tsp_values, $hour_value, $tsp_guideline_values, $aqi_values, 0);
 
-    $check = false;
-    $index = 0;
-
-    for($k = 0; $k < count($slex_tsp_values); $k++) // < --------- CHECK CARBON MONOXIDE VALUES IF IT HAS A VALUE FOR SPECIFIC HOUR ($i + 1) --------- >
-    {
-      $data_hour_value = substr($slex_tsp_values[$k]->timestamp, 11, -6);
-
-      if($i == 23 && $data_hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-      {
-        $check_24 = true;
-        $index_24 = $k;
-        break;
-      }
-
-      else if(($i + 1) == $data_hour_value) // < --------- IF ITS A NORMAL HOUR --------- >
-      {
-        $check = true;
-        $index = $k;
-        break;
-      }
-    }
-
-    if($check_24 && $hour_value == 0) // < --------- IF THE HOUR IS 24TH HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_tsp_values[$index_24]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_tsp_values[$index_24]->timestamp, 11, -6);
-
-      $tsp_ave += $slex_tsp_values[$index_24]->concentration_value;
-      $tsp_ctr++;
-
-      $ave = $tsp_ave / $tsp_ctr;
-      $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
-
-//      if($aqi_value > 400)
-//      {
-//        $aqi_value = -1;
-//      }
-
-      if($data_hour_value == $hour_value)
-      {
-        //array_push($slex_aqi_values,$aqi_value);
-        $slex_date_gathered = $slex_tsp_values[$index_24]->timestamp;
-      }
-
-      array_push($slex_tsp_aqi_values, $aqi_value);
-    }
-
-    else if($check) // < --------- IF THE HOUR IS A NORMAL HOUR --------- >
-    {
-      $data_date_tomorrow = substr($slex_tsp_values[$index]->timestamp, 0, -9);
-      $data_hour_value = substr($slex_tsp_values[$index]->timestamp, 11, -6);
-
-      if($data_hour_value <= $hour_value || $hour_value == 0) // < --------- TO AVOID VALUES FROM DB WHICH ARE NOT IN RANGE OF THE CURRENT HOUR --------- >
-      {
-        $tsp_ave += $slex_tsp_values[$index]->concentration_value;
-        $tsp_ctr++;
-
-        $ave = $tsp_ave / $tsp_ctr;
-        $aqi_value = round(calculateAQI($tsp_guideline_values, $ave, 0, $aqi_values));
-
-//        if($aqi_value > 400)
-//        {
-//          $aqi_value = -1;
-//        }
-
-        if($data_hour_value == $hour_value) // < --------- IF THE HOUR ($i + 1) IS THE CURRENT VALUE, THEN ADD TO slex AQI VALUES --------- >
-        {
-          $slex_date_gathered = $slex_tsp_values[$index]->timestamp;
-        }
-
-        array_push($slex_tsp_aqi_values, $aqi_value);
-      }
-
-      else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-      {
-        array_push($slex_tsp_aqi_values, -1);
-      }
-    }
-
-    else // < --------- FILL THE ARRAY WITH 0 VALUES --------- >
-    {
-      array_push($slex_tsp_aqi_values, -1);
-    }
+  $slex_tsp_aqi_values = $data_container[0];
+  $slex_tsp_actual_values = $data_container[1];
+  if($data_container[2] != "") {
+    $slex_date_gathered = $data_container[2];
   }
-
-  //echo count($slex_pm10_aqi_values);
 
   // --------- TO SUPPORT VALIDATIONS IN CAQMS-API.JS --------- //
 
@@ -1793,291 +785,23 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 
   $slex_min_max_values = array();
 
-  if(count($slex_co_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($slex_co_aqi_values); $x++)
-    {
-      if($slex_co_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($slex_min_max_values, [min(array_filter($slex_co_aqi_values, function($v) { return $v >= 0; })),max($slex_co_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($slex_min_max_values, [min($slex_co_aqi_values),max($slex_co_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($slex_min_max_values, [0,0]);
-  }
-
-  if(count($slex_so2_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($slex_so2_aqi_values); $x++)
-    {
-      if($slex_so2_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($slex_min_max_values, [min(array_filter($slex_so2_aqi_values, function($v) { return $v >= 0; })),max($slex_so2_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($slex_min_max_values, [min($slex_so2_aqi_values),max($slex_so2_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($slex_min_max_values, [0,0]);
-  }
-
-  if(count($slex_no2_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($slex_no2_aqi_values); $x++)
-    {
-      if($slex_no2_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($slex_min_max_values, [min(array_filter($slex_no2_aqi_values, function($v) { return $v >= 0; })),max($slex_no2_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($slex_min_max_values, [min($slex_no2_aqi_values),max($slex_no2_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($slex_min_max_values, [0,0]);
-  }
-
-  if(count($slex_o3_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($slex_o3_aqi_values); $x++)
-    {
-      if($slex_o3_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($slex_min_max_values, [min(array_filter($slex_o3_aqi_values, function($v) { return $v >= 0; })),max($slex_o3_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($slex_min_max_values, [min($slex_o3_aqi_values),max($slex_o3_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($slex_min_max_values, [0,0]);
-  }
-
-  if(count($slex_pm10_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($slex_pm10_aqi_values); $x++)
-    {
-      if($slex_pm10_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($slex_min_max_values, [min(array_filter($slex_pm10_aqi_values, function($v) { return $v >= 0; })),max($slex_pm10_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($slex_min_max_values, [min($slex_pm10_aqi_values),max($slex_pm10_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($slex_min_max_values, [0,0]);
-  }
-
-  if(count($slex_tsp_aqi_values) > 0) // < --------- AVOIDS NO DATA --------- >
-  {
-    $checker = false;
-
-    for($x = 0 ; $x < count($slex_tsp_aqi_values); $x++)
-    {
-      if($slex_tsp_aqi_values[$x] > 0) // < --------- CHECK IF THE VALUE IS GREATER THAN 0, TO AVOID ERROR IN USING MIN METHOD --------- >
-      {
-        $checker = true;
-        break;
-      }
-    }
-
-    if($checker)
-    {
-      array_push($slex_min_max_values, [min(array_filter($slex_tsp_aqi_values, function($v) { return $v >= 0; })),max($slex_tsp_aqi_values)]);
-    }
-
-    else
-    {
-      array_push($slex_min_max_values, [min($slex_tsp_aqi_values),max($slex_tsp_aqi_values)]);
-    }
-  }
-
-  else  // < --------- FILL IN VALUES WITH 0 --------- >
-  {
-    array_push($slex_min_max_values, [0,0]);
-  }
+  array_push($slex_min_max_values, MinMax($slex_co_aqi_values));
+  array_push($slex_min_max_values, MinMax($slex_so2_aqi_values));
+  array_push($slex_min_max_values, MinMax($slex_no2_aqi_values));
+  array_push($slex_min_max_values, MinMax($slex_o3_aqi_values));
+  array_push($slex_min_max_values, MinMax($slex_pm10_aqi_values));
+  array_push($slex_min_max_values, MinMax($slex_tsp_aqi_values));
 
   // --------- SET DEFAULT VALUE IF NO DATA IN DB --------- //
 
-  //echo $hour_value;
+  $slex_aqi_values = array();
 
-  if($slex_co_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($slex_aqi_values, $slex_co_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($slex_aqi_values, $slex_co_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($slex_aqi_values, -1);
-  }
-
-  if($slex_so2_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($slex_aqi_values, $slex_so2_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($slex_aqi_values, $slex_so2_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($slex_aqi_values, -1);
-  }
-
-  if($slex_no2_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($slex_aqi_values, $slex_no2_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($slex_aqi_values, $slex_no2_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($slex_aqi_values, -1);
-  }
-
-  if($slex_o3_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($slex_aqi_values, $slex_o3_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($slex_aqi_values, $slex_o3_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($slex_aqi_values, -1);
-  }
-
-  if($slex_pm10_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($slex_aqi_values, $slex_pm10_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($slex_aqi_values, $slex_pm10_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($slex_aqi_values, -1);
-  }
-
-  if($slex_tsp_max >= 0)
-  {
-    if($hour_value == 0)
-    {
-      array_push($slex_aqi_values, $slex_tsp_aqi_values[23]);
-    }
-
-    else
-    {
-      array_push($slex_aqi_values, $slex_tsp_aqi_values[$hour_value-1]);
-    }
-  }
-
-  else
-  {
-    array_push($slex_aqi_values, -1);
-  }
+  array_push($slex_aqi_values, AQIValues($slex_co_max, $hour_value, $slex_co_aqi_values));
+  array_push($slex_aqi_values, AQIValues($slex_so2_max, $hour_value, $slex_so2_aqi_values));
+  array_push($slex_aqi_values, AQIValues($slex_no2_max, $hour_value, $slex_no2_aqi_values));
+  array_push($slex_aqi_values, AQIValues($slex_o3_max, $hour_value, $slex_o3_aqi_values));
+  array_push($slex_aqi_values, AQIValues($slex_pm10_max, $hour_value, $slex_pm10_aqi_values));
+  array_push($slex_aqi_values, AQIValues($slex_tsp_max, $hour_value, $slex_tsp_aqi_values));
 
   // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
 
@@ -2090,7 +814,7 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
     $slex_prevalentIndex = "0";
   }
 
-  // --------- GET USER CHOSEN AREA --------- //
+// --------- GET USER CHOSEN AREA --------- //
 
   $area_chosen_name = "Bancal";
 
@@ -2187,7 +911,6 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 
     return $aqi;
   }
-
   function calculateConcentrationValue($gv, $aqi_value, $prec, $aqi_val)
   {
     $concentration_value = 0;
@@ -2217,7 +940,6 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
       return floorDec($concentration_value, $precision = $prec);
     }
   }
-
   function floorDec($val, $precision = 2) {
     if ($precision < 0) { $precision = 0; }
     $numPointPosition = intval(strpos($val, '.'));
@@ -2229,7 +951,6 @@ for($i = 0; $i < 24; $i++) // < --------- 24 HOURS OF VALUES --------- >
 ?>
 
 <script type="text/javascript">
-
   var pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone", "Particulate Matter 10", "Totally Suspended Particles"];
   var pollutant_symbols = ["CO", "SO2", "NO2", "O3","PM 10", "TSP"];
 
