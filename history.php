@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Skullpluggery
- * Date: 8/13/2016
- * Time: 7:00 PM
- */
-
 require_once 'class/dbFunctions.php';
 
 $error = false;
