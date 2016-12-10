@@ -820,6 +820,8 @@ function Generate($name)
   return $area_generate;
 }
 
+// --------- MAIN METHOD --------- //
+
 $bancal = Generate("bancal");
 $slex = Generate("slex");
 
@@ -844,69 +846,54 @@ if(isset($_GET["area"]))
   var emergencyAir = "#b71c1c";
   var otherAir = "#212121";
 
-  var bancalAllDayValues_array = <?= json_encode($bancal->AllDayValues_array) ?>;
-  var bancal_aqi_values = <?= json_encode($bancal->aqi_values) ?>;
+  function Area(name, displayName, data){
+    return {
+      name: name,
+      date_gathered: data.date_gathered,
+      AllDayValues_array: data.AllDayValues_array,
+      co_values: data.co_values,
+      so2_values: data.so2_values,
+      no2_values: data.no2_values,
+      o3_values: data.o3_values,
+      pb_values: data.pb_values,
+      pm10_values: data.pm10_values,
+      tsp_values: data.tsp_values,
+      co_actual_values: data.co_actual_values,
+      so2_actual_values: data.so2_actual_values,
+      no2_actual_values: data.no2_actual_values,
+      o3_actual_values: data.o3_actual_values,
+      o3_1_actual_values: data.o3_1_actual_values,
+      pm10_actual_values: data.pm10_actual_values,
+      tsp_actual_values: data.tsp_actual_values,
+      co_aqi_values: data.co_aqi_values,
+      so2_aqi_values: data.so2_aqi_values,
+      no2_aqi_values: data.no2_aqi_values,
+      o3_aqi_values: data.o3_aqi_values,
+      o3_1_aqi_values: data.o3_1_aqi_values,
+      pm10_aqi_values: data.pm10_aqi_values,
+      tsp_aqi_values: data.tsp_aqi_values,
+      aqi_values: data.aqi_values,
+      min_max_values: data.min_max_values,
+      prevalentIndex: data.prevalentIndex[0],
+      co_max: data.co_max,
+      so2_max: data.so2_max,
+      no2_max: data.no2_max,
+      o3_max: data.o3_max,
+      pm10_max: data.pm10_max,
+      tsp_max: data.tsp_max,
 
-  var bancal_prevalentIndex = <?= $bancal->prevalentIndex[0] ?>;
-  var bancal_prevalent_value = JSON.stringify(bancal_aqi_values[bancal_prevalentIndex]).replace(/"/g, '');
-  var bancal_min_max_values = <?= json_encode($bancal->min_max_values) ?>;
+      AQIStatus: "",
+      AirQuality: "",
+      AQI: "",
+      prevalentPollutant: "",
+      d_date_gathered: "",
+      prevalent_value: data.aqi_values[data.prevalentIndex[0]],
+      displayName: displayName
+    };
+  }
 
-  var bancal_date_gathered = <?= json_encode($bancal->date_gathered) ?>;
-
-  var bancal_co_aqi_values = <?= json_encode($bancal->co_aqi_values) ?>;
-  var bancal_so2_aqi_values = <?= json_encode($bancal->so2_aqi_values) ?>;
-  var bancal_no2_aqi_values = <?= json_encode($bancal->no2_aqi_values) ?>;
-  var bancal_o3_aqi_values = <?= json_encode($bancal->o3_aqi_values) ?>;
-  var bancal_o3_1_aqi_values = <?= json_encode($bancal->o3_1_aqi_values) ?>;
-  var bancal_pm10_aqi_values = <?= json_encode($bancal->pm10_aqi_values) ?>;
-  var bancal_tsp_aqi_values = <?= json_encode($bancal->tsp_aqi_values) ?>;
-
-  var bancal_co_actual_values = <?= json_encode($bancal->co_actual_values) ?>;
-  var bancal_so2_actual_values = <?= json_encode($bancal->so2_actual_values) ?>;
-  var bancal_no2_actual_values = <?= json_encode($bancal->no2_actual_values) ?>;
-  var bancal_o3_actual_values = <?= json_encode($bancal->o3_actual_values) ?>;
-  var bancal_o3_1_actual_values = <?= json_encode($bancal->o3_1_actual_values) ?>;
-  var bancal_pm10_actual_values = <?= json_encode($bancal->pm10_actual_values) ?>;
-  var bancal_tsp_actual_values = <?= json_encode($bancal->tsp_actual_values) ?>;
-
-  var bancal_co_max = <?= json_encode($bancal->co_max) ?>;
-  var bancal_so2_max = <?= json_encode($bancal->so2_max) ?>;
-  var bancal_no2_max = <?= json_encode($bancal->no2_max) ?>;
-  var bancal_o3_max = <?= json_encode($bancal->o3_max) ?>;
-  var bancal_pm10_max = <?= json_encode($bancal->pm10_max) ?>;
-  var bancal_tsp_max = <?= json_encode($bancal->tsp_max) ?>;
-
-  var slexAllDayValues_array = <?= json_encode($slex->AllDayValues_array) ?>;
-  var slex_aqi_values = <?= json_encode($slex->aqi_values) ?>;
-
-  var slex_prevalentIndex = <?= $slex->prevalentIndex[0] ?>;
-  var slex_prevalent_value = JSON.stringify(slex_aqi_values[slex_prevalentIndex]).replace(/"/g, '');
-  var slex_min_max_values = <?= json_encode($slex->min_max_values) ?>;
-
-  var slex_date_gathered = <?= json_encode($slex->date_gathered) ?>;
-
-  var slex_co_aqi_values = <?= json_encode($slex->co_aqi_values) ?>;
-  var slex_so2_aqi_values = <?= json_encode($slex->so2_aqi_values) ?>;
-  var slex_no2_aqi_values = <?= json_encode($slex->no2_aqi_values) ?>;
-  var slex_o3_aqi_values = <?= json_encode($slex->o3_aqi_values) ?>;
-  var slex_o3_1_aqi_values = <?= json_encode($slex->o3_1_aqi_values) ?>;
-  var slex_pm10_aqi_values = <?= json_encode($slex->pm10_aqi_values) ?>;
-  var slex_tsp_aqi_values = <?= json_encode($slex->tsp_aqi_values) ?>;
-
-  var slex_co_actual_values = <?= json_encode($slex->co_actual_values) ?>;
-  var slex_so2_actual_values = <?= json_encode($slex->so2_actual_values) ?>;
-  var slex_no2_actual_values = <?= json_encode($slex->no2_actual_values) ?>;
-  var slex_o3_actual_values = <?= json_encode($slex->o3_actual_values) ?>;
-  var slex_o3_1_actual_values = <?= json_encode($slex->o3_1_actual_values) ?>;
-  var slex_pm10_actual_values = <?= json_encode($slex->pm10_actual_values) ?>;
-  var slex_tsp_actual_values = <?= json_encode($slex->tsp_actual_values) ?>;
-
-  var slex_co_max = <?= json_encode($slex->co_max) ?>;
-  var slex_so2_max = <?= json_encode($slex->so2_max) ?>;
-  var slex_no2_max = <?= json_encode($slex->no2_max) ?>;
-  var slex_o3_max = <?= json_encode($slex->o3_max) ?>;
-  var slex_pm10_max = <?= json_encode($slex->pm10_max) ?>;
-  var slex_tsp_max = <?= json_encode($slex->tsp_max) ?>;
+  var bancal_area = Area("bancal", "Bancal Carmona, Cavite", <?= json_encode($bancal)?>);
+  var slex_area = Area("slex", "SLEX Carmona Exit, Cavite", <?= json_encode($slex)?>);
 
   var area_chosen = "<?= $area_chosen_name ?>";
 </script>

@@ -53,110 +53,67 @@ function createGraph(data_pollutant, chartNames)
   chart.draw(data, options);
 }
 
+function drawTheGraph(area_data)
+{
+  var array_draw = [];
+
+  array_draw.push(area_data.co_aqi_values);
+  array_draw.push(area_data.so2_aqi_values);
+  array_draw.push(area_data.no2_aqi_values);
+  array_draw.push(area_data.o3_aqi_values);
+  array_draw.push(area_data.pm10_aqi_values);
+  array_draw.push(area_data.tsp_aqi_values);
+
+  if(area_data.AllDayValues_array.length != 0)
+  {
+    for(var i = 0 ; i < area_data.aqi_values.length; i++)
+    {
+      var maxValue = 0;
+
+      switch(i)
+      {
+        case 0:
+          maxValue = Math.max(parseInt(area_data.co_max));
+          break;
+
+        case 1:
+          maxValue = Math.max(parseInt(area_data.so2_max));
+          break;
+
+        case 2:
+          maxValue = Math.max(parseInt(area_data.no2_max));
+          break;
+
+        case 3:
+          maxValue = Math.max(parseInt(area_data.o3_max));
+          break;
+
+        case 4:
+          maxValue = Math.max(parseInt(area_data.pm10_max));
+          break;
+
+        case 5:
+          maxValue = Math.max(parseInt(area_data.tsp_max));
+          break;
+      }
+
+      if(maxValue > -1)
+      {
+        var chartNames = "chart_div_" + (i+1);
+        createGraph(array_draw[i], chartNames);
+      }
+    }
+  }
+}
+
 function drawBasic() {
+  if(area_chosen == "Bancal")
+  {
+    drawTheGraph(bancal_area);
+  }
 
-    var array_draw = [];
-
-    if(area_chosen == "Bancal")
-    {
-      array_draw.push(bancal_co_aqi_values);
-      array_draw.push(bancal_so2_aqi_values);
-      array_draw.push(bancal_no2_aqi_values);
-      array_draw.push(bancal_o3_aqi_values);
-      array_draw.push(bancal_pm10_aqi_values);
-      array_draw.push(bancal_tsp_aqi_values);
-
-      if(bancalAllDayValues_array.length != 0)
-      {
-        for(var i = 0 ; i < bancal_aqi_values.length; i++)
-        {
-          var maxValue = 0;
-
-          switch(i)
-          {
-            case 0:
-              maxValue = Math.max(parseInt(bancal_co_max));
-            break;
-
-            case 1:
-              maxValue = Math.max(parseInt(bancal_so2_max));
-            break;
-
-            case 2:
-              maxValue = Math.max(parseInt(bancal_no2_max));
-            break;
-
-            case 3:
-              maxValue = Math.max(parseInt(bancal_o3_max));
-            break;
-
-            case 4:
-              maxValue = Math.max(parseInt(bancal_pm10_max));
-            break;
-
-            case 5:
-              maxValue = Math.max(parseInt(bancal_tsp_max));
-            break;
-          }
-
-          if(maxValue > -1)
-          {
-            var chartNames = "chart_div_" + (i+1);
-            createGraph(array_draw[i], chartNames);
-          }
-        }
-      }
-    }
-
-    else
-    {
-      array_draw.push(slex_co_aqi_values);
-      array_draw.push(slex_so2_aqi_values);
-      array_draw.push(slex_no2_aqi_values);
-      array_draw.push(slex_o3_aqi_values);
-      array_draw.push(slex_pm10_aqi_values);
-      array_draw.push(slex_tsp_aqi_values);
-
-      if(slexAllDayValues_array.length != 0)
-      {
-        for(var i = 0 ; i < slex_aqi_values.length; i++)
-        {
-          var maxValue = 0;
-
-          switch(i)
-          {
-            case 0:
-              maxValue = Math.max(parseInt(slex_co_max));
-            break;
-
-            case 1:
-              maxValue = Math.max(parseInt(slex_so2_max));
-            break;
-
-            case 2:
-              maxValue = Math.max(parseInt(slex_no2_max));
-            break;
-
-            case 3:
-              maxValue = Math.max(parseInt(slex_o3_max));
-            break;
-
-            case 4:
-              maxValue = Math.max(parseInt(slex_pm10_max));
-            break;
-
-            case 5:
-              maxValue = Math.max(parseInt(slex_tsp_max));
-            break;
-          }
-
-          if(maxValue > -1)
-          {
-            var chartNames = "chart_div_" + (i+1);
-            createGraph(array_draw[i], chartNames);
-          }
-        }
-      }
-    }
-
+  else
+  {
+    drawTheGraph(slex_area);
+  }
 }
