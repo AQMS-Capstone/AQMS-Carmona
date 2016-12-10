@@ -6,17 +6,18 @@
  * Time: 7:00 PM
  */
 
-require_once 'public/include/db_connect.php';
+require_once 'class/dbFunctions.php';
 
 $error = false;
 $areaName = array('Select an area', 'SLEX', 'Bancal', 'All');
-$a_name = "";
+$row = 0;
+
+
 
 if(isset($_POST["btnGenerate"]))
 {
 
     // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
-
 
     $area = $_POST["drpArea"];
     $pollutant = $_POST["drpPollutant"];
@@ -26,46 +27,18 @@ if(isset($_POST["btnGenerate"]))
 
 if($area == 3) {
     if ($pollutant == 'All') {
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
-                          ORDER BY TIMESTAMP DESC";
-
-        $result = mysqli_query($con, $query);
-        $row = mysqli_num_rows($result);
-        mysqli_close($con);
-
+        $row = CheckPollutants("", "", $dateTimeFrom, $dateTimeTo);
     } else {
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE ELEMENTS.e_symbol = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
-                          ORDER BY TIMESTAMP DESC";
-        $result = mysqli_query($con, $query);
-
-        $result = mysqli_query($con, $query);
-        $row = mysqli_num_rows($result);
-
-        mysqli_close($con);
+        $row = CheckPollutants("", $pollutant, $dateTimeFrom, $dateTimeTo);
     }
 }
 else{
     if ($pollutant == 'All') {
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$areaName[$area]' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
-                          ORDER BY TIMESTAMP DESC";
-
+        $row = CheckPollutants($areaName[$area], "", $dateTimeFrom, $dateTimeTo);
     } else {
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$areaName[$area]' and ELEMENTS.e_symbol = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateTimeFrom') and DATE('$dateTimeTo')
-                          ORDER BY TIMESTAMP DESC";
-        $result = mysqli_query($con, $query);
-    }
-    $result = mysqli_query($con, $query);
-    $row = mysqli_num_rows($result);
 
-    mysqli_close($con);
+        $row = CheckPollutants($areaName[$area], $pollutant, $dateTimeFrom, $dateTimeTo);
+    }
 }
     if($row == 0){
         //$error = true;
@@ -110,34 +83,6 @@ else{
 
 
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-    <script type ="text/javascript">
-
-        /*function getData(area) {
-            $.ajax({
-                type: 'POST',
-                url: 'history.php',
-                data: {
-                    get_option:area
-                },
-                success: function (response) {
-                    document.getElementById("drpPollutant").innerHTML=response;
-                }
-            });
-        }*/
-
-
-//        var errorMessage = "<?//= $errorMessage    ?>//";
-//
-//        if(errorMessage == "No available data!")
-//        {
-//            alert(errorMessage);
-//            $errorMessage = "";
-//        }
-//
-//        errorMessage = "";
-       // alert(errorMessage);
-
-    </script>
 
 </head>
 
