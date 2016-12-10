@@ -61,13 +61,13 @@ function GetPollutants($a_name, $p_name, $dFrom, $dTo, $order){
 
     }
     else if($p_name == ""){
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$a_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY $order DESC";
     }
     else{
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$a_name' and ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY $order DESC";
@@ -75,7 +75,7 @@ function GetPollutants($a_name, $p_name, $dFrom, $dTo, $order){
     $result = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($result)) {
 
-        if($row["AREA_NAME"] == "bancal"){
+        if($row['AREA_NAME'] == "bancal"){
             array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
 
 

@@ -62,6 +62,7 @@ try {
     }
     $loc = strtolower($area[$areaIndex]);
 
+
     $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
     if($areaIndex == 3) {
         if ($pollutant == 'All') {
