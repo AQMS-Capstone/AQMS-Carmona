@@ -7,18 +7,18 @@ $row = 0;
 
 
 
-if(filter_input(INPUT_POST, 'btnGenerate'))
+if(isset($_POST['btnGenerate']))
 {
 
     $gpdf = new GPDF();
 
     // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
 
-    $area = $_POST["drpArea"];
-    $pollutant = $_POST["drpPollutant"];
-    $dateTimeFrom = $_POST["txtDateTimeFrom"];
-    $dateTimeTo = $_POST["txtDateTimeTo"];
-    $order = $_POST["drpOrder"];
+    $area = filter_input(INPUT_POST, 'drpArea');
+    $pollutant = filter_input(INPUT_POST, 'drpPollutant');
+    $dateTimeFrom = filter_input(INPUT_POST, 'txtDateTimeFrom');
+    $dateTimeTo = filter_input(INPUT_POST, 'txtDateTimeTo');
+    $order = filter_input(INPUT_POST, 'drpOrder');
 
 
 if($area == 3) {
