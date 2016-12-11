@@ -231,7 +231,7 @@ table.dataTable.no-footer {
 
 @media only screen and (max-width: 992px) {
     .float-card {
-        width: 105%;
+        width: 106%;
         top: 5%;
         max-height: 100%;
         margin-left: -0.75rem;
