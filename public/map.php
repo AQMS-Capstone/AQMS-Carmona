@@ -12,7 +12,7 @@ if(isset($_GET["area"]))
     $data = $_GET["area"];
 }
 ?>
-<div id="home">
+<div id="home" class="hide-on-med-and-down">
     <div id="googleMap"></div>
     <div id="zoneStatus" class="card float-card" style="max-height: 445px;" hidden>
         <div class="card-content black-text">

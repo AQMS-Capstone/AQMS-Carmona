@@ -84,12 +84,12 @@
             <br>
             <br>
             <div class="row">
-                <div class="col s3">
+                <div class="col s12 m3">
                     <div>
                         <a href="https://www.facebook.com/VCMesina" target="_blank"><img class="img-circle img-small" src="res/images/team/vonn.jpg" alt="Vonn"></a>
                     </div>
                 </div>
-                <div class="col s9 left-align">
+                <div class="col s12 m9 left-align-on-med-and-up">
                     <h4>Vonn Mesina</h4>
                     <p>Vonn is an Information Technology major with a specialization in web and mobile development.
                         He is currently working at Gleent Inc. as an iOS Developer</p>
@@ -97,12 +97,12 @@
             </div>
 
             <div class="row">
-                <div class="col s3">
+                <div class="col s12 m3">
                     <div>
                         <a href="https://www.facebook.com/rairulyle" target="_blank"><img class="img-circle img-small" src="res/images/team/lyle.jpg" alt="Lyle"></a>
                     </div>
                 </div>
-                <div class="col s9 left-align">
+                <div class="col s12 m9 left-align-on-med-and-up">
 
                     <h4>Lyle Dela Cuesta</h4>
                     <p>Lyle is an Information Technology major with a specialization in web and mobile development.
@@ -111,12 +111,12 @@
             </div>
 
             <div class="row">
-                <div class="col s3">
+                <div class="col s12 m3">
                     <div>
                         <a href="https://www.facebook.com/krismariano30" target="_blank"><img class="img-circle img-small" src="res/images/team/kris.jpg" alt="Kris"></a>
                     </div>
                 </div>
-                <div class="col s9 left-align">
+                <div class="col s12 m9 left-align-on-med-and-up">
                     <h4>Kris Mariano</h4>
                     <p>Kris is an Information Technology major with a specialization in web and mobile development.
                         He is currently working at NXP, Philips Inc. as a Front End and Back End Developer.</p>

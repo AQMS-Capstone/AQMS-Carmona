@@ -76,6 +76,12 @@ form {
     width: 40px;
 }
 
+@media only screen and (min-width: 601px) {
+    .left-align-on-med-and-up {
+        text-align: left;
+    }
+}
+
 nav {
     height: 60px;
     line-height: 60px;
@@ -220,7 +226,6 @@ table.dataTable.no-footer {
 .card, .form-card {
     transition: all 0.3s ease-in;
 }
-
 .float-card {
     position: absolute;
     right: 0.5%;
@@ -229,6 +234,9 @@ table.dataTable.no-footer {
     width: 50%;
     top: 29%;
 
+}
+.side-nav .collapsible-header{
+   padding: 0 ;
 }
 
 .row-no-after {

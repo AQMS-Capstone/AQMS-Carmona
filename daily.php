@@ -35,7 +35,7 @@ include("class/Map.php");
     <div class="section no-pad-bot">
         <div class="container">
             <div class="row">
-                <div class="col s4">
+                <div class="col s12 m4">
                     <div class="card" style="min-height: 591px;">
                         <div class="card-image">
                             <img id="zoneImg" src="res/images/area/slex_carmona-exit.jpg">
@@ -58,7 +58,7 @@ include("class/Map.php");
                     </div>
                 </div>
 
-                <div class="col s8">
+                <div class="col s12 m8">
                     <div class="row-no-after">
                         <div class="card" style="min-height: 288px;">
 
@@ -85,13 +85,17 @@ include("class/Map.php");
                     <div class="row-no-after">
                         <div class="card" style="min-height: 288px;">
                             <div class="card-content">
+                                <div class="hide-on-med-and-up">
+                                    <p class="orange-text center">Graph is not available on mobile view.</p>
+                                    <br>
+                                </div>
                                 <div class="scroll" style="height:250px;">
                                  <table>
                                     <thead>
                                     <tr>
                                         <th></th>
                                         <th>Current</th>
-                                        <th></th>
+                                        <th class="hide-on-med-and-down"></th>
                                         <th>Min</th>
                                         <th>Max</th>
                                     </tr>
@@ -143,7 +147,7 @@ include("class/Map.php");
                                                     echo "<tr>";
                                                     echo "<td class='elementName' id='$elementName'>NaN</td>";
                                                     echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                                    echo "<td><div id='$chartName'></div></td>";
+                                                    echo "<td class=\"hide-on-med-and-down\"><div id='$chartName'></div></td>";
                                                     echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
                                                     echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
                                                     echo "</tr>";

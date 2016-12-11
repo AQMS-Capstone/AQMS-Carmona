@@ -6,6 +6,7 @@ $( document ).ready(function(){
     $('select').material_select();
     $('.parallax').parallax();
     $('.modal-trigger').leanModal();
+    $('.collapsible').collapsible();
 })
 
 
@@ -16,7 +17,13 @@ $("#reports-tab").click(function () {
     $("#reports").show();
 })
 
+$("#sensor").click(function () {
+    $("#sensor-content").toggle('slow');
+})
 
+$("#calculator").click(function () {
+    $("#calculator-content").toggle('slow');
+})
 
 
 $("#reports-tab").click(function () {

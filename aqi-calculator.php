@@ -57,7 +57,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
             <div class="row">
                 <div class="col s12">
                     <form method="post">
-                        <div class="input-field col s7">
+                        <div class="input-field col s12 m7">
                             <select id="element" name="element" required>
                                 <option value="" disabled <?php if ($element == null) {
                                     echo 'selected';
@@ -94,17 +94,17 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             </select>
                             <label>Pollutant</label>
                         </div>
-                        <div class="input-field col s2">
+                        <div class="input-field col s10 m2">
                             <input id="concentration" type="number" name="concentration" class="validate"
                                    value="<?php if ($concentration != null) {
                                        echo $concentration;
                                    } ?>">
                             <label for="number" id="txtConversion"></label>
                         </div>
-                        <div class="input-field col s1">
+                        <div class="input-field col s2 m1">
                             <label id="unit">unit</label>
                         </div>
-                        <div class="input-field col s2">
+                        <div class="input-field col s12 m2">
                             <button class="btn waves-effect waves-light" type="submit" name="submit">CALCULATE</button>
                         </div>
                     </form>

@@ -190,7 +190,7 @@ if (isset($_POST['btnSubmit'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s6">
+                            <div class="col s12 m6">
                                 <div class="input-field col s10">
                                     <input id="co_value" name="co_value" type="number" class="validate" step="0.1"
                                            min="0.0"
@@ -222,7 +222,7 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
                             </div>
 
-                            <div class="col s6">
+                            <div class="col s12 m6">
                                 <div class="input-field col s10">
                                     <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001"
                                            min="0.000"

@@ -49,8 +49,8 @@ function GetAreaStatus2(area_data)
         $("#zoneName").text('Bancal Carmona, Cavite');
         $("#zoneImg").attr("src", "res/images/area/bancal.jpg");
     }else{
-        $("#zoneName").text('Bancal Carmona, Cavite');
-        $("#zoneImg").attr("src", "res/images/area/bancal.jpg");
+        $("#zoneName").text('SLEX Carmona Exit, Cavite');
+        $("#zoneImg").attr("src", "res/images/area/slex_carmona-exit.jpg");
     }
 
     if (area_data.prevalent_value == -1 || area_data.AllDayValues_array.length == 0 || area_data.aqi_values.length == 0) {
