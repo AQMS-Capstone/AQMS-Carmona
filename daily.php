@@ -35,7 +35,7 @@ include("class/Map.php");
     <div class="section no-pad-bot">
         <div class="container">
             <div class="row">
-                <div class="col s12 m4">
+                <div class="col s12 l4">
                     <div class="card" style="min-height: 591px;">
                         <div class="card-image">
                             <img id="zoneImg" src="res/images/area/slex_carmona-exit.jpg">
@@ -58,7 +58,7 @@ include("class/Map.php");
                     </div>
                 </div>
 
-                <div class="col s12 m8">
+                <div class="col s12 l8">
                     <div class="row-no-after">
                         <div class="card" style="min-height: 288px;">
 
