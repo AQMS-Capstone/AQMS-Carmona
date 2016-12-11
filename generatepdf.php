@@ -1,6 +1,6 @@
 <?php
 
-require_once 'lib/fpdf.php';
+
 require_once 'class/db_connect.php';
 require_once 'class/dbFunctions.php';
 
@@ -39,21 +39,17 @@ try {
     $dateFrom = $_POST["txtDateTimeFrom"];
     $dateTo = $_POST["txtDateTimeTo"];
     */
-    session_start();
+    //session_start();
 
-    $areaIndex = $_SESSION["drpArea"];;
-    $pollutant = $_SESSION["drpPollutant"];
-    $dateFrom = $_SESSION["txtDateTimeFrom"];
-    $dateTo = $_SESSION["txtDateTimeTo"];
-    $orderIndex = $_SESSION["drpOrder"];
+    $areaIndex = $_POST["drpArea"];;
+    $pollutant = $_POST["drpPollutant"];
+    $dateFrom = $_POST["txtDateTimeFrom"];
+    $dateTo = $_POST["txtDateTimeTo"];
+    $orderIndex = $_POST["drpOrder"];
 
-    if(empty($_SESSION['drpArea']))
-    {
-        echo "<script>
-                alert('There are no data available to generate a report');
-                window.location.href='history.php';
-               </script>";
-    }
+
+    //echo $areaIndex;
+
 
     if($orderIndex <= 1){
         $order = 'timestamp';
@@ -61,26 +57,34 @@ try {
         $order = 'MASTER.e_id';
     }
     $loc = strtolower($area[$areaIndex]);
-
+    $gpdf = new GPDF();
 
     $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
     if($areaIndex == 3) {
         if ($pollutant == 'All') {
-            list($bancalData, $slexData, $bancalData1, $slexData1) = GetPollutants("", "", $dateFrom, $dateTo, $order);
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants("", "", $dateFrom, $dateTo, $order);
 
         } else {
-            list($bancalData, $slexData, $bancalData1, $slexData1) = GetPollutants("", $pollutant, $dateFrom, $dateTo, $order);
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants("", $pollutant, $dateFrom, $dateTo, $order);
         }
 
     }
     else{
         if ($pollutant == 'All') {
-            list($bancalData, $slexData, $bancalData1, $slexData1) = GetPollutants($loc, "", $dateFrom, $dateTo, $order);
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants($loc, "", $dateFrom, $dateTo, $order);
         } else {
-            list($bancalData, $slexData, $bancalData1, $slexData1) = GetPollutants($loc, $pollutant, $dateFrom, $dateTo, $order);
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants($loc, $pollutant, $dateFrom, $dateTo, $order);
         }
 
         $a_name = $area[$areaIndex].' Carmona, Cavite';
+    }
+
+    if(empty($bancalData) && empty($slexData))
+    {
+        echo "<script>
+                alert('There are no data available to generate a report');
+                window.location.href='history.php';
+               </script>";
     }
 
     if(!empty($slexData) && empty($bancalData)){
@@ -181,69 +185,7 @@ try {
 
 
 //------------------ GENERATING PDF -------------------------
-    class PDF extends FPDF
-    {
 
-// Simple table
-        function BasicTable($header, $data)
-        {
-            // Header
-            $this->Cell(5);
-            foreach ($header as $col) {
-                $this->SetFont('helvetica', 'B', 10);
-
-                $this->Cell(45, 7, $col, 1, 0, 'C');
-            }
-            $this->Ln();
-            // Data
-            foreach ($data as $row) {
-                $this->Cell(5);
-                $this->SetFont('helvetica', '', 10);
-                foreach ($row as $col)
-                    $this->Cell(45, 6, $col, 1, 0, 'C');
-                $this->Ln();
-
-            }
-
-        }
-
-// Page header
-        function Header()
-        {
-            date_default_timezone_set("Asia/Manila");
-            $g_time = date("l, m-d-Y G:i");
-            // Logo
-            $this->Image('res/header.png', 10, 3, 190);
-            $this->Image('res/Logo1.png', 10, 3, 32);
-            $this->SetFont('helvetica', 'B', 18);
-            $this->Cell(50);
-            $this->SetTextColor(255, 255, 255);
-            $this->Cell(30, 5, 'AQMS Carmona History Report', 0, 0);
-            // Arial bold 15
-            // Move to the right
-
-            $this->Cell(48);
-            // Title
-            $this->SetFont('helvetica', 'B', 8);
-            $this->SetTextColor(0, 0, 0);
-            //$this->Cell(10);
-            $this->Cell(30, 30, 'Generated on:' . ' ' . $g_time, 0, 0);
-            // Line break
-            $this->Ln(20);
-        }
-
-// Page footer
-        function Footer()
-        {
-            // Position at 1.5 cm from bottom
-            $this->SetY(-15);
-            // Arial italic 8
-            $this->SetFont('Arial', 'I', 8);
-            // Page number
-            $this->Cell(150);
-            $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
-        }
-    }
 
 
 // Instanciation of inherited class
@@ -298,7 +240,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $bancalDataSet);
         $pdf->Ln(2);
@@ -311,7 +252,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $slexDataSet);
         $pdf->Ln(2);
@@ -319,7 +259,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $bancalDataSet);
         $pdf->Ln(2);
@@ -328,7 +267,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $slexDataSet);
         $pdf->Ln(2);
@@ -360,21 +298,11 @@ try {
 
 }
 catch(Exception $e){
-    /*session_start();*/
-
-    /*
-    echo '<script language="javascript">';
-    echo 'alert("Error")';
-    echo '</script>';
-
-    header("Location: history.php");
-       */
     die();
-
 }
 
 finally{
-    session_destroy();
+    //session_destroy();
     mysqli_close($con);
 }
 ?>

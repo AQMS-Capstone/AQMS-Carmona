@@ -19,6 +19,7 @@ if(isset($_POST["btnGenerate"]))
     $dateTimeTo = $_POST["txtDateTimeTo"];
     $order = $_POST["drpOrder"];
 
+
 if($area == 3) {
     if ($pollutant == 'All') {
         $row = $gpdf->CheckPollutants("", "", $dateTimeFrom, $dateTimeTo);
@@ -41,7 +42,7 @@ else{
     }else{
         //$error = false; // THEN SET THIS TO TRUE / FALSE OK OK
 
-        session_start();
+        /*session_start();
 
         $_SESSION['drpArea'] = $_POST["drpArea"];
         $_SESSION['drpPollutant'] = $_POST["drpPollutant"];
@@ -49,12 +50,11 @@ else{
         $_SESSION['txtDateTimeTo'] = $_POST["txtDateTimeTo"];
         $_SESSION['drpOrder'] = $_POST["drpOrder"];
 
-
-
+        */
+        header("Location: generatepdf.php");
     }
+    //unset($_POST['btnGenerate']);
 
-    unset($_POST['btnGenerate']);
-    header("Location: generatepdf.php");
 }
 ?>
 
@@ -98,7 +98,7 @@ else{
             <div class="row">
                 <div class="col s12">
                     <div>
-                        <form method = "post" action="">
+                        <form method = "post" action="generatepdf.php">
                         <!--<form method = "post" action="generatepdf.php">-->
                             <div id = "woah" class="input-field col s12">
                                 <!--<select name = "drpArea" id = "drpArea" required onchange="getData(this.value)">-->
