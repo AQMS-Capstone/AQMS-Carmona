@@ -17,14 +17,14 @@ $("#reports-tab").click(function () {
     $("#reports").show();
 })
 
-$("#sensor").click(function () {
-    $("#sensor-content").toggle('slow');
-})
 
-$("#calculator").click(function () {
-    $("#calculator-content").toggle('slow');
-})
+$("#sensor").off("click").on("click", function() {
+    $("#sensor-content").fadeToggle("default");
+});
 
+$("#calculator").off("click").on("click", function() {
+    $("#calculator-content").fadeToggle("default");
+});
 
 $("#reports-tab").click(function () {
     $("#content-holder").load('public/history.php');
