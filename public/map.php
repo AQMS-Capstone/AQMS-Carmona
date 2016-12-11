@@ -27,7 +27,7 @@ if(isset($_GET["area"]))
                     </div>
                     <div  >
                         <div class="col s12 m7">
-                            <div class="row-no-after">
+                            <div class="row-no-after left-align-on-med-and-up center-align">
                                 <div class="col s12">
                                     <p style="font-weight: bold; font-size: 1.5em;" id="aqiText">AQI Status</p>
                                     <span style="font-size: x-large"><b class="teal-text" id="zoneName">Zone Name</b></span>
