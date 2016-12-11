@@ -7,8 +7,9 @@ $row = 0;
 
 
 
-if(isset($_POST["btnGenerate"]))
+if(filter_input(INPUT_POST, 'btnGenerate'))
 {
+
     $gpdf = new GPDF();
 
     // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
