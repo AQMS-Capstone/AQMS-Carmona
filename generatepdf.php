@@ -1,7 +1,7 @@
 <?php
 
 require_once 'lib/fpdf.php';
-require_once 'public/include/db_connect.php';
+require_once 'class/db_connect.php';
 require_once 'class/dbFunctions.php';
 
 $areaIndex = 0;

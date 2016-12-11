@@ -4,7 +4,7 @@ $statusMessage = ["", ""];
 
 function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statusMessage)
 {
-    include('public/include/db_connect.php');
+    include('class/db_connect.php');
 
     $query = "SELECT timestamp FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
     $result = mysqli_query($con, $query);
