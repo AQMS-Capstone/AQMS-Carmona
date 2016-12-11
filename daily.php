@@ -86,7 +86,7 @@ include("class/Map.php");
                         <div class="card" style="min-height: 288px;">
                             <div class="card-content">
                                 <div class="hide-on-med-and-up">
-                                    <p class="orange-text center">Graph is not available on mobile view.</p>
+                                    <p class="orange-text center">Touch and Swipe for more info.</p>
                                     <br>
                                 </div>
                                 <div class="scroll" style="height:250px;">
@@ -95,7 +95,7 @@ include("class/Map.php");
                                     <tr>
                                         <th></th>
                                         <th>Current</th>
-                                        <th class="hide-on-med-and-down"></th>
+                                        <th></th>
                                         <th>Min</th>
                                         <th>Max</th>
                                     </tr>
@@ -147,7 +147,7 @@ include("class/Map.php");
                                                     echo "<tr>";
                                                     echo "<td class='elementName' id='$elementName'>NaN</td>";
                                                     echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                                    echo "<td class=\"hide-on-med-and-down\"><div id='$chartName'></div></td>";
+                                                    echo "<td><div id='$chartName'></div></td>";
                                                     echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
                                                     echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
                                                     echo "</tr>";
