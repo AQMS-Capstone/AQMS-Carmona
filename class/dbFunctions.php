@@ -1,105 +1,174 @@
 <?php
+require_once 'lib/fpdf.php';
 
+class PDF extends FPDF
+{
 
+// Simple table
+    function BasicTable($header, $data)
+    {
+        // Header
+        $this->Cell(5);
+        foreach ($header as $col) {
+            $this->SetFont('helvetica', 'B', 10);
 
-function CheckPollutants($a_name, $p_name, $dFrom, $dTo){
-    include('public/include/db_connect.php');
-    if($a_name == "" && $p_name == ""){
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+            $this->Cell(45, 7, $col, 1, 0, 'C');
+        }
+        $this->Ln();
+        // Data
+        foreach ($data as $row) {
+            $this->Cell(5);
+            $this->SetFont('helvetica', '', 10);
+            foreach ($row as $col)
+                $this->Cell(45, 6, $col, 1, 0, 'C');
+            $this->Ln();
+
+        }
+
+    }
+
+// Page header
+    function Header()
+    {
+        date_default_timezone_set("Asia/Manila");
+        $g_time = date("l, m-d-Y G:i");
+        // Logo
+        $this->Image('res/header.png', 10, 3, 190);
+        $this->Image('res/Logo1.png', 10, 3, 32);
+        $this->SetFont('helvetica', 'B', 18);
+        $this->Cell(50);
+        $this->SetTextColor(255, 255, 255);
+        $this->Cell(30, 5, 'AQMS Carmona History Report', 0, 0);
+        // Arial bold 15
+        // Move to the right
+
+        $this->Cell(48);
+        // Title
+        $this->SetFont('helvetica', 'B', 8);
+        $this->SetTextColor(0, 0, 0);
+        //$this->Cell(10);
+        $this->Cell(30, 30, 'Generated on:' . ' ' . $g_time, 0, 0);
+        // Line break
+        $this->Ln(20);
+    }
+
+// Page footer
+    function Footer()
+    {
+        // Position at 1.5 cm from bottom
+        $this->SetY(-15);
+        // Arial italic 8
+        $this->SetFont('Arial', 'I', 8);
+        // Page number
+        $this->Cell(150);
+        $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
+    }
+}
+
+class GPDF{
+
+    function CheckPollutants($a_name, $p_name, $dFrom, $dTo){
+        include('class/db_connect.php');
+        if($a_name == "" && $p_name == ""){
+            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY TIMESTAMP DESC";
-    }
-    else if($a_name == ""){
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        }
+        else if($a_name == ""){
+            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY TIMESTAMP DESC";
 
-    }
-    else if($p_name == ""){
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        }
+        else if($p_name == ""){
+            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$a_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY TIMESTAMP DESC";
 
-    }
-    else{
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        }
+        else{
+            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$a_name' and ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY TIMESTAMP DESC";
 
+        }
+
+        $result = mysqli_query($con, $query);
+        $row = mysqli_num_rows($result);
+        mysqli_close($con);
+        return $row;
     }
 
-    $result = mysqli_query($con, $query);
-    $row = mysqli_num_rows($result);
-    mysqli_close($con);
-    return $row;
-}
+    function GetPollutants($a_name, $p_name, $dFrom, $dTo, $order){
 
-function GetPollutants($a_name, $p_name, $dFrom, $dTo, $order){
+        include('class/db_connect.php');
 
-    include('public/include/db_connect.php');
+        $bancalData = array();
+        $slexData = array();
+        $bancalData1 = array();
+        $slexData1 = array();
 
-    $bancalData = array();
-    $slexData = array();
-    $bancalData1 = array();
-    $slexData1 = array();
-
-    if($a_name == "" && $p_name == ""){
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+        if($a_name == "" && $p_name == ""){
+            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY $order DESC";
-    }
-    else if($a_name == ""){
-        $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+        }
+        else if($a_name == ""){
+            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE ELEMENTS.e_symbol = '$p_name' AND DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY $order DESC";
 
-    }
-    else if($p_name == ""){
-        $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        }
+        else if($p_name == ""){
+            $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$a_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY $order DESC";
-    }
-    else{
-        $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
+        }
+        else{
+            $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = '$a_name' and ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
                           ORDER BY $order DESC";
-    }
-    $result = mysqli_query($con, $query);
-    while ($row = mysqli_fetch_array($result)) {
-
-        if($row['AREA_NAME'] == "bancal"){
-            array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
-
-
-            array_push($bancalData1, $row["E_NAME"]);
-            array_push($bancalData1, $row["E_SYMBOL"]);
-            array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
-            array_push($bancalData1, $row["timestamp"]);
         }
-        else{
-            array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
+        $result = mysqli_query($con, $query);
+        while ($row = mysqli_fetch_array($result)) {
+
+            if($row['AREA_NAME'] == "bancal"){
+                array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
 
 
-            array_push($slexData1, $row["E_NAME"]);
-            array_push($slexData1, $row["E_SYMBOL"]);
-            array_push($slexData1, $row["CONCENTRATION_VALUE"]);
-            array_push($slexData1, $row["timestamp"]);
+                array_push($bancalData1, $row["E_NAME"]);
+                array_push($bancalData1, $row["E_SYMBOL"]);
+                array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
+                array_push($bancalData1, $row["timestamp"]);
+            }
+            else{
+                array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
+
+
+                array_push($slexData1, $row["E_NAME"]);
+                array_push($slexData1, $row["E_SYMBOL"]);
+                array_push($slexData1, $row["CONCENTRATION_VALUE"]);
+                array_push($slexData1, $row["timestamp"]);
+            }
+
         }
 
-    }
-
-
+        mysqli_close($con);
         return [$bancalData, $slexData, $bancalData1, $slexData1];
 
+    }
+
 }
+
+
 ?>
 
 <?php

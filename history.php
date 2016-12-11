@@ -9,6 +9,7 @@ $row = 0;
 
 if(isset($_POST["btnGenerate"]))
 {
+    $gpdf = new GPDF();
 
     // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
 
@@ -20,17 +21,17 @@ if(isset($_POST["btnGenerate"]))
 
 if($area == 3) {
     if ($pollutant == 'All') {
-        $row = CheckPollutants("", "", $dateTimeFrom, $dateTimeTo);
+        $row = $gpdf->CheckPollutants("", "", $dateTimeFrom, $dateTimeTo);
     } else {
-        $row = CheckPollutants("", $pollutant, $dateTimeFrom, $dateTimeTo);
+        $row = $gpdf->CheckPollutants("", $pollutant, $dateTimeFrom, $dateTimeTo);
     }
 }
 else{
     if ($pollutant == 'All') {
-        $row = CheckPollutants($areaName[$area], "", $dateTimeFrom, $dateTimeTo);
+        $row = $gpdf->CheckPollutants($areaName[$area], "", $dateTimeFrom, $dateTimeTo);
     } else {
 
-        $row = CheckPollutants($areaName[$area], $pollutant, $dateTimeFrom, $dateTimeTo);
+        $row = $gpdf->CheckPollutants($areaName[$area], $pollutant, $dateTimeFrom, $dateTimeTo);
     }
 }
     if($row == 0){
