@@ -53,7 +53,7 @@ class Area{
 
 // --------- FUNCTIONS --------- //
 
-function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $area)
+function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $area, $date_now_string)
 {
   require 'public/include/db_connect.php';
 
@@ -61,7 +61,7 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
 
   if($hour_value == 0)
   {
-    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
+    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now_string') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
   }
 
   else
@@ -637,37 +637,6 @@ function Generate($name)
 
   $hour_value = date("H"); // < --------- CURRENT HOUR --------- >
 
-  // --------- DECLARATIONS --------- //
-
-  /*
-  $date_gathered = "";
-  $AllDayValues_array = array();
-  $co_values = array();
-  $so2_values = array();
-  $no2_values = array();
-  $o3_values = array();
-  $pb_values = array();
-  $pm10_values = array();
-  $tsp_values = array();
-  $co_actual_values = array();
-  $so2_actual_values = array();
-  $no2_actual_values = array();
-  $o3_actual_values = array();
-  $o3_1_actual_values = array();
-  $pm10_actual_values = array();
-  $tsp_actual_values = array();
-  $co_aqi_values = array();
-  $so2_aqi_values = array();
-  $no2_aqi_values = array();
-  $o3_aqi_values = array();
-  $o3_1_aqi_values = array();
-  $pm10_aqi_values = array();
-  $tsp_aqi_values = array();
-
-  */
-
-  $data_container = array();
-
   // --------- GUIDELINE VALUES --------- //
 
   $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
@@ -681,7 +650,7 @@ function Generate($name)
 
   // --------- GET VALUES FROM DB --------- //
 
-  $area_generate->AllDayValues_array = DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $name);
+  $area_generate->AllDayValues_array = DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $name, $date_now_string);
 
   // --------- SEPARATE THE VALUES INTO SPECIFIED ARRAYS --------- //
 
