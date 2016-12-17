@@ -17,8 +17,16 @@ body {
     overflow: hidden;
 }
 
+
+@media only screen and (max-width: 992px) {
+    .scroll:hover {
+        overflow-x: scroll;
+    }
+}
+
 .scroll:hover {
     overflow-y: scroll;
+
 }
 
 .brand-logo {
@@ -52,6 +60,7 @@ form {
 .scroll::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 150, 136, 0.3);
     background-color: #009688;
+    height: 5px;
 }
 
 .elementName, .elementCurrent {
@@ -74,6 +83,12 @@ form {
     text-align: center;
     white-space: nowrap;
     width: 40px;
+}
+
+@media only screen and (min-width: 601px) {
+    .left-align-on-med-and-up {
+        text-align: left;
+    }
 }
 
 nav {
@@ -221,14 +236,31 @@ table.dataTable.no-footer {
     transition: all 0.3s ease-in;
 }
 
-.float-card {
-    position: absolute;
-    right: 0.5%;
-    margin: 0.5rem 0.5rem 1rem 0;
-    z-index: 997;
-    width: 50%;
-    top: 29%;
+@media only screen and (max-width: 992px) {
+    .float-card {
+        width: 106%;
+        top: 5%;
+        max-height: 100%;
+        margin-left: -0.75rem;
 
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .float-card {
+        position: absolute;
+        right: 0.5%;
+        margin: 0.5rem 0.5rem 1rem 0;
+        z-index: 997;
+        width: 50%;
+        top: 29%;
+        max-height: 445px;
+    }
+}
+
+
+.side-nav .collapsible-header{
+   padding: 0 ;
 }
 
 .row-no-after {

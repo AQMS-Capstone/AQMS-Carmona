@@ -36,7 +36,6 @@ function InitAQICalculator(){
 
         GetElementInfoAQI();
     });
-
 }
 
 function GetElementInfoAQI(){
@@ -83,8 +82,6 @@ function GetElementInfoAQI(){
                 "step" : 0.001
             });
         }
-
-
 
         $('#unit').text("ppm");
     }
@@ -259,9 +256,6 @@ function GetAQIDetails(AQI,element){
 }
 
 function GetStatement(AQIStatus,element){
-
-
-
     switch (AQIStatus){
         case "No Current Data":{
             break;

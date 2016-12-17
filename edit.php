@@ -76,7 +76,7 @@
          * Time: 2:05 PM
          */
 
-        include('public/include/db_connect.php');
+        include('class/db_connect.php');
 
         $timestamp_array = array();
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once 'lib/fpdf.php';
-require_once 'public/include/db_connect.php';
 
+require_once 'class/db_connect.php';
+require_once 'class/dbFunctions.php';
 
 $areaIndex = 0;
 $pollutant = "";
@@ -12,17 +12,11 @@ $prevalent_air_pollutant = "";
 $prevalent_air_pollutant_symbol = "";
 $aqi_status = "";
 $aqi_index = 0;
-$sampol = array();
-$sampol1 = array();
-$igachu = array();
-$ugachme = array();
-$query = "";
 $synthesis = "";
 $health_Effects = "";
 $c_Statement = "";
 $time_updated = "";
 $a_name = "";
-$query1 = "";
 $bancalData = array();
 $slexData = array();
 $bancalData1 = array();
@@ -45,21 +39,17 @@ try {
     $dateFrom = $_POST["txtDateTimeFrom"];
     $dateTo = $_POST["txtDateTimeTo"];
     */
-    session_start();
+    //session_start();
 
-    $areaIndex = $_SESSION["drpArea"];;
-    $pollutant = $_SESSION["drpPollutant"];
-    $dateFrom = $_SESSION["txtDateTimeFrom"];
-    $dateTo = $_SESSION["txtDateTimeTo"];
-    $orderIndex = $_SESSION["drpOrder"];
+    $areaIndex = $_POST["drpArea"];;
+    $pollutant = $_POST["drpPollutant"];
+    $dateFrom = $_POST["txtDateTimeFrom"];
+    $dateTo = $_POST["txtDateTimeTo"];
+    $orderIndex = $_POST["drpOrder"];
 
-    if(empty($_SESSION['drpArea']))
-    {
-        echo "<script>
-                alert('There are no data available to generate a report');
-                window.location.href='history.php';
-               </script>";
-    }
+
+    //echo $areaIndex;
+
 
     if($orderIndex <= 1){
         $order = 'timestamp';
@@ -67,197 +57,92 @@ try {
         $order = 'MASTER.e_id';
     }
     $loc = strtolower($area[$areaIndex]);
+    $gpdf = new GPDF();
 
     $filename = $dateFrom.'_to_'.$dateTo.'_AQI_History_Report'.'.pdf';
     if($areaIndex == 3) {
         if ($pollutant == 'All') {
-            $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY $order DESC";
-
-            $result = mysqli_query($con, $query1);
-            while ($row = mysqli_fetch_array($result)) {
-
-                if($row["AREA_NAME"] == "bancal"){
-                    array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
-
-
-                    array_push($bancalData1, $row["E_NAME"]);
-                    array_push($bancalData1, $row["E_SYMBOL"]);
-                    array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($bancalData1, $row["timestamp"]);
-                }
-                else{
-                    array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
-
-
-                    array_push($slexData1, $row["E_NAME"]);
-                    array_push($slexData1, $row["E_SYMBOL"]);
-                    array_push($slexData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($slexData1, $row["timestamp"]);
-                }
-
-            }
-
-
-
-            if(!empty($slexData) && empty($bancalData)){
-                foreach ($slexData as $line) {
-                    # code...
-                    $slexDataSet[] = explode(';', trim($line));
-                }
-            }
-            else if(empty($slexData) && !empty($bancalData)){
-                foreach ($bancalData as $line) {
-                    # code...
-                    $bancalDataSet[] = explode(';', trim($line));
-                }
-            }
-            else{
-                foreach ($slexData as $line) {
-                    # code...
-                    $slexDataSet[] = explode(';', trim($line));
-                }
-
-                foreach ($bancalData as $line) {
-                    # code...
-                    $bancalDataSet[] = explode(';', trim($line));
-                }
-            }
-
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants("", "", $dateFrom, $dateTo, $order);
 
         } else {
-            $query1 = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE ELEMENTS.e_symbol = '$pollutant' AND DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY $order DESC";
-
-            $result = mysqli_query($con, $query1);
-            while ($row = mysqli_fetch_array($result)) {
-
-                if($row["AREA_NAME"] == "bancal"){
-                    array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
-
-
-                    array_push($bancalData1, $row["E_NAME"]);
-                    array_push($bancalData1, $row["E_SYMBOL"]);
-                    array_push($bancalData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($bancalData1, $row["timestamp"]);
-                }
-                else{
-                    array_push($slexData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
-
-
-                    array_push($slexData1, $row["E_NAME"]);
-                    array_push($slexData1, $row["E_SYMBOL"]);
-                    array_push($slexData1, $row["CONCENTRATION_VALUE"]);
-                    array_push($slexData1, $row["timestamp"]);
-                }
-
-            }
-
-
-
-            if(!empty($slexData) && empty($bancalData)){
-                foreach ($slexData as $line) {
-                    # code...
-                    $slexDataSet[] = explode(';', trim($line));
-                }
-            }
-            else if(empty($slexData) && !empty($bancalData)){
-                foreach ($bancalData as $line) {
-                    # code...
-                    $bancalDataSet[] = explode(';', trim($line));
-                }
-            }
-            else{
-                foreach ($slexData as $line) {
-                    # code...
-                    $slexDataSet[] = explode(';', trim($line));
-                }
-
-                foreach ($bancalData as $line) {
-                    # code...
-                    $bancalDataSet[] = explode(';', trim($line));
-                }
-            }
-
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants("", $pollutant, $dateFrom, $dateTo, $order);
         }
-        if(count($slexData1) != 0 && count($bancalData1) != 0) {
-            if (strtotime($slexData1[3] > strtotime($bancalData1[3]))) {
-                $time_updated = $slexData1[3];
-            } else {
-                $time_updated = $bancalData1[3];
-            }
-
-            $a_name = "SLEX and Bancal, Carmona, Cavite";
-            if ($slexData1[2] > $bancalData1[2]) {
-                $prevalent_air_pollutant_symbol = $slexData1[1];
-                $prevalent_air_pollutant = $slexData1[0];
-                $aqi_index = $slexData1[2];
-            } else {
-                $prevalent_air_pollutant_symbol = $bancalData1[1];
-                $prevalent_air_pollutant = $bancalData1[0];
-                $aqi_index = $bancalData1[2];
-            }
-        }else if(count($slexData1) != 0 && count($bancalData1) == 0){
-            $a_name = "SLEX, Carmona, Cavite";
-            $time_updated = $slexData1[3];
-            $prevalent_air_pollutant_symbol = $slexData1[1];
-            $prevalent_air_pollutant = $slexData1[0];
-            $aqi_index = $slexData1[2];
-
-        }else if(count($slexData1) == 0 && count($bancalData1) != 0){
-            $a_name = "Bancal, Carmona, Cavite";
-            $time_updated = $bancalData1[3];
-            $prevalent_air_pollutant_symbol = $bancalData1[1];
-            $prevalent_air_pollutant = $bancalData1[0];
-            $aqi_index = $bancalData1[2];
-        }
-
 
     }
     else{
         if ($pollutant == 'All') {
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$loc' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY $order DESC";
-
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants($loc, "", $dateFrom, $dateTo, $order);
         } else {
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
-                          FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$loc' and ELEMENTS.e_symbol = '$pollutant' and DATE(timestamp) BETWEEN DATE('$dateFrom') and DATE('$dateTo')
-                          ORDER BY $order DESC";
-            $result = mysqli_query($con, $query);
-        }
-        $result = mysqli_query($con, $query);
-        while ($row = mysqli_fetch_array($result)) {
-            array_push($sampol, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
-
-
-            array_push($sampol1, $row["E_NAME"]);
-            array_push($sampol1, $row["E_SYMBOL"]);
-            array_push($sampol1, $row["CONCENTRATION_VALUE"]);
-            array_push($sampol1, $row["timestamp"]);
-        }
-
-        $time_updated = $sampol1[3];
-
-        foreach ($sampol as $line) {
-            # code...
-            $ugachme[] = explode(';', trim($line));
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants($loc, $pollutant, $dateFrom, $dateTo, $order);
         }
 
         $a_name = $area[$areaIndex].' Carmona, Cavite';
-        $aqi_index = $sampol1[2];
-        $prevalent_air_pollutant_symbol = $sampol1[1];
-        $prevalent_air_pollutant = $sampol1[0];
+    }
+
+    if(empty($bancalData) && empty($slexData))
+    {
+        echo "<script>
+                alert('There are no data available to generate a report');
+                window.location.href='history.php';
+               </script>";
+    }
+
+    if(!empty($slexData) && empty($bancalData)){
+        foreach ($slexData as $line) {
+            # code...
+            $slexDataSet[] = explode(';', trim($line));
+        }
+    }
+    else if(empty($slexData) && !empty($bancalData)){
+        foreach ($bancalData as $line) {
+            # code...
+            $bancalDataSet[] = explode(';', trim($line));
+        }
+    }
+    else{
+        foreach ($slexData as $line) {
+            # code...
+            $slexDataSet[] = explode(';', trim($line));
+        }
+
+        foreach ($bancalData as $line) {
+            # code...
+            $bancalDataSet[] = explode(';', trim($line));
+        }
     }
 
 
-    //}
+    if(count($slexData1) != 0 && count($bancalData1) != 0) {
+        if (strtotime($slexData1[3] > strtotime($bancalData1[3]))) {
+            $time_updated = $slexData1[3];
+        } else {
+            $time_updated = $bancalData1[3];
+        }
+
+        $a_name = "SLEX and Bancal, Carmona, Cavite";
+        if ($slexData1[2] > $bancalData1[2]) {
+            $prevalent_air_pollutant_symbol = $slexData1[1];
+            $prevalent_air_pollutant = $slexData1[0];
+            $aqi_index = $slexData1[2];
+        } else {
+            $prevalent_air_pollutant_symbol = $bancalData1[1];
+            $prevalent_air_pollutant = $bancalData1[0];
+            $aqi_index = $bancalData1[2];
+        }
+    }else if(count($slexData1) != 0 && count($bancalData1) == 0){
+        $a_name = "SLEX, Carmona, Cavite";
+        $time_updated = $slexData1[3];
+        $prevalent_air_pollutant_symbol = $slexData1[1];
+        $prevalent_air_pollutant = $slexData1[0];
+        $aqi_index = $slexData1[2];
+
+    }else if(count($slexData1) == 0 && count($bancalData1) != 0){
+        $a_name = "Bancal, Carmona, Cavite";
+        $time_updated = $bancalData1[3];
+        $prevalent_air_pollutant_symbol = $bancalData1[1];
+        $prevalent_air_pollutant = $bancalData1[0];
+        $aqi_index = $bancalData1[2];
+    }
 
     if ($aqi_index < 26.0) {
         $aqi_status = "Good";
@@ -300,69 +185,7 @@ try {
 
 
 //------------------ GENERATING PDF -------------------------
-    class PDF extends FPDF
-    {
 
-// Simple table
-        function BasicTable($header, $sampol)
-        {
-            // Header
-            $this->Cell(5);
-            foreach ($header as $col) {
-                $this->SetFont('helvetica', 'B', 10);
-
-                $this->Cell(45, 7, $col, 1, 0, 'C');
-            }
-            $this->Ln();
-            // Data
-            foreach ($sampol as $row) {
-                $this->Cell(5);
-                $this->SetFont('helvetica', '', 10);
-                foreach ($row as $col)
-                    $this->Cell(45, 6, $col, 1, 0, 'C');
-                $this->Ln();
-
-            }
-
-        }
-
-// Page header
-        function Header()
-        {
-            date_default_timezone_set("Asia/Manila");
-            $g_time = date("l, m-d-Y G:i");
-            // Logo
-            $this->Image('res/header.png', 10, 3, 190);
-            $this->Image('res/Logo1.png', 10, 3, 32);
-            $this->SetFont('helvetica', 'B', 18);
-            $this->Cell(50);
-            $this->SetTextColor(255, 255, 255);
-            $this->Cell(30, 5, 'AQMS Carmona History Report', 0, 0);
-            // Arial bold 15
-            // Move to the right
-
-            $this->Cell(48);
-            // Title
-            $this->SetFont('helvetica', 'B', 8);
-            $this->SetTextColor(0, 0, 0);
-            //$this->Cell(10);
-            $this->Cell(30, 30, 'Generated on:' . ' ' . $g_time, 0, 0);
-            // Line break
-            $this->Ln(20);
-        }
-
-// Page footer
-        function Footer()
-        {
-            // Position at 1.5 cm from bottom
-            $this->SetY(-15);
-            // Arial italic 8
-            $this->SetFont('Arial', 'I', 8);
-            // Page number
-            $this->Cell(150);
-            $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
-        }
-    }
 
 
 // Instanciation of inherited class
@@ -417,7 +240,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $bancalDataSet);
         $pdf->Ln(2);
@@ -430,7 +252,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $slexDataSet);
         $pdf->Ln(2);
@@ -438,7 +259,6 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $bancalDataSet);
         $pdf->Ln(2);
@@ -447,18 +267,8 @@ try {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $slexDataSet);
-        $pdf->Ln(2);
-    }
-    else {
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Pollutant', 'Symbol', 'Concentration Values', 'Timestamp');
-//$data = $pdf->LoadData('countries.txt');
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $ugachme);
         $pdf->Ln(2);
     }
     /*
@@ -488,21 +298,11 @@ try {
 
 }
 catch(Exception $e){
-    /*session_start();*/
-
-    /*
-    echo '<script language="javascript">';
-    echo 'alert("Error")';
-    echo '</script>';
-
-    header("Location: history.php");
-       */
     die();
-
 }
 
 finally{
-    session_destroy();
+    //session_destroy();
     mysqli_close($con);
 }
 ?>

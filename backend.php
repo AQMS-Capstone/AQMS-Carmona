@@ -4,7 +4,7 @@ $statusMessage = ["", ""];
 
 function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statusMessage)
 {
-    include('public/include/db_connect.php');
+    include('class/db_connect.php');
 
     $query = "SELECT timestamp FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
     $result = mysqli_query($con, $query);
@@ -12,7 +12,7 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
     if($result) {
 
         if (mysqli_num_rows($result) == 0) {
-            $query = "INSERT INTO MASTER (m_id, area_name, e_id, concentration_value, timestamp) VALUES (NULL, '$area', '$e_id', '$value', '$date_now_string')";
+            $query = "INSERT INTO MASTER (area_name, e_id, concentration_value, timestamp) VALUES ('$area', '$e_id', '$value', '$date_now_string')";
             if (!mysqli_query($con, $query)) {
                 die('Error: ' . mysqli_error($con));
             }
@@ -190,7 +190,7 @@ if (isset($_POST['btnSubmit'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s6">
+                            <div class="col s12 l6">
                                 <div class="input-field col s10">
                                     <input id="co_value" name="co_value" type="number" class="validate" step="0.1"
                                            min="0.0"
@@ -222,7 +222,7 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
                             </div>
 
-                            <div class="col s6">
+                            <div class="col s12 l6">
                                 <div class="input-field col s10">
                                     <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001"
                                            min="0.000"

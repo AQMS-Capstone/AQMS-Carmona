@@ -57,7 +57,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
             <div class="row">
                 <div class="col s12">
                     <form method="post">
-                        <div class="input-field col s7">
+                        <div class="input-field col s12 l7">
                             <select id="element" name="element" required>
                                 <option value="" disabled <?php if ($element == null) {
                                     echo 'selected';
@@ -94,18 +94,18 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             </select>
                             <label>Pollutant</label>
                         </div>
-                        <div class="input-field col s2">
+                        <div class="input-field col s10 l2">
                             <input id="concentration" type="number" name="concentration" class="validate"
                                    value="<?php if ($concentration != null) {
                                        echo $concentration;
                                    } ?>">
                             <label for="number" id="txtConversion"></label>
                         </div>
-                        <div class="input-field col s1">
+                        <div class="input-field col s2 l1">
                             <label id="unit">unit</label>
                         </div>
-                        <div class="input-field col s2">
-                            <button class="btn waves-effect waves-light" type="submit" name="submit">CALCULATE</button>
+                        <div class="input-field col s12 l2">
+                            <button class="btn waves-effect waves-light" style="width: 100%;" type="submit" name="submit">CALCULATE</button>
                         </div>
                     </form>
                 </div>
@@ -127,7 +127,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s12 m4 l4">
+                    <div class="col s12 l4">
                         <div class="card" style="min-height: 328px;">
                             <div class="card-content">
                                 <div class="card-title teal-text"><b>Sensitive Groups</b></div>
@@ -137,7 +137,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
                         </div>
                     </div>
-                    <div class="col s12 m4 l4">
+                    <div class="col s12 l4">
                         <div class="card" style="min-height: 328px;">
                             <div class="card-content">
                                 <div class="card-title teal-text"><b>Health Effects</b></div>
@@ -147,7 +147,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
                         </div>
                     </div>
-                    <div class="col s12 m4 l4">
+                    <div class="col s12 l4">
                         <div class="card" style="min-height: 328px;">
                             <div class="card-content">
                                 <div class="card-title teal-text"><b>Cautionary</b></div>
@@ -219,152 +219,23 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 </script>
 
 <?php
-function GetAQI()
-{
-    global $co_guideline_values;
-    global $sufur_guideline_values;
-    global $no2_guideline_values;
-    global $ozone_guideline_values_8;
-    global $ozone_guideline_values_1;
-    global $pm_10_guideline_values;
-    global $tsp_guideline_values;
-
-
-    global $aqi_values;
-
-    global $aqi;
-    global $element;
-
-    $concentration = $_POST["concentration"];
-    $element = $_POST["element"];
-
-    if ($element == "CO") {
-        $aqi = round(calculateAQI($co_guideline_values, $concentration, 1, $aqi_values));
-    }
-    if ($element == "SO2") {
-        $aqi = round(calculateAQI($sufur_guideline_values, $concentration, 3, $aqi_values));
-    }
-    if ($element == "NO2") {
-        $aqi = round(calculateAQI($no2_guideline_values, $concentration, 2, $aqi_values));
-    }
-    if ($element == "O3_8") {
-        $aqi = round(calculateAQI($ozone_guideline_values_8, $concentration, 3, $aqi_values));
-    }
-    if ($element == "O3_1") {
-        $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, 3, $aqi_values));
-    }
-
-    if ($element == "PM 10") {
-        $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, 0, $aqi_values));
-    }
-    if ($element == "TSP") {
-        $aqi = round(calculateAQI($tsp_guideline_values, $concentration, 0, $aqi_values));
-    }
-
-    echo "
-          
-          
-          <script type='text/javascript'>
-          
-             var AQI = \"$aqi\";
-             var pollutant = \"$element\";
-           
-             GetAQIDetails(AQI,pollutant);
-             
-             $(\"#aqiNum\").text(AQI);
-             
-             $(\"#AQIStat\").css(\"background-color\", AQIAirQuality);
-             $(\"#aqiText\").text(AQIStatus);
-             $(\"#result\").show();
-             ScrollTo('calculator');
-          </script>
-          
-          
-    ";
-
-    header("location: aqi-calculator.php");
-}
-
-function GetCV(){
-    global $co_guideline_values;
-    global $sufur_guideline_values;
-    global $no2_guideline_values;
-    global $ozone_guideline_values_8;
-    global $ozone_guideline_values_1;
-    global $pm_10_guideline_values;
-    global $tsp_guideline_values;
-
-
-    global $aqi_values;
-
-    global $aqi;
-    global $element;
-
-    $concentration = $_POST["concentration"];
-    $element = $_POST["element"];
-
-    $concentration_value = 0;
-
-    if ($element == "CO") {
-        $concentration_value = calculateConcentrationValue($co_guideline_values, $concentration, 1, $aqi_values);
-    }
-    if ($element == "SO2") {
-        $concentration_value = calculateConcentrationValue($sufur_guideline_values, $concentration, 3, $aqi_values);
-    }
-    if ($element == "NO2") {
-        $concentration_value = calculateConcentrationValue($no2_guideline_values, $concentration, 2, $aqi_values);
-    }
-    if ($element == "O3_8") {
-        $concentration_value = calculateConcentrationValue($ozone_guideline_values_8, $concentration, 3, $aqi_values);
-    }
-    if ($element == "O3_1") {
-        $concentration_value = calculateConcentrationValue($ozone_guideline_values_1, $concentration, 3, $aqi_values);
-    }
-    if ($element == "PM 10") {
-        $concentration_value = calculateConcentrationValue($pm_10_guideline_values, $concentration, 0, $aqi_values);
-    }
-    if ($element == "TSP") {
-        $concentration_value = calculateConcentrationValue($tsp_guideline_values, $concentration, 0, $aqi_values);
-    }
-
-    echo "
-          
-          
-          <script type='text/javascript'>
-          
-             var AQI = \"$concentration\";
-             var pollutant = \"$element\";
-           
-             GetAQIDetails(AQI,pollutant);
-             
-             $('#aqiNum').text($concentration_value);
-             $(\"#AQIStat\").css(\"background-color\", AQIAirQuality);
-             $(\"#aqiText\").text(AQIStatus);
-             $(\"#result\").show();
-             ScrollTo('calculator');
-          </script>
-          
-          
-    ";
-
-    header("location: aqi-calculator.php");
-}
 
 if (isset($_POST['submit'])) {
+    require_once("class/dbFunctions.php");
 
+    $aqicvCalcu = new AQICalculator();
     if(isset($_GET["calculator"]))
     {
         $data = $_GET["calculator"];
 
         if($data == "CVA"){
-            GetAQI();
+            $aqicvCalcu->GetAQI();
         }else{
-            GetCV();
+            $aqicvCalcu->GetCV();
         }
     }else{
-        GetAQI();
+        $aqicvCalcu->GetAQI();
     }
-
 }
 ?>
 </body>

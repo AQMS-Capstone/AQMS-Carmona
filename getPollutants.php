@@ -6,7 +6,7 @@
  * Time: 10:04 PM
  */
 
-include('public/include/db_connect.php');
+include('class/db_connect.php');
 
 
 $area = $_GET['area'];
