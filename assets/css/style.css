@@ -1,0 +1,291 @@
+body {
+
+}
+
+.nav-wrapper {
+    background-color: #009688;
+}
+
+.brand-logo {
+    margin-top: 5px;
+    height: 50px;
+}
+
+.scroll {
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+@media only screen and (max-width: 992px) {
+    .scroll:hover {
+        overflow-x: scroll;
+    }
+}
+
+.scroll:hover {
+    overflow-y: scroll;
+
+}
+
+.brand-logo {
+    margin-top: 10px;
+}
+
+.material-icons {
+    vertical-align: -5px;
+}
+
+form {
+    margin-bottom: 0;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+
+.bottom {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 150, 136, 0.3);
+    background-color: #009688;
+    height: 5px;
+}
+
+.elementName, .elementCurrent {
+    font-weight: bold;
+}
+
+.elementMin {
+    color: #2196F3;
+}
+
+.elementMax {
+    color: #b71c1c;
+}
+
+.labels {
+    color: #212121;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    white-space: nowrap;
+    width: 40px;
+}
+
+@media only screen and (min-width: 601px) {
+    .left-align-on-med-and-up {
+        text-align: left;
+    }
+}
+
+nav {
+    height: 60px;
+    line-height: 60px;
+}
+
+footer.page-footer .footer-copyright {
+    background-color: #009688
+}
+
+#legends nav ul li {
+    margin: 0 5px 0 5px;
+}
+.img-parallax{
+
+    -webkit-filter: drop-shadow(50px 50px 50px rgba(0,0,0,0.16));
+    filter:         drop-shadow(50px 50px 50px rgba(0,0,0,0.16));
+}
+
+@media only screen and (min-width: 1200px) {
+    .centered-legend {
+        float: right;
+        position: relative;
+        left: -22%;
+    }
+
+    .centered-nav {
+        float: right;
+        position: relative;
+        left: -25%;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+    .centered-legend {
+        float: right;
+        position: relative;
+        left: 25%;
+    }
+
+    .centered-nav {
+        float: right;
+        position: relative;
+        left: -25%;
+    }
+}
+
+@media only screen and (min-width: 1700px) {
+    .centered-legend {
+        float: right;
+        position: relative;
+        left: 9%;
+    }
+
+    .centered-nav {
+        float: right;
+        position: relative;
+        left: -30%;
+    }
+}
+
+nav.navbar-fixed {
+    height: 45px;
+    line-height: 45px;
+}
+
+nav ul.black-text a {
+    color: #444;
+}
+
+.emphasize-text {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.page-footer {
+    border-top: solid;
+    border-color: #e0e0e0;
+    border-width: 1px;
+}
+
+.date {
+    color: #212121 !important;
+    border-bottom: 1px solid #9e9e9e !important;
+    padding: 0 !important;
+}
+
+.input-date {
+
+}
+
+.caption {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.img-small {
+    width: 150px;
+    height: 150px;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    padding: 15px 5px;
+    border-radius: 0px;
+    border-bottom: 1px solid #e0e0e0;
+
+}
+
+.btn-flat:hover {
+    background-color: transparent;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 0;
+}
+
+.input-date-time {
+
+}
+
+.flatpickr label {
+    top: 0px;
+    font-size: 0.8rem;
+}
+
+#googleMap {
+    position: absolute;
+    top: 154px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.form-card {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 15px;
+    position: relative;
+}
+
+.card, .form-card {
+    transition: all 0.3s ease-in;
+}
+
+@media only screen and (max-width: 992px) {
+    .float-card {
+        width: 106%;
+        top: 5%;
+        max-height: 100%;
+        margin-left: -0.75rem;
+
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .float-card {
+        position: absolute;
+        right: 0.5%;
+        margin: 0.5rem 0.5rem 1rem 0;
+        z-index: 997;
+        width: 50%;
+        top: 29%;
+        max-height: 445px;
+    }
+}
+
+
+.side-nav .collapsible-header{
+   padding: 0 ;
+}
+
+.row-no-after {
+    content: none;
+}
+
+.img-circle {
+    border-radius: 50%;
+
+}
+
+.tabs .tab a {
+    color: #009688;
+
+}
+
+.tabs .tab a:hover {
+    color: #B2DFDB;
+
+}
+
+.tabs .indicator {
+    background-color: #009688;
+}
+
+td, th {
+    padding: 5px 2px;
+}
