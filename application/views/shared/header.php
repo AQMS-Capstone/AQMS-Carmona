@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title><?php echo $title; ?></title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/materialize.min.css"); ?>" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link rel="stylesheet" href="<?php echo base_url("assets/css/style.css"); ?>" rel="stylesheet" media="screen">
 
     <link rel="icon" href="<?php echo base_url("assets/favicon.ico"); ?>" type="image/x-icon">
@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div>
     <nav class="z-depth-1" style="height: 70px;">
         <div class="nav-wrapper">
-            <a id="logo" href="index.php"><img class="brand-logo center" alt="Brand Logo" src="<?php echo base_url("assets/logo.png"); ?>"> </a>
+            <a id="logo" href="index.php"><img class="brand-logo center" alt="Brand Logo" src="<?php echo site_url("assets/logo.png"); ?>"> </a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="side-nav" id="mobile-demo">
                 <li class="teal z-depth-1"><a id="logo" href="index.php"><img alt="Brand Logo" class="center"

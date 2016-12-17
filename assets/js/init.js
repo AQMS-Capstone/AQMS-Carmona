@@ -5,7 +5,7 @@ $( document ).ready(function(){
     $("#reports").hide();
     $('select').material_select();
     $('.parallax').parallax();
-    $('.modal-trigger').leanModal();
+    $('.modal-trigger').modal();
     $('.collapsible').collapsible();
 })
 
