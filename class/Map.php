@@ -744,6 +744,11 @@ function Generate($name)
     $area_generate->date_gathered = $data_container[2];
   }
 
+  if($area_generate->date_gathered != ""){
+    //$area_generate->date_gathered = date("l, F d Y, h:i a", strtotime($area_generate->date_gathered));
+    $area_generate->date_gathered = date("F d, Y @ h:i a", strtotime($area_generate->date_gathered));
+  }
+
 // --------- TO SUPPORT VALIDATIONS IN CAQMS-API.JS --------- //
 
   $area_generate->co_max = max($area_generate->co_aqi_values);
