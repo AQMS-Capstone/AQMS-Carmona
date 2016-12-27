@@ -89,8 +89,8 @@ function initialize()
     var bancalMarker = new MarkerWithLabel({
         position: bancal,
         map: map,
-        labelContent: bancal_area.prevalentPollutant +", "+ bancal_area.AQI,
-        labelAnchor: new google.maps.Point(70, 75),
+        labelContent:  bancal_area.displayPointName,
+        labelAnchor: new google.maps.Point(bancal_area.displayPointX, 80),
         labelClass: "labels", // the CSS class for the label
         labelInBackground: false,
     });
@@ -98,8 +98,8 @@ function initialize()
     var slexMarker = new MarkerWithLabel({
         position: slex,
         map: map,
-        labelContent: slex_area.prevalentPollutant +", "+ slex_area.AQI,
-        labelAnchor: new google.maps.Point(60, 75), //ETO YUNG DAPAT ICENTER, STATIC KO MUNA
+        labelContent: slex_area.displayPointName,
+        labelAnchor: new google.maps.Point(slex_area.displayPointX, 80), //ETO YUNG DAPAT ICENTER, STATIC KO MUNA
         labelClass: "labels", // the CSS class for the label
         labelInBackground: false,
     });
