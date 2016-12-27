@@ -28,6 +28,6 @@ class Map_model extends CI_Model{
         $this->db->order_by('TIMESTAMP', 'ASC');
 
         $query = $this->db->get();
-        return $query->row_array();
+        return $query;
     }
 }
