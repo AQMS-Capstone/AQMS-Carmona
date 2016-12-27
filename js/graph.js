@@ -1,7 +1,7 @@
 /**
  * Created by Skullpluggery on 10/28/2016.
  */
-google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.load('current', {packages: ['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawBasic);
 
 function createGraph(data_pollutant, chartNames)
@@ -47,7 +47,7 @@ function createGraph(data_pollutant, chartNames)
       colors: ['#009688'],
   };
 
-  var chart = new google.visualization.LineChart(
+  var chart = new google.visualization.ColumnChart(
       document.getElementById(chartNames));
 
   chart.draw(data, options);
