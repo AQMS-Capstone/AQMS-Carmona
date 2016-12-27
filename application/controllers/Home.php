@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-header('Access-Control-Allow-Origin: *');
 class Home extends CI_Controller {
 
 	/**
@@ -23,7 +22,6 @@ class Home extends CI_Controller {
 	{
         $data['title'] = 'Air Quality Monitoring System';
 
-        $this->load->helper('url');
         $this->load->view('/shared/header', $data);
 		$this->load->view('home');
 	}
