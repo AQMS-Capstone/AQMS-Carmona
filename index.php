@@ -9,12 +9,7 @@
     <link rel="icon" href="/res/favicon.ico" type="image/x-icon"/>
 
     <?php
-    /**
-     * Created by PhpStorm.
-     * User: Skullpluggery
-     * Date: 8/13/2016
-     * Time: 7:00 PM
-     */
+
     include("class/Map.php");
     ?>
 
@@ -22,7 +17,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
     <meta property="og:url"                content="http://aqms.mcl-ccis.net/" />
     <meta property="og:type"               content="website" />

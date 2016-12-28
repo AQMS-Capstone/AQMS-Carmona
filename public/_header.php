@@ -1,17 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Skullpluggery
- * Date: 8/13/2016
- * Time: 7:00 PM
- */
-
-?>
-
 <div>
     <nav class="z-depth-1" style="height: 70px;">
         <div class="nav-wrapper">
-            <a id="logo" href="index.php"><img class="brand-logo center" alt="Brand Logo" src="res/logo.png"> </a>
+            <a id="logo" href="http://aqms.mcl-ccis.net/"><img class="brand-logo center" alt="Brand Logo" src="res/logo.png"> </a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="side-nav" id="mobile-demo">
                 <li class="teal z-depth-1"><a id="logo" href="index.php"><img alt="Brand Logo" class="center" src="res/logo.png" style="height: 45px;"> </a></li>
