@@ -1,8 +1,3 @@
-/**
- * Created by Skullpluggery on 10/28/2016.
- */
-//google.charts.load('current', {packages: ['corechart', 'bar']});
-//google.charts.setOnLoadCallback(drawBasic);
 
 drawBasic();
 
@@ -20,7 +15,8 @@ function createGraph(data_pollutant, chartNames, rolling_time)
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontSize: 9
                     },
                     gridLines: {
                         display: false
@@ -29,6 +25,9 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                 xAxes: [{
                     barPercentage: .98,
                     categoryPercentage: .98,
+                    ticks: {
+                        fontSize: 9
+                    },
                     gridLines: {
                         display: false
                     }
