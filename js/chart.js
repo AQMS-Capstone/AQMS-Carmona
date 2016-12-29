@@ -6,6 +6,13 @@ let barChart = new Chart(CHART,{
         scaleShowLabels : false,
         legend:{
             display : false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
         }
     },
     type: 'bar',
@@ -20,6 +27,7 @@ let barChart = new Chart(CHART,{
                     '#FF9800',
                     '#f44336',
                     '#9C27B0',
+                    '#b71c1c',
                     '#b71c1c'
                 ],
                 data: [65, 59, 80, 81, 56, 55, 40],
