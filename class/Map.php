@@ -49,6 +49,7 @@ class Area{
   var $tsp_max = 0;
   var $displayPointX = 0;
   var $displayPointName = "";
+  var $rolling_time = array();
 
   function Area(){}
 }
@@ -621,6 +622,53 @@ function AQIValues($max_value, $hour_value, $pollutant_aqi_values)
 
   return $data_container;
 }
+function GetRollingTime($hour_value)
+{
+  $hours_literal = array();
+  $hours_needed = array();
+  $dayValues = [23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
+
+  if ($hour_value < 8) {
+    $ctr = 6 - $hour_value;
+
+    for ($i = 0; $i <= $ctr; $i++) { // NEEDED
+      array_unshift($hours_literal, $dayValues[$i]);
+      array_unshift($hours_needed, $dayValues[$i]);
+    }
+
+    for ($i = 0; $i <= $hour_value; $i++) { // NEEDED
+      array_push($hours_literal, $i);
+      array_push($hours_needed, $i);
+    }
+
+    for ($i = 0; $i < 24; $i++) { // COMPLETE 24 HOURS
+      if (in_array($dayValues[$i], $hours_literal) == false) {
+        array_unshift($hours_literal, $dayValues[$i]);
+      }
+    }
+  } else {
+    $begin = $hour_value - 7;
+
+    for ($i = $begin; $i <= $hour_value; $i++) { // THIS NEEDED
+      array_push($hours_literal, $i);
+      array_push($hours_needed, $i);
+    }
+
+    for ($i = $begin; $i >= 0; $i--) { // COMPLETE 24 HOURS
+      if (in_array($i, $hours_literal) == false) { // COMPLETE 24 HOURS
+        array_unshift($hours_literal, $i);
+      }
+    }
+
+    for ($i = 0; $i < 24; $i++) {
+      if (in_array($dayValues[$i], $hours_literal) == false) { // COMPLETE 24 HOURS
+        array_unshift($hours_literal, $dayValues[$i]);
+      }
+    }
+  }
+
+  return $hours_literal;
+}
 function Generate($name)
 {
   $area_generate = new Area();
@@ -638,6 +686,10 @@ function Generate($name)
   $date_yesterday_string = $date_yesterday . " 00:00:00";
 
   $hour_value = date("H"); // < --------- CURRENT HOUR --------- >
+
+  // --------- SET ROLLING TIME --------- //
+
+  $area_generate->rolling_time = GetRollingTime($hour_value);
 
   // --------- GUIDELINE VALUES --------- //
 
@@ -881,7 +933,8 @@ if(isset($_GET["area"]))
       prevalent_value: data.aqi_values[data.prevalentIndex[0]],
       displayName: displayName,
       displayPointName: data.displayPointName,
-      displayPointX: data.displayPointX
+      displayPointX: data.displayPointX,
+      rolling_time: data.rolling_time
     };
   }
 
@@ -890,4 +943,3 @@ if(isset($_GET["area"]))
 
   var area_chosen = "<?= $area_chosen_name ?>";
 </script>
-

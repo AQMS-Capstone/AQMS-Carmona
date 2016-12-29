@@ -39,7 +39,8 @@
 <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
 <script src="js/caqms-api.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
-<script src="js/chart.js"></script>
+<script src="js/graph.js"></script>
+<!--<script src="js/chart.js"></script>-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>

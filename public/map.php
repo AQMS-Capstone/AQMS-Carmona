@@ -109,7 +109,7 @@ if(isset($_GET["area"]))
                                                 echo "<tr>";
                                                 echo "<td class='elementName' id='$elementName'>NaN</td>";
                                                 echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                                echo "<td><div class='chart'><canvas id='myChart'></canvas></div></td>";
+                                                echo "<td><div class='chart'><canvas id='$chartName'></canvas></div></td>";
                                                 echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
                                                 echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
                                                 echo "</tr>";

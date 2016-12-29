@@ -1,11 +1,78 @@
 /**
  * Created by Skullpluggery on 10/28/2016.
  */
-google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawBasic);
+//google.charts.load('current', {packages: ['corechart', 'bar']});
+//google.charts.setOnLoadCallback(drawBasic);
 
-function createGraph(data_pollutant, chartNames)
+drawBasic();
+
+function createGraph(data_pollutant, chartNames, rolling_time)
 {
+    const CHART = document.getElementById(chartNames);
+    let barChart = new Chart(CHART, {
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            scaleShowLabels: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: .98,
+                    categoryPercentage: .98,
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        },
+        type: 'bar',
+        data: {
+            labels: [rolling_time[0].toString(), rolling_time[1].toString(), rolling_time[2].toString(), rolling_time[3].toString(), rolling_time[4].toString(), rolling_time[5].toString(), rolling_time[6].toString(), rolling_time[7].toString(), rolling_time[8].toString(), rolling_time[9].toString(), rolling_time[10].toString(), rolling_time[11].toString(), rolling_time[12].toString(), rolling_time[13].toString(), rolling_time[14].toString(), rolling_time[15].toString(), rolling_time[16].toString(), rolling_time[17].toString(), rolling_time[18].toString(), rolling_time[19].toString(), rolling_time[20].toString(), rolling_time[21].toString(), rolling_time[22].toString(), rolling_time[23].toString()],
+            datasets: [
+                {
+                    label: "AQI",
+                    backgroundColor: [
+                        determineBG(data_pollutant[0]),
+                        determineBG(data_pollutant[1]),
+                        determineBG(data_pollutant[2]),
+                        determineBG(data_pollutant[3]),
+                        determineBG(data_pollutant[4]),
+                        determineBG(data_pollutant[5]),
+                        determineBG(data_pollutant[6]),
+                        determineBG(data_pollutant[7]),
+                        determineBG(data_pollutant[8]),
+                        determineBG(data_pollutant[9]),
+                        determineBG(data_pollutant[10]),
+                        determineBG(data_pollutant[11]),
+                        determineBG(data_pollutant[12]),
+                        determineBG(data_pollutant[13]),
+                        determineBG(data_pollutant[14]),
+                        determineBG(data_pollutant[15]),
+                        determineBG(data_pollutant[16]),
+                        determineBG(data_pollutant[17]),
+                        determineBG(data_pollutant[18]),
+                        determineBG(data_pollutant[19]),
+                        determineBG(data_pollutant[20]),
+                        determineBG(data_pollutant[21]),
+                        determineBG(data_pollutant[22]),
+                        determineBG(data_pollutant[23])
+                    ],
+                    data: [data_pollutant[0], data_pollutant[1], data_pollutant[2], data_pollutant[3], data_pollutant[4], data_pollutant[5], data_pollutant[6], data_pollutant[7], data_pollutant[8], data_pollutant[9], data_pollutant[10], data_pollutant[11], data_pollutant[12], data_pollutant[13], data_pollutant[14], data_pollutant[15], data_pollutant[16], data_pollutant[17], data_pollutant[18], data_pollutant[19], data_pollutant[20], data_pollutant[21], data_pollutant[22], data_pollutant[23]],
+                }
+            ]
+        }
+    });
+    /*
   var data = new google.visualization.DataTable();
   data.addColumn('timeofday', 'Time of Day');
   data.addColumn('number', 'AQI Level');
@@ -51,6 +118,7 @@ function createGraph(data_pollutant, chartNames)
       document.getElementById(chartNames));
 
   chart.draw(data, options);
+    */
 }
 
 function drawTheGraph(area_data)
@@ -100,7 +168,7 @@ function drawTheGraph(area_data)
       if(maxValue > -1)
       {
         var chartNames = "chart_div_" + (i+1);
-        createGraph(array_draw[i], chartNames);
+        createGraph(array_draw[i], chartNames, area_data.rolling_time);
       }
     }
   }
@@ -116,4 +184,26 @@ function drawBasic() {
   {
     drawTheGraph(slex_area);
   }
+}
+
+function determineBG(AQI){
+    var AirQuality = otherAir;
+
+    if(AQI >= 0 && AQI <= 50){
+        AirQuality = goodAir;
+    }else if(AQI >= 51 && AQI <= 100){
+        AirQuality = fairAir;
+    }else if(AQI >= 101 && AQI <= 150){
+        AirQuality = unhealthyAir;
+    }else if(AQI >= 151 && AQI <= 200){
+        AirQuality = veryUnhealthyAir;
+    }else if(AQI >= 201 && AQI <= 300){
+        AirQuality = acutelyUnhealthyAir;
+    }else if(AQI >= 301){
+        AirQuality = emergencyAir;
+    }else if(AQI == -1){
+        AirQuality = otherAir;
+    }
+
+    return AirQuality;
 }
