@@ -801,8 +801,11 @@ function Generate($name)
     $area_generate->displayPointX = $width / 2;
 
   }else{
-    $area_generate->displayPointName = "--";
-    $area_generate->displayPointX = 10;
+    $area_generate->displayPointName = "&nbsp-&nbsp";
+    $area_generate->displayPointX = 11;
+
+    //$area_generate->displayPointName = "offline";
+    //$area_generate->displayPointX = 25;
   }
 
   return $area_generate;
