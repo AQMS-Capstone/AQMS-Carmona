@@ -11,11 +11,17 @@ let barChart = new Chart(CHART,{
             yAxes: [{
                 ticks: {
                     beginAtZero: true
+                },
+                gridLines: {
+                    display:false
                 }
             }],
             xAxes: [{
                 barPercentage: .98,
-                categoryPercentage: .98
+                categoryPercentage: .98,
+                gridLines: {
+                    display:false
+                }
         }]
         }
     },
