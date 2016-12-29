@@ -12,12 +12,16 @@ let barChart = new Chart(CHART,{
                 ticks: {
                     beginAtZero: true
                 }
-            }]
+            }],
+            xAxes: [{
+                barPercentage: .98,
+                categoryPercentage: .98
+        }]
         }
     },
     type: 'bar',
     data: {
-        labels: ["BANO", "SI", "VONN", "HAHAHA", "PAKYU", "KA", "VONN"],
+        labels: ["01", "02", "03", "04", "05", "06", "07","08", "09", "10", "11", "12"],
         datasets: [
             {
                 label: "AQI",
@@ -27,10 +31,15 @@ let barChart = new Chart(CHART,{
                     '#FF9800',
                     '#f44336',
                     '#9C27B0',
+                    '#4CAF50',
                     '#b71c1c',
-                    '#b71c1c'
+                    '#4CAF50',
+                    '#FFEB3B',
+                    '#FF9800',
+                    '#f44336',
+                    '#f44336'
                 ],
-                data: [65, 59, 80, 81, 56, 55, 40],
+                data: [23, 22, 21, 20, 19, 18, 17,16, 15, 14, 13, 12],
             }
         ]
     }
