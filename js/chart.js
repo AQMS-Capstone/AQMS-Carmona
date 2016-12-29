@@ -2,31 +2,26 @@ const CHART = document.getElementById("myChart");
 let barChart = new Chart(CHART,{
     options: {
         maintainAspectRatio: false,
-        responsive: true
+        responsive: true,
+        scaleShowLabels : false,
+        legend:{
+            display : false
+        }
     },
     type: 'bar',
     data: {
         labels: ["BANO", "SI", "VONN", "HAHAHA", "PAKYU", "KA", "VONN"],
         datasets: [
             {
-                label: "My First dataset",
+                label: "AQI",
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    '#4CAF50',
+                    '#FFEB3B',
+                    '#FF9800',
+                    '#f44336',
+                    '#9C27B0',
+                    '#b71c1c'
                 ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1,
                 data: [65, 59, 80, 81, 56, 55, 40],
             }
         ]
