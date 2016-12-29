@@ -67,7 +67,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                         determineBG(data_pollutant[22]),
                         determineBG(data_pollutant[23])
                     ],
-                    data: [data_pollutant[0], data_pollutant[1], data_pollutant[2], data_pollutant[3], data_pollutant[4], data_pollutant[5], data_pollutant[6], data_pollutant[7], data_pollutant[8], data_pollutant[9], data_pollutant[10], data_pollutant[11], data_pollutant[12], data_pollutant[13], data_pollutant[14], data_pollutant[15], data_pollutant[16], data_pollutant[17], data_pollutant[18], data_pollutant[19], data_pollutant[20], data_pollutant[21], data_pollutant[22], data_pollutant[23]],
+                    data: [removeNegative(data_pollutant[0]), removeNegative(data_pollutant[1]), removeNegative(data_pollutant[2]), removeNegative(data_pollutant[3]), removeNegative(data_pollutant[4]), removeNegative(data_pollutant[5]), removeNegative(data_pollutant[6]), removeNegative(data_pollutant[7]), removeNegative(data_pollutant[8]), removeNegative(data_pollutant[9]), removeNegative(data_pollutant[10]), removeNegative(data_pollutant[11]), removeNegative(data_pollutant[12]), removeNegative(data_pollutant[13]), removeNegative(data_pollutant[14]), removeNegative(data_pollutant[15]), removeNegative(data_pollutant[16]), removeNegative(data_pollutant[17]), removeNegative(data_pollutant[18]), removeNegative(data_pollutant[19]), removeNegative(data_pollutant[20]), removeNegative(data_pollutant[21]), removeNegative(data_pollutant[22]), removeNegative(data_pollutant[23])],
                 }
             ]
         }
@@ -206,4 +206,12 @@ function determineBG(AQI){
     }
 
     return AirQuality;
+}
+
+function removeNegative(AQI){
+    if(AQI < 0){
+        AQI = 0;
+    }
+
+    return AQI;
 }
