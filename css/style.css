@@ -99,7 +99,10 @@ form {
         text-align: left;
     }
 }
-
+.chart{
+    height: 80px;
+    width: 100%;
+}
 nav {
     height: 60px;
     line-height: 60px;
