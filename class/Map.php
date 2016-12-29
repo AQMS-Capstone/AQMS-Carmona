@@ -62,6 +62,13 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
 
   $array_holder = array();
 
+  date_default_timezone_set('Asia/Manila');
+  $date_now = date("Y-m-d H").":00:00";
+  $date_beginning = date("Y-m-d H",time() - (86400*2) + (3600 * 2)).":00:00";
+
+  $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP <= '$date_now'  AND TIMESTAMP >= '$date_beginning' AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
+
+  /*
   if($hour_value == 0)
   {
     $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now_string') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
@@ -70,7 +77,7 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
   else
   {
     $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
-  }
+  }*/
 
   $result =  mysqli_query($con,$sql);
 
@@ -89,6 +96,64 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
   }
 
   return $array_holder;
+}
+function EightHrAveraging2($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
+{
+  $container = array();
+  $dates = GetRollingDates();
+
+  $ctr = 0;
+  $ave = 0;
+
+  $aqi_values = array();
+  $actual_values = array();
+  $date_gathered = "";
+
+  for ($i = 0; $i < 24; $i++) {
+    $ctrBegin = 23 - $i;
+    $ctrEnd = $ctrBegin + 7;
+
+    for ($j = $ctrBegin; $j <= $ctrEnd; $j++) { // NEEDED HOURS
+
+      for ($k = 0; $k < count($values); $k++) { //FIND CONCENTRATION VALUE OF THOSE HOURS FROM DB
+        if ($dates[$j] == $values[$k]->timestamp) {
+          if ($dates[$j] == date("Y-m-d H").":00:00") {
+            $date_gathered = $values[$k]->timestamp;
+          }
+
+          $ave += $values[$k]->concentration_value;
+          $ctr++;
+
+          break;
+        }
+
+      }
+    }
+
+    if ($ctr >= (8 * 0.75)) {
+      $ave = $ave / $ctr;
+      $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
+
+      if ($aqi_value > 400) {
+        $aqi_value = -1;
+      }
+
+      array_push($aqi_values, $aqi_value);
+      array_push($actual_values, $ave);
+    } else {
+      array_push($aqi_values, -1);
+      array_push($actual_values, -1);
+    }
+
+    $ave = 0;
+    $ctr = 0;
+  }
+
+  array_push($container, $aqi_values);
+  array_push($container, $actual_values);
+  array_push($container, $date_gathered);
+
+  return $container;
 }
 function EightHrAveraging($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
 {
@@ -601,6 +666,8 @@ function AQIValues($max_value, $hour_value, $pollutant_aqi_values)
 
   if($max_value >= 0)
   {
+    $data_container = $pollutant_aqi_values[23];
+    /*
     if($hour_value == 0)
     {
       $data_container = $pollutant_aqi_values[23];
@@ -611,7 +678,7 @@ function AQIValues($max_value, $hour_value, $pollutant_aqi_values)
     {
       $data_container = $pollutant_aqi_values[$hour_value-1];
       //array_push($area_aqi_values, $pollutant_aqi_values[$hour_value-1]);
-    }
+    }*/
   }
 
   else
@@ -668,6 +735,46 @@ function GetRollingTime($hour_value)
   }
 
   return $hours_literal;
+}
+function GetRollingDates()
+{
+  $dates = array();
+  $ctr = 0;
+
+  date_default_timezone_set('Asia/Manila');
+
+  for($i = 0; $i < 47; $i++){
+    $date_beginning = date("Y-m-d H",time() - $ctr).":00:00";
+    $ctr += 3600;
+
+    array_push($dates, $date_beginning);
+  }
+  return $dates;
+}
+function GetNeededTime_8($hour_value)
+{
+  $hours_needed = array();
+  $dayValues = [23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
+
+  if ($hour_value < 8) {
+    $ctr = 6 - $hour_value;
+
+    for ($i = 0; $i <= $ctr; $i++) { // NEEDED
+      array_unshift($hours_needed, $dayValues[$i]);
+    }
+
+    for ($i = 0; $i <= $hour_value; $i++) { // NEEDED
+      array_push($hours_needed, $i);
+    }
+  } else {
+    $begin = $hour_value - 7;
+
+    for ($i = $begin; $i <= $hour_value; $i++) { // THIS NEEDED
+      array_push($hours_needed, $i);
+    }
+  }
+
+  return $hours_needed;
 }
 function Generate($name)
 {
@@ -737,7 +844,7 @@ function Generate($name)
   }
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
-  $data_container = EightHrAveraging($area_generate->co_values, $hour_value, $co_guideline_values, $aqi_values, 1);
+  $data_container = EightHrAveraging2($area_generate->co_values, $hour_value, $co_guideline_values, $aqi_values, 1);
 
   $area_generate->co_aqi_values = $data_container[0];
   $area_generate->co_actual_values = $data_container[1];
@@ -795,6 +902,8 @@ function Generate($name)
   if ($data_container[2] != "") {
     $area_generate->date_gathered = $data_container[2];
   }
+
+  // --------- DATE FORMATTER --------- //
 
   if ($area_generate->date_gathered != "") {
     //$area_generate->date_gathered = date("l, F d Y, h:i a", strtotime($area_generate->date_gathered));
