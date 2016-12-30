@@ -221,7 +221,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <?php
 
 if (isset($_POST['submit'])) {
-    require_once("class/dbFunctions.php");
+    require_once("include/dbFunctions.php");
 
     $aqicvCalcu = new AQICalculator();
     if(isset($_GET["calculator"]))
