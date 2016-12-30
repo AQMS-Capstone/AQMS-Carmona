@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Skullpluggery
- * Date: 8/13/2016
- * Time: 7:00 PM
- */
-
-include("class/Map.php");
+include("include/Map.php");
 
 $synthesis = "";
 $health_effects = "";
@@ -22,30 +15,10 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>AQI Calculator - Air Quality Monitoring System</title>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
-
-    <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
-
-
-</head>
-
-<body>
-
-
-<?php include('public/_header.php'); ?>
-
+<?php
+define('WEB_TITLE', 'Calculator - Air Quality Monitoring System');
+include("include/header.php");
+?>
 <div id="content-holder">
     <div class="section">
         <h1 class="header center teal-text" style="margin-bottom: 0; padding-bottom: 0;"><span class="material-icons" style="font-size: 2em;">cloud</span></h1>
@@ -167,12 +140,8 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <br>
 
 
-<?php include('public/_footer.php'); ?>
+<?php include('include/footer.php'); ?>
 
-
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.min.js"></script>
-<script src="js/init.js"></script>
 <script src="js/aqi-calculator.js"></script>
 <script type="text/javascript">
 
@@ -221,7 +190,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <?php
 
 if (isset($_POST['submit'])) {
-    require_once("class/dbFunctions.php");
+    require_once("include/dbFunctions.php");
 
     $aqicvCalcu = new AQICalculator();
     if(isset($_GET["calculator"]))

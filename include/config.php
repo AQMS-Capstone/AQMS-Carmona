@@ -15,4 +15,3 @@ define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
 define("DB_DATABASE", "aqms");
-define('BASE_URL', 'http://http://localhost/aqms-carmona/');

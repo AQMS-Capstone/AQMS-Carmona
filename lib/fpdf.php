@@ -359,12 +359,12 @@ function AddPage($orientation='', $size='', $rotation=0)
 
 function Header()
 {
-	// To be implemented in your own inherited class
+	// To be implemented in your own inherited include
 }
 
 function Footer()
 {
-	// To be implemented in your own inherited class
+	// To be implemented in your own inherited include
 }
 
 function PageNo()
@@ -1003,7 +1003,7 @@ function Output($dest='', $name='', $isUTF8=false)
 				header('Content-Type: application/pdf');
 				header('Content-Disposition: inline; '.$this->_httpencode('filename',$name,$isUTF8));
 				header('Cache-Control: private, max-age=0, must-revalidate');
-				header('Pragma: public');
+				header('Pragma: include');
 			}
 			echo $this->buffer;
 			break;
@@ -1013,7 +1013,7 @@ function Output($dest='', $name='', $isUTF8=false)
 			header('Content-Type: application/x-download');
 			header('Content-Disposition: attachment; '.$this->_httpencode('filename',$name,$isUTF8));
 			header('Cache-Control: private, max-age=0, must-revalidate');
-			header('Pragma: public');
+			header('Pragma: include');
 			echo $this->buffer;
 			break;
 		case 'F':

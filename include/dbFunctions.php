@@ -68,7 +68,7 @@ class PDF extends FPDF
 class GPDF{
 
     function CheckPollutants($a_name, $p_name, $dFrom, $dTo){
-        include('class/db_connect.php');
+        include('include/db_connect.php');
         if($a_name == "" && $p_name == ""){
             $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
@@ -105,7 +105,7 @@ class GPDF{
 
     function GetPollutants($a_name, $p_name, $dFrom, $dTo, $order){
 
-        include('class/db_connect.php');
+        include('include/db_connect.php');
 
         $bancalData = array();
         $slexData = array();

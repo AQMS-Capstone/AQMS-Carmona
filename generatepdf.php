@@ -1,8 +1,8 @@
 <?php
 
 
-require_once 'class/db_connect.php';
-require_once 'class/dbFunctions.php';
+require_once 'include/db_connect.php';
+require_once 'include/dbFunctions.php';
 
 $areaIndex = 0;
 $pollutant = "";
@@ -177,7 +177,7 @@ try {
     }
     else  {
         $aqi_status = "Emergency";
-        $c_Statement = "Everyone should remain indoors, (keeping windows and doors closed unless heat stress is possible). Motor vehicle use should be prohibited except for emergency situations. Industrial activities, except that which is vital for public safety and health, should be curtailed";
+        $c_Statement = "Everyone should remain indoors, (keeping windows and doors closed unless heat stress is possible). Motor vehicle use should be prohibited except for emergency situations. Industrial activities, except that which is vital for include safety and health, should be curtailed";
         $health_Effects = "";
         $synthesis = "";
     }
@@ -188,7 +188,7 @@ try {
 
 
 
-// Instanciation of inherited class
+// Instanciation of inherited include
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
