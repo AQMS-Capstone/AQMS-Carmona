@@ -4,7 +4,7 @@ $statusMessage = ["", ""];
 
 function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statusMessage)
 {
-    include('class/db_connect.php');
+    include('include/db_connect.php');
 
     $query = "SELECT timestamp FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
     $result = mysqli_query($con, $query);
@@ -279,7 +279,7 @@ if (isset($_POST['btnSubmit'])) {
 </div>
 
 </div>
-<?php include('public/_footer.php'); ?>
+<?php include('public/footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>

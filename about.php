@@ -1,13 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Skullpluggery
- * Date: 8/13/2016
- * Time: 7:00 PM
- */
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +20,7 @@
 <body>
 
 
-<?php  include('public/_header.php'); ?>
+<?php  include('include/header.php'); ?>
 
 <div id="content-holder">
     <br>
@@ -131,7 +121,7 @@
 
 
 
-<?php  include('public/_footer.php'); ?>
+<?php  include('include/footer.php'); ?>
 
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

@@ -16,7 +16,7 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="teal-text">Links</h5>
                 <ul>
-                    <li><a class="orange-text" href="index.php">Home</a></li>
+                    <li><a class="orange-text" href="../public/index.php">Home</a></li>
                     <li><a class="orange-text" href="daily.php">Daily Reports</a></li>
                     <li><a class="orange-text" href="history.php">History Reports</a></li>
                     <li><a class="orange-text" href="aqi-calculator.php">AQI Calculator</a></li>

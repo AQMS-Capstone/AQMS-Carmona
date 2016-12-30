@@ -1,8 +1,8 @@
 <?php
 
 
-require_once 'class/db_connect.php';
-require_once 'class/dbFunctions.php';
+require_once 'include/db_connect.php';
+require_once 'include/dbFunctions.php';
 
 $areaIndex = 0;
 $pollutant = "";

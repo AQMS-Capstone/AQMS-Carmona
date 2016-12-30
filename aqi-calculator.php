@@ -6,7 +6,7 @@
  * Time: 7:00 PM
  */
 
-include("class/Map.php");
+include("include/Map.php");
 
 $synthesis = "";
 $health_effects = "";
@@ -44,7 +44,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <body>
 
 
-<?php include('public/_header.php'); ?>
+<?php include('include/header.php'); ?>
 
 <div id="content-holder">
     <div class="section">
@@ -167,7 +167,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <br>
 
 
-<?php include('public/_footer.php'); ?>
+<?php include('include/footer.php'); ?>
 
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

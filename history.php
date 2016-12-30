@@ -1,5 +1,5 @@
 <?php
-require_once 'class/dbFunctions.php';
+require_once 'include/dbFunctions.php';
 
 $error = false;
 $areaName = array('Select an area', 'SLEX', 'Bancal', 'All');
@@ -83,7 +83,7 @@ else{
 
 <body>
 
-<?php  include('public/_header.php'); ?>
+<?php  include('include/header.php'); ?>
 
 
 <div id="content-holder">
@@ -167,7 +167,7 @@ else{
 </div>
 
 
-<?php  include('public/_footer.php'); ?>
+<?php  include('include/footer.php'); ?>
 
 <!--<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

@@ -76,7 +76,7 @@
          * Time: 2:05 PM
          */
 
-        include('class/db_connect.php');
+        include('include/db_connect.php');
 
         $timestamp_array = array();
 
@@ -264,7 +264,7 @@
     <br><br>
 </div>
 
-<?php include('public/_footer.php'); ?>
+<?php include('include/footer.php'); ?>
 <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
 <script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
 <script src='js/materialize.min.js'></script>
