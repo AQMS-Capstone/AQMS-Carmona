@@ -19,7 +19,6 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 var area = getUrlParameter('area');
 
-
 $(document).ready(function () {
 
     if (area != null) {

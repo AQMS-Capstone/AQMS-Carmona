@@ -395,6 +395,64 @@ function TwentyFourHrAveraging($values, $hour_value, $guideline_values, $guideli
 
   return $container;
 }
+function TwentyFourHrAveraging2($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
+{
+  $container = array();
+  $dates = GetRollingDates();
+
+  $ctr = 0;
+  $ave = 0;
+
+  $aqi_values = array();
+  $actual_values = array();
+  $date_gathered = "";
+
+  for ($i = 0; $i < 24; $i++) {
+    $ctrBegin = 23 - $i;
+    $ctrEnd = $ctrBegin + 23;
+
+    for ($j = $ctrBegin; $j <= $ctrEnd; $j++) { // NEEDED HOURS
+
+      for ($k = 0; $k < count($values); $k++) { //FIND CONCENTRATION VALUE OF THOSE HOURS FROM DB
+        if ($dates[$j] == $values[$k]->timestamp) {
+          if ($dates[$j] == date("Y-m-d H").":00:00") {
+            $date_gathered = $values[$k]->timestamp;
+          }
+
+          $ave += $values[$k]->concentration_value;
+          $ctr++;
+
+          break;
+        }
+
+      }
+    }
+
+    if ($ctr >= (24 * 0.75)) {
+      $ave = $ave / $ctr;
+      $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
+
+      if ($aqi_value > 400) {
+        $aqi_value = -1;
+      }
+
+      array_push($aqi_values, $aqi_value);
+      array_push($actual_values, $ave);
+    } else {
+      array_push($aqi_values, -1);
+      array_push($actual_values, -1);
+    }
+
+    $ave = 0;
+    $ctr = 0;
+  }
+
+  array_push($container, $aqi_values);
+  array_push($container, $actual_values);
+  array_push($container, $date_gathered);
+
+  return $container;
+}
 function OneHrAveraging($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
 {
   $container = array();
@@ -491,6 +549,64 @@ function OneHrAveraging($values, $hour_value, $guideline_values, $guideline_aqi_
       array_push($aqi_values, -1);
       array_push($actual_values, -1);
     }
+  }
+
+  array_push($container, $aqi_values);
+  array_push($container, $actual_values);
+  array_push($container, $date_gathered);
+
+  return $container;
+}
+function OneHrAveraging2($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
+{
+  $container = array();
+  $dates = GetRollingDates();
+
+  $ctr = 0;
+  $ave = 0;
+
+  $aqi_values = array();
+  $actual_values = array();
+  $date_gathered = "";
+
+  for ($i = 0; $i < 24; $i++) {
+    $ctrBegin = 23 - $i;
+    $ctrEnd = $ctrBegin;
+
+    for ($j = $ctrBegin; $j <= $ctrEnd; $j++) { // NEEDED HOURS
+
+      for ($k = 0; $k < count($values); $k++) { //FIND CONCENTRATION VALUE OF THOSE HOURS FROM DB
+        if ($dates[$j] == $values[$k]->timestamp) {
+          if ($dates[$j] == date("Y-m-d H").":00:00") {
+            $date_gathered = $values[$k]->timestamp;
+          }
+
+          $ave += $values[$k]->concentration_value;
+          $ctr++;
+
+          break;
+        }
+
+      }
+    }
+
+    if ($ctr >= (1 * 0.75)) {
+      $ave = $ave / $ctr;
+      $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
+
+      if ($aqi_value > 400) {
+        $aqi_value = -1;
+      }
+
+      array_push($aqi_values, $aqi_value);
+      array_push($actual_values, $ave);
+    } else {
+      array_push($aqi_values, -1);
+      array_push($actual_values, -1);
+    }
+
+    $ave = 0;
+    $ctr = 0;
   }
 
   array_push($container, $aqi_values);
@@ -854,7 +970,7 @@ function Generate($name)
   }
 
 // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
-  $data_container = TwentyFourHrAveraging($area_generate->so2_values, $hour_value, $sufur_guideline_values, $aqi_values, 3);
+  $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $aqi_values, 3);
 
   $area_generate->so2_aqi_values = $data_container[0];
   $area_generate->so2_actual_values = $data_container[1];
@@ -864,7 +980,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
 
-  $data_container = OneHrAveraging($area_generate->no2_values, $hour_value, $no2_guideline_values, $aqi_values, 2);
+  $data_container = OneHrAveraging2($area_generate->no2_values, $hour_value, $no2_guideline_values, $aqi_values, 2);
 
   $area_generate->no2_aqi_values = $data_container[0];
   $area_generate->no2_actual_values = $data_container[1];
@@ -874,7 +990,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM O3 --------- //
 
-  $data_container = EightHrAveraging($area_generate->o3_values, $hour_value, $ozone_guideline_values_8, $aqi_values, 3);
+  $data_container = EightHrAveraging2($area_generate->o3_values, $hour_value, $ozone_guideline_values_8, $aqi_values, 3);
 
   $area_generate->o3_aqi_values = $data_container[0];
   $area_generate->o3_actual_values = $data_container[1];
@@ -885,7 +1001,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM PM 10 --------- //
 
-  $data_container = TwentyFourHrAveraging($area_generate->pm10_values, $hour_value, $pm_10_guideline_values, $aqi_values, 0);
+  $data_container = TwentyFourHrAveraging2($area_generate->pm10_values, $hour_value, $pm_10_guideline_values, $aqi_values, 0);
 
   $area_generate->pm10_aqi_values = $data_container[0];
   $area_generate->pm10_actual_values = $data_container[1];
@@ -895,7 +1011,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM TSP --------- // REMEMBER TO COMMENT AQI > 400 IN TSP!!
 
-  $data_container = TwentyFourHrAveraging($area_generate->tsp_values, $hour_value, $tsp_guideline_values, $aqi_values, 0);
+  $data_container = TwentyFourHrAveraging2($area_generate->tsp_values, $hour_value, $tsp_guideline_values, $aqi_values, 0);
 
   $area_generate->tsp_aqi_values = $data_container[0];
   $area_generate->tsp_actual_values = $data_container[1];

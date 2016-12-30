@@ -102,7 +102,6 @@ include("class/Map.php");
                                     </thead>
                                     <tbody>
                                     <?php
-
                                     function getAreaStatus2($area_data)
                                     {
                                         $untilValue = $area_data->aqi_values;
@@ -147,7 +146,7 @@ include("class/Map.php");
                                                     echo "<tr>";
                                                     echo "<td class='elementName' id='$elementName'>NaN</td>";
                                                     echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                                    echo "<td><div id='$chartName'></div></td>";
+                                                    echo "<td><div class='chart'><canvas id='$chartName'></canvas></div></td>";
                                                     echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
                                                     echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
                                                     echo "</tr>";
@@ -168,6 +167,8 @@ include("class/Map.php");
                                         else if($data == "Bancal") {
                                             getAreaStatus2($bancal);
                                         }
+                                    }else{
+                                        getAreaStatus2($bancal);
                                     }
                                     ?>
                                     </tbody>
@@ -183,12 +184,10 @@ include("class/Map.php");
         </div>
     </div>
 </div>
-
-
 <?php  include('public/_footer.php'); ?>
 
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 <script src="js/graph.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
