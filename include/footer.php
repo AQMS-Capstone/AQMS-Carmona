@@ -1,11 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Skullpluggery
- * Date: 10/26/2016
- * Time: 9:01 PM
- */?>
-
 <footer class="page-footer white black-text">
     <div class="container">
         <div class="row">
@@ -16,7 +8,7 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="teal-text">Links</h5>
                 <ul>
-                    <li><a class="orange-text" href="../public/index.php">Home</a></li>
+                    <li><a class="orange-text" href="index.php">Home</a></li>
                     <li><a class="orange-text" href="daily.php">Daily Reports</a></li>
                     <li><a class="orange-text" href="history.php">History Reports</a></li>
                     <li><a class="orange-text" href="aqi-calculator.php">AQI Calculator</a></li>
@@ -31,3 +23,6 @@
         </div>
     </div>
 </footer>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/init.js"></script>

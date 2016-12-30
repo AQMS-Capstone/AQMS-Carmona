@@ -1,34 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Skullpluggery
- * Date: 8/13/2016
- * Time: 7:00 PM
- */
+define("PAGE_TITLE", "Daily - Air Quality Monitoring System");
 include("include/Map.php");
+include('include/header.php');
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Daily - Air Quality Monitoring System</title>
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
-
-    <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
-    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
-
-
-</head>
-
-<body>
-<?php  include('include/header.php'); ?>
 
 <div id="content-holder">
     <br>
@@ -184,14 +160,11 @@ include("include/Map.php");
         </div>
     </div>
 </div>
-<?php  include('include/footer.php'); ?>
 
-<!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+<?php  include('include/footer.php'); ?>
+<!--Additional Scripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 <script src="js/graph.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.min.js"></script>
-<script src="js/init.js"></script>
 <script src="js/daily.js"></script>
 <script src="js/aqi-calculator.js"></script>
 </body>

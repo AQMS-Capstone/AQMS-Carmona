@@ -279,12 +279,8 @@ if (isset($_POST['btnSubmit'])) {
 </div>
 
 </div>
-<?php include('public/footer.php'); ?>
-
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.min.js"></script>
+<?php include('include/footer.php'); ?>
 <script src="js/flatpickr.min.js"></script>
-<script src="js/init.js"></script>
 <script type="text/javascript">
 
     $('#co_value').val('');
