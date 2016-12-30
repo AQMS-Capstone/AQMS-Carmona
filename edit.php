@@ -105,7 +105,7 @@ include("include/BASE_URL.php");
                     echo "<td>" . $row['e_name'] . "</td>";
                     echo "<td>" . $row['e_symbol'] . "</td>";
                     echo "<td>" . $row['concentration_value'] . "</td>";
-                    echo "<td><a data-target='" . $identifier . "' include='waves-effect waves-light btn modal-trigger'>Edit</button></td>";
+                    echo "<td><a data-target='" . $identifier . "' class='waves-effect waves-light btn modal-trigger'>Edit</button></td>";
                     echo "</tr>";
 
                     $step = 0;
@@ -143,98 +143,98 @@ include("include/BASE_URL.php");
                     }
 
                     echo "
-            <div id='" . $identifier . "' include='modal'>
+            <div id='" . $identifier . "' class='modal'>
                 
-                  <div include=\"modal-content\" style=\"padding: 24px 24px 0px 24px;\">
-                    <div include=\"row-no-after\">
-                      <div include='col s12'>
-                         <div include=\"row\">
-                            <div include=\"col s12\">
+                  <div class=\"modal-content\" style=\"padding: 24px 24px 0px 24px;\">
+                    <div class=\"row-no-after\">
+                      <div class='col s12'>
+                         <div class=\"row\">
+                            <div class=\"col s12\">
                                 <h4>Edit Concentration Value</h4>
-                                <div include=\"divider\"></div>
+                                <div class=\"divider\"></div>
                             </div>
                          </div>
                          
-                         <div include=\"row\">
-                            <div include=\"col s3\">
-                                <label include=\"teal-text emphasize-text\">Timestamp :</label>
+                         <div class=\"row\">
+                            <div class=\"col s3\">
+                                <label class=\"teal-text emphasize-text\">Timestamp :</label>
                             </div>
-                            <div include=\"col s7\">
+                            <div class=\"col s7\">
                                 <span>" . $row['timestamp'] . "</span>
                             </div>
                         </div>
                         
-                        <div include=\"row\">
-                            <div include=\"col s3\">
-                                <label include=\"teal-text emphasize-text\">Area Name :</label>
+                        <div class=\"row\">
+                            <div class=\"col s3\">
+                                <label class=\"teal-text emphasize-text\">Area Name :</label>
                             </div>
-                            <div include=\"col s7\">
+                            <div class=\"col s7\">
                                 <span>" . $row['area_name'] . "</span>
                             </div>
                         </div>
                         
-                        <div include=\"row\">
-                            <div include=\"col s3\">
-                                <label include=\"teal-text emphasize-text\">Element Name :</label>
+                        <div class=\"row\">
+                            <div class=\"col s3\">
+                                <label class=\"teal-text emphasize-text\">Element Name :</label>
                             </div>
-                            <div include=\"col s7\">
+                            <div class=\"col s7\">
                                 <span>" . $row['e_name'] . "</span>
                             </div>
                         </div>
                         
-                        <div include=\"row\">
-                            <div include=\"col s3\">
-                                <label include=\"teal-text emphasize-text\">Element Symbol :</label>
+                        <div class=\"row\">
+                            <div class=\"col s3\">
+                                <label class=\"teal-text emphasize-text\">Element Symbol :</label>
                             </div>
-                            <div include=\"col s7\">
+                            <div class=\"col s7\">
                                 <span>" . $row['e_symbol'] . "</span>
                             </div>
                         </div>
                         
-                        <div include=\"row\">
-                            <div include=\"col s3\">
-                                <label include=\"teal-text emphasize-text\">Concentration Value :</label>
+                        <div class=\"row\">
+                            <div class=\"col s3\">
+                                <label class=\"teal-text emphasize-text\">Concentration Value :</label>
                             </div>
-                            <div include=\"col s7\">
+                            <div class=\"col s7\">
                                 <span>" . $row['concentration_value'] . " " . $unit ."</span>
                             </div>
                         </div>";
 
                     if ($row['e_symbol'] == "TSP") {
                         echo "                                
-                                <div include=\"row\" style=\"margin-bottom: 0px;\">
-                                    <div include='input-field col s10'>
-                                        <input id='$identifier_input' name='so2_value' type='number' include='validate'
+                                <div class=\"row\" style=\"margin-bottom: 0px;\">
+                                    <div class='input-field col s10'>
+                                        <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                                min='$min'>
                                         <label>Enter new concentration value</label>
                                     </div>
-                                    <div include='input-field col s2'>
+                                    <div class='input-field col s2'>
                                         <label id='unit'>$unit</label>
                                     </div>
                                 </div>
                             ";
                     } else if ($row['e_symbol'] == "PM 10") {
                         echo "
-                                <div include=\"row\" style=\"margin-bottom: 0px;\">
-                                    <div include='input-field col s10'>
-                                        <input id='$identifier_input' name='so2_value' type='number' include='validate'
+                                <div class=\"row\" style=\"margin-bottom: 0px;\">
+                                    <div class='input-field col s10'>
+                                        <input id='$identifier_input' name='so2_value' type='number' class='validate'
                                                min='$min' max='$max'>
                                         <label>Enter new concentration value</label>
                                     </div>
-                                    <div include='input-field col s2'>
+                                    <div class='input-field col s2'>
                                         <label id='unit'>$unit</label>
                                     </div>
                                 </div>
                             ";
                     } else {
                         echo "
-                                <div include=\"row\" style=\"margin-bottom: 0px;\">
-                                    <div include='input-field col s10'>
-                                        <input id='$identifier_input' name='so2_value' type='number' include='validate' step='$step'
+                                <div class=\"row\" style=\"margin-bottom: 0px;\">
+                                    <div class='input-field col s10'>
+                                        <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
                                                min='$min' max='$max'>
                                         <label>Enter new concentration value</label>
                                     </div>
-                                    <div include='input-field col s2'>
+                                    <div class='input-field col s2'>
                                         <label id='unit'>$unit</label>
                                     </div>
                                 </div>
@@ -252,9 +252,9 @@ include("include/BASE_URL.php");
                 
                 
         </div>
-        <div include='modal-footer'>
-                    <a href='#!' include=' modal-action modal-close waves-effect waves-green btn-flat'>Cancel</a>
-                    <button id='btnSave' onclick='myFunction($value_time, $value_element, $identifier_input, $area, $e_id)' include='modal-action waves-effect waves-green btn-flat'>Save</button>
+        <div class='modal-footer'>
+                    <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Cancel</a>
+                    <button id='btnSave' onclick='myFunction($value_time, $value_element, $identifier_input, $area, $e_id)' class='modal-action waves-effect waves-green btn-flat'>Save</button>
                 </div>
             ";
                     $ctr++;
@@ -267,6 +267,7 @@ include("include/BASE_URL.php");
     <br><br>
 </div>
 <?php include('include/footer.php'); ?>
+<script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
 <script type='text/javascript'>
     function myFunction(timestamp, symbol, iden2, area, e_id) {
         var concentration_value = iden2.value;
