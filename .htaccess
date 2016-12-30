@@ -1,0 +1,2 @@
+RewriteEngine on
+ErrorDocument 403 /AQMS-Carmona/errors/403.php
