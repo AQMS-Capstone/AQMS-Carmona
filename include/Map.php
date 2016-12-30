@@ -109,9 +109,25 @@ function EightHrAveraging2($values, $hour_value, $guideline_values, $guideline_a
   $actual_values = array();
   $date_gathered = "";
 
+  // *- TO PREVENT HOURS W/O VALUES FROM DB TO HAVE AN AQI - OR IF DEEMED UNNECESSARY, MAY BE COMMENTED
+  $db_dates = array();
+
+  for ($k = 0; $k < count($values); $k++) {
+    array_push($db_dates, $values[$k]->timestamp);
+  }
+  // *-
+
   for ($i = 0; $i < 24; $i++) {
     $ctrBegin = 23 - $i;
     $ctrEnd = $ctrBegin + 7;
+
+    // *- TO PREVENT HOURS W/O VALUES FROM DB TO HAVE AN AQI - OR IF DEEMED UNNECESSARY, MAY BE COMMENTED
+    $exists = false;
+
+    if (in_array($dates[$ctrBegin], $db_dates)) {
+      $exists = true;
+    }
+    // *-
 
     for ($j = $ctrBegin; $j <= $ctrEnd; $j++) { // NEEDED HOURS
 
@@ -130,7 +146,7 @@ function EightHrAveraging2($values, $hour_value, $guideline_values, $guideline_a
       }
     }
 
-    if ($ctr >= (8 * 0.75)) {
+    if ($ctr >= (8 * 0.75) && $exists) { //* - REMOVE EXISTS IF UNNECESSARY
       $ave = $ave / $ctr;
       $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
@@ -407,9 +423,25 @@ function TwentyFourHrAveraging2($values, $hour_value, $guideline_values, $guidel
   $actual_values = array();
   $date_gathered = "";
 
+  // *- TO PREVENT HOURS W/O VALUES FROM DB TO HAVE AN AQI - OR IF DEEMED UNNECESSARY, MAY BE COMMENTED
+  $db_dates = array();
+
+  for ($k = 0; $k < count($values); $k++) {
+    array_push($db_dates, $values[$k]->timestamp);
+  }
+  // *-
+
   for ($i = 0; $i < 24; $i++) {
     $ctrBegin = 23 - $i;
     $ctrEnd = $ctrBegin + 23;
+
+    // *- TO PREVENT HOURS W/O VALUES FROM DB TO HAVE AN AQI - OR IF DEEMED UNNECESSARY, MAY BE COMMENTED
+    $exists = false;
+
+    if (in_array($dates[$ctrBegin], $db_dates)) {
+      $exists = true;
+    }
+    // *-
 
     for ($j = $ctrBegin; $j <= $ctrEnd; $j++) { // NEEDED HOURS
 
@@ -428,7 +460,7 @@ function TwentyFourHrAveraging2($values, $hour_value, $guideline_values, $guidel
       }
     }
 
-    if ($ctr >= (24 * 0.75)) {
+    if ($ctr >= (24 * 0.75) && $exists) { //* - REMOVE EXISTS IF UNNECESSARY
       $ave = $ave / $ctr;
       $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
