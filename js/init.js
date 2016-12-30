@@ -27,7 +27,7 @@ $("#calculator").off("click").on("click", function() {
 });
 
 $("#reports-tab").click(function () {
-    $("#content-holder").load('include/history.php');
+    $("#content-holder").load('public/history.php');
 })
 
 $("#home-tab").click(function () {

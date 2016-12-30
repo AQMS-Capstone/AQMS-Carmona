@@ -1,6 +1,12 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Kris
+ * Date: 11/27/2016
+ * Time: 10:04 PM
+ */
 
-include('include/db_connect.php');
+include('class/db_connect.php');
 
 
 $area = $_GET['area'];

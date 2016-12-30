@@ -1,8 +1,11 @@
 <?php
-require_once 'include/dbFunctions.php';
+require_once 'class/dbFunctions.php';
+
 $error = false;
 $areaName = array('Select an area', 'SLEX', 'Bancal', 'All');
 $row = 0;
+
+
 
 if(isset($_POST['btnGenerate']))
 {
@@ -56,11 +59,32 @@ else{
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<?php
-define('WEB_TITLE', 'History - Air Quality Monitoring System');
-include('include/header.php');
-?>
+    <title>History - Air Quality Monitoring System</title>
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
+
+
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+
+<?php  include('public/_header.php'); ?>
+
 
 <div id="content-holder">
     <br>
@@ -142,10 +166,15 @@ include('include/header.php');
     <br>
 </div>
 
-<?php  include('include/footer.php'); ?>
 
+<?php  include('public/_footer.php'); ?>
 
+<!--<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <script src="js/flatpickr.min.js"></script>
+<script src="js/init.js"></script>
+
 <script type="text/javascript">
     var area_name = ["slex", "bancal", "all"];
 

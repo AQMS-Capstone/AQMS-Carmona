@@ -744,7 +744,7 @@ if ($) {
       }
 
       var overlayID = _generateID();
-      var $overlay = $('<div include="lean-overlay"></div>');
+      var $overlay = $('<div class="lean-overlay"></div>');
       lStack = (++_stack);
 
       // Store a reference of the overlay
@@ -1001,7 +1001,7 @@ if ($) {
 
         // Add and animate caption if it exists
         if (origin.data('caption') !== "") {
-          var $photo_caption = $('<div include="materialbox-caption"></div>');
+          var $photo_caption = $('<div class="materialbox-caption"></div>');
           $photo_caption.text(origin.data('caption'));
           $('body').append($photo_caption);
           $photo_caption.css({ "display": "inline" });
@@ -1151,7 +1151,7 @@ if ($) {
                 'z-index': ''
               });
 
-              // Remove include
+              // Remove class
               origin.removeClass('active');
               doneAnimating = true;
               $(this).remove();
@@ -1254,7 +1254,7 @@ $(document).ready(function(){
       // If the location.hash matches one of the links, use that as the active tab.
       $active = $($links.filter('[href="'+location.hash+'"]'));
 
-      // If no match is found, use the first link or any with include 'active' as the initial active tab.
+      // If no match is found, use the first link or any with class 'active' as the initial active tab.
       if ($active.length === 0) {
         $active = $(this).find('li.tab a.active').first();
       }
@@ -1273,7 +1273,7 @@ $(document).ready(function(){
       }
 
       // append indicator then set indicator width to tab width
-      $this.append('<div include="indicator"></div>');
+      $this.append('<div class="indicator"></div>');
       var $indicator = $this.find('.indicator');
       if ($this.is(":visible")) {
         $indicator.css({"right": $tabs_width - (($index + 1) * $tab_width)});
@@ -1428,7 +1428,7 @@ $(document).ready(function(){
         setAttributes();
 
         var renderTooltipEl = function() {
-          var tooltip = $('<div include="material-tooltip"></div>');
+          var tooltip = $('<div class="material-tooltip"></div>');
 
           // Create Text span
           if (allowHtml) {
@@ -1443,7 +1443,7 @@ $(document).ready(function(){
             .attr('id', tooltipId);
 
           // Create backdrop
-          backdrop = $('<div include="backdrop"></div>');
+          backdrop = $('<div class="backdrop"></div>');
           backdrop.appendTo(tooltip);
           return tooltip;
         };
@@ -1799,7 +1799,7 @@ $(document).ready(function(){
                         continue;
                     }
 
-                    // Put element include and style to the specified parent
+                    // Put element class and style to the specified parent
                     var wrapper = document.createElement('i');
                     wrapper.className = el.className + ' waves-input-wrapper';
 
@@ -2102,7 +2102,7 @@ $(document).ready(function(){
         }
 
         // Add Touch Area
-        var dragTarget = $('<div include="drag-target"></div>');
+        var dragTarget = $('<div class="drag-target"></div>');
         $('body').append(dragTarget);
 
         if (options.edge == 'left') {
@@ -2811,7 +2811,7 @@ $(document).ready(function(){
       }
     };
 
-    // Radio and Checkbox focus include
+    // Radio and Checkbox focus class
     var radio_checkbox = 'input[type=radio], input[type=checkbox]';
     $(document).on('keyup.radio', radio_checkbox, function(e) {
       // TAB, check if tabbing to radio or checkbox.
@@ -2829,7 +2829,7 @@ $(document).ready(function(){
     // Textarea Auto Resize
     var hiddenDiv = $('.hiddendiv').first();
     if (!hiddenDiv.length) {
-      hiddenDiv = $('<div include="hiddendiv common"></div>');
+      hiddenDiv = $('<div class="hiddendiv common"></div>');
       $('body').append(hiddenDiv);
     }
     var text_area_selector = '.materialize-textarea';
@@ -2901,7 +2901,7 @@ $(document).ready(function(){
     var left;
 
     $(range_type).each(function () {
-      var thumb = $('<span include="thumb"><span include="value"></span></span>');
+      var thumb = $('<span class="thumb"><span class="value"></span></span>');
       $(this).after(thumb);
     });
 
@@ -2917,7 +2917,7 @@ $(document).ready(function(){
 
       // If thumb indicator does not exist yet, create it
       if (thumb.length <= 0) {
-        thumb = $('<span include="thumb"><span include="value"></span></span>');
+        thumb = $('<span class="thumb"><span class="value"></span></span>');
         $(this).after(thumb);
       }
 
@@ -3012,7 +3012,7 @@ $(document).ready(function(){
         // Check if data isn't empty
         if (!$.isEmptyObject(data)) {
           // Create autocomplete element
-          var $autocomplete = $('<ul include="autocomplete-content dropdown-content"></ul>');
+          var $autocomplete = $('<ul class="autocomplete-content dropdown-content"></ul>');
 
           // Append autocomplete element
           if ($inputDiv.length) {
@@ -3028,7 +3028,7 @@ $(document).ready(function(){
                 beforeMatch = $el.text().slice(0, matchStart),
                 matchText = $el.text().slice(matchStart, matchEnd + 1),
                 afterMatch = $el.text().slice(matchEnd + 1);
-            $el.html("<span>" + beforeMatch + "<span include='highlight'>" + matchText + "</span>" + afterMatch + "</span>");
+            $el.html("<span>" + beforeMatch + "<span class='highlight'>" + matchText + "</span>" + afterMatch + "</span>");
             if (img.length) {
               $el.prepend(img);
             }
@@ -3053,7 +3053,7 @@ $(document).ready(function(){
                     key.toLowerCase() !== val) {
                   var autocompleteOption = $('<li></li>');
                   if(!!data[key]) {
-                    autocompleteOption.append('<img src="'+ data[key] +'" include="right circle"><span>'+ key +'</span>');
+                    autocompleteOption.append('<img src="'+ data[key] +'" class="right circle"><span>'+ key +'</span>');
                   } else {
                     autocompleteOption.append('<span>'+ key +'</span>');
                   }
@@ -3106,9 +3106,9 @@ $(document).ready(function(){
 
       var uniqueID = Materialize.guid();
       $select.data('select-id', uniqueID);
-      var wrapper = $('<div include="select-wrapper"></div>');
+      var wrapper = $('<div class="select-wrapper"></div>');
       wrapper.addClass($select.attr('class'));
-      var options = $('<ul id="select-options-' + uniqueID +'" include="dropdown-content select-dropdown ' + (multiple ? 'multiple-select-dropdown' : '') + '"></ul>'),
+      var options = $('<ul id="select-options-' + uniqueID +'" class="dropdown-content select-dropdown ' + (multiple ? 'multiple-select-dropdown' : '') + '"></ul>'),
           selectChildren = $select.children('option, optgroup'),
           valuesSelected = [],
           optionsHover = false;
@@ -3127,22 +3127,22 @@ $(document).ready(function(){
         var classes = option.attr('class');
         if (!!icon_url) {
           var classString = '';
-          if (!!classes) classString = ' include="' + classes + '"';
+          if (!!classes) classString = ' class="' + classes + '"';
 
           // Check for multiple type.
           if (type === 'multiple') {
-            options.append($('<li include="' + disabledClass + '"><img src="' + icon_url + '"' + classString + '><span><input type="checkbox"' + disabledClass + '/><label></label>' + option.html() + '</span></li>'));
+            options.append($('<li class="' + disabledClass + '"><img src="' + icon_url + '"' + classString + '><span><input type="checkbox"' + disabledClass + '/><label></label>' + option.html() + '</span></li>'));
           } else {
-            options.append($('<li include="' + disabledClass + optgroupClass + '"><img src="' + icon_url + '"' + classString + '><span>' + option.html() + '</span></li>'));
+            options.append($('<li class="' + disabledClass + optgroupClass + '"><img src="' + icon_url + '"' + classString + '><span>' + option.html() + '</span></li>'));
           }
           return true;
         }
 
         // Check for multiple type.
         if (type === 'multiple') {
-          options.append($('<li include="' + disabledClass + '"><span><input type="checkbox"' + disabledClass + '/><label></label>' + option.html() + '</span></li>'));
+          options.append($('<li class="' + disabledClass + '"><span><input type="checkbox"' + disabledClass + '/><label></label>' + option.html() + '</span></li>'));
         } else {
-          options.append($('<li include="' + disabledClass + optgroupClass + '"><span>' + option.html() + '</span></li>'));
+          options.append($('<li class="' + disabledClass + optgroupClass + '"><span>' + option.html() + '</span></li>'));
         }
       };
 
@@ -3160,7 +3160,7 @@ $(document).ready(function(){
           } else if ($(this).is('optgroup')) {
             // Optgroup.
             var selectOptions = $(this).children('option');
-            options.append($('<li include="optgroup"><span>' + $(this).attr('label') + '</span></li>'));
+            options.append($('<li class="optgroup"><span>' + $(this).attr('label') + '</span></li>'));
 
             selectOptions.each(function() {
               appendOptionWithIcon($select, $(this), 'optgroup-option');
@@ -3199,14 +3199,14 @@ $(document).ready(function(){
       // Wrap Elements
       $select.wrap(wrapper);
       // Add Select Display Element
-      var dropdownIcon = $('<span include="caret">&#9660;</span>');
+      var dropdownIcon = $('<span class="caret">&#9660;</span>');
       if ($select.is(':disabled'))
         dropdownIcon.addClass('disabled');
 
       // escape double quotes
       var sanitizedLabelHtml = label.replace(/"/g, '&quot;');
 
-      var $newSelect = $('<input type="text" include="select-dropdown" readonly="true" ' + (($select.is(':disabled')) ? 'disabled' : '') + ' data-activates="select-options-' + uniqueID +'" value="'+ sanitizedLabelHtml +'"/>');
+      var $newSelect = $('<input type="text" class="select-dropdown" readonly="true" ' + (($select.is(':disabled')) ? 'disabled' : '') + ' data-activates="select-options-' + uniqueID +'" value="'+ sanitizedLabelHtml +'"/>');
       $select.before($newSelect);
       $newSelect.before(dropdownIcon);
 
@@ -3502,9 +3502,9 @@ $(document).ready(function(){
 
         // dynamically add indicators
         if (options.indicators) {
-          $indicators = $('<ul include="indicators"></ul>');
+          $indicators = $('<ul class="indicators"></ul>');
           $slides.each(function( index ) {
-            var $indicator = $('<li include="indicator-item"></li>');
+            var $indicator = $('<li class="indicator-item"></li>');
 
             // Handle clicks on indicators
             $indicator.click(function () {
@@ -3931,7 +3931,7 @@ $(document).ready(function(){
       $chips.data('chips').forEach(function(elem){
         html += self.renderChip(elem);
       });
-      html += '<input include="input" placeholder="">';
+      html += '<input class="input" placeholder="">';
       $chips.html(html);
       self.setPlaceholder($chips);
     };
@@ -3939,11 +3939,11 @@ $(document).ready(function(){
     this.renderChip = function(elem) {
       if (!elem.tag) return;
 
-      var html = '<div include="chip">' + elem.tag;
+      var html = '<div class="chip">' + elem.tag;
       if (elem.image) {
         html += ' <img src="' + elem.image + '"> ';
       }
-      html += '<i include="material-icons close">close</i>';
+      html += '<i class="material-icons close">close</i>';
       html += '</div>';
       return html;
     };
@@ -4575,7 +4575,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 // Remove the root.
                 P.$root.remove()
 
-                // Remove the input include, remove the stored data, and unbind
+                // Remove the input class, remove the stored data, and unbind
                 // the events (after a tick for IE - see `P.close`).
                 $ELEMENT.removeClass( CLASSES.input ).removeData( NAME )
                 setTimeout( function() {
@@ -4605,7 +4605,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 // If it’s already open, do nothing.
                 if ( STATE.open ) return P
 
-                // Add the “active” include.
+                // Add the “active” class.
                 $ELEMENT.addClass( CLASSES.active )
                 aria( ELEMENT, 'expanded', true )
 
@@ -4614,7 +4614,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 //   Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=625289
                 setTimeout( function() {
 
-                    // Add the “opened” include to the picker root.
+                    // Add the “opened” class to the picker root.
                     P.$root.addClass( CLASSES.opened )
                     aria( P.$root[0], 'hidden', false )
 
@@ -4723,7 +4723,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                     }, 0 )
                 }
 
-                // Remove the “active” include.
+                // Remove the “active” class.
                 $ELEMENT.removeClass( CLASSES.active )
                 aria( ELEMENT, 'expanded', false )
 
@@ -4732,7 +4732,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 //   Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=625289
                 setTimeout( function() {
 
-                    // Remove the “opened” and “focused” include from the picker root.
+                    // Remove the “opened” and “focused” class from the picker root.
                     P.$root.removeClass( CLASSES.opened + ' ' + CLASSES.focused )
                     aria( P.$root[0], 'hidden', true )
 
@@ -4953,19 +4953,19 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                         // Create the components nodes.
                         P.component.nodes( STATE.open ),
 
-                        // The picker box include
+                        // The picker box class
                         CLASSES.box
                     ),
 
-                    // Picker wrap include
+                    // Picker wrap class
                     CLASSES.wrap
                 ),
 
-                // Picker frame include
+                // Picker frame class
                 CLASSES.frame
             ),
 
-            // Picker holder include
+            // Picker holder class
             CLASSES.holder
         ) //endreturn
     } //createWrappedComponent
@@ -4982,7 +4982,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
             // Store the picker data by component name.
             data(NAME, P).
 
-            // Add the “input” include name.
+            // Add the “input” class name.
             addClass(CLASSES.input).
 
             // Remove the tabindex.
@@ -5067,7 +5067,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 }
             }).
 
-            // Add/remove the “target” include on focus and blur.
+            // Add/remove the “target” class on focus and blur.
             on({
                 focus: function() {
                     $ELEMENT.addClass( CLASSES.target )
@@ -5208,7 +5208,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
         // Stop the event from propagating to the doc.
         event.stopPropagation()
 
-        // If it’s a focus event, add the “focused” include to the root.
+        // If it’s a focus event, add the “focused” class to the root.
         if ( event.type == 'focus' ) {
             P.$root.addClass( CLASSES.focused )
         }
@@ -5368,8 +5368,8 @@ PickerConstructor._ = {
         // If the item is an array, do a join
         item = $.isArray( item ) ? item.join( '' ) : item
 
-        // Check for the include
-        klass = klass ? ' include="' + klass + '"' : ''
+        // Check for the class
+        klass = klass ? ' class="' + klass + '"' : ''
 
         // Check for any attributes
         attribute = attribute ? ' ' + attribute : ''
@@ -6776,22 +6776,22 @@ return _.node(
                                             // Add the `infocus` or `outfocus` classes based on month in view.
                                             klasses.push( viewsetObject.month == targetDate.month ? settings.klass.infocus : settings.klass.outfocus )
 
-                                            // Add the `today` include if needed.
+                                            // Add the `today` class if needed.
                                             if ( nowObject.pick == targetDate.pick ) {
                                                 klasses.push( settings.klass.now )
                                             }
 
-                                            // Add the `selected` include if something's selected and the time matches.
+                                            // Add the `selected` class if something's selected and the time matches.
                                             if ( isSelected ) {
                                                 klasses.push( settings.klass.selected )
                                             }
 
-                                            // Add the `highlighted` include if something's highlighted and the time matches.
+                                            // Add the `highlighted` class if something's highlighted and the time matches.
                                             if ( isHighlighted ) {
                                                 klasses.push( settings.klass.highlighted )
                                             }
 
-                                            // Add the `disabled` include if something's disabled and the object matches.
+                                            // Add the `disabled` class if something's disabled and the object matches.
                                             if ( isDisabled ) {
                                                 klasses.push( settings.klass.disabled )
                                             }
@@ -6945,7 +6945,7 @@ Picker.extend( 'pickadate', DatePicker )
   $.fn.characterCounter = function(){
     return this.each(function(){
       var $input = $(this);
-      var $counterElement = $input.parent().find('span[include="character-counter"]');
+      var $counterElement = $input.parent().find('span[class="character-counter"]');
 
       // character counter has already been added appended to the parent container
       if ($counterElement.length) {
@@ -6970,14 +6970,14 @@ Picker.extend( 'pickadate', DatePicker )
     actualLength      = +$(this).val().length,
     isValidLength     = actualLength <= maxLength;
 
-    $(this).parent().find('span[include="character-counter"]')
+    $(this).parent().find('span[class="character-counter"]')
                     .html( actualLength + '/' + maxLength);
 
     addInputStyle(isValidLength, $(this));
   }
 
   function addCounterElement($input) {
-    var $counterElement = $input.parent().find('span[include="character-counter"]');
+    var $counterElement = $input.parent().find('span[class="character-counter"]');
 
     if ($counterElement.length) {
       return;
@@ -6993,7 +6993,7 @@ Picker.extend( 'pickadate', DatePicker )
   }
 
   function removeCounterElement(){
-    $(this).parent().find('span[include="character-counter"]').html('');
+    $(this).parent().find('span[class="character-counter"]').html('');
   }
 
   function addInputStyle(isValidLength, $input){
@@ -7033,7 +7033,7 @@ Picker.extend( 'pickadate', DatePicker )
         var images, offset, center, pressed, dim, count,
             reference, referenceY, amplitude, target, velocity,
             xform, frame, timestamp, ticker, dragged, vertical_dragged;
-        var $indicators = $('<ul include="indicators"></ul>');
+        var $indicators = $('<ul class="indicators"></ul>');
 
 
         // Initialize
@@ -7078,7 +7078,7 @@ Picker.extend( 'pickadate', DatePicker )
         view.find('.carousel-item').each(function (i) {
           images.push($(this)[0]);
           if (showIndicators) {
-            var $indicator = $('<li include="indicator-item"></li>');
+            var $indicator = $('<li class="indicator-item"></li>');
 
             // Add active to first by default.
             if (i === 0) {

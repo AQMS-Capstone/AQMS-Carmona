@@ -1,3 +1,11 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Skullpluggery
+ * Date: 10/26/2016
+ * Time: 9:01 PM
+ */?>
+
 <footer class="page-footer white black-text">
     <div class="container">
         <div class="row">
@@ -23,8 +31,3 @@
         </div>
     </div>
 </footer>
-
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="<?php echo BASE_URL; ?>/js/materialize.js"></script>
-<script src="<?php echo BASE_URL; ?>/js/init.js"></script>
-

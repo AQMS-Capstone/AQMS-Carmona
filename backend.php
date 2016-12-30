@@ -1,10 +1,10 @@
 <?php
-include("include/BASE_URL.php");
+
 $statusMessage = ["", ""];
 
 function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statusMessage)
 {
-    include('include/db_connect.php');
+    include('class/db_connect.php');
 
     $query = "SELECT timestamp FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
     $result = mysqli_query($con, $query);
@@ -279,8 +279,12 @@ if (isset($_POST['btnSubmit'])) {
 </div>
 
 </div>
-<?php include('include/footer.php'); ?>
+<?php include('public/_footer.php'); ?>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <script src="js/flatpickr.min.js"></script>
+<script src="js/init.js"></script>
 <script type="text/javascript">
 
     $('#co_value').val('');

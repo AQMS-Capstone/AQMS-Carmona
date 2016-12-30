@@ -5,7 +5,7 @@
  * Date: 27/11/2016
  * Time: 7:47 PM
  */
-include('include/db_connect.php');
+include('class/db_connect.php');
 
 if(isset($_POST['timestamp']) && !empty($_POST['timestamp'])) {
     $timestamp = $_POST['timestamp'];

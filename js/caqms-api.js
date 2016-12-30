@@ -91,7 +91,7 @@ function initialize()
         map: map,
         labelContent:  bancal_area.displayPointName,
         labelAnchor: new google.maps.Point(bancal_area.displayPointX, 80),
-        labelClass: "labels", // the CSS include for the label
+        labelClass: "labels", // the CSS class for the label
         labelInBackground: false,
     });
 
@@ -100,7 +100,7 @@ function initialize()
         map: map,
         labelContent: slex_area.displayPointName,
         labelAnchor: new google.maps.Point(slex_area.displayPointX, 80), //ETO YUNG DAPAT ICENTER, STATIC KO MUNA
-        labelClass: "labels", // the CSS include for the label
+        labelClass: "labels", // the CSS class for the label
         labelInBackground: false,
     });
 

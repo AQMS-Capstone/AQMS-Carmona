@@ -58,7 +58,7 @@ class Area{
 
 function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $area, $date_now_string)
 {
-  require 'include/db_connect.php';
+  require 'class/db_connect.php';
 
   $array_holder = array();
 
