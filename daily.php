@@ -160,7 +160,6 @@ include('include/header.php');
         </div>
     </div>
 </div>
-
 <?php  include('include/footer.php'); ?>
 <!--Additional Scripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>

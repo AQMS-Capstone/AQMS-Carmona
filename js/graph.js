@@ -1,5 +1,5 @@
 
-drawBasic();
+
 
 function createGraph(data_pollutant, chartNames, rolling_time)
 {

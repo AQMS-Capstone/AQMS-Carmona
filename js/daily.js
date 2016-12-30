@@ -34,7 +34,7 @@ $(document).ready(function () {
     else {
         GetAreaStatus2(bancal_area);
     }
-
+    drawBasic();
     ScrollTo("content-holder");
 })
 

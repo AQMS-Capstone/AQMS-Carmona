@@ -233,7 +233,8 @@ function initialize()
             }
         }
 
-        $("#zoneStatus").show(1000);
+        $("#zoneStatus").show();
+        drawBasic();
     }
 
     var area = getUrlParameter('area');

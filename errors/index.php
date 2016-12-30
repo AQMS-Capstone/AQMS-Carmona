@@ -27,5 +27,6 @@ define('BASE_URL', 'http://localhost/aqms-carmona/');
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="<?php echo BASE_URL; ?>js/materialize.js"></script>
 <script src="<?php echo BASE_URL; ?>js/init.js"></script>
+
 </body>
 </html>
