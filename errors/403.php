@@ -4,7 +4,7 @@ define('BASE_URL', 'http://localhost/aqms-carmona/');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>403 Forbidden</title>
+	<title>403 Forbidden Access</title>
 	<link rel="icon" href="<?php echo BASE_URL; ?>res/favicon.ico" type="image/x-icon"/>
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
