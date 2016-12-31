@@ -16,7 +16,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontSize: 9
+                        fontSize: 8
                     },
                     gridLines: {
                         display: false
@@ -26,7 +26,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     barPercentage: .98,
                     categoryPercentage: .98,
                     ticks: {
-                        fontSize: 9
+                        fontSize: 8
                     },
                     gridLines: {
                         display: false
