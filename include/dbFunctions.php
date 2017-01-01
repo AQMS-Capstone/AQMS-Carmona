@@ -176,14 +176,7 @@ class GPDF{
 class AQICalculator{
     function GetAQI()
     {
-        $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
-        $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
-        $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
-        $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
-        $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
-        $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
-        $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
-        $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
+        require 'include/guidelines.php';
 
         $aqi = 0;
 
@@ -191,25 +184,25 @@ class AQICalculator{
         $element = $_POST["element"];
 
         if ($element == "CO") {
-            $aqi = round(calculateAQI($co_guideline_values, $concentration, 1, $aqi_values));
+            $aqi = round(calculateAQI($co_guideline_values, $concentration, 1, $guideline_aqi_values));
         }
         if ($element == "SO2") {
-            $aqi = round(calculateAQI($sufur_guideline_values, $concentration, 3, $aqi_values));
+            $aqi = round(calculateAQI($sufur_guideline_values, $concentration, 3, $guideline_aqi_values));
         }
         if ($element == "NO2") {
-            $aqi = round(calculateAQI($no2_guideline_values, $concentration, 2, $aqi_values));
+            $aqi = round(calculateAQI($no2_guideline_values, $concentration, 2, $guideline_aqi_values));
         }
         if ($element == "O3_8") {
-            $aqi = round(calculateAQI($ozone_guideline_values_8, $concentration, 3, $aqi_values));
+            $aqi = round(calculateAQI($ozone_guideline_values_8, $concentration, 3, $guideline_aqi_values));
         }
         if ($element == "O3_1") {
-            $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, 3, $aqi_values));
+            $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, 3, $guideline_aqi_values));
         }
         if ($element == "PM 10") {
-            $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, 0, $aqi_values));
+            $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, 0, $guideline_aqi_values));
         }
         if ($element == "TSP") {
-            $aqi = round(calculateAQI($tsp_guideline_values, $concentration, 0, $aqi_values));
+            $aqi = round(calculateAQI($tsp_guideline_values, $concentration, 0, $guideline_aqi_values));
         }
 
         echo "
@@ -232,14 +225,7 @@ class AQICalculator{
     }
 
     function GetCV(){
-        $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
-        $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
-        $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
-        $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
-        $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
-        $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
-        $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
-        $aqi_values = [[0,50], [51,100], [101,150], [151,200], [201,300], [301,400]];
+        require 'include/guidelines.php';
 
         $concentration = $_POST["concentration"];
         $element = $_POST["element"];
@@ -247,25 +233,25 @@ class AQICalculator{
         $concentration_value = 0;
 
         if ($element == "CO") {
-            $concentration_value = calculateConcentrationValue($co_guideline_values, $concentration, 1, $aqi_values);
+            $concentration_value = calculateConcentrationValue($co_guideline_values, $concentration, 1, $guideline_aqi_values);
         }
         if ($element == "SO2") {
-            $concentration_value = calculateConcentrationValue($sufur_guideline_values, $concentration, 3, $aqi_values);
+            $concentration_value = calculateConcentrationValue($sufur_guideline_values, $concentration, 3, $guideline_aqi_values);
         }
         if ($element == "NO2") {
-            $concentration_value = calculateConcentrationValue($no2_guideline_values, $concentration, 2, $aqi_values);
+            $concentration_value = calculateConcentrationValue($no2_guideline_values, $concentration, 2, $guideline_aqi_values);
         }
         if ($element == "O3_8") {
-            $concentration_value = calculateConcentrationValue($ozone_guideline_values_8, $concentration, 3, $aqi_values);
+            $concentration_value = calculateConcentrationValue($ozone_guideline_values_8, $concentration, 3, $guideline_aqi_values);
         }
         if ($element == "O3_1") {
-            $concentration_value = calculateConcentrationValue($ozone_guideline_values_1, $concentration, 3, $aqi_values);
+            $concentration_value = calculateConcentrationValue($ozone_guideline_values_1, $concentration, 3, $guideline_aqi_values);
         }
         if ($element == "PM 10") {
-            $concentration_value = calculateConcentrationValue($pm_10_guideline_values, $concentration, 0, $aqi_values);
+            $concentration_value = calculateConcentrationValue($pm_10_guideline_values, $concentration, 0, $guideline_aqi_values);
         }
         if ($element == "TSP") {
-            $concentration_value = calculateConcentrationValue($tsp_guideline_values, $concentration, 0, $aqi_values);
+            $concentration_value = calculateConcentrationValue($tsp_guideline_values, $concentration, 0, $guideline_aqi_values);
         }
 
         echo "

@@ -791,13 +791,7 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
 {
   $aqi = 0;
 
-  $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
-  $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
-  $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1,-1]]; // 8 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125,  0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
-  $pm_10_guideline_values = [[0, 54], [55, 154], [155,  254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
-  $tsp_guideline_values = [[0, 80], [81, 230], [231,  349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
+  require 'include/guidelines.php';
 
   for($x = 0; $x < count($gv); $x++)
   {
@@ -1088,14 +1082,7 @@ function Generate($name)
 
   // --------- GUIDELINE VALUES --------- //
 
-  $co_guideline_values = [[0.0, 4.4], [4.5, 9.4], [9.5, 12.4], [12.5, 15.4], [15.5, 30.4], [30.5, 40.4]]; // 8hr - ppm
-  $sufur_guideline_values = [[0.000, 0.034], [0.035, 0.144], [0.145, 0.224], [0.225, 0.304], [0.305, 0.604], [0.605, 0.804]]; // 24hr - ppm - CHANGE
-  $no2_guideline_values = [[-1, -1], [-1, -1], [-1, -1], [-1, -1], [0.65, 1.24], [1.25, 1.64]]; // 1 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_8 = [[0.000, 0.064], [0.065, 0.084], [0.085, 0.104], [0.105, 0.124], [0.125, 0.374], [-1, -1]]; // 8 hr - ppm // pbb - CHANGE
-  $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125, 0.164], [0.165, 0.204], [0.205, 0.404], [0.405, 0.504]]; // 1 hr - ppm // pbb
-  $pm_10_guideline_values = [[0, 54], [55, 154], [155, 254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
-  $tsp_guideline_values = [[0, 80], [81, 230], [231, 349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
-  $aqi_values = [[0, 50], [51, 100], [101, 150], [151, 200], [201, 300], [301, 400]];
+  require 'include/guidelines.php';
 
   // --------- GET VALUES FROM DB --------- //
 
@@ -1132,7 +1119,7 @@ function Generate($name)
   }
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
-  $data_container = EightHrAveraging2($area_generate->co_values, $hour_value, $co_guideline_values, $aqi_values, 1);
+  $data_container = EightHrAveraging2($area_generate->co_values, $hour_value, $co_guideline_values, $guideline_aqi_values, 1);
 
   $area_generate->co_aqi_values = $data_container[0];
   $area_generate->co_actual_values = $data_container[1];
@@ -1142,7 +1129,7 @@ function Generate($name)
   }
 
 // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
-  $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $aqi_values, 3);
+  $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, 3);
 
   $area_generate->so2_aqi_values = $data_container[0];
   $area_generate->so2_actual_values = $data_container[1];
@@ -1152,7 +1139,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
 
-  $data_container = OneHrAveraging2($area_generate->no2_values, $hour_value, $no2_guideline_values, $aqi_values, 2);
+  $data_container = OneHrAveraging2($area_generate->no2_values, $hour_value, $no2_guideline_values, $guideline_aqi_values, 2);
 
   $area_generate->no2_aqi_values = $data_container[0];
   $area_generate->no2_actual_values = $data_container[1];
@@ -1162,7 +1149,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM O3 --------- //
 
-  $data_container = EightHrAveraging2($area_generate->o3_values, $hour_value, $ozone_guideline_values_8, $aqi_values, 3);
+  $data_container = EightHrAveraging2($area_generate->o3_values, $hour_value, $ozone_guideline_values_8, $guideline_aqi_values, 3);
 
   $area_generate->o3_aqi_values = $data_container[0];
   $area_generate->o3_actual_values = $data_container[1];
@@ -1173,7 +1160,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM PM 10 --------- //
 
-  $data_container = TwentyFourHrAveraging2($area_generate->pm10_values, $hour_value, $pm_10_guideline_values, $aqi_values, 0);
+  $data_container = TwentyFourHrAveraging2($area_generate->pm10_values, $hour_value, $pm_10_guideline_values, $guideline_aqi_values, 0);
 
   $area_generate->pm10_aqi_values = $data_container[0];
   $area_generate->pm10_actual_values = $data_container[1];
@@ -1183,7 +1170,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM TSP --------- // REMEMBER TO COMMENT AQI > 400 IN TSP!!
 
-  $data_container = TwentyFourHrAveraging2($area_generate->tsp_values, $hour_value, $tsp_guideline_values, $aqi_values, 0);
+  $data_container = TwentyFourHrAveraging2($area_generate->tsp_values, $hour_value, $tsp_guideline_values, $guideline_aqi_values, 0);
 
   $area_generate->tsp_aqi_values = $data_container[0];
   $area_generate->tsp_actual_values = $data_container[1];
