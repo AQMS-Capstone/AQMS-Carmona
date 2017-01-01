@@ -211,6 +211,7 @@ function CalculateAveraging($element){
           $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
 
         }else{ // NO PRECEDING VALUE
+
           $ave = $element[$i]->concentration_value;
           $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
 //                    echo "2 DATESTRING ADD: ".$dateString;
@@ -227,7 +228,13 @@ function CalculateAveraging($element){
       }
 
       if($i == count($element) - 1){
-        $ave = $ave / $ctr;
+        $ave = $ave - $element[$i]->concentration_value;
+        $ctr--;
+
+        if($ctr > 0){
+          $ave = $ave / $ctr;
+        }
+
         $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
 //                echo "3 DATESTRING ADD: ".$dateString;
 //                echo "<br/>";
