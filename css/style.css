@@ -260,6 +260,7 @@ table.dataTable.no-footer {
 
 @media only screen and (min-width: 601px) {
     .float-card {
+
         position: absolute;
         right: 0.5%;
         margin: 0.5rem 0.5rem 1rem 0;

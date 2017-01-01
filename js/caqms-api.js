@@ -77,6 +77,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 function initialize()
 {
+    $("#zoneStatus").hide();
     var mapProp = {
         disableDefaultUI:true,
         center:carmona,
