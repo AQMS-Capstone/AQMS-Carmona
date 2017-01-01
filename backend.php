@@ -48,12 +48,19 @@ if (isset($_POST['btnSubmit'])) {
     $area = $_POST['area'];
     $time = $_POST['time'];
 
-    $date = date("Y-m-d H", strtotime($time));
-    $time = $date.":00:00";
-
     date_default_timezone_set('Asia/Manila');
-    $date_now = date("Y-m-d H");
-    $date_now_string = $date_now.":00:00";
+
+    //$date = date("Y-m-d H", strtotime($time));
+    //$time = $date.":00:00";
+
+    //$date_now = date("Y-m-d H");
+    //$date_now_string = $date_now.":00:00";
+
+    $date = date("Y-m-d H:i:s", strtotime($time));
+    $time = $date;
+
+    $date_now = date("Y-m-d H:i:s");
+    $date_now_string = $date_now;
 
     $co_value = $_POST['co_value'];
     $so2_value = $_POST['so2_value'];

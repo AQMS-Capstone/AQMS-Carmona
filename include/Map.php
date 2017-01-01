@@ -56,15 +56,25 @@ class Area{
 
 // --------- FUNCTIONS --------- //
 
+class AreaFunction{
+  var $co_holder = array();
+  var $so2_holder = array();
+  var $no2_holder = array();
+}
+
 function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $area, $date_now_string)
 {
   require 'include/db_connect.php';
 
   $array_holder = array();
+  $data_holder = array();
+
+  $element_holder_bancal = new AreaFunction();
+  $element_holder_slex = new AreaFunction();
 
   date_default_timezone_set('Asia/Manila');
-  $date_now = date("Y-m-d H").":00:00";
-  $date_beginning = date("Y-m-d H",time() - (86400*2) + (3600 * 2)).":00:00";
+  $date_now = date("Y-m-d H") . ":00:00";
+  $date_beginning = date("Y-m-d H", time() - (86400 * 2) + (3600 * 1)) . ":01:00";
 
   $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP <= '$date_now'  AND TIMESTAMP >= '$date_beginning' AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
 
@@ -79,10 +89,9 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
     $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
   }*/
 
-  $result =  mysqli_query($con,$sql);
+  $result = mysqli_query($con, $sql);
 
-  while($row=mysqli_fetch_assoc($result))
-  {
+  while ($row = mysqli_fetch_assoc($result)) {
     $dataClass = new Master();
 
     $dataClass->area_name = $row['area_name'];
@@ -92,10 +101,141 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
     $dataClass->e_name = $row['e_name'];
     $dataClass->e_symbol = $row['e_symbol'];
 
-    array_push($array_holder, $dataClass);
+    if($dataClass->area_name == "bancal") {
+      if ($dataClass->e_symbol == "CO") {
+        array_push($element_holder_bancal->co_holder, $dataClass);
+      } else if ($dataClass->e_symbol == "SO2") {
+        array_push($element_holder_bancal->so2_holder, $dataClass);
+      } else if ($dataClass->e_symbol == "NO2") {
+        array_push($element_holder_bancal->no2_holder, $dataClass);
+      }
+    }else{
+      if ($dataClass->e_symbol == "CO") {
+        array_push($element_holder_slex->co_holder, $dataClass);
+      } else if ($dataClass->e_symbol == "SO2") {
+        array_push($element_holder_slex->so2_holder, $dataClass);
+      } else if ($dataClass->e_symbol == "NO2") {
+        array_push($element_holder_slex->no2_holder, $dataClass);
+      }
+    }
+
+    //array_push($array_holder, $dataClass);
+  }
+
+  if(count($element_holder_bancal->co_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_bancal->co_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_bancal->so2_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_bancal->so2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_bancal->no2_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_bancal->no2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+
+  if(count($element_holder_slex->co_holder) > 0){
+    $data_holder =  CalculateAveraging($element_holder_slex->co_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_slex->so2_holder) > 0){
+    $data_holder =  CalculateAveraging($element_holder_slex->so2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_slex->no2_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_slex->no2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
   }
 
   return $array_holder;
+}
+function CalculateAveraging($element){
+  $return_holder = array();
+
+  if(count($element) > 0) {
+    $date = date("Y-m-d H", strtotime($element[0]->timestamp)).":00:00";
+    $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
+    $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+    $ave = 0;
+    $ctr = 0;
+
+    $dateString = "";
+
+    for ($i = 0; $i < count($element); $i++) {
+      $date = $element[$i]->timestamp;
+
+      if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
+        $ave += $element[$i]->concentration_value;
+        $ctr++;
+        $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
+      }else{
+        if($ctr > 0){
+          $ave = $ave / $ctr;
+          $dateString = $ctr_timestamp_end;
+//                    echo "1 DATESTRING: ".$dateString;
+//                    echo "<br/>";
+          array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
+
+          $ave = 0;
+          $ctr = 0;
+
+          $ave += $element[$i]->concentration_value;
+          $ctr++;
+
+          $ctr_timestamp_begin = date("Y-m-d H", strtotime($dateString)) . ":01:00";
+          $ctr_timestamp_end = date("Y-m-d H", strtotime($dateString) + 3600) . ":00:00";
+
+        }else{ // NO PRECEDING VALUE
+          $ave = $element[$i]->concentration_value;
+          $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
+//                    echo "2 DATESTRING: ".$dateString;
+//                    echo "<br/>";
+          array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
+
+          $ave = 0;
+          $ctr = 0;
+
+          $ctr_timestamp_begin = date("Y-m-d H", strtotime($dateString)) . ":01:00";
+          $ctr_timestamp_end = date("Y-m-d H", strtotime($dateString) + 3600) . ":00:00";
+        }
+      }
+
+      if($i == count($element) - 1){
+        $ave = $ave / $ctr;
+        $dateString = $ctr_timestamp_end;
+//                echo "3 DATESTRING: ".$dateString;
+//                echo "<br/>";
+        array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
+      }
+    }
+  }
+
+  return $return_holder;
+}
+function AssignDataElements($area_name, $e_id, $ave, $date, $name, $symbol){
+  $dataClass = new Master();
+
+  $dataClass->area_name = $area_name;
+  $dataClass->e_id = $e_id;
+  $dataClass->concentration_value = $ave;
+  $dataClass->timestamp = $date;
+  $dataClass->e_name = $name;
+  $dataClass->e_symbol = $symbol;
+
+  return $dataClass;
 }
 function EightHrAveraging2($values, $hour_value, $guideline_values, $guideline_aqi_values, $prec)
 {
