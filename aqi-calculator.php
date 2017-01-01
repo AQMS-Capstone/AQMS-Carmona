@@ -7,6 +7,7 @@
  */
 
 include("include/Map.php");
+include('include/guidelines.php');
 
 $synthesis = "";
 $health_effects = "";
@@ -169,12 +170,55 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
 <?php include('include/footer.php'); ?>
 
-
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
 <script src="js/aqi-calculator.js"></script>
 <script type="text/javascript">
+    var unit_used = "<?php echo $unit_used; ?>";
+
+    /*
+    var co_precision = "<?php echo $unit_used; ?>";
+    var sulfur_precision = "<?php echo $unit_used; ?>";
+    var no2_precision = "<?php echo $unit_used; ?>";
+    var o3_precision = "<?php echo $unit_used; ?>";
+    var pm10_precision = "<?php echo $unit_used; ?>";
+    var tsp_precision = "<?php echo $unit_used; ?>";
+    */
+
+    var co_step = <?php echo $co_step; ?>;
+    var co_min = <?php echo $co_min; ?>;
+    var co_max = <?php echo $co_max; ?>;
+    var co_unit = "<?php echo $co_unit; ?>";
+
+    var sulfur_step = 1;
+    if(unit_used == "old") {
+        sulfur_step = <?php echo $sulfur_step; ?>;
+    }
+
+    var sulfur_min = <?php echo $sulfur_min; ?>;
+    var sulfur_max = <?php echo $sulfur_max; ?>;
+    var sulfur_unit = "<?php echo $sulfur_unit; ?>";
+
+    var no2_step = 1;
+    if(unit_used == "old") {
+        no2_step = <?php echo $no2_step; ?>;
+    }
+    var no2_min = <?php echo $no2_min; ?>;
+    var no2_max = <?php echo $no2_max; ?>;
+    var no2_unit = "<?php echo $no2_unit; ?>";
+
+    var o3_step = <?php echo $o3_step; ?>;
+    var o3_min = <?php echo $o3_min; ?>;
+    var o3_max = <?php echo $o3_max; ?>;
+    var o3_unit = "<?php echo $o3_unit; ?>";
+
+    var pm10_min = <?php echo $pm10_min; ?>;
+    var pm10_max = <?php echo $pm10_max; ?>;
+    var pm10_unit = "<?php echo $pm10_unit; ?>";
+
+    var tsp_min = <?php echo $tsp_min; ?>;
+    var tsp_unit = "<?php echo $tsp_unit; ?>";
 
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),

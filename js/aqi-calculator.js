@@ -44,64 +44,92 @@ function GetElementInfoAQI(){
         if($('#element').val() == "CO")
         {
             $("#concentration").attr({
-                "min" : 0.0,
-                "max" : 40.4,
-                "step" : 0.1
+                "min" : co_min,
+                "max" : co_max,
+                "step" : co_step
             });
+
+            $('#unit').text("ppm");
         }
 
         if($('#element').val() == "SO2")
         {
-            $("#concentration").attr({
-                "min" : 0.000,
-                "max" : 0.804,
-                "step" : 0.001
-            });
+            if(unit_used == "old") {
+                $("#concentration").attr({
+                    "min": sulfur_min,
+                    "max": sulfur_max,
+                    "step": sulfur_step
+                });
+
+                $('#unit').text("ppm");
+            }else{
+                $("#concentration").attr({
+                    "min": sulfur_min,
+                    "max": sulfur_max,
+                    "step": sulfur_step
+                });
+                $('#unit').text("ppb");
+            }
         }
+
         if($('#element').val() == "NO2")
         {
-            $("#concentration").attr({
-                "step" : 0.01,
-                "min" : 0.65,
-                "max" : 1.64
-            });
+            if(unit_used == "old") {
+                $("#concentration").attr({
+                    "step": no2_step,
+                    "min": no2_min,
+                    "max": no2_max
+                });
+
+                $('#unit').text("ppm");
+            }else{
+                $("#concentration").attr({
+                    "step": no2_step,
+                    "min": no2_min,
+                    "max": no2_max
+                });
+                $('#unit').text("ppb");
+            }
         }
         if($('#element').val() == "O3_8")
         {
             $("#concentration").attr({
-                "min" : 0.000,
-                "max" : 0.504,
-                "step" : 0.001
+                "min" : o3_min,
+                "max" : o3_max,
+                "step" : o3_step
             });
+
+            $('#unit').text("ppm");
         }
         if($('#element').val() == "O3_1")
         {
             $("#concentration").attr({
-                "min" : 0.000,
-                "max" : 0.504,
-                "step" : 0.001
+                "min" : o3_min,
+                "max" : o3_max,
+                "step" : o3_step
             });
-        }
 
-        $('#unit').text("ppm");
+            $('#unit').text("ppm");
+        }
     }
     else{
         if($('#element').val() == "PM 10")
         {
             $("#concentration").attr({
-                "min" : 0,
-                "max" : 504,
+                "min" : pm10_min,
+                "max" : pm10_max,
                 "step" : 1
             });
         }
         if($('#element').val() == "TSP")
         {
             $("#concentration").attr({
-                "min" : 0,
+                "min" : tsp_min,
                 "max" : 999999,
                 "step" : 1
             });
         }
+
         $('#unit').text("ug/m3");
     }
 }

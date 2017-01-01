@@ -174,28 +174,29 @@ function CalculateAveraging($element){
 
     $dateString = "";
 
-//    echo "start begin ".$ctr_timestamp_begin;
-//    echo "<br/>";
-//    echo "begin end ".$ctr_timestamp_end;
-//    echo "<br/><br/>";
+    echo "start begin ".$ctr_timestamp_begin;
+    echo "<br/>";
+    echo "begin end ".$ctr_timestamp_end;
+    echo "<br/><br/>";
 
     for ($i = 0; $i < count($element); $i++) {
       $date = $element[$i]->timestamp;
 
-//      echo "CTRL ".$date;
-//      echo "<br/>";
+      echo "CTRL ".$date;
+      echo "<br/>";
 
       if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
-//        echo "inner</br>";
+        //echo "inner</br>";
         $ave += $element[$i]->concentration_value;
         $ctr++;
         $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-      }else{
+      }
+      else{
         if($ctr > 0){
           $ave = $ave / $ctr;
           $dateString = $ctr_timestamp_end;
-//                    echo "1 DATESTRING ADD: ".$dateString;
-//                    echo "<br/>";
+                    echo "1 DATESTRING ADD: ".$dateString;
+                    echo "<br/>";
           array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
 
           $ave = 0;
@@ -204,35 +205,44 @@ function CalculateAveraging($element){
           $ave += $element[$i]->concentration_value;
           $ctr++;
 
-          $ctr_timestamp_begin = date("Y-m-d H", strtotime($dateString)) . ":01:00";
-          $ctr_timestamp_end = date("Y-m-d H", strtotime($dateString) + 3600) . ":00:00";
+          //$dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
+          $ctr_timestamp_begin = date("Y-m-d H", strtotime($element[$i]->timestamp)) . ":01:00";
+          $ctr_timestamp_end = date("Y-m-d H", strtotime($element[$i]->timestamp) + 3600) . ":00:00";
 
         }else{ // NO PRECEDING VALUE
           $ave = $element[$i]->concentration_value;
           $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-//                    echo "2 DATESTRING ADD: ".$dateString;
-//                    echo "<br/>";
+                    echo "2 DATESTRING ADD: ".$dateString;
+                    echo "<br/>";
           array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
 
           $ave = 0;
           $ctr = 0;
 
-          $ctr_timestamp_begin = date("Y-m-d H", strtotime($dateString)) . ":01:00";
-          $ctr_timestamp_end = date("Y-m-d H", strtotime($dateString) + 3600) . ":00:00";
+          $ctr_timestamp_begin = date("Y-m-d H", strtotime($element[$i]->timestamp)) . ":01:00";
+          $ctr_timestamp_end = date("Y-m-d H", strtotime($element[$i]->timestamp) + 3600) . ":00:00";
         }
       }
 
       if($i == count($element) - 1){
         $ave = $ave / $ctr;
         $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-//                echo "3 DATESTRING ADD: ".$dateString;
-//                echo "<br/>";
+                echo "3 DATESTRING ADD: ".$dateString;
+                echo "<br/>";
+        array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
+
+        $ave = $element[$i]->concentration_value;
+        $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp) + 3600).":00:00";
+
         array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
       }
+
     }
 
-//    echo "-----------------------";
-//    echo "<br/>";
+    //array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
+
+    echo "-----------------------";
+    echo "<br/>";
   }
 
   return $return_holder;
