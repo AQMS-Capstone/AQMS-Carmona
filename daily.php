@@ -44,7 +44,7 @@ include('include/header.php');
 
                             <div class="card-content">
                                 <ul class="tabs">
-                                    <li class="tab col s3"><a class="active" href="#synthesis">Sensitive Groups</a></li>
+                                    <li class="tab col s3"><a href="#synthesis">Sensitive Groups</a></li>
                                     <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>
                                     <li class="tab col s3"><a href="#cautionary">Cautionary</a></li>
                                 </ul>

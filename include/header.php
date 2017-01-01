@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?php echo PAGE_TITLE; ?></title>
-    <link rel="icon" href="/res/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon"/>
 
 
 

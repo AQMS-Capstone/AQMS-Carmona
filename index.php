@@ -50,97 +50,92 @@ include('include/header.php');
                                 <p class="orange-text center">Touch and Swipe for more info.</p>
                                 <br>
                             </div>
-                            <div class="scroll">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Current</th>
-                                        <th></th>
-                                        <th>Min</th>
-                                        <th>Max</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                            <div style="min-height: 150px">
+                                <!--Synthesis-->
+                                <ul class="tabs">
+                                    <li class="tab col s3"><a class="active" href="#synthesis">Sensitive Groups</a></li>
+                                    <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>
+                                    <li class="tab col s3"><a href="#cautionary">Cautionary</a></li>
+                                </ul>
+                                <div class="divider"></div>
+                                <br>
 
-                                    <?php
+                                <div id="synthesis" class="col s12"> </div>
+                                <div id="health-effects" class="col s12"> </div>
+                                <div id="cautionary" class="col s12"> </div>
 
-                                    function getAreaStatus($area_data)
-                                    {
-                                        $untilValue = $area_data->aqi_values;
+                                <br>
+                            </div>
+                            <div>
+                                <?php
 
-                                        if (count($area_data->AllDayValues_array) != 0) {
-                                            for ($x = 0; $x < count($untilValue); $x++) {
-                                                $maxValue = 0;
+                                function getAreaStatus($area_data)
+                                {
+                                    $untilValue = $area_data->aqi_values;
 
-                                                switch ($x) {
-                                                    case 0:
-                                                        $maxValue = $area_data->co_max;
-                                                        break;
+                                    if (count($area_data->AllDayValues_array) != 0) {
+                                        for ($x = 0; $x < count($untilValue); $x++) {
+                                            $maxValue = 0;
 
-                                                    case 1:
-                                                        $maxValue = $area_data->so2_max;
-                                                        break;
+                                            switch ($x) {
+                                                case 0:
+                                                    $maxValue = $area_data->co_max;
+                                                    break;
 
-                                                    case 2:
-                                                        $maxValue = $area_data->no2_max;
-                                                        break;
+                                                case 1:
+                                                    $maxValue = $area_data->so2_max;
+                                                    break;
 
-                                                    case 3:
-                                                        $maxValue = $area_data->o3_max;
-                                                        break;
+                                                case 2:
+                                                    $maxValue = $area_data->no2_max;
+                                                    break;
 
-                                                    case 4:
-                                                        $maxValue = $area_data->pm10_max;
-                                                        break;
+                                                case 3:
+                                                    $maxValue = $area_data->o3_max;
+                                                    break;
 
-                                                    case 5:
-                                                        $maxValue = $area_data->tsp_max;
-                                                        break;
-                                                }
+                                                case 4:
+                                                    $maxValue = $area_data->pm10_max;
+                                                    break;
 
-                                                if ($maxValue > -1) {
-                                                    $elementName = "e_symbol_" . ($x + 1);
-                                                    $conentrationName = "concentration_value_" . ($x + 1);
-                                                    $chartName = "chart_div_" . ($x + 1);
-                                                    $elementNameMin = "aqi_min_" . ($x + 1);
-                                                    $elementNameMax = "aqi_max_" . ($x + 1);
+                                                case 5:
+                                                    $maxValue = $area_data->tsp_max;
+                                                    break;
+                                            }
 
-                                                    echo "<tr>";
-                                                    echo "<td class='elementName' id='$elementName'>NaN</td>";
-                                                    echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                                    echo "<td><div class='chart'><canvas id='$chartName'></canvas></div></td>";
-                                                    echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
-                                                    echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
-                                                    echo "</tr>";
-                                                }
+                                            if ($maxValue > -1) {
+                                                $elementName = "e_symbol_" . ($x + 1);
+                                                $conentrationName = "concentration_value_" . ($x + 1);
+                                                $chartName = "chart_div_" . ($x + 1);
+                                                $elementNameMin = "aqi_min_" . ($x + 1);
+                                                $elementNameMax = "aqi_max_" . ($x + 1);
+
+//                                                echo "<tr>";
+//                                                echo "<td class='elementName' id='$elementName'>NaN</td>";
+//                                                echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
+                                                echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
+//                                                echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
+//                                                echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
+//                                                echo "</tr>";
                                             }
                                         }
                                     }
+                                }
 
-                                    if (isset($_GET["area"])) {
-                                        $data = $_GET["area"];
-                                        $untilValue = array();
+                                if (isset($_GET["area"])) {
+                                    $data = $_GET["area"];
+                                    $untilValue = array();
 
-                                        if ($data == "SLEX") {
-                                            getAreaStatus($slex);
-                                        } else if ($data == "Bancal") {
-                                            getAreaStatus($bancal);
-                                        }
+                                    if ($data == "SLEX") {
+                                        getAreaStatus($slex);
+                                    } else if ($data == "Bancal") {
+                                        getAreaStatus($bancal);
                                     }
-                                    ?>
-                                    </tbody>
-                                </table>
+                                }
+                                ?>
                             </div>
                         </div>
 
-                    </div>
-                    <div id="plotOption" class="center-align">
-                        <div class="divider"></div>
-                        <form action="daily.php" style="height: 100%;">
-                            <a class="waves-effect orange-text btn-flat" href="daily.php?area=<?php echo "$data" ?>"
-                               style="width:100%">VIEW MORE</a>
-                        </form>
                     </div>
                 </div>
 
@@ -181,7 +176,6 @@ include('include/header.php');
 
 </div>
 
-
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
 <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
 <script src="js/caqms-api.js"></script>
@@ -189,6 +183,7 @@ include('include/header.php');
 <script src="js/graph.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
+<script src="js/aqi-calculator.js"></script>
 <script src="js/init.js"></script>
 
 </body>

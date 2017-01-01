@@ -101,7 +101,7 @@ form {
 }
 .chart{
     height: 80px;
-    width: 415px;
+    width: 100%;
 }
 nav {
     height: 60px;
@@ -266,7 +266,7 @@ table.dataTable.no-footer {
         z-index: 997;
         width: 50%;
         top: 29%;
-        max-height: 445px;
+        min-height: 440px;
     }
 }
 
