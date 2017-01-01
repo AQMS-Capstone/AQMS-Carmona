@@ -41,6 +41,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                 {
                     label: "AQI",
                     backgroundColor: [
+
                         determineBG(data_pollutant[0]),
                         determineBG(data_pollutant[1]),
                         determineBG(data_pollutant[2]),
@@ -71,53 +72,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
             ]
         }
     });
-    /*
-  var data = new google.visualization.DataTable();
-  data.addColumn('timeofday', 'Time of Day');
-  data.addColumn('number', 'AQI Level');
 
-  for(var i = 0 ; i < 24 ; i ++)
-  {
-    var value = 0;
-
-    if(i < data_pollutant.length)
-    {
-      value = parseInt(JSON.stringify(data_pollutant[i]).replace(/"/g, ''));
-    }
-
-    if(value == -1)
-    {
-      value = 0;
-    }
-
-    data.addRow([{v: [i + 1, 0, 0], f: ''}, value]);
-  }
-
-  var options = {
-      width: 400,
-      height: 75,
-      hAxis: {
-          format: 'HH',
-          viewWindow: {
-              min: [1, 00, 0],
-              max: [24, 00, 0]
-          },
-          gridlines:{ color:'transparent', count:17},
-      },
-      vAxis:{
-          gridlines:{ color:'transparent' }
-      ,
-      },
-      legend: {position: 'none'},
-      pointSize: 3,
-      colors: ['#009688'],
-  };
-
-  var chart = new google.visualization.ColumnChart(
-      document.getElementById(chartNames));
-
-  chart.draw(data, options);
-    */
 }
 
 function drawTheGraph(area_data)

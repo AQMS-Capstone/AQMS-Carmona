@@ -12,7 +12,7 @@ include('include/header.php');
     }
     ?>
     <div id="home">
-        <div id="googleMap" class="hide-on-med-and-down"></div>
+        <div id="googleMap"></div>
         <div class="container">
 
             <div id="zoneStatus" class="card float-card" hidden>
