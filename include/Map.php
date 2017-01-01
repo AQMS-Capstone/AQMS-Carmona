@@ -122,18 +122,18 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
     //array_push($array_holder, $dataClass);
   }
 
-  if(count($element_holder_bancal->co_holder) > 0){
-    $data_holder = CalculateAveraging($element_holder_bancal->co_holder);
-    for($i = 0 ; $i < count($data_holder); $i++){
-      array_push($array_holder, $data_holder[$i]);
-    }
-  }
-  if(count($element_holder_bancal->so2_holder) > 0){
-    $data_holder = CalculateAveraging($element_holder_bancal->so2_holder);
-    for($i = 0 ; $i < count($data_holder); $i++){
-      array_push($array_holder, $data_holder[$i]);
-    }
-  }
+//  if(count($element_holder_bancal->co_holder) > 0){
+//    $data_holder = CalculateAveraging($element_holder_bancal->co_holder);
+//    for($i = 0 ; $i < count($data_holder); $i++){
+//      array_push($array_holder, $data_holder[$i]);
+//    }
+//  }
+//  if(count($element_holder_bancal->so2_holder) > 0){
+//    $data_holder = CalculateAveraging($element_holder_bancal->so2_holder);
+//    for($i = 0 ; $i < count($data_holder); $i++){
+//      array_push($array_holder, $data_holder[$i]);
+//    }
+//  }
   if(count($element_holder_bancal->no2_holder) > 0){
     $data_holder = CalculateAveraging($element_holder_bancal->no2_holder);
     for($i = 0 ; $i < count($data_holder); $i++){
@@ -141,24 +141,24 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
     }
   }
 
-  if(count($element_holder_slex->co_holder) > 0){
-    $data_holder =  CalculateAveraging($element_holder_slex->co_holder);
-    for($i = 0 ; $i < count($data_holder); $i++){
-      array_push($array_holder, $data_holder[$i]);
-    }
-  }
-  if(count($element_holder_slex->so2_holder) > 0){
-    $data_holder =  CalculateAveraging($element_holder_slex->so2_holder);
-    for($i = 0 ; $i < count($data_holder); $i++){
-      array_push($array_holder, $data_holder[$i]);
-    }
-  }
-  if(count($element_holder_slex->no2_holder) > 0){
-    $data_holder = CalculateAveraging($element_holder_slex->no2_holder);
-    for($i = 0 ; $i < count($data_holder); $i++){
-      array_push($array_holder, $data_holder[$i]);
-    }
-  }
+//  if(count($element_holder_slex->co_holder) > 0){
+//    $data_holder =  CalculateAveraging($element_holder_slex->co_holder);
+//    for($i = 0 ; $i < count($data_holder); $i++){
+//      array_push($array_holder, $data_holder[$i]);
+//    }
+//  }
+//  if(count($element_holder_slex->so2_holder) > 0){
+//    $data_holder =  CalculateAveraging($element_holder_slex->so2_holder);
+//    for($i = 0 ; $i < count($data_holder); $i++){
+//      array_push($array_holder, $data_holder[$i]);
+//    }
+//  }
+//  if(count($element_holder_slex->no2_holder) > 0){
+//    $data_holder = CalculateAveraging($element_holder_slex->no2_holder);
+//    for($i = 0 ; $i < count($data_holder); $i++){
+//      array_push($array_holder, $data_holder[$i]);
+//    }
+//  }
 
   return $array_holder;
 }
@@ -174,10 +174,19 @@ function CalculateAveraging($element){
 
     $dateString = "";
 
+//    echo "start begin ".$ctr_timestamp_begin;
+//    echo "<br/>";
+//    echo "begin end ".$ctr_timestamp_end;
+//    echo "<br/><br/>";
+
     for ($i = 0; $i < count($element); $i++) {
       $date = $element[$i]->timestamp;
 
+//      echo "CTRL ".$date;
+//      echo "<br/>";
+
       if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
+//        echo "inner</br>";
         $ave += $element[$i]->concentration_value;
         $ctr++;
         $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
@@ -185,7 +194,7 @@ function CalculateAveraging($element){
         if($ctr > 0){
           $ave = $ave / $ctr;
           $dateString = $ctr_timestamp_end;
-//                    echo "1 DATESTRING: ".$dateString;
+//                    echo "1 DATESTRING ADD: ".$dateString;
 //                    echo "<br/>";
           array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
 
@@ -201,7 +210,7 @@ function CalculateAveraging($element){
         }else{ // NO PRECEDING VALUE
           $ave = $element[$i]->concentration_value;
           $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-//                    echo "2 DATESTRING: ".$dateString;
+//                    echo "2 DATESTRING ADD: ".$dateString;
 //                    echo "<br/>";
           array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
 
@@ -215,12 +224,15 @@ function CalculateAveraging($element){
 
       if($i == count($element) - 1){
         $ave = $ave / $ctr;
-        $dateString = $ctr_timestamp_end;
-//                echo "3 DATESTRING: ".$dateString;
+        $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
+//                echo "3 DATESTRING ADD: ".$dateString;
 //                echo "<br/>";
         array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
       }
     }
+
+//    echo "-----------------------";
+//    echo "<br/>";
   }
 
   return $return_holder;
@@ -840,11 +852,9 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
     {
       if($gv == $ozone_guideline_values_8)
       {
-        //echo "HAHA";
 
         if($ave > 0.374)
         {
-          //echo "HIHI";
           $gv = $ozone_guideline_values_1;
         }
       }
@@ -1119,7 +1129,7 @@ function Generate($name)
   }
 
   // --------- EXCRETE VALUES FROM CARBON MONOXIDE --------- //
-  $data_container = EightHrAveraging2($area_generate->co_values, $hour_value, $co_guideline_values, $guideline_aqi_values, 1);
+  $data_container = EightHrAveraging2($area_generate->co_values, $hour_value, $co_guideline_values, $guideline_aqi_values, $co_precision);
 
   $area_generate->co_aqi_values = $data_container[0];
   $area_generate->co_actual_values = $data_container[1];
@@ -1129,8 +1139,12 @@ function Generate($name)
   }
 
 // --------- EXCRETE VALUES FROM SULFUR DIOXIDE --------- //
-  $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, 3);
 
+  if($unit_used == "old") {
+    $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, $sulfur_precision);
+  }else{
+    $data_container = OneHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, $sulfur_precision);
+  }
   $area_generate->so2_aqi_values = $data_container[0];
   $area_generate->so2_actual_values = $data_container[1];
   if ($data_container[2] != "") {
@@ -1139,7 +1153,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM NITROGEN DIOXIDE --------- //
 
-  $data_container = OneHrAveraging2($area_generate->no2_values, $hour_value, $no2_guideline_values, $guideline_aqi_values, 2);
+  $data_container = OneHrAveraging2($area_generate->no2_values, $hour_value, $no2_guideline_values, $guideline_aqi_values, $no2_precision);
 
   $area_generate->no2_aqi_values = $data_container[0];
   $area_generate->no2_actual_values = $data_container[1];
@@ -1149,7 +1163,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM O3 --------- //
 
-  $data_container = EightHrAveraging2($area_generate->o3_values, $hour_value, $ozone_guideline_values_8, $guideline_aqi_values, 3);
+  $data_container = EightHrAveraging2($area_generate->o3_values, $hour_value, $ozone_guideline_values_8, $guideline_aqi_values, $o3_precision);
 
   $area_generate->o3_aqi_values = $data_container[0];
   $area_generate->o3_actual_values = $data_container[1];
@@ -1160,7 +1174,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM PM 10 --------- //
 
-  $data_container = TwentyFourHrAveraging2($area_generate->pm10_values, $hour_value, $pm_10_guideline_values, $guideline_aqi_values, 0);
+  $data_container = TwentyFourHrAveraging2($area_generate->pm10_values, $hour_value, $pm_10_guideline_values, $guideline_aqi_values, $pm10_precision);
 
   $area_generate->pm10_aqi_values = $data_container[0];
   $area_generate->pm10_actual_values = $data_container[1];
@@ -1170,7 +1184,7 @@ function Generate($name)
 
 // --------- EXCRETE VALUES FROM TSP --------- // REMEMBER TO COMMENT AQI > 400 IN TSP!!
 
-  $data_container = TwentyFourHrAveraging2($area_generate->tsp_values, $hour_value, $tsp_guideline_values, $guideline_aqi_values, 0);
+  $data_container = TwentyFourHrAveraging2($area_generate->tsp_values, $hour_value, $tsp_guideline_values, $guideline_aqi_values, $pm10_precision);
 
   $area_generate->tsp_aqi_values = $data_container[0];
   $area_generate->tsp_actual_values = $data_container[1];

@@ -181,105 +181,135 @@ if (isset($_POST['btnSubmit'])) {
     <br>
     <div class="section no-pad-bot">
         <div class="container">
-            <div class="row">
-                <div class="col s12">
-                    <form method="post" action="">
-                        <div class="row">
-                            <div class="col s12">
-                                <div class="input-field col s12">
-                                    <select id="area" name="area" required>
-                                        <option value="" disabled selected>Select an area</option>
-                                        <option value="slex">SLEX Entrance/Exit Carmona, Cavite</option>
-                                        <option value="bancal">Bancal Carmona, Cavite</option>
+            <?php
+
+            require 'include/guidelines.php';
+
+            echo "
+            <div class='row'>
+                <div class='col s12'>
+                    <form method='post' action=''>
+                        <div class='row'>
+                            <div class='col s12'>
+                                <div class='input-field col s12'>
+                                    <select id='area' name='area' required>
+                                        <option value='' disabled selected>Select an area</option>
+                                        <option value='slex'>SLEX Entrance/Exit Carmona, Cavite</option>
+                                        <option value='bancal'>Bancal Carmona, Cavite</option>
                                     </select>
                                     <label>Area</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col s12 l6">
-                                <div class="input-field col s10">
-                                    <input id="co_value" name="co_value" type="number" class="validate" step="0.1"
-                                           min="0.0"
-                                           max="40.4">
+                        <div class='row'>
+                            <div class='col s12 l6'>
+                                <div class='input-field col s10'>
+                                    <input id='co_value' name='co_value' type='number' class='validate' step='$co_step'
+                                           min='$co_min'
+                                           max='$co_max'>
                                     <label>Carbon Monoxide</label>
                                 </div>
-                                <div class="input-field col s2">
-                                    <label id="unit">ppm</label>
-                                </div>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$co_unit</label>
+                                </div>";
 
-
-                                <div class="input-field col s10">
-                                    <input id="so2_value" name="so2_value" type="number" class="validate" step="0.001"
-                                           min="0.000" max="0.804">
+                                if($unit_used == "old"){
+                                echo "
+                                <div class='input-field col s10'>
+                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$sulfur_step' min='$sulfur_min' max='$sulfur_max'>
                                     <label>Sulfur Dioxide</label>
                                 </div>
-                                <div class="input-field col s2">
-                                    <label id="unit">ppm</label>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$sulfur_unit</label>
                                 </div>
-
-                                <div class="input-field col s10">
-                                    <input id="no2_value" name="no2_value" type="number" class="validate" step="0.01"
-                                           min="0.65"
-                                           max="1.64">
-                                    <label>Nitrogen Oxide</label>
+                                
+                                <div class='input-field col s10'>
+                                    <input id='no2_value' name='no2_value' type='number' class='validate' step='$no2_step'
+                                           min='$no2_min'
+                                           max='$no2_max'>
+                                    <label>Nitrogen Dioxide</label>
                                 </div>
-                                <div class="input-field col s2">
-                                    <label id="unit">ppm</label>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$no2_unit</label>
                                 </div>
+                                ";
+                                }else{
+                                echo"
+                                <div class='input-field col s10'>
+                                    <input id='so2_value' name='so2_value' type='number' class='validate' min='$sulfur_min' max='$sulfur_max'>
+                                    <label>Sulfur Dioxide</label>
+                                </div>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$sulfur_unit</label>
+                                </div>
+                                
+                                <div class='input-field col s10'>
+                                    <input id='no2_value' name='no2_value' type='number' class='validate'
+                                           min='$no2_min'
+                                           max='$no2_max'>
+                                    <label>Nitrogen Dioxide</label>
+                                </div>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$no2_unit</label>
+                                </div>
+                                ";
+                                }
+                                echo"
                             </div>
-
-                            <div class="col s12 l6">
-                                <div class="input-field col s10">
-                                    <input id="o3_value" name="o3_value" type="number" class="validate" step="0.001"
-                                           min="0.000"
-                                           max="0.504">
+            
+                            <div class='col s12 l6'>
+                                <div class='input-field col s10'>
+                                    <input id='o3_value' name='o3_value' type='number' class='validate' step='$o3_step'
+                                           min='$o3_min'
+                                           max='$o3_max'>
                                     <label>Ozone</label>
                                 </div>
-                                <div class="input-field col s2">
-                                    <label id="unit">ppm</label>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$o3_unit</label>
                                 </div>
-
-                                <div class="input-field col s10">
-                                    <input id="pm10_value" name="pm10_value" type="number" class="validate" min="0"
-                                           max="504">
+            
+                                <div class='input-field col s10'>
+                                    <input id='pm10_value' name='pm10_value' type='number' class='validate' min='$pm10_min' max='$pm10_max'>
                                     <label>Particulate Matter 10</label>
                                 </div>
-                                <div class="input-field col s2">
-                                    <label id="unit">ug/m3</label>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$pm10_unit</label>
                                 </div>
-
-                                <div class="input-field col s10">
-                                    <input id="tsp_value" name="tsp_value" type="number" class="validate" min="0">
+            
+                                <div class='input-field col s10'>
+                                    <input id='tsp_value' name='tsp_value' type='number' class='validate' min='$tsp_min'>
                                     <label>Total Suspended Particles</label>
                                 </div>
-                                <div class="input-field col s2">
-                                    <label id="unit">ug/m3</label>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$tsp_unit</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <div class="input-field col s12">
-                                    <p class="flatpickr input-date-time">
-                                        <label for="time">Time</label>
-                                        <input id="time" name="time" class="date col s12"
-                                               placeholder="YYYY-MM-DD"
+                        
+                        <div class='row'>
+                            <div class='col s12'>
+                                <div class='input-field col s12'>
+                                    <p class='flatpickr input-date-time'>
+                                        <label for='time'>Time</label>
+                                        <input id='time' name='time' class='date col s12'
+                                               placeholder='YYYY-MM-DD'
                                                data-input>
                                     </p>
-
+            
                                 </div>
-                                <div class="input-field col s12">
-                                    <button class="btn waves-effect waves-light" type="submit"
-                                            style="width: 100%; margin-top:3%;" name="btnSubmit">Submit
+                                <div class='input-field col s12'>
+                                    <button class='btn waves-effect waves-light' type='submit'
+                                            style='width: 100%; margin-top:3%;' name='btnSubmit'>Submit
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
-
+            
                 </div>
-            </div>
+            </div>";
+
+            ?>
 
         </div>
     </div>
