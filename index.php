@@ -44,7 +44,7 @@ include('include/header.php');
 
                     </div>
 
-                    <div class="row">
+                    <div class="row-no-after">
                         <div class="col s12 m12">
                             <div class="hide-on-med-and-up center">
                                 <p class="orange-text center">Touch and Swipe for more info.</p>
@@ -134,6 +134,8 @@ include('include/header.php');
                                 }
                                 ?>
                             </div>
+                            <a class="waves-effect orange-text" href="daily.php?area=<?php echo "$data" ?>"
+                               style="margin-top: 1em;">See More</a>
                         </div>
 
                     </div>
