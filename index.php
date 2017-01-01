@@ -1,7 +1,7 @@
 <?php
 define("PAGE_TITLE", "Air Quality Monitoring System");
 include("include/Map.php");
-//include('include/header.php');
+include('include/header.php');
 ?>
 
 <div id="content-holder">
