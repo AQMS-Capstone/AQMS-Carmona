@@ -163,41 +163,38 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
   return $array_holder;
 }
 function CalculateAveraging($element){
+
+  date_default_timezone_set('Asia/Manila');
+
   $return_holder = array();
 
   if(count($element) > 0) {
-    $date = date("Y-m-d H", strtotime($element[0]->timestamp)).":00:00";
-    $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-    $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+
+    $date = date("Y-m-d H:i:s", strtotime($element[0]->timestamp));
+
+    if(strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)).":01:00")){
+      $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
+      $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
+    }else{
+
+      $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
+      $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+    }
+
     $ave = 0;
     $ctr = 0;
-
-    $dateString = "";
-
-//    echo "start begin ".$ctr_timestamp_begin;
-//    echo "<br/>";
-//    echo "begin end ".$ctr_timestamp_end;
-//    echo "<br/><br/>";
 
     for ($i = 0; $i < count($element); $i++) {
       $date = $element[$i]->timestamp;
 
-//      echo "CTRL ".$date;
-//      echo "<br/>";
-
       if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
-        //echo "inner</br>";
         $ave += $element[$i]->concentration_value;
         $ctr++;
-        $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
       }
       else{
         if($ctr > 0){
           $ave = $ave / $ctr;
-//          echo "AVE: ".$ave." ";
           $dateString = $ctr_timestamp_end;
-//                    echo "1 DATESTRING ADD: ".$dateString;
-//                    echo "<br/>";
           array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
 
           $ave = 0;
@@ -206,52 +203,26 @@ function CalculateAveraging($element){
           $ave += $element[$i]->concentration_value;
           $ctr++;
 
-          $date = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-          $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-          $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+          $date = date("Y-m-d H:i:s", strtotime($element[$i]->timestamp));
 
-        }else{ // NO PRECEDING VALUE
-
-          $ave = $element[$i]->concentration_value;
-          $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-//                    echo "2 DATESTRING ADD: ".$dateString;
-//                    echo "<br/>";
-          array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
-
-          $ave = 0;
-          $ctr = 0;
-
-          $date = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-          $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-          $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+          if(strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)).":01:00")){
+            $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
+            $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
+          }else {
+            $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
+            $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+          }
         }
       }
 
       if($i == count($element) - 1){
-        $ave = $ave - $element[$i]->concentration_value;
-        $ctr--;
-
-        if($ctr > 0){
+        if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
           $ave = $ave / $ctr;
+          $dateString = $ctr_timestamp_end;
+          array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
         }
-
-        $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp)).":00:00";
-//                echo "3 DATESTRING ADD: ".$dateString;
-//                echo "<br/>";
-        array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
-
-        $ave = $element[$i]->concentration_value;
-        $dateString = date("Y-m-d H", strtotime($element[$i]->timestamp) + 3600).":00:00";
-
-        array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
       }
-
     }
-
-    //array_push($return_holder, AssignDataElements($element[$i]->area_name, $element[$i]->e_id, $ave, $dateString, $element[$i]->e_name, $element[$i]->e_symbol));
-
-//    echo "-----------------------";
-//    echo "<br/>";
   }
 
   return $return_holder;
