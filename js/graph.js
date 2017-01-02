@@ -49,7 +49,6 @@ function createGraph(data_pollutant, chartNames, rolling_time)
             animation :{
                 onComplete: function () {
                     var ctx = this.chart.ctx;
-                    console.log(ctx);
                     ctx.font = this.scales.font;
                     ctx.fillStyle = this.chart.config.options.defaultFontColor;
                     ctx.textAlign = 'center';
@@ -74,6 +73,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                 yAxes: [{
                     display: false,
                     ticks: {
+                        max: 480,
                         beginAtZero: true,
                         fontSize: 8
                     },
