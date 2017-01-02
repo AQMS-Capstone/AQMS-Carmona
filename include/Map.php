@@ -122,18 +122,18 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
     //array_push($array_holder, $dataClass);
   }
 
-//  if(count($element_holder_bancal->co_holder) > 0){
-//    $data_holder = CalculateAveraging($element_holder_bancal->co_holder);
-//    for($i = 0 ; $i < count($data_holder); $i++){
-//      array_push($array_holder, $data_holder[$i]);
-//    }
-//  }
-//  if(count($element_holder_bancal->so2_holder) > 0){
-//    $data_holder = CalculateAveraging($element_holder_bancal->so2_holder);
-//    for($i = 0 ; $i < count($data_holder); $i++){
-//      array_push($array_holder, $data_holder[$i]);
-//    }
-//  }
+  if(count($element_holder_bancal->co_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_bancal->co_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_bancal->so2_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_bancal->so2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
   if(count($element_holder_bancal->no2_holder) > 0){
     $data_holder = CalculateAveraging($element_holder_bancal->no2_holder);
     for($i = 0 ; $i < count($data_holder); $i++){
@@ -141,24 +141,24 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
     }
   }
 
-//  if(count($element_holder_slex->co_holder) > 0){
-//    $data_holder =  CalculateAveraging($element_holder_slex->co_holder);
-//    for($i = 0 ; $i < count($data_holder); $i++){
-//      array_push($array_holder, $data_holder[$i]);
-//    }
-//  }
-//  if(count($element_holder_slex->so2_holder) > 0){
-//    $data_holder =  CalculateAveraging($element_holder_slex->so2_holder);
-//    for($i = 0 ; $i < count($data_holder); $i++){
-//      array_push($array_holder, $data_holder[$i]);
-//    }
-//  }
-//  if(count($element_holder_slex->no2_holder) > 0){
-//    $data_holder = CalculateAveraging($element_holder_slex->no2_holder);
-//    for($i = 0 ; $i < count($data_holder); $i++){
-//      array_push($array_holder, $data_holder[$i]);
-//    }
-//  }
+  if(count($element_holder_slex->co_holder) > 0){
+    $data_holder =  CalculateAveraging($element_holder_slex->co_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_slex->so2_holder) > 0){
+    $data_holder =  CalculateAveraging($element_holder_slex->so2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
+  if(count($element_holder_slex->no2_holder) > 0){
+    $data_holder = CalculateAveraging($element_holder_slex->no2_holder);
+    for($i = 0 ; $i < count($data_holder); $i++){
+      array_push($array_holder, $data_holder[$i]);
+    }
+  }
 
   return $array_holder;
 }
