@@ -16,7 +16,7 @@ include('include/header.php');
         <div class="container">
 
             <div id="zoneStatus" class="card float-card">
-                <div class="card-content black-text">
+                <div class="card-content black-text" style="height: 433px;">
                     <div class="row">
                         <div class="col s12 m4">
                             <div class="center-align">
@@ -66,79 +66,82 @@ include('include/header.php');
 
                                 <br>
                             </div>
-                            <div>
-                                <?php
+                        </div>
 
-                                function getAreaStatus($area_data)
-                                {
-                                    $untilValue = $area_data->aqi_values;
+                    </div>
+                    <div class="bottom-fixed">
+                        <div style=" padding-left: 20px;padding-right: 20px;">
+                            <?php
 
-                                    if (count($area_data->AllDayValues_array) != 0) {
-                                        for ($x = 0; $x < count($untilValue); $x++) {
-                                            $maxValue = 0;
+                            function getAreaStatus($area_data)
+                            {
+                                $untilValue = $area_data->aqi_values;
 
-                                            switch ($x) {
-                                                case 0:
-                                                    $maxValue = $area_data->co_max;
-                                                    break;
+                                if (count($area_data->AllDayValues_array) != 0) {
+                                    for ($x = 0; $x < count($untilValue); $x++) {
+                                        $maxValue = 0;
 
-                                                case 1:
-                                                    $maxValue = $area_data->so2_max;
-                                                    break;
+                                        switch ($x) {
+                                            case 0:
+                                                $maxValue = $area_data->co_max;
+                                                break;
 
-                                                case 2:
-                                                    $maxValue = $area_data->no2_max;
-                                                    break;
+                                            case 1:
+                                                $maxValue = $area_data->so2_max;
+                                                break;
 
-                                                case 3:
-                                                    $maxValue = $area_data->o3_max;
-                                                    break;
+                                            case 2:
+                                                $maxValue = $area_data->no2_max;
+                                                break;
 
-                                                case 4:
-                                                    $maxValue = $area_data->pm10_max;
-                                                    break;
+                                            case 3:
+                                                $maxValue = $area_data->o3_max;
+                                                break;
 
-                                                case 5:
-                                                    $maxValue = $area_data->tsp_max;
-                                                    break;
-                                            }
+                                            case 4:
+                                                $maxValue = $area_data->pm10_max;
+                                                break;
 
-                                            if ($maxValue > -1) {
-                                                $elementName = "e_symbol_" . ($x + 1);
-                                                $conentrationName = "concentration_value_" . ($x + 1);
-                                                $chartName = "chart_div_" . ($x + 1);
-                                                $elementNameMin = "aqi_min_" . ($x + 1);
-                                                $elementNameMax = "aqi_max_" . ($x + 1);
+                                            case 5:
+                                                $maxValue = $area_data->tsp_max;
+                                                break;
+                                        }
+
+                                        if ($maxValue > -1) {
+                                            $elementName = "e_symbol_" . ($x + 1);
+                                            $conentrationName = "concentration_value_" . ($x + 1);
+                                            $chartName = "chart_div_" . ($x + 1);
+                                            $elementNameMin = "aqi_min_" . ($x + 1);
+                                            $elementNameMax = "aqi_max_" . ($x + 1);
 
 //                                                echo "<tr>";
 //                                                echo "<td class='elementName' id='$elementName'>NaN</td>";
 //                                                echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                                echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
+                                            echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
 //                                                echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
 //                                                echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
 //                                                echo "</tr>";
-                                            }
                                         }
                                     }
                                 }
+                            }
 
-                                if (isset($_GET["area"])) {
-                                    $data = $_GET["area"];
-                                    $untilValue = array();
+                            if (isset($_GET["area"])) {
+                                $data = $_GET["area"];
+                                $untilValue = array();
 
-                                    if ($data == "SLEX") {
-                                        getAreaStatus($slex);
-                                    } else if ($data == "Bancal") {
-                                        getAreaStatus($bancal);
-                                    }
+                                if ($data == "SLEX") {
+                                    getAreaStatus($slex);
+                                } else if ($data == "Bancal") {
+                                    getAreaStatus($bancal);
                                 }
-                                ?>
-                                <a class="waves-effect orange-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
-                                   style="margin-top: 1em; width: 100%;">See More</a>
-                            </div>
-
+                            }
+                            ?>
                         </div>
 
+
+                        <a class="waves-effect orange-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
+                           style="margin-top: 1em; width: 100%;">See More</a>
                     </div>
                 </div>
 

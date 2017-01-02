@@ -100,9 +100,11 @@ form {
     }
 }
 .bottom-fixed{
-    position: fixed;
-    bottom: 0;
+    position:absolute;
+    bottom:0;
+    left:0;
     width: 100%;
+
 }
 .chart{
     height: 80px;
