@@ -5,35 +5,6 @@ function createGraph(data_pollutant, chartNames, rolling_time)
 {
     const CHART = document.getElementById(chartNames);
     let barChart = new Chart(CHART, {
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            scaleShowLabels: false,
-            legend: {
-                display: false
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        fontSize: 8
-                    },
-                    gridLines: {
-                        display: false
-                    }
-                }],
-                xAxes: [{
-                    barPercentage: .98,
-                    categoryPercentage: .98,
-                    ticks: {
-                        fontSize: 8
-                    },
-                    gridLines: {
-                        display: false
-                    }
-                }]
-            }
-        },
         type: 'bar',
         data: {
             labels: [rolling_time[0].toString(), rolling_time[1].toString(), rolling_time[2].toString(), rolling_time[3].toString(), rolling_time[4].toString(), rolling_time[5].toString(), rolling_time[6].toString(), rolling_time[7].toString(), rolling_time[8].toString(), rolling_time[9].toString(), rolling_time[10].toString(), rolling_time[11].toString(), rolling_time[12].toString(), rolling_time[13].toString(), rolling_time[14].toString(), rolling_time[15].toString(), rolling_time[16].toString(), rolling_time[17].toString(), rolling_time[18].toString(), rolling_time[19].toString(), rolling_time[20].toString(), rolling_time[21].toString(), rolling_time[22].toString(), rolling_time[23].toString()],
@@ -70,6 +41,58 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     data: [removeNegative(data_pollutant[0]), removeNegative(data_pollutant[1]), removeNegative(data_pollutant[2]), removeNegative(data_pollutant[3]), removeNegative(data_pollutant[4]), removeNegative(data_pollutant[5]), removeNegative(data_pollutant[6]), removeNegative(data_pollutant[7]), removeNegative(data_pollutant[8]), removeNegative(data_pollutant[9]), removeNegative(data_pollutant[10]), removeNegative(data_pollutant[11]), removeNegative(data_pollutant[12]), removeNegative(data_pollutant[13]), removeNegative(data_pollutant[14]), removeNegative(data_pollutant[15]), removeNegative(data_pollutant[16]), removeNegative(data_pollutant[17]), removeNegative(data_pollutant[18]), removeNegative(data_pollutant[19]), removeNegative(data_pollutant[20]), removeNegative(data_pollutant[21]), removeNegative(data_pollutant[22]), removeNegative(data_pollutant[23])],
                 }
             ]
+
+        },
+        options: {
+            defaultFontColor: "#212121",
+            hover: {animationDuration: 0},
+            animation :{
+                onComplete: function () {
+                    var ctx = this.chart.ctx;
+                    console.log(ctx);
+                    ctx.font = this.scales.font;
+                    ctx.fillStyle = this.chart.config.options.defaultFontColor;
+                    ctx.textAlign = 'center';
+
+                    ctx.textBaseline = 'bottom';
+                    this.data.datasets.forEach(function (dataset) {
+                        for (var i = 0; i < dataset.data.length; i++) {
+                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                            ctx.fillText(dataset.data[i], model.x, model.y - 5);
+                        }
+                    });
+                }
+            },
+            tooltips: false,
+            maintainAspectRatio: false,
+            responsive: true,
+            scaleShowLabels: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 8
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: .98,
+                    categoryPercentage: .98,
+                    ticks: {
+
+                        fontSize: 8
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
         }
     });
 
