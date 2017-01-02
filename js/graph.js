@@ -75,7 +75,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     ticks: {
                         max: 480,
                         beginAtZero: true,
-                        fontSize: 8
+                        fontSize: 11
                     },
                     gridLines: {
                         display: false
@@ -86,7 +86,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     categoryPercentage: .98,
                     ticks: {
 
-                        fontSize: 8
+                        fontSize: 11
                     },
                     gridLines: {
                         display: false
@@ -111,43 +111,83 @@ function drawTheGraph(area_data)
 
   if(area_data.AllDayValues_array.length != 0)
   {
-    for(var i = 0 ; i < area_data.aqi_values.length; i++)
-    {
-      var maxValue = 0;
+      var url = window.location.href.toString();
 
-      switch(i)
-      {
-        case 0:
-          maxValue = Math.max(parseInt(area_data.co_max));
-          break;
+      if (url.includes("daily")){
+          for(var i = 0 ; i < area_data.aqi_values.length; i++)
+          {
+              var maxValue = 0;
 
-        case 1:
-          maxValue = Math.max(parseInt(area_data.so2_max));
-          break;
+              switch(i)
+              {
+                  case 0:
+                      maxValue = Math.max(parseInt(area_data.co_max));
+                      break;
 
-        case 2:
-          maxValue = Math.max(parseInt(area_data.no2_max));
-          break;
+                  case 1:
+                      maxValue = Math.max(parseInt(area_data.so2_max));
+                      break;
 
-        case 3:
-          maxValue = Math.max(parseInt(area_data.o3_max));
-          break;
+                  case 2:
+                      maxValue = Math.max(parseInt(area_data.no2_max));
+                      break;
 
-        case 4:
-          maxValue = Math.max(parseInt(area_data.pm10_max));
-          break;
+                  case 3:
+                      maxValue = Math.max(parseInt(area_data.o3_max));
+                      break;
 
-        case 5:
-          maxValue = Math.max(parseInt(area_data.tsp_max));
-          break;
+                  case 4:
+                      maxValue = Math.max(parseInt(area_data.pm10_max));
+                      break;
+
+                  case 5:
+                      maxValue = Math.max(parseInt(area_data.tsp_max));
+                      break;
+              }
+
+              if(maxValue > -1)
+              {
+                  var chartNames = "chart_div_" + (i+1);
+                  createGraph(array_draw[i], chartNames, area_data.rolling_time);
+              }
+          }
+      }else {
+          if(area_data.AQI != "-"){
+              var index = area_data.prevalentIndex;
+              var maxValue = 0;
+
+              switch(index) {
+                  case 0:
+                      maxValue = Math.max(parseInt(area_data.co_max));
+                      break;
+
+                  case 1:
+                      maxValue = Math.max(parseInt(area_data.so2_max));
+                      break;
+
+                  case 2:
+                      maxValue = Math.max(parseInt(area_data.no2_max));
+                      break;
+
+                  case 3:
+                      maxValue = Math.max(parseInt(area_data.o3_max));
+                      break;
+
+                  case 4:
+                      maxValue = Math.max(parseInt(area_data.pm10_max));
+                      break;
+
+                  case 5:
+                      maxValue = Math.max(parseInt(area_data.tsp_max));
+                      break;
+              }
+
+              if(maxValue > -1) {
+                  var chartNames = "chart_div_" + (index + 1);
+                  createGraph(array_draw[index], chartNames, area_data.rolling_time);
+              }
+          }
       }
-
-      if(maxValue > -1)
-      {
-        var chartNames = "chart_div_" + (i+1);
-        createGraph(array_draw[i], chartNames, area_data.rolling_time);
-      }
-    }
   }
 }
 

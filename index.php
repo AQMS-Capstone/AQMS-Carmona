@@ -75,6 +75,42 @@ include('include/header.php');
 
                             function getAreaStatus($area_data)
                             {
+//                                if (count($area_data->AllDayValues_array) != 0) {
+//
+//                                    $ind = $area_data->prevalentIndex[0];
+//                                    $maxValue = 0;
+//
+//                                    switch ($ind) {
+//                                        case 0:
+//                                            $maxValue = $area_data->co_max;
+//                                            break;
+//
+//                                        case 1:
+//                                            $maxValue = $area_data->so2_max;
+//                                            break;
+//
+//                                        case 2:
+//                                            $maxValue = $area_data->no2_max;
+//                                            break;
+//
+//                                        case 3:
+//                                            $maxValue = $area_data->o3_max;
+//                                            break;
+//
+//                                        case 4:
+//                                            $maxValue = $area_data->pm10_max;
+//                                            break;
+//
+//                                        case 5:
+//                                            $maxValue = $area_data->tsp_max;
+//                                            break;
+//                                    }
+//
+//                                    if ($maxValue > -1) {
+//                                        $chartName = "chart_div_" . ($ind + 1);
+//                                        echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
+//                                    }
+//                                }
                                 $untilValue = $area_data->aqi_values;
 
                                 if (count($area_data->AllDayValues_array) != 0) {
