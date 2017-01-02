@@ -50,7 +50,7 @@ include('include/header.php');
                                 <p class="orange-text center">Touch and Swipe for more info.</p>
                                 <br>
                             </div>
-                            <div style="min-height: 150px">
+                            <div style="min-height: 120px">
                                 <!--Synthesis-->
                                 <ul class="tabs">
                                     <li class="tab col s3"><a class="active" href="#synthesis">Sensitive Groups</a></li>
@@ -133,9 +133,10 @@ include('include/header.php');
                                     }
                                 }
                                 ?>
+                                <a class="waves-effect orange-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
+                                   style="margin-top: 1em; width: 100%;">See More</a>
                             </div>
-                            <a class="waves-effect orange-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
-                               style="margin-top: 1em; width: 100%;">See More</a>
+
                         </div>
 
                     </div>

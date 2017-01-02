@@ -99,9 +99,14 @@ form {
         text-align: left;
     }
 }
+.bottom-fixed{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
 .chart{
     height: 80px;
-    width: 100%;
+    width: 100% !important;
 }
 nav {
     height: 60px;

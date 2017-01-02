@@ -58,7 +58,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     this.data.datasets.forEach(function (dataset) {
                         for (var i = 0; i < dataset.data.length; i++) {
                             var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                            ctx.fillText(dataset.data[i], model.x, model.y - 5);
+                            ctx.fillText(dataset.data[i], model.x, model.y);
                         }
                     });
                 }
