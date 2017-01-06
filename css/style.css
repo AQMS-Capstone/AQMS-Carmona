@@ -1,7 +1,11 @@
 body {
 
 }
-
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .nav-wrapper {
     background-color: #009688;
 }
@@ -284,9 +288,22 @@ table.dataTable.no-footer {
 }
 
 .row-no-after {
-    content: none;
+    margin-bottom: 0;
+}
+.chart-legend ul {
+    list-style: none;
 }
 
+.chart-legend li {
+    display: inline;
+}
+.chart-legend li span{
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-right: 5px;
+    margin-left: 5px;
+}
 .img-circle {
     border-radius: 50%;
 
