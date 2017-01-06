@@ -70,21 +70,25 @@ function GetAreaStatus2(area_data)
     $("#aqiText").css("color", AQIAirQuality);
     $("#aqiText").text(AQIStatus);
 
-    if (area_data.AllDayValues_array.length != 0) {
+    //if (area_data.AllDayValues_array.length != 0) {
         for (var i = 0; i < area_data.aqi_values.length; i++) {
             var maxValue = 0;
+            var found = false;
 
             switch (i) {
                 case 0:
                     maxValue = Math.max(parseInt(area_data.co_max));
+                    found = true;
                     break;
 
                 case 1:
                     maxValue = Math.max(parseInt(area_data.so2_max));
+                    found = true;
                     break;
 
                 case 2:
                     maxValue = Math.max(parseInt(area_data.no2_max));
+                    found = true;
                     break;
 
                 case 3:
@@ -100,36 +104,43 @@ function GetAreaStatus2(area_data)
                     break;
             }
 
-            if (maxValue > -1) {
+            if (found) {
+
                 var elementName = "e_symbol_" + (i + 1);
                 var conentrationName = "concentration_value_" + (i + 1);
                 var elementMin = "aqi_min_" + (i + 1);
                 var elementMax = "aqi_max_" + (i + 1);
 
-                document.getElementById(elementName).innerHTML = pollutant_symbols[i];
+                document.getElementById(elementName).innerHTML = pollutant_labels[i];
 
                 if (area_data.aqi_values[i] == -1) {
-                    document.getElementById(conentrationName).innerHTML = "-";
+                    document.getElementById(conentrationName).innerHTML = "Current: -";
                 }
 
                 else {
-                    document.getElementById(conentrationName).innerHTML = area_data.aqi_values[i];
+                    document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
                 }
 
                 var minValue = area_data.min_max_values[i][0];
 
                 if (minValue == -1) {
-                    document.getElementById(elementMin).innerHTML = 0;
+                    document.getElementById(elementMin).innerHTML = "Min: 0";
                 }
 
                 else {
-                    document.getElementById(elementMin).innerHTML = minValue;
+                    document.getElementById(elementMin).innerHTML = "Min: " + minValue;
                 }
 
-                document.getElementById(elementMax).innerHTML = area_data.min_max_values[i][1];
+                var maxValue =  area_data.min_max_values[i][1];
+
+                if(maxValue == -1){
+                    document.getElementById(elementMax).innerHTML = "Max: 0";
+                }else{
+                    document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                }
             }
         }
-    }
+    //}
 }
 
 $("#prevArea").click(function () {

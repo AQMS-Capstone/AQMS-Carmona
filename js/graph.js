@@ -109,27 +109,31 @@ function drawTheGraph(area_data)
   array_draw.push(area_data.pm10_aqi_values);
   array_draw.push(area_data.tsp_aqi_values);
 
-  if(area_data.AllDayValues_array.length != 0)
-  {
+  //if(area_data.AllDayValues_array.length != 0){
+
       var url = window.location.href.toString();
 
       if (url.includes("daily")){
           for(var i = 0 ; i < area_data.aqi_values.length; i++)
           {
               var maxValue = 0;
+              var found = true;
 
               switch(i)
               {
                   case 0:
                       maxValue = Math.max(parseInt(area_data.co_max));
+                      found = true;
                       break;
 
                   case 1:
                       maxValue = Math.max(parseInt(area_data.so2_max));
+                      found = true;
                       break;
 
                   case 2:
                       maxValue = Math.max(parseInt(area_data.no2_max));
+                      found = true;
                       break;
 
                   case 3:
@@ -145,7 +149,7 @@ function drawTheGraph(area_data)
                       break;
               }
 
-              if(maxValue > -1)
+              if(found)
               {
                   var chartNames = "chart_div_" + (i+1);
                   createGraph(array_draw[i], chartNames, area_data.rolling_time);
@@ -188,7 +192,7 @@ function drawTheGraph(area_data)
               }
           }
       }
-  }
+  //}
 }
 
 function drawBasic() {
