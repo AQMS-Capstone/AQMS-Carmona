@@ -54,7 +54,7 @@ try {
     if($orderIndex <= 1){
         $order = 'timestamp';
     }else{
-        $order = 'MASTER.e_id';
+        $order = 'MASTER.e_id, timestamp';
     }
     $loc = strtolower($area[$areaIndex]);
     $gpdf = new GPDF();
