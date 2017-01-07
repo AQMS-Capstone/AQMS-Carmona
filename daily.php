@@ -54,7 +54,7 @@ include('include/header.php');
                                     <div id="js-legend" class="chart-legend"></div>
                                 </div>
                             </div>
-                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Daily
+                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Current
                                     Distribution</b>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ include('include/header.php');
                                 <canvas id="barChart"></canvas>
                             </div>
 
-                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">24 hrs
+                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Rolling 24 hrs
                                     Distribution</b>
                         </div>
                     </div>
