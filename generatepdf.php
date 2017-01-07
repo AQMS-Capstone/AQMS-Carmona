@@ -25,6 +25,7 @@ $bancalDataSet = array();
 $slexDataSet = array();
 
 $filename = "";
+$orderIndex = 0;
 $order = "" ;
 
 try {
@@ -44,12 +45,17 @@ try {
     $pollutant = $_POST["drpPollutant"];
     $dateFrom = $_POST["txtDateTimeFrom"];
     $dateTo = $_POST["txtDateTimeTo"];
+    $orderIndex = $_POST["drpOrder"];
 
 
     //echo $areaIndex;
 
-    $order = 'MASTER.e_id, timestamp';
 
+    if($orderIndex <= 1){
+        $order = 'timestamp';
+    }else{
+        $order = 'MASTER.e_id, timestamp';
+    }
     $loc = strtolower($area[$areaIndex]);
     $gpdf = new GPDF();
 

@@ -15,7 +15,7 @@ if(isset($_POST['btnGenerate']))
     $pollutant = filter_input(INPUT_POST, 'drpPollutant');
     $dateTimeFrom = filter_input(INPUT_POST, 'txtDateTimeFrom');
     $dateTimeTo = filter_input(INPUT_POST, 'txtDateTimeTo');
-    //$order = filter_input(INPUT_POST, 'drpOrder');
+    $order = filter_input(INPUT_POST, 'drpOrder');
 
 
 if($area == 3) {
@@ -96,14 +96,14 @@ include('include/header.php');
                                 <label>Pollutant</label>
                             </div>
 
-                            <!---<div  class="input-field col s12">
+                            <div  class="input-field col s12">
                                 <select name = "drpOrder" required>
                                     <option value="1" selected>Timestamp</option>
                                     <option value="2">Element</option>
 
                                 </select>
                                 <label>Order By</label>
-                            </div> -->
+                            </div>
 
                             <div class="input-field s12">
                                 <div class="input-field col s12">
