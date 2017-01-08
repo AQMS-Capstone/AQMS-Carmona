@@ -38,9 +38,9 @@ include('include/header.php');
             <h3 class="header teal-text">The Air Quality Monitoring System</h3>
             <div class="divider"></div><br>
             <p class="gray-text text-lighten-3 caption">
-                AQMS promotes Air Pollution awareness and provides a unified Air Quality information for the municipality of Carmona.
-                The sensors will gather concentration values of the following elements (CO, SO2, NO2, O3, PM10, and TSP), and then the website will provide necessary information such as AQI Graph,
-                AQI Value, and synthesis to help the citizen in Carmona to be aware in the quality of air they're breathing.
+                AQMS promotes Air Pollution awareness and provides a unified Air Quality information for the Municipality of Carmona.
+                The system will gather concentration values of the following pollutants (CO, SO2, and NO2) in real-time from the two "key-areas" in Carmona namely: Bancal Junction/Intersection, and SLEX Entrance / Exit. The system will then provide the necessary information such as the prevalent pollutant, its AQI value and synthesis, and the rolling 24-hour AQI Graph
+                in order to help the citizen of Carmona be aware of the air quality they're breathing.
             </p>
         </div>
     </div>
@@ -62,8 +62,8 @@ include('include/header.php');
                 </div>
                 <div class="col s12 l9 left-align-on-med-and-up">
                     <h4>Vonn Mesina</h4>
-                    <p>Vonn is an Information Technology major with a specialization in web and mobile development.
-                        He is currently working at Gleent Inc. as an iOS Developer</p>
+                    <p>Vonn is currently an I.T. student, specializing in web and mobile development.
+                        He is currently working at Gleent Inc. as their OJT-iOS Developer</p>
                 </div>
             </div>
 
@@ -76,8 +76,8 @@ include('include/header.php');
                 <div class="col s12 l9 left-align-on-med-and-up">
 
                     <h4>Lyle Dela Cuesta</h4>
-                    <p>Lyle is an Information Technology major with a specialization in web and mobile development.
-                        He is currently working at NXP, Philips Inc. as a Front End and Back End Developer</p>
+                    <p>Lyle is currently an I.T. student, specializing in web and mobile development.
+                        He is currently working at NXP, Philips Inc. as their OJT-Front End and Back End Developer</p>
                 </div>
             </div>
 
@@ -89,8 +89,8 @@ include('include/header.php');
                 </div>
                 <div class="col s12 l9 left-align-on-med-and-up">
                     <h4>Kris Mariano</h4>
-                    <p>Kris is an Information Technology major with a specialization in web and mobile development.
-                        He is currently working at NXP, Philips Inc. as a Front End and Back End Developer.</p>
+                    <p>Kris is currently an I.T. student, specializing in web and mobile development.
+                        He is currently working at NXP, Philips Inc. as their OJT-Front End and Back End Developer.</p>
                 </div>
             </div>
         </div>

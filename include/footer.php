@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col l6 s12">
                 <h5 class="teal-text"><b>AQMS - Carmona</b></h5>
-                <p class="text-lighten-4">Take care of your body. It's the only place you have to live in. Know the air that you are breathing.</p>
+                <p class="text-lighten-4">Take care of your body. Know the quality of air you're breathing.</p>
             </div>
             <div class="col l4 offset-l2 s12">
                 <h5 class="teal-text">Links</h5>
