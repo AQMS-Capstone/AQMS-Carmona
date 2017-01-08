@@ -176,7 +176,7 @@ include('include/header.php');
                         </div>
 
 
-                        <a class="waves-effect orange-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
+                        <a class="waves-effect teal-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
                            style="margin-top: 1em; width: 100%;">See More</a>
                     </div>
                 </div>
