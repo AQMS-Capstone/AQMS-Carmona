@@ -42,7 +42,7 @@ $(document).ready(function () {
 //     alert(e.data.param1);
 // });
 
-$("[data-click]").on('click', function (e) {
+$("[data-click-accordion]").on('click', function (e) {
     var prevValue = $(this).attr('data-prevValue');
     var prevIndex = $(this).attr('data-prevIndex');
 

@@ -112,7 +112,7 @@ include('include/header.php');
                     echo "<div class='row'>
                         <div class='col s12'>
                             <ul class='collapsible' data-collapsible='accordion'>
-                                <li data-click = '' data-prevValue = '$value' data-prevIndex = '$ind'>
+                                <li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$ind'>
                                     <div class='collapsible-header active'>
                                         <div class='row-no-after'>
                                             <div class='col s5'>
@@ -174,7 +174,7 @@ include('include/header.php');
 
                                     $value = $area_data->aqi_values[$x];
 
-                                    echo "<li data-click = '' data-prevValue = '$value' data-prevIndex = '$x'>
+                                    echo "<li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$x'>
                                     <div class='collapsible-header'>
                                         <div class='row-no-after'>
                                             <div class='col s5'>
