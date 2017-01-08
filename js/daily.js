@@ -36,8 +36,7 @@ $(document).ready(function () {
     }
     drawBasic();
     ScrollTo("content-holder");
-})
-
+});
 
 var AQIAirQuality;
 var AQIStatus;
