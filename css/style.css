@@ -1,6 +1,9 @@
 body {
 
 }
+.collapsible-body .chart{
+    padding: 15px;
+}
 img {
     display: block;
     margin-left: auto;

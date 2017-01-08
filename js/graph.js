@@ -236,3 +236,4 @@ function removeNegative(AQI){
 
     return AQI;
 }
+

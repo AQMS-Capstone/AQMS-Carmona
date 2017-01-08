@@ -192,6 +192,7 @@ include('include/header.php');
                     
                                     </div>
                                     <div class='collapsible-body'>
+                                    
                                         <div class='chart'><canvas id='$chartName'></canvas></div>
                                     </div>
                                 </li>
@@ -233,7 +234,7 @@ include('include/header.php');
 <!--Additional Scripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 <script src="js/graph.js"></script>
-<script src="js/sample-graph.js"></script>
+<script src="js/daily-graph.js"></script>
 <script src="js/daily.js"></script>
 <script src="js/aqi-calculator.js"></script>
 </body>
