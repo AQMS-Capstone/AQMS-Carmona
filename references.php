@@ -8,8 +8,7 @@ include('include/header.php');
     <div class="section white">
         <div class="row container center">
             <h3 class="header teal-text">References</h3>
-            <h5 class="teal-text text-lighten-2">The information provided in this website are guided by the following guideline/s</h5>
-
+            <p class="header center grey-text" style="margin-top: 0; padding-top: 0;">The information provided in this website are guided by the following guideline/s</p>
             <div class="divider"></div>
             <br>
             <br>
