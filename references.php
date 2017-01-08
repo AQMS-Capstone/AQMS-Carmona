@@ -16,8 +16,8 @@ include('include/header.php');
             <div class="row">
 
                 <div class="col s12 left-align-on-med-and-up">
-                    <li class="gray-text text-lighten-3 caption">Technical Assistance Document for the Reporting of Daily Air Quality - May 2016 | <a href="https://www3.epa.gov/airnow/aqi-technical-assistance-document-may2016.pdf" target = "_blank">Download PDF</a></li>
-                    <li class="gray-text text-lighten-3 caption">Implementing Rules and Regulations for RA 8749 - DAO 200-81 | <a href="http://air.emb.gov.ph/wp-content/uploads/2016/04/DAO-2000-81.pdf" target = "_blank">Download PDF</a></li>
+                    <li class="gray-text text-lighten-3 caption">Technical Assistance Document for the Reporting of Daily Air Quality - May 2016 | <a href="https://www3.epa.gov/airnow/aqi-technical-assistance-document-may2016.pdf" target = "_blank" class = "orange-text">Download PDF</a></li>
+                    <li class="gray-text text-lighten-3 caption">Implementing Rules and Regulations for RA 8749 - DAO 200-81 | <a href="http://air.emb.gov.ph/wp-content/uploads/2016/04/DAO-2000-81.pdf" target = "_blank" class = "orange-text">Download PDF</a></li>
                 </div>
             </div>
         </div>
