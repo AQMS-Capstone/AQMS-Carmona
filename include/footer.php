@@ -13,6 +13,7 @@
                     <li><a class="orange-text" href="history.php">History Reports</a></li>
                     <li><a class="orange-text" href="aqi-calculator.php">AQI Calculator</a></li>
                     <li><a class="orange-text" href="about.php">About</a></li>
+                    <li><a class="orange-text" href="references.php">References</a></li>
                 </ul>
             </div>
         </div>
