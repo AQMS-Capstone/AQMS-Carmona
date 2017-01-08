@@ -38,6 +38,17 @@ $(document).ready(function () {
     ScrollTo("content-holder");
 });
 
+// $('[data-click]').on('click', function (e) {
+//     alert(e.data.param1);
+// });
+
+$("[data-click]").on('click', function (e) {
+    var prevValue = $(this).attr('data-prevValue');
+    var prevIndex = $(this).attr('data-prevIndex');
+
+    GetAQIDetails(prevValue, pollutant_symbols[prevIndex]);
+});
+
 var AQIAirQuality;
 var AQIStatus;
 

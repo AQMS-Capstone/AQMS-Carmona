@@ -107,10 +107,12 @@ include('include/header.php');
                     $elementNameMin = "aqi_min_" . ($ind + 1);
                     $elementNameMax = "aqi_max_" . ($ind + 1);
 
+                    $value = $area_data->aqi_values[$ind];
+
                     echo "<div class='row'>
                         <div class='col s12'>
                             <ul class='collapsible' data-collapsible='accordion'>
-                                <li>
+                                <li data-click = '' data-prevValue = '$value' data-prevIndex = '$ind'>
                                     <div class='collapsible-header active'>
                                         <div class='row-no-after'>
                                             <div class='col s5'>
@@ -170,7 +172,9 @@ include('include/header.php');
                                     $elementNameMin = "aqi_min_" . ($x + 1);
                                     $elementNameMax = "aqi_max_" . ($x + 1);
 
-                                    echo "<li>
+                                    $value = $area_data->aqi_values[$x];
+
+                                    echo "<li data-click = '' data-prevValue = '$value' data-prevIndex = '$x'>
                                     <div class='collapsible-header'>
                                         <div class='row-no-after'>
                                             <div class='col s5'>

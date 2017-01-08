@@ -333,6 +333,9 @@ function GetAQIDetails(AQI,element){
 function GetStatement(AQIStatus,element){
     switch (AQIStatus){
         case "No Current Data":{
+            $("#synthesis").text("");
+            $("#health-effects").text("");
+            $("#cautionary").text("");
             break;
         }
         case "Good":{
