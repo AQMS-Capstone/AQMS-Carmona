@@ -138,6 +138,28 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                     </div>
                 </div>
             </div>
+
+            <div class='row'>
+                <div class='col s12'>
+                    <ul class='collapsible' data-collapsible='accordion'>
+                        <li>
+                            <div class='collapsible-header active'>
+                                <div class='row-no-after'>
+                                    <div class='col s5'>
+                                        <i class='material-icons'>settings_input_svideo</i>
+                                        <b id = ''>References</b>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class='collapsible-body'>
+                                    <p class="gray-text text-lighten-3 caption center-align">SOON</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
