@@ -97,3 +97,6 @@ $ozone_guideline_values_1 = [[-1, -1], [-1, -1], [0.125, 0.164], [0.165, 0.204],
 $pm_10_guideline_values = [[0, 54], [55, 154], [155, 254], [255, 354], [355, 424], [425, 504]]; // 24 hr - ug/m3
 $tsp_guideline_values = [[0, 80], [81, 230], [231, 349], [350, 599], [600, 899], [900, -1]]; // 24 hr - ug/m3
 $guideline_aqi_values = [[0, 50], [51, 100], [101, 150], [151, 200], [201, 300], [301, 400]];
+
+$pollutant_labels = ["Carbon Monoxide", "Sulfur Dioxide", "Nitrogen Dioxide", "Ozone", "Particulate Matter 10", "Totally Suspended Particles"];
+$pollutant_symbols = ["CO", "SO2", "NO2", "O3","PM 10", "TSP"];

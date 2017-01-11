@@ -67,7 +67,6 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
   require 'include/db_connect.php';
 
   $array_holder = array();
-  $data_holder = array();
 
   $element_holder_bancal = new AreaFunction();
   $element_holder_slex = new AreaFunction();
@@ -119,7 +118,8 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
       }
     }
 
-    //array_push($array_holder, $dataClass);
+
+    //array_push($values_holder, $dataClass);
   }
 
   if(count($element_holder_bancal->co_holder) > 0){
@@ -1133,7 +1133,7 @@ function Generate($name)
   if($unit_used == "old") {
     $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, $sulfur_precision);
   }else{
-    $data_container = OneHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, $sulfur_precision);
+    $data_container = TwentyFourHrAveraging2($area_generate->so2_values, $hour_value, $sufur_guideline_values, $guideline_aqi_values, $sulfur_precision);
   }
   $area_generate->so2_aqi_values = $data_container[0];
   $area_generate->so2_actual_values = $data_container[1];
