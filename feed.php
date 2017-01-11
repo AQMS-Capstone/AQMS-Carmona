@@ -5,6 +5,7 @@
  * Date: 06/01/2017
  * Time: 11:10 PM
  */
+define("PAGE_TITLE", "Feed - Air Quality Monitoring System");
 include('include/header_feed.php');
 ?>
 
