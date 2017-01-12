@@ -29,6 +29,19 @@ include('include/header_feed.php');
     function GetFeed()
     {
         //$('div#tryPanel').load('add.php');
+        if(isTriggered) {
+            $.ajax({
+                type: "GET",
+                url: 'retrieve_time_stop.php',
+                dataType: 'JSON',
+                success: function (response) {
+                    var triggered = response["isStopTriggered"];
+                    if (triggered == true) {
+                        isTriggered = false;
+                    }
+                }
+            });
+        }
 
         if(!isTriggered) {
             $.ajax({
@@ -79,7 +92,7 @@ include('include/header_feed.php');
                     if(ctr == 7){
                         ctr = 0;
                         isSoundRunning = false;
-                        isTriggered = false;
+                        //isTriggered = false;
                         stopSound();
                         //stop
                     }else {
