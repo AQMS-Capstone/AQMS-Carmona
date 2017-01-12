@@ -1,10 +1,9 @@
-
 <?php
 /**
  * Created by PhpStorm.
  * User: Kris
  * Date: 1/12/2017
- * Time: 3:03 PM
+ * Time: 1:13 PM
  */
 
 Init();
@@ -15,12 +14,12 @@ function Init(){
     $date_now = date("Y-m-d H:i");
     $date_supposed = date("Y-m-d H") . ":01";
     $triggered = false;
+
     if(strtotime($date_now) >= strtotime($date_supposed)){
         $triggered = true;
-    }
-    else{
+    }else{
         $triggered = false;
     }
 
-    echo json_encode(array("isStopTriggered"=>$triggered));
+    echo json_encode(array("isResumed"=>$triggered));
 }

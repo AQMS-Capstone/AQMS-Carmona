@@ -18,8 +18,12 @@ include('include/header_feed.php');
         var isRunning = false;
         var isSoundRunning = false;
         var ctr = 0;
+        var ctr2 = 0;
 
-        var isTriggered = true;
+        var isTriggered = false;
+        var isFirstLoad = true;
+        var isFirstTriggered = false;
+        var isResumedTriggered = false;
 
     $(function()
     {
@@ -30,20 +34,31 @@ include('include/header_feed.php');
     {
         //$('div#tryPanel').load('add.php');
         if(isTriggered) {
-            $.ajax({
-                type: "GET",
-                url: 'retrieve_time_stop.php',
-                dataType: 'JSON',
-                success: function (response) {
-                    var triggered = response["isStopTriggered"];
-                    if (triggered == true) {
-                        isTriggered = false;
-                    }
-                }
-            });
+            if(ctr2 == 7){
+                ctr2 = 0;
+                isTriggered = false;
+            }else{
+                ctr2++;
+            }
         }
 
-        if(!isTriggered) {
+        $.ajax({
+            type: "GET",
+            url: 'retrieve_resumer.php',
+            dataType: 'JSON',
+            success: function (response) {
+                var isResumed = response["isResumed"];
+                if (isResumed == true) {
+                    isResumedTriggered = false;
+                }else{
+                    if(isTriggered) {
+                        isResumedTriggered = true;
+                    }
+                }
+            }
+        });
+
+        if(!isTriggered && !isResumedTriggered){
             $.ajax({
                 type: "GET",
                 url: 'retrieve_time.php',
@@ -52,6 +67,7 @@ include('include/header_feed.php');
                     var triggered = response["isSoundTriggered"];
                     if (triggered == true) {
                         isTriggered = true;
+                        isResumedTriggered = true;
                     }
                 }
             });
@@ -86,13 +102,23 @@ include('include/header_feed.php');
 
                 if(container1 == "1" || container2 == "1"){
                     isSoundRunning = true;
+
+                    if(isFirstLoad == true){
+                        isFirstLoad = false;
+                        isFirstTriggered = true;
+                    }
                 }
 
-                if(isSoundRunning && isTriggered){
+                console.log("IS SOUND RUNNING: " + isSoundRunning);
+                console.log("IS TRIGGERED: " + isTriggered);
+                console.log("IS FIRST TRIGGERED: " + isFirstTriggered);
+                console.log("-----------------------------------------");
+
+                if((isSoundRunning && isTriggered) || isFirstTriggered){
                     if(ctr == 7){
                         ctr = 0;
                         isSoundRunning = false;
-                        //isTriggered = false;
+                        isFirstTriggered = false;
                         stopSound();
                         //stop
                     }else {
