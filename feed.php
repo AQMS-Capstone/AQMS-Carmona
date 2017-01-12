@@ -25,6 +25,8 @@ include('include/header_feed.php');
         var isFirstTriggered = false;
         var isResumedTriggered = false;
 
+        var alertToPlay = "0";
+
     $(function()
     {
         GetFeed();
@@ -100,7 +102,17 @@ include('include/header_feed.php');
                 var container1 = response["play1"];
                 var container2 = response["play2"];
 
-                if(container1 == "1" || container2 == "1"){
+                console.log("CONTAINER 1: " + container1);
+                console.log("CONTAINER 2: " + container2);
+
+                if(container1 == "1" || container1 == "2" || container2 == "1" || container2 == "2"){
+
+                    alertToPlay = container1;
+
+                    if(alertToPlay == "0" || alertToPlay == "1"){
+                        alertToPlay = container2;
+                    }
+
                     isSoundRunning = true;
 
                     if(isFirstLoad == true){
@@ -122,7 +134,12 @@ include('include/header_feed.php');
                         stopSound();
                         //stop
                     }else {
-                        playSound("res/Sounds/", "Red Alert");
+                        if(alertToPlay == "2"){
+                            playSound("res/Sounds/", "Red Alert");
+                        }else if(alertToPlay == "1"){
+                            playSound("res/Sounds/", "filling-your-inbox");
+                        }
+
                         ctr++;
                     }
                 }

@@ -118,6 +118,8 @@ function displayAction($curAQI){
 
     if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
         $action = "Needs immediate attention";
+    }else if($curStatus == "NO STATUS") {
+        $action = "-";
     }else{
         $action = "No action needed";
     }
@@ -170,7 +172,7 @@ function returnAQIStstus($AQI)
     } else if ($AQI >= 301) {
         $AQIStatus = "Emergency";
     } else if ($AQI == -1) {
-        $AQIStatus = "No Current Data";
+        $AQIStatus = "No Status";
     }
 
     return strtoupper($AQIStatus);

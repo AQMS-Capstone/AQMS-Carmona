@@ -31,9 +31,11 @@ function returnPlay($prevAQI, $curAQI){
     $action = "";
 
     if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
+        $action = "2";
+    }else if($curStatus == "NO STATUS"){
         $action = "1";
     }else{
-        $action = "02";
+        $action = "0";
     }
 
     return $action;
@@ -58,7 +60,7 @@ function returnAQIStstus($AQI)
     } else if ($AQI >= 301) {
         $AQIStatus = "Emergency";
     } else if ($AQI == -1) {
-        $AQIStatus = "No Current Data";
+        $AQIStatus = "No Status";
     }
 
     return strtoupper($AQIStatus);
