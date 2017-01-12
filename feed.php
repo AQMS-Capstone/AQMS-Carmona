@@ -16,6 +16,10 @@ include('include/header_feed.php');
     <script type = "text/javascript">
 
         var isRunning = false;
+        var isSoundRunning = false;
+        var ctr = 0;
+
+        var isTriggered = true;
 
     $(function()
     {
@@ -28,6 +32,19 @@ include('include/header_feed.php');
 
         $.ajax({
             type: "GET",
+            url: 'retrieve_time.php',
+            dataType:'JSON',
+            success: function (response) {
+                $('#trigger').html(response);
+                var triggered = response["isSoundTriggered"];
+                if(triggered == true){
+                    isTriggered = true;
+                }
+            }
+        });
+
+        $.ajax({
+            type: "GET",
             url: 'retrieve_status.php',
             success: function (response) {
                 $('#tryPanel1').html(response);
@@ -35,7 +52,6 @@ include('include/header_feed.php');
         });
 
         if(isRunning == false) {
-            console.log("KRIS SENPAI");
             $.ajax({
                 type: "GET",
                 url: 'retrieve_feed.php',
@@ -49,14 +65,26 @@ include('include/header_feed.php');
         $.ajax({
             type: "GET",
             url: 'retrieve_alert.php',
+            dataType:'JSON',
             success: function (response) {
-                var container = response.play1;
-                console.log("CONTAINER IS: " + container);
-                if(container == "1"){
-                    console.log("SENPAI <3");
-                    playSound("res/Sounds/","Red Alert");
-                }else{
+                var container1 = response["play1"];
+                var container2 = response["play2"];
 
+                if(container1 == "1" || container2 == "1"){
+                    isSoundRunning = true;
+                }
+
+                if(isSoundRunning && isTriggered){
+                    if(ctr == 7){
+                        ctr = 0;
+                        isSoundRunning = false;
+                        isTriggered = false;
+                        stopSound();
+                        //stop
+                    }else {
+                        playSound("res/Sounds/", "Red Alert");
+                        ctr++;
+                    }
                 }
             }
         });
@@ -67,9 +95,14 @@ include('include/header_feed.php');
     function playSound(filePath,filename){
         document.getElementById("play-sound").innerHTML='<audio autoplay="autoplay"><source src="'+ filePath + filename + '.mp3" type="audio/mpeg" /><embed hidden="true" autostart="true" loop="false" src="'+ filePath + filename +'.mp3" /></audio>';
     }
+
+    function stopSound(){
+        document.getElementById("play-sound").innerHTML= '';
+    }
     </script>
 </head>
 <body>
+<div id = "trigger"></div>
 <div id="tryPanel1"></div>
 <div class="container">
     <div class='row row-no-after'>

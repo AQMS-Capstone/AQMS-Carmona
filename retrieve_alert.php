@@ -7,13 +7,15 @@
  */
 Init();
 
-
 function Init(){
+    ob_start();
     include('include/guidelines.php');
     include('include/Map.php');
 
+
     $play1 = returnPlay(determineLastHourAQI($bancal),$bancal->aqi_values[$bancal->prevalentIndex[0]]);
-    $play2 = returnPlay(determineLastHourAQI($bancal),$bancal->aqi_values[$bancal->prevalentIndex[0]]);
+    $play2 = returnPlay(determineLastHourAQI($slex),$slex->aqi_values[$slex->prevalentIndex[0]]);
+    ob_end_clean();
 
     echo json_encode(array("play1"=>$play1, "play2"=>$play2));
 
@@ -28,10 +30,10 @@ function returnPlay($prevAQI, $curAQI){
     $curStatus = returnAQIStstus($curAQI);
     $action = "";
 
-    if($prevStatus == $curStatus){
-        $action = "no-play";
+    if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
+        $action = "1";
     }else{
-        $action = "play";
+        $action = "02";
     }
 
     return $action;

@@ -105,19 +105,18 @@ function displayAQIMonitoring($date,$area){
     echo "<div class = 'card' style='padding:0; margin-top:0; box-shadow:0px 0px 0px; background: $color1';>";
     echo "<div class = 'card-content'>";
     echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
-    echo "<b>Action: ".displayAction(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</b>";
+    echo "<b>Action: ".displayAction($area->aqi_values[$area->prevalentIndex[0]])."</b>";
     echo "</h6>";
     echo "</div>";
     echo "</div>";
     echo "</div>";
 
 }
-function displayAction($prevAQI, $curAQI){
-    $prevStatus = returnAQIStstus($prevAQI);
+function displayAction($curAQI){
     $curStatus = returnAQIStstus($curAQI);
     $action = "";
 
-    if($prevStatus == "GOOD" || $prevStatus == "FAIR" || $prevStatus == "UNHEALTHY FOR SENSITIVE GROUPS" || $prevStatus == "NO CHANGE" || $prevStatus = "EMERGENCY" || $prevStatus = "VERY UNHEALTHY" || $prevStatus = "ACUTELY UNHEALTHY"&& $curStatus = "EMERGENCY" || $curStatus = "VERY UNHEALTHY" || $curStatus = "ACUTELY UNHEALTHY"){
+    if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
         $action = "Needs immediate attention";
     }else{
         $action = "No action needed";
