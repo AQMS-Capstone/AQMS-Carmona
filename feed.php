@@ -26,6 +26,7 @@ include('include/header_feed.php');
         var isResumedTriggered = false;
 
         var alertToPlay = "0";
+        var statusHolder = "0";
 
     $(function()
     {
@@ -102,9 +103,6 @@ include('include/header_feed.php');
                 var container1 = response["play1"];
                 var container2 = response["play2"];
 
-                console.log("CONTAINER 1: " + container1);
-                console.log("CONTAINER 2: " + container2);
-
                 if(container1 == "1" || container1 == "2" || container2 == "1" || container2 == "2"){
 
                     alertToPlay = container1;
@@ -117,6 +115,11 @@ include('include/header_feed.php');
 
                     if(isFirstLoad == true){
                         isFirstLoad = false;
+                        isFirstTriggered = true;
+                    }
+
+                    if(statusHolder != alertToPlay){
+                        statusHolder = alertToPlay;
                         isFirstTriggered = true;
                     }
                 }

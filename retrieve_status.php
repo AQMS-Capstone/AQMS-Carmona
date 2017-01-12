@@ -185,7 +185,7 @@ function displayAQIStatusChange($prevAQI, $curAQI){
 
 
     if($prevStatus == $curStatus){
-        $change = "No change";
+        $change = "Same with previous hour";
     }else{
         $change = "From ".$prevStatus. " (last hour) to ".$curStatus;
     }
