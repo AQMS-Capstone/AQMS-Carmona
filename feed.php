@@ -30,17 +30,19 @@ include('include/header_feed.php');
     {
         //$('div#tryPanel').load('add.php');
 
-        $.ajax({
-            type: "GET",
-            url: 'retrieve_time.php',
-            dataType:'JSON',
-            success: function (response) {
-                var triggered = response["isSoundTriggered"];
-                if(triggered == true){
-                    isTriggered = true;
+        if(!isTriggered) {
+            $.ajax({
+                type: "GET",
+                url: 'retrieve_time.php',
+                dataType: 'JSON',
+                success: function (response) {
+                    var triggered = response["isSoundTriggered"];
+                    if (triggered == true) {
+                        isTriggered = true;
+                    }
                 }
-            }
-        });
+            });
+        }
 
         $.ajax({
             type: "GET",
