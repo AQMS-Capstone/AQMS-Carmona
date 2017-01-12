@@ -35,7 +35,6 @@ include('include/header_feed.php');
             url: 'retrieve_time.php',
             dataType:'JSON',
             success: function (response) {
-                $('#trigger').html(response);
                 var triggered = response["isSoundTriggered"];
                 if(triggered == true){
                     isTriggered = true;
