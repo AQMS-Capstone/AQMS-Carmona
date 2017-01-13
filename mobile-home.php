@@ -109,9 +109,10 @@ if (isset($_GET["area"])) {
                         }
                     }
                     ?>
-                    <div class="card-action center">
-                        <a>VIEW MORE</a>
-                    </div>
+
+                </div>
+                <div class="card-action center">
+                    <a>VIEW MORE</a>
                 </div>
             </div>
         </div>
