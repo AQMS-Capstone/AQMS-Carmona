@@ -114,10 +114,11 @@ function drawTheGraph(area_data)
       var url = window.location.href.toString();
 
       if (url.includes("daily")){
+
           for(var i = 0 ; i < area_data.aqi_values.length; i++)
           {
               var maxValue = 0;
-              var found = true;
+              var found = false;
 
               switch(i)
               {
