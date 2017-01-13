@@ -246,12 +246,21 @@ table.dataTable.no-footer {
     font-size: 0.8rem;
 }
 
-#googleMap {
+.map-home {
     position: absolute;
     top: 154px;
     left: 0px;
     right: 0px;
     bottom: 0px;
+}
+
+.map-daily{
+    position: absolute;
+    top: 154px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height : 60%;
 }
 
 .form-card {

@@ -6,40 +6,34 @@ include('include/header.php');
 
 <div id="content-holder">
 
-    <br>
-    <div class="section no-pad-bot">
+    <div id="googleMap" class="map-daily"></div>
+
+    <div class="section no-pad-bot" style="margin-top: 300px;">
         <div class="container">
             <div class="row row-no-after">
-                <div class="col s3">
-                    <div class="card" style="min-height: 260px;">
+                <div class="col s12">
+                    <div class="card">
+                        <div id="aqiColor" class="col s12 center">
+                            <p style="font-size: 2em; margin: 15px;" class="white-text"><b id="aqiText">NaN</b></p>
+                        </div>
                         <div class="card-content">
-                            <img id="zoneImg" class="img-circle" src="res/images/area/slex_carmona-exit.jpg"
-                                 height="150">
-                            <br>
-                            <div class="center">
-                                <a id ="prevArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
-                                <a id ="nextArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                            <div class="row">
+                                <div class="col s12 center">
+                                    <br>
+                                    <p style="font-weight: bold; font-size: 2em;">AQI: <span id="aqiNum"></span ></p>
+                                    <p class="card-title teal-text" style="font-weight: bold" id="zoneName">Zone Name</p>
+                                    <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
+                                    <p><b>Recorded on: </b><span id="timeUpdated">NaN</span></p>
+                                </div>
                             </div>
-                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Zone Name</b></h6>
+
+
+                        </div>
+                        <div class="card-action center">
+                            <a id ="prevArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_left</i></a>
+                            <a id ="nextArea" class="waves-effect orange-text"><i class="material-icons">keyboard_arrow_right</i></a>
                         </div>
                     </div>
-
-                </div>
-                <div class="col s9">
-                    <div class="card" style="min-height: 260px;">
-                        <div class="card-content">
-                            <div class="center-align">
-                                <p class="material-icons" style="font-size: 6em;margin-bottom: 0;margin-top: 0;"
-                                   id="AQIStat">
-                                    cloud</p>
-                                <p style="font-size: 1.5em;margin-top: 0;"><b>AQI: </b><span id="aqiNum">NaN</span></p>
-                                <p style="font-size: 2em"><b id="aqiText">NaN</b></p>
-                                <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
-                                <p><b>Recorded on: </b><span id="timeUpdated">NaN</span></p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="row row-no-after">
@@ -232,6 +226,9 @@ include('include/header.php');
 </div>
 <?php include('include/footer.php'); ?>
 <!--Additional Scripts-->
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNqg21fMXOnBCPajFuCDgy5zt6MkOPYv4"></script>
+<script src="js/caqms-api.js"></script>
+<script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 <script src="js/graph.js"></script>
 <script src="js/daily-graph.js"></script>

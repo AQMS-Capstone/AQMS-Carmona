@@ -77,7 +77,7 @@ function GetAreaStatus2(area_data)
     GetAQIDetails(area_data.prevalent_value, pollutant_symbols[area_data.prevalentIndex]);
 
     $("#AQIStat").css("color", AQIAirQuality);
-    $("#aqiText").css("color", AQIAirQuality);
+    $("#aqiColor").css("background-color", AQIAirQuality);
     $("#aqiText").text(AQIStatus);
 
     //if (area_data.AllDayValues_array.length != 0) {

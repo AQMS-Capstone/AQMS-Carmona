@@ -17,7 +17,7 @@ include('include/header.php');
     }
     ?>
     <div id="home">
-        <div id="googleMap"></div>
+        <div id="googleMap" class="map-home"></div>
         <div class="container">
 
             <div id="zoneStatus" class="card float-card">
