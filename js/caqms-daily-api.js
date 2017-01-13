@@ -124,8 +124,6 @@ function initialize()
         fillColor:slex_area.AirQuality,
         fillOpacity:0.5
     });
-    var d = new Date();
-    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
     google.maps.event.addListener(bancalMarker,'click',function() {
         window.location.href = "daily.php?area=Bancal";
@@ -152,11 +150,6 @@ function initialize()
         }else{
             map.setCenter(slexZoom);
         }
-
-
-        GetAQIDetails(area_data.prevalent_value, pollutant_symbols[area_data.prevalentIndex]);
-
-
     }
 
     var area = getUrlParameter('area');
@@ -164,11 +157,9 @@ function initialize()
     if(area!=null){
         if(area=="SLEX"){
             GetAreaStatus(slex_area);
-            //GetSLEXStatus();
         }
         else if(area="Bancal"){
             GetAreaStatus(bancal_area);
-            //GetBancalStatus();
         }
     }
 }
