@@ -33,9 +33,9 @@ function returnPlay($prevAQI, $curAQI){
     if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
         $action = "2";
     }else if($curStatus == "NO STATUS"){
-        $action = "1";
-    }else{
         $action = "0";
+    }else{
+        $action = "1";
     }
 
     return $action;

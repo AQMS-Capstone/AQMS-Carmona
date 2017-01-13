@@ -76,11 +76,15 @@ include('include/header_feed.php');
             });
         }
 
+        //enclose sa function, tas sa pag load tatawagan niya ung function, tas pag nag success
         $.ajax({
             type: "GET",
             url: 'retrieve_status.php',
             success: function (response) {
                 $('#tryPanel1').html(response);
+            },
+            error:function(response){
+
             }
         });
 
@@ -103,43 +107,34 @@ include('include/header_feed.php');
                 var container1 = response["play1"];
                 var container2 = response["play2"];
 
-                if(container1 == "1" || container1 == "2" || container2 == "1" || container2 == "2"){
+                alertToPlay = container1;
 
-                    alertToPlay = container1;
-
-                    if(alertToPlay == "0" || alertToPlay == "1"){
+                if (alertToPlay == "0") {
+                    if (container2 == "1" || container2 == "2") {
                         alertToPlay = container2;
                     }
-
-                    isSoundRunning = true;
-
-                    if(isFirstLoad == true){
-                        isFirstLoad = false;
-                        isFirstTriggered = true;
-                    }
-
-                    if(statusHolder != alertToPlay){
-                        statusHolder = alertToPlay;
-                        isFirstTriggered = true;
+                } else if (alertToPlay == "1") {
+                    if (container2 == "2") {
+                        alertToPlay = container2;
                     }
                 }
 
-                console.log("IS SOUND RUNNING: " + isSoundRunning);
-                console.log("IS TRIGGERED: " + isTriggered);
-                console.log("IS FIRST TRIGGERED: " + isFirstTriggered);
-                console.log("-----------------------------------------");
+                if (statusHolder != alertToPlay) {
+                    statusHolder = alertToPlay;
+                    isFirstTriggered = true;
+                }
 
-                if((isSoundRunning && isTriggered) || isFirstTriggered){
-                    if(ctr == 7){
+                if ((isTriggered) || isFirstTriggered) {
+                    if (ctr == 7) {
                         ctr = 0;
                         isSoundRunning = false;
                         isFirstTriggered = false;
                         stopSound();
                         //stop
-                    }else {
-                        if(alertToPlay == "2"){
+                    } else {
+                        if (alertToPlay == "2") {
                             playSound("res/Sounds/", "Red Alert");
-                        }else if(alertToPlay == "1"){
+                        } else if (alertToPlay == "1") {
                             playSound("res/Sounds/", "filling-your-inbox");
                         }
 
