@@ -17,25 +17,25 @@ var area = getUrlParameter('area');
 
 $("#prevArea").click(function () {
     if (area == "Bancal") {
-        location.href = "mobile_home.php?area=SLEX";
+        location.href = "mobile-home.php?area=SLEX";
     }
     else if (area == "SLEX") {
-        location.href = "mobile_home?area=Bancal";
+        location.href = "mobile-home?area=Bancal";
     }
     else {
-        location.href = "mobile_home.php?area=SLEX";
+        location.href = "mobile-home.php?area=SLEX";
     }
 })
 
 $("#nextArea").click(function () {
     if (area == "Bancal") {
-        location.href = "mobile_home.php?area=SLEX";
+        location.href = "mobile-home.php?area=SLEX";
     }
     else if (area == "SLEX") {
-        location.href = "mobile_home.php?area=Bancal";
+        location.href = "mobile-home.php?area=Bancal";
     }
     else {
-        location.href = "mobile_home.php?area=SLEX";
+        location.href = "mobile-home.php?area=SLEX";
     }
 })
 
