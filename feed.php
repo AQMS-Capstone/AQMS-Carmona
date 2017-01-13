@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nostos
- * Date: 06/01/2017
- * Time: 11:10 PM
- */
 define("PAGE_TITLE", "Feed - Air Quality Monitoring System");
 include('include/header_feed.php');
 
@@ -12,7 +6,7 @@ include('include/header_feed.php');
 
 <html>
 <head>
-    <script src = "jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src = "js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script type = "text/javascript">
 
         var isRunning = false;
@@ -133,9 +127,9 @@ include('include/header_feed.php');
                         //stop
                     } else {
                         if (alertToPlay == "2") {
-                            playSound("res/Sounds/", "Red Alert");
+                            playSound("res/sounds/", "Red Alert");
                         } else if (alertToPlay == "1") {
-                            playSound("res/Sounds/", "filling-your-inbox");
+                            playSound("res/sounds/", "filling-your-inbox");
                         }
 
                         ctr++;
