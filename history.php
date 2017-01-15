@@ -100,6 +100,7 @@ include('include/header.php');
                                 <select name = "drpOrder" required>
                                     <option value="1" selected>Timestamp</option>
                                     <option value="2">Element</option>
+                                    <option value="3">Concentration Value</option>
 
                                 </select>
                                 <label>Order By</label>

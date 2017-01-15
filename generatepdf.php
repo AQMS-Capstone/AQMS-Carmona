@@ -53,8 +53,10 @@ try {
 
     if($orderIndex <= 1){
         $order = 'timestamp';
-    }else{
+    }else if($orderIndex == 2){
         $order = 'MASTER.e_id, timestamp';
+    }else{
+        $order = 'MASTER.concentration_value, timestamp';
     }
     $loc = strtolower($area[$areaIndex]);
     $gpdf = new GPDF();
