@@ -97,12 +97,16 @@ include('include/Map.php');
                         <canvas id="slex_barChart"></canvas>
                     </div>
 
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Slex Rolling 24 hrs
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">SLEX Rolling 24 hrs
                             Distribution</b>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="container">
+    <br><br>
+    <div class="divider"></div>
 </div>
 <div class="container">
     <div class="col s12">
@@ -113,6 +117,16 @@ include('include/Map.php');
             <select id="showEntries">
                 <option value="" disabled selected>Show entries</option>
                 <option value = "5">5</option>
+                <option value = "10">10</option>
+                <option value = "25">25</option>
+                <option value = "50">50</option>
+                <option value = "100">100</option>
+            </select>
+        </div>
+        <div class="col s2">
+            <select id="sortBy">
+                <option value="" disabled selected>Sort by</option>
+                <option value = "5">Timestamp</option>
                 <option value = "10">10</option>
                 <option value = "25">25</option>
                 <option value = "50">50</option>
