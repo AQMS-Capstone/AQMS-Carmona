@@ -72,14 +72,14 @@ include('include/header.php');
                     <div class="card" style="height: 215px;">
                         <div class="card-content">
                             <ul class="tabs">
-                                <li class="tab col s3"><a href="#synthesis">Sensitive Groups</a></li>
-                                <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>
-                                <li class="tab col s3"><a href="#cautionary">Cautionary</a></li>
+<!--                                <li class="tab col s3"><a href="#synthesis">Sensitive Groups</a></li>-->
+<!--                                <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>-->
+                                <li class="tab col s3"><a href="#cautionary">Cautionary Statement</a></li>
                             </ul>
                             <br>
 
-                            <div id="synthesis" class="col s12"> </div>
-                            <div id="health-effects" class="col s12"> </div>
+<!--                            <div id="synthesis" class="col s12"> </div>-->
+<!--                            <div id="health-effects" class="col s12"> </div>-->
                             <div id="cautionary" class="col s12"> </div>
 
                             <br>
