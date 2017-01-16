@@ -43,70 +43,24 @@ include('include/Map.php');
 </header>
 <main>
     <div class="row row-no-after">
-        <div class="col s4">
-            <div class="card z-depth-0">
-                <div id="aqiColor" class="col s12 grey" style="margin-bottom: 15px;">
-                    <p style="font-size: 1em;" class="white-text"><b id="aqiText">No Status</b></p>
-                </div>
-                <div class="card-content">
-                    <div class="row">
-                       <p class="card-title teal-text" style="font-weight: bold" id="zoneName">SLEX</p>
+        <div id="statusDiv"></div>
 
 
-                        <div class="divider"></div>
-                        <br>
-
-                        <div class="col s12" style="padding: 0;">
-                            <p style="font-weight: bold; font-size: 2em;">AQI: <span id="aqiNum"></span ></p>
-                        </div>
-
-                        <div class="col s12" style="padding: 0;">
-                            <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
-                            <p><b>Recorded on: </b><span id="timeUpdated">NaN</span></p>
-                            <p><b>Change in AQI Status: </b><span id="timeUpdated">NaN</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div id="aqiColor" class="col s12 grey">
-                    <p style="font-size: 1em;" class="white-text"><b id="aqiText">Action</b></p>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card z-depth-0">
-                <div id="aqiColor" class="col s12 grey" style="margin-bottom: 15px;">
-                    <p style="font-size: 1em;" class="white-text"><b id="aqiText">No Status</b></p>
-                </div>
-                <div class="card-content">
-                    <div class="row">
-                        <p class="card-title teal-text" style="font-weight: bold" id="zoneName">Bancal</p>
-
-
-                        <div class="divider"></div>
-                        <br>
-
-                        <div class="col s12" style="padding: 0;">
-                            <p style="font-weight: bold; font-size: 2em;">AQI: <span id="aqiNum"></span ></p>
-                        </div>
-
-                        <div class="col s12" style="padding: 0;">
-                            <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
-                            <p><b>Recorded on: </b><span id="timeUpdated">NaN</span></p>
-                            <p><b>Change in AQI Status: </b><span id="timeUpdated">NaN</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div id="aqiColor" class="col s12 grey">
-                    <p style="font-size: 1em;" class="white-text"><b id="aqiText">Action</b></p>
-                </div>
-            </div>
-        </div>
         <div class="col s4">
             <div class="row row-no-after">
                 <div class="col s12" style="padding:0;">
                     <div class="card z-depth-0">
                         <div class="card-content">
-                            SLEX PIE GRAPH
+                            <div class="row">
+                                <div class="col s9">
+                                    <canvas id="slex_doughnutChart"></canvas>
+                                </div>
+                                <div class="col s2">
+                                    <div id="js-legend_2" class="chart-legend"></div>
+                                </div>
+                            </div>
+                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">S Current
+                                    Distribution</b>
                         </div>
                     </div>
                 </div>
@@ -115,19 +69,62 @@ include('include/Map.php');
                 <div class="col s12" style="padding:0;">
                     <div class="card z-depth-0">
                         <div class="card-content">
-                            BANCAL PIE GRAPH
+                            <div class="row">
+                                <div class="col s9">
+                                    <canvas id="bancal_doughnutChart"></canvas>
+                                </div>
+                                <div class="col s2">
+                                    <div id="js-legend_1" class="chart-legend"></div>
+                                </div>
+                            </div>
+                            <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">B Current
+                                    Distribution</b>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <div class="col s4">
+            <div class="card z-depth-0" style="height: 215px;">
+                <div class="card-content">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a href="#">Cautionary Statement</a></li>
+                    </ul>
+                    <br>
+                    <div id="cautionary_1" class="col s12"> </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s4">
+            <div class="card z-depth-0" style="height: 215px;">
+                <div class="card-content">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a href="#">Cautionary Statement</a></li>
+                    </ul>
+                    <br>
+                    <div id="cautionary_2" class="col s12"> </div>
+                    <br>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
     <div class="row row-no-after">
         <div class="col s12">
             <div class="card z-depth-0">
                 <div class="card-content">
-                    SLEX GRAPH HERE
+                    <div style="width: 100%; height: 150px;">
+                        <canvas id="slex_barChart"></canvas>
+                    </div>
+
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">SLEX Rolling 24 hrs
+                            Distribution</b>
                 </div>
             </div>
         </div>
@@ -136,7 +133,12 @@ include('include/Map.php');
         <div class="col s12">
             <div class="card z-depth-0">
                 <div class="card-content">
-                    BANCAL GRAPH HERE
+                    <div style="width: 100%; height: 150px;">
+                        <canvas id="bancal_barChart"></canvas>
+                    </div>
+
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Bancal Rolling 24 hrs
+                            Distribution</b>
                 </div>
             </div>
         </div>
@@ -152,59 +154,84 @@ include('include/Map.php');
     <div class="col s12">
         <div class="card z-depth-1">
             <div class="card-content">
-                DROP DOWN CONTROLS HERE
+                <div class="row row-no-after">
+                    <div class="col s2">
+                        <select id="showEntries">
+                            <option value="" disabled selected>Show entries</option>
+                            <option value = "5">5</option>
+                            <option value = "10">10</option>
+                            <option value = "25">25</option>
+                            <option value = "50">50</option>
+                            <option value = "100">100</option>
+                        </select>
+                    </div>
+                    <div class="col s2">
+                        <select id="sortBy">
+                            <option value="" disabled selected>Sort by</option>
+                            <option value = "1">Timestamp</option>
+                            <option value = "2">Element</option>
+                            <option value = "3">Concentration Value</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="scroll" style="height: 500px;">
         <div class="row">
-            <div class="col s12">
-                <div class="card z-depth-0">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div><div class="col s12">
-                <div class="card z-depth-0">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
+            <div id="feedDiv"></div>
+<!--            <div class="col s12">-->
+<!--                <div class="card z-depth-0">-->
+<!--                    <div class="card-content">-->
+<!--                        FEED HERE-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12">-->
+<!--                <div class="card z-depth-0">-->
+<!--                    <div class="card-content">-->
+<!--                        FEED HERE-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12">-->
+<!--                <div class="card z-depth-0">-->
+<!--                    <div class="card-content">-->
+<!--                        FEED HERE-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div><div class="col s12">-->
+<!--                <div class="card z-depth-0">-->
+<!--                    <div class="card-content">-->
+<!--                        FEED HERE-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12">-->
+<!--                <div class="card z-depth-0">-->
+<!--                    <div class="card-content">-->
+<!--                        FEED HERE-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12">-->
+<!--                <div class="card z-depth-0">-->
+<!--                    <div class="card-content">-->
+<!--                        FEED HERE-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
     </div>
 
+    <div id="feedDiv"></div>
+    <div id="play-sound"></div>
 
 </main>
     <?php include('include/footer.php'); ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+<script src="js/feed2.js"></script>
 </body>
 </html>
