@@ -105,35 +105,50 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col s12 l4">
-                        <div class="card" style="min-height: 328px;">
-                            <div class="card-content">
-                                <div class="card-title teal-text"><b>Sensitive Groups</b></div>
-                                <p id="synthesis">
-                                </p>
-                            </div>
+<!--                <div class="row">-->
+<!--                    <div class="col s12 l4">-->
+<!--                        <div class="card" style="min-height: 328px;">-->
+<!--                            <div class="card-content">-->
+<!--                                <div class="card-title teal-text"><b>Sensitive Groups</b></div>-->
+<!--                                <p id="synthesis">-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!---->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col s12 l4">-->
+<!--                        <div class="card" style="min-height: 328px;">-->
+<!--                            <div class="card-content">-->
+<!--                                <div class="card-title teal-text"><b>Health Effects</b></div>-->
+<!--                                <p id="health-effects">-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!---->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col s12 l4">-->
+<!--                        <div class="card" style="min-height: 328px;">-->
+<!--                            <div class="card-content">-->
+<!--                                <div class="card-title teal-text"><b>Cautionary</b></div>-->
+<!--                                <p id="cautionary">-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!---->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                        </div>
-                    </div>
-                    <div class="col s12 l4">
-                        <div class="card" style="min-height: 328px;">
+                <div class="row row-no-after">
+                    <div class="col s12 m12">
+                        <div class="card" style="height: 215px;">
                             <div class="card-content">
-                                <div class="card-title teal-text"><b>Health Effects</b></div>
-                                <p id="health-effects">
-                                </p>
+                                <ul class="tabs">
+                                    <li class="tab col s3"><a href="#cautionary">Cautionary Statement</a></li>
+                                </ul>
+                                <br>
+                                <div id="cautionary" class="col s12"> </div>
+                                <br>
                             </div>
-
-                        </div>
-                    </div>
-                    <div class="col s12 l4">
-                        <div class="card" style="min-height: 328px;">
-                            <div class="card-content">
-                                <div class="card-title teal-text"><b>Cautionary</b></div>
-                                <p id="cautionary">
-                                </p>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -153,7 +168,12 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
                             </div>
                             <div class='collapsible-body'>
-                                    <p class="gray-text text-lighten-3 caption center-align">SOON</p>
+                                <p class="gray-text text-lighten-3 caption center-align">DAO 2000-81 Breakpoint Table</p>
+                                <img src="res/images/guidelines/picture2.png" alt="CAA Breakpoint Table">
+                                <br>
+                                <p class="gray-text text-lighten-3 caption center-align">AQI Formula (from Guidelines for Reporting of Daily Air Quality Index - AQI - May 2016)</p>
+                                <img src="res/images/guidelines/formula1.png" alt="CAA Breakpoint Table">
+                                <br>
                             </div>
                         </li>
                     </ul>
