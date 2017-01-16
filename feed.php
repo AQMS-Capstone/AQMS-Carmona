@@ -126,11 +126,9 @@ include('include/Map.php');
         <div class="col s2">
             <select id="sortBy">
                 <option value="" disabled selected>Sort by</option>
-                <option value = "5">Timestamp</option>
-                <option value = "10">10</option>
-                <option value = "25">25</option>
-                <option value = "50">50</option>
-                <option value = "100">100</option>
+                <option value = "1">Timestamp</option>
+                <option value = "2">Element</option>
+                <option value = "3">Concentration Value</option>
             </select>
         </div>
     </div>

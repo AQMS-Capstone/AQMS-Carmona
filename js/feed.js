@@ -10,6 +10,7 @@ var ctr2 = 0;
 var isTriggered = false;
 var isFirstTriggered = false;
 var isResumedTriggered = false;
+var isSortPicked = false;
 
 var alertToPlay = "0";
 var statusHolder = "0";
@@ -88,19 +89,36 @@ function GetFeed(bancal_area, slex_area)
     });
 
     if(isRunning == false) {
-        $.ajax({
-            type: "GET",
-            url: 'retrieve_feed.php',
-            data: {phpValue: JSON.stringify("-1")},
-            success: function (response) {
-                if(JSON.stringify(response) === JSON.stringify(feed_holder)){
 
-                }else{
-                    feed_holder = response;
-                    $('#feedDiv').html(response);
+        if(!isSortPicked) {
+            $.ajax({
+                type: "GET",
+                url: 'retrieve_feed.php',
+                data: {phpValue: JSON.stringify("-1")},
+                success: function (response) {
+                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                    } else {
+                        feed_holder = response;
+                        $('#feedDiv').html(response);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            $.ajax({
+                type: "GET",
+                url: 'retrieve_feed.php',
+                data: {phpValue: JSON.stringify("-1"), phpValue2: JSON.stringify($('#sortBy').val())},
+                success: function (response) {
+                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                    } else {
+                        feed_holder = response;
+                        $('#feedDiv').html(response);
+                    }
+                }
+            });
+        }
     }
 
     $.ajax({
@@ -161,19 +179,36 @@ function stopSound(){
 
 function GetFeed2() {
     isRunning = true;
-    $.ajax({
-        type: "GET",
-        url: 'retrieve_feed.php',
-        data: {phpValue: JSON.stringify($('#showEntries').val())},
-        success: function (response) {
-            if(JSON.stringify(response) === JSON.stringify(feed_holder)){
 
-            }else{
-                feed_holder = response;
-                $('#feedDiv').html(response);
+    if(!isSortPicked) {
+        $.ajax({
+            type: "GET",
+            url: 'retrieve_feed.php',
+            data: {phpValue: JSON.stringify($('#showEntries').val())},
+            success: function (response) {
+                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                } else {
+                    feed_holder = response;
+                    $('#feedDiv').html(response);
+                }
             }
-        }
-    });
+        });
+    }else{
+        $.ajax({
+            type: "GET",
+            url: 'retrieve_feed.php',
+            data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val())},
+            success: function (response) {
+                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                } else {
+                    feed_holder = response;
+                    $('#feedDiv').html(response);
+                }
+            }
+        });
+    }
 
     myGetFeed2 = setTimeout('GetFeed2()', 1000);
 }
@@ -184,6 +219,14 @@ $( document ).ready(function() {
         $(function()
         {
             GetFeed2();
+        });
+    });
+
+    $('select[id=sortBy]').change(function () {
+
+        $(function()
+        {
+            isSortPicked = true;
         });
     });
 });
