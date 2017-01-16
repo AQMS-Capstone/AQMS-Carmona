@@ -1,5 +1,5 @@
 <?php
-define("PAGE_TITLE", "About - Air Quality Monitoring System");
+define("PAGE_TITLE", "References - Air Quality Monitoring System");
 include('include/header.php');
 ?>
 
