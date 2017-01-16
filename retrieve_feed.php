@@ -45,7 +45,7 @@ function displayFeed($limiter){
 
         if (mysqli_num_rows($result) == 0) {
             echo "<div class='col s12'>";
-            echo "<div class = 'card' style='margin-top:0em;'>";
+            echo "<div class = 'card z-depth-0' style='margin-top:0em;'>";
             echo "<div class = 'card-content'>";
             echo "NO FEED";
             echo "</div>";
@@ -57,7 +57,7 @@ function displayFeed($limiter){
             while ($row = mysqli_fetch_array($result)) {
 
                 echo "<div class='col s12'>";
-                echo "<div class = 'card' style='margin-top:0em;'>";
+                echo "<div class = 'card z-depth-0' style='margin-top:0em;'>";
                 echo "<div class = 'card-content'>";
                 echo "<p style='color:gray'>".date("F d, Y - h:i a", strtotime($row['timestamp']))."</p>";
                 echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";

@@ -75,14 +75,14 @@ function displayAQIMonitoring($date,$area){
     $color1 = returnAQIColor($area->aqi_values[$area->prevalentIndex[0]]);
 
     echo "<div class='col s6'>";
-    echo "<div class = 'card' style='padding:0; margin-bottom:0; box-shadow:0px 0px 0px; background: $color1';>";
+    echo "<div class = 'card z-depth-0' style='padding:0; margin-bottom:0; box-shadow:0px 0px 0px; background: $color1';>";
     echo "<div class = 'card-content'>";
     echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
     echo "<b>".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."</b>";
     echo "</h6>";
     echo "</div>";
     echo "</div>";
-    echo "<div class = 'card' style='margin-top:0; margin-bottom:0'>";
+    echo "<div class = 'card z-depth-0' style='margin-top:0; margin-bottom:0'>";
     echo "<div class = 'card-content'>";
     //echo "AQI as of ". strtoupper(date("F d, Y @ h a", strtotime($date))) . " in " . strtoupper($area->name);
     //echo negateZero($area->aqi_values[$area->prevalentIndex[0]]) . " [".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."]";
@@ -112,7 +112,7 @@ function displayAQIMonitoring($date,$area){
 
     echo "</div>";
     echo "</div>";
-    echo "<div class = 'card' style='padding:0; margin-top:0; box-shadow:0px 0px 0px; background: $color1';>";
+    echo "<div class = 'card z-depth-0' style='padding:0; margin-top:0; box-shadow:0px 0px 0px; background: $color1';>";
     echo "<div class = 'card-content'>";
     echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
     echo "<b>Action: ".displayAction($area->aqi_values[$area->prevalentIndex[0]])."</b>";

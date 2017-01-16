@@ -8,13 +8,13 @@ include('include/Map.php');
 <head>
     <script src = "js/jquery-3.1.1.min.js" type="text/javascript"></script>
 </head>
-<body>
+<body style="background-color: #e0e0e0">
 
 <div id="statusDiv"></div>
 <div class="container">
     <div class="row row-no-after">
         <div class="col s6">
-            <div class="card" style="height: 215px;">
+            <div class="card z-depth-0" style="height: 215px;">
                 <div class="card-content">
                     <ul class="tabs">
                         <li class="tab col s3"><a href="#">Cautionary Statement</a></li>
@@ -27,7 +27,7 @@ include('include/Map.php');
         </div>
 
         <div class="col s6">
-            <div class="card" style="height: 215px;">
+            <div class="card z-depth-0" style="height: 215px;">
                 <div class="card-content">
                     <ul class="tabs">
                         <li class="tab col s3"><a href="#">Cautionary Statement</a></li>
@@ -42,7 +42,7 @@ include('include/Map.php');
 
     <div class="row row-no-after">
         <div class="col s3">
-            <div class="card">
+            <div class="card z-depth-0">
                 <div class="card-content">
                     <div class="row">
                         <div class="col s9">
@@ -59,7 +59,7 @@ include('include/Map.php');
         </div>
 
         <div class="col s9">
-            <div class="card" style="min-height: 215px;">
+            <div class="card z-depth-0" style="min-height: 215px;">
                 <div class="card-content">
                     <div style="width: 100%; height: 150px;">
                         <canvas id="bancal_barChart"></canvas>
@@ -74,7 +74,7 @@ include('include/Map.php');
 
     <div class="row row-no-after">
         <div class="col s3">
-            <div class="card">
+            <div class="card z-depth-0">
                 <div class="card-content">
                     <div class="row">
                         <div class="col s9">
@@ -91,7 +91,7 @@ include('include/Map.php');
         </div>
 
         <div class="col s9">
-            <div class="card" style="min-height: 215px;">
+            <div class="card z-depth-0" style="min-height: 215px;">
                 <div class="card-content">
                     <div style="width: 100%; height: 150px;">
                         <canvas id="slex_barChart"></canvas>
@@ -109,30 +109,38 @@ include('include/Map.php');
     <div class="divider"></div>
 </div>
 <div class="container">
-    <div class="col s12">
-        <h3 class="header teal-text center-align">Input Feed</h3>
-    </div>
     <div class='row row-no-after'>
-        <div class="col s2">
-            <select id="showEntries">
-                <option value="" disabled selected>Show entries</option>
-                <option value = "5">5</option>
-                <option value = "10">10</option>
-                <option value = "25">25</option>
-                <option value = "50">50</option>
-                <option value = "100">100</option>
-            </select>
+        <div class="col s12">
+            <div class="card z-depth-0">
+                <div class="card-content">
+                    <div class="row row-no-after">
+                        <div class="col s2">
+                            <select id="showEntries">
+                                <option value="" disabled selected>Show entries</option>
+                                <option value = "5">5</option>
+                                <option value = "10">10</option>
+                                <option value = "25">25</option>
+                                <option value = "50">50</option>
+                                <option value = "100">100</option>
+                            </select>
+                        </div>
+                        <div class="col s2">
+                            <select id="sortBy">
+                                <option value="" disabled selected>Sort by</option>
+                                <option value = "5">Timestamp</option>
+                                <option value = "10">10</option>
+                                <option value = "25">25</option>
+                                <option value = "50">50</option>
+                                <option value = "100">100</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div class="col s2">
-            <select id="sortBy">
-                <option value="" disabled selected>Sort by</option>
-                <option value = "5">Timestamp</option>
-                <option value = "10">10</option>
-                <option value = "25">25</option>
-                <option value = "50">50</option>
-                <option value = "100">100</option>
-            </select>
-        </div>
+
+
     </div>
 </div>
 <div id="feedDiv"></div>
