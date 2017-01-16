@@ -38,8 +38,27 @@ include('include/Map.php');
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col s12">
+    <div class="row row-no-after">
+        <div class="col s3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s9">
+                            <canvas id="bancal_doughnutChart"></canvas>
+                        </div>
+                        <div class="col s2">
+                            <div id="js-legend_1" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">B Current
+                            Distribution</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s9">
             <div class="card" style="min-height: 215px;">
                 <div class="card-content">
                     <div style="width: 100%; height: 150px;">
@@ -51,8 +70,27 @@ include('include/Map.php');
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col s12">
+    <div class="row row-no-after">
+        <div class="col s3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s9">
+                            <canvas id="slex_doughnutChart"></canvas>
+                        </div>
+                        <div class="col s2">
+                            <div id="js-legend_2" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">S Current
+                            Distribution</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s9">
             <div class="card" style="min-height: 215px;">
                 <div class="card-content">
                     <div style="width: 100%; height: 150px;">

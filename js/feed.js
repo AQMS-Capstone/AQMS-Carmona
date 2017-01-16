@@ -27,8 +27,8 @@ $(function()
 
 function GetFeed(bancal_area, slex_area)
 {
-    initGraph(bancal_area, bancal_area.rolling_time, "bancal_barChart");
-    initGraph(slex_area, slex_area.rolling_time, "slex_barChart");
+    initGraph(bancal_area, bancal_area.rolling_time, "bancal_barChart", "bancal_doughnutChart");
+    initGraph(slex_area, slex_area.rolling_time, "slex_barChart", "slex_doughnutChart");
 
     if(isTriggered) {
         if(ctr2 == 7){
@@ -426,7 +426,7 @@ function GetCautionary(AQIStatus,element, control){
     }
 }
 
-function initGraph(area_data, rolling_time, chartName){
+function initGraph(area_data, rolling_time, chartName, doughnutChartName){
 
     var holder;
 
@@ -444,6 +444,33 @@ function initGraph(area_data, rolling_time, chartName){
             bancal_data_holder = area_data;
         }else{
             slex_data_holder = area_data;
+        }
+
+        var ctx_doughnut = document.getElementById(doughnutChartName);
+        var doughnutChart = new Chart(ctx_doughnut, {
+            type: 'doughnut',
+            data: {
+                labels: [pollutant_symbols[0], pollutant_symbols[1], pollutant_symbols[2]],
+                datasets: [{
+                    data: [checkData(area_data.aqi_values[0]), checkData(area_data.aqi_values[1]), checkData(area_data.aqi_values[2])],
+                    backgroundColor: [
+                        '#FF9800',
+                        '#3F51B5',
+                        '#E91E63',
+                    ]
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                }
+            }
+        });
+
+        if(doughnutChartName == "bancal_doughnutChart") {
+            document.getElementById('js-legend_1').innerHTML = doughnutChart.generateLegend();
+        }else{
+            document.getElementById('js-legend_2').innerHTML = doughnutChart.generateLegend();
         }
 
         var ctx_bar = document.getElementById(chartName);
