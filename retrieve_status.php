@@ -25,25 +25,35 @@ function Init(){
     echo "</div>";
 }
 
+function displayCautionary($AQIStatus, $element, $control){
+    echo "<script type='text/javascript'>";
+    echo "GetCautionary('$AQIStatus', '$element', '$control')";
+
+    //$hi = "#cautionary_1";
+    //echo "$('$control').text('renjo is pogi')";
+    echo "</script>";
+}
+
 function determineLastHourAQI($area){
     return max($area->co_aqi_values[22], $area->no2_aqi_values[22], $area->so2_aqi_values[22]);
 }
 
-function displayAQILevelChangeMonitoring($date, $area){
-    date_default_timezone_set('Asia/Manila');
-    $date_yesterday_feed = date("Y-m-d H a", strtotime($date) - 3600);
+//function displayAQILevelChangeMonitoring($date, $area){
+//    date_default_timezone_set('Asia/Manila');
+//    $date_yesterday_feed = date("Y-m-d H a", strtotime($date) - 3600);
+//
+//    $dateDisplay = date("F d, Y @ h a", strtotime($date));
+//    $dateYesterdayDisplay = date("F d, Y @ h a", strtotime($date_yesterday_feed));
+//
+//    echo "AQI Level Change Monitor as of ".strtoupper($dateDisplay)." in ".strtoupper($area->name);
+//    echo "<br/>";
+//    echo "LAST HOUR LEVEL: ".returnAQIStstus(determineLastHourAQI($area))." (".strtoupper($dateYesterdayDisplay).")";
+//    echo "<br/>";
+//    echo "CURRENT LEVEL: ".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]]);
+//    echo "<br/>";
+//    echo "STATUS: ".displayAQIDesc(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]]);
+//}
 
-    $dateDisplay = date("F d, Y @ h a", strtotime($date));
-    $dateYesterdayDisplay = date("F d, Y @ h a", strtotime($date_yesterday_feed));
-
-    echo "AQI Level Change Monitor as of ".strtoupper($dateDisplay)." in ".strtoupper($area->name);
-    echo "<br/>";
-    echo "LAST HOUR LEVEL: ".returnAQIStstus(determineLastHourAQI($area))." (".strtoupper($dateYesterdayDisplay).")";
-    echo "<br/>";
-    echo "CURRENT LEVEL: ".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]]);
-    echo "<br/>";
-    echo "STATUS: ".displayAQIDesc(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]]);
-}
 function displayAQIDesc($prevAQI, $curAQI){
     $AQIDesc = "";
 
@@ -111,6 +121,13 @@ function displayAQIMonitoring($date,$area){
     echo "</div>";
     echo "</div>";
 
+    if($area->name == "bancal") {
+        $controlName = "1";
+        displayCautionary(returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]]), $pollutant_symbols[$area->prevalentIndex[0]], $controlName);
+    }else{
+        $controlName = "2";
+        displayCautionary(returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]]), $pollutant_symbols[$area->prevalentIndex[0]], $controlName);
+    }
 }
 function displayAction($curAQI){
     $curStatus = returnAQIStstus($curAQI);
@@ -181,8 +198,6 @@ function displayAQIStatusChange($prevAQI, $curAQI){
     $prevStatus = returnAQIStstus($prevAQI);
     $curStatus = returnAQIStstus($curAQI);
     $change = "";
-
-
 
     if($prevStatus == $curStatus){
         $change = "Same with previous hour";

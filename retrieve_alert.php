@@ -30,7 +30,7 @@ function returnPlay($prevAQI, $curAQI){
     $curStatus = returnAQIStstus($curAQI);
     $action = "";
 
-    if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
+    if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY" || $curStatus == "UNHEALTHY FOR SENSITIVE GROUPS"){
         $action = "2";
     }else if($curStatus == "NO STATUS"){
         $action = "0";

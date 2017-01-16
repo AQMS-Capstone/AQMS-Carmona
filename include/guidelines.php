@@ -40,7 +40,7 @@ $sulfur_max = $sufur_guideline_values[5][1];
 $sulfur_unit = "ppm";
 
 $no2_step = 0.01;
-$no2_min = $no2_guideline_values[0][0];
+$no2_min = $no2_guideline_values[4][0];
 $no2_max = $no2_guideline_values[5][1];
 $no2_unit = "ppm";
 
