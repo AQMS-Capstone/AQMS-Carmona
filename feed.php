@@ -104,13 +104,9 @@ include('include/Map.php');
         </div>
     </div>
 </div>
-<div class="container">
-    <br><br>
-    <div class="divider"></div>
-</div>
+<div class="divider"></div>
 <div class="container">
     <div class='row row-no-after'>
-<<<<<<< HEAD
         <div class="col s12">
             <div class="card z-depth-0">
                 <div class="card-content">
@@ -128,40 +124,19 @@ include('include/Map.php');
                         <div class="col s2">
                             <select id="sortBy">
                                 <option value="" disabled selected>Sort by</option>
-                                <option value = "5">Timestamp</option>
-                                <option value = "10">10</option>
-                                <option value = "25">25</option>
-                                <option value = "50">50</option>
-                                <option value = "100">100</option>
+                                <option value = "1">Timestamp</option>
+                                <option value = "2">Element</option>
+                                <option value = "3">Concentration Value</option>
                             </select>
                         </div>
                     </div>
 
                 </div>
             </div>
-=======
-        <div class="col s2">
-            <select id="showEntries">
-                <option value="" disabled selected>Show entries</option>
-                <option value = "5">5</option>
-                <option value = "10">10</option>
-                <option value = "25">25</option>
-                <option value = "50">50</option>
-                <option value = "100">100</option>
-            </select>
-        </div>
-        <div class="col s2">
-            <select id="sortBy">
-                <option value="" disabled selected>Sort by</option>
-                <option value = "1">Timestamp</option>
-                <option value = "2">Element</option>
-                <option value = "3">Concentration Value</option>
-            </select>
->>>>>>> origin/AQMS-Enhanced
-        </div>
 
 
     </div>
+</div>
 </div>
 <div id="feedDiv"></div>
 <div id="play-sound"></div>
