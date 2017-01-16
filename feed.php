@@ -108,7 +108,7 @@ include('include/Map.php');
 <div class="container">
     <div class='row row-no-after'>
         <div class="col s12">
-            <div class="card z-depth-0">
+            <div class = "card" style="margin-top:0em;">
                 <div class="card-content">
                     <div class="row row-no-after">
                         <div class="col s2">
