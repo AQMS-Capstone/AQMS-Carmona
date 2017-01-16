@@ -1,7 +1,7 @@
 <?php
 define("PAGE_TITLE", "Feed - Air Quality Monitoring System");
 include('include/header_feed.php');
-
+include('include/Map.php');
 ?>
 
 <html>
@@ -10,8 +10,7 @@ include('include/header_feed.php');
 </head>
 <body>
 
-<div id = "trigger"></div>
-<div id="tryPanel1"></div>
+<div id="statusDiv"></div>
 <div class="container">
     <div class="row row-no-after">
         <div class="col s6">
@@ -39,6 +38,32 @@ include('include/header_feed.php');
                 </div>
             </div>
         </div>
+
+        <div class="col s12">
+            <div class="card" style="min-height: 215px;">
+                <div class="card-content">
+                    <div style="width: 100%; height: 150px;">
+                        <canvas id="bancal_barChart"></canvas>
+                    </div>
+
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Bancal Rolling 24 hrs
+                            Distribution</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12">
+            <div class="card" style="min-height: 215px;">
+                <div class="card-content">
+                    <div style="width: 100%; height: 150px;">
+                        <canvas id="slex_barChart"></canvas>
+                    </div>
+
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Slex Rolling 24 hrs
+                            Distribution</b>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="container">
@@ -58,9 +83,10 @@ include('include/header_feed.php');
         </div>
     </div>
 </div>
-<div id="tryPanel2"></div>
+<div id="feedDiv"></div>
 <div id="play-sound"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 <script src="js/feed.js"></script>
 </body>
 </html>

@@ -14,14 +14,22 @@ var isResumedTriggered = false;
 var alertToPlay = "0";
 var statusHolder = "0";
 
+var bancal_data_holder;
+var slex_data_holder;
+
+var status_holder;
+var feed_holder;
+
 $(function()
 {
-    GetFeed();
+    GetFeed(bancal_area, slex_area);
 });
 
-function GetFeed()
+function GetFeed(bancal_area, slex_area)
 {
-    //$('div#tryPanel').load('add.php');
+    initGraph(bancal_area, bancal_area.rolling_time, "bancal_barChart");
+    initGraph(slex_area, slex_area.rolling_time, "slex_barChart");
+
     if(isTriggered) {
         if(ctr2 == 7){
             ctr2 = 0;
@@ -67,7 +75,12 @@ function GetFeed()
         type: "GET",
         url: 'retrieve_status.php',
         success: function (response) {
-            $('#tryPanel1').html(response);
+            if(JSON.stringify(response) === JSON.stringify(status_holder)){
+
+            }else{
+                status_holder = response;
+                $('#statusDiv').html(response);
+            }
         },
         error:function(response){
 
@@ -80,7 +93,12 @@ function GetFeed()
             url: 'retrieve_feed.php',
             data: {phpValue: JSON.stringify("-1")},
             success: function (response) {
-                $('#tryPanel2').html(response);
+                if(JSON.stringify(response) === JSON.stringify(feed_holder)){
+
+                }else{
+                    feed_holder = response;
+                    $('#feedDiv').html(response);
+                }
             }
         });
     }
@@ -130,7 +148,7 @@ function GetFeed()
         }
     });
 
-    myGetFeed = setTimeout('GetFeed()',1000);
+    myGetFeed = setTimeout('GetFeed(bancal_area, slex_area)',1000);
 }
 
 function playSound(filePath,filename){
@@ -148,7 +166,12 @@ function GetFeed2() {
         url: 'retrieve_feed.php',
         data: {phpValue: JSON.stringify($('#showEntries').val())},
         success: function (response) {
-            $('#tryPanel2').html(response);
+            if(JSON.stringify(response) === JSON.stringify(feed_holder)){
+
+            }else{
+                feed_holder = response;
+                $('#feedDiv').html(response);
+            }
         }
     });
 
@@ -400,5 +423,90 @@ function GetCautionary(AQIStatus,element, control){
             }
             break;
         }
+    }
+}
+
+function initGraph(area_data, rolling_time, chartName){
+
+    var holder;
+
+    if(chartName == "bancal_barChart"){
+        holder = bancal_data_holder;
+    }else{
+        holder = slex_data_holder;
+    }
+
+    if(JSON.stringify(area_data) === JSON.stringify(holder)) {
+        console.log("SAME");
+    }else{
+
+        if(chartName == "bancal_barChart"){
+            bancal_data_holder = area_data;
+        }else{
+            slex_data_holder = area_data;
+        }
+
+        var ctx_bar = document.getElementById(chartName);
+        var barChart = new Chart(ctx_bar, {
+            type: 'bar',
+            data: {
+                labels: [area_data.rolling_time[0].toString(), rolling_time[1].toString(), rolling_time[2].toString(), rolling_time[3].toString(), rolling_time[4].toString(), rolling_time[5].toString(), rolling_time[6].toString(), rolling_time[7].toString(), rolling_time[8].toString(), rolling_time[9].toString(), rolling_time[10].toString(), rolling_time[11].toString(), rolling_time[12].toString(), rolling_time[13].toString(), rolling_time[14].toString(), rolling_time[15].toString(), rolling_time[16].toString(), rolling_time[17].toString(), rolling_time[18].toString(), rolling_time[19].toString(), rolling_time[20].toString(), rolling_time[21].toString(), rolling_time[22].toString(), rolling_time[23].toString()],
+                datasets: [
+                    {
+                        label: pollutant_symbols[0],
+                        backgroundColor: "#FF9800",
+                        data: checkIndex(pollutant_symbols[0], area_data)
+                    },
+                    {
+                        label: pollutant_symbols[1],
+                        backgroundColor: "#3F51B5",
+                        data: checkIndex(pollutant_symbols[1], area_data)
+                    },
+                    {
+                        label: pollutant_symbols[2],
+                        backgroundColor: "#E91E63",
+                        data: checkIndex(pollutant_symbols[2], area_data)
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
+    }
+}
+
+function checkIndex(pollutant, area_data){
+
+    var arrayContainer = [];
+
+    if(pollutant == "CO"){
+        arrayContainer = [checkData(area_data.co_aqi_values[0]), checkData(area_data.co_aqi_values[1]), checkData(area_data.co_aqi_values[2]), checkData(area_data.co_aqi_values[3]), checkData(area_data.co_aqi_values[4]), checkData(area_data.co_aqi_values[5]), checkData(area_data.co_aqi_values[6]), checkData(area_data.co_aqi_values[7]), checkData(area_data.co_aqi_values[8]), checkData(area_data.co_aqi_values[9]), checkData(area_data.co_aqi_values[10]), checkData(area_data.co_aqi_values[11]), checkData(area_data.co_aqi_values[12]), checkData(area_data.co_aqi_values[13]), checkData(area_data.co_aqi_values[14]), checkData(area_data.co_aqi_values[15]), checkData(area_data.co_aqi_values[16]), checkData(area_data.co_aqi_values[17]), checkData(area_data.co_aqi_values[18]), checkData(area_data.co_aqi_values[19]), checkData(area_data.co_aqi_values[20]), checkData(area_data.co_aqi_values[21]), checkData(area_data.co_aqi_values[22]), checkData(area_data.co_aqi_values[23])];
+    }else if(pollutant == "SO2"){
+        arrayContainer = [checkData(area_data.so2_aqi_values[0]), checkData(area_data.so2_aqi_values[1]), checkData(area_data.so2_aqi_values[2]), checkData(area_data.so2_aqi_values[3]), checkData(area_data.so2_aqi_values[4]), checkData(area_data.so2_aqi_values[5]), checkData(area_data.so2_aqi_values[6]), checkData(area_data.so2_aqi_values[7]), checkData(area_data.so2_aqi_values[8]), checkData(area_data.so2_aqi_values[9]), checkData(area_data.so2_aqi_values[10]), checkData(area_data.so2_aqi_values[11]), checkData(area_data.so2_aqi_values[12]), checkData(area_data.so2_aqi_values[13]), checkData(area_data.so2_aqi_values[14]), checkData(area_data.so2_aqi_values[15]), checkData(area_data.so2_aqi_values[16]), checkData(area_data.so2_aqi_values[17]), checkData(area_data.so2_aqi_values[18]), checkData(area_data.so2_aqi_values[19]), checkData(area_data.so2_aqi_values[20]), checkData(area_data.so2_aqi_values[21]), checkData(area_data.so2_aqi_values[22]), checkData(area_data.so2_aqi_values[23])];
+    }else if(pollutant == "NO2"){
+        arrayContainer = [checkData(area_data.no2_aqi_values[0]), checkData(area_data.no2_aqi_values[1]), checkData(area_data.no2_aqi_values[2]), checkData(area_data.no2_aqi_values[3]), checkData(area_data.no2_aqi_values[4]), checkData(area_data.no2_aqi_values[5]), checkData(area_data.no2_aqi_values[6]), checkData(area_data.no2_aqi_values[7]), checkData(area_data.no2_aqi_values[8]), checkData(area_data.no2_aqi_values[9]), checkData(area_data.no2_aqi_values[10]), checkData(area_data.no2_aqi_values[11]), checkData(area_data.no2_aqi_values[12]), checkData(area_data.no2_aqi_values[13]), checkData(area_data.no2_aqi_values[14]), checkData(area_data.no2_aqi_values[15]), checkData(area_data.no2_aqi_values[16]), checkData(area_data.no2_aqi_values[17]), checkData(area_data.no2_aqi_values[18]), checkData(area_data.no2_aqi_values[19]), checkData(area_data.no2_aqi_values[20]), checkData(area_data.no2_aqi_values[21]), checkData(area_data.no2_aqi_values[22]), checkData(area_data.no2_aqi_values[23])];
+    }
+
+    return arrayContainer;
+}
+
+function checkData(data){
+    if(data < 0){
+        return 0;
+    }else{
+        return data;
     }
 }
