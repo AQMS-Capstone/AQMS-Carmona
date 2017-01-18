@@ -113,7 +113,7 @@ include('include/Map.php');
                     <div class="row row-no-after">
                         <div class="col s2">
                             <select id="showEntries">
-                                <option value="" disabled selected>Show entries</option>
+                                <option value = "0" disabled selected>Show entries</option>
                                 <option value = "5">5</option>
                                 <option value = "10">10</option>
                                 <option value = "25">25</option>
@@ -123,10 +123,17 @@ include('include/Map.php');
                         </div>
                         <div class="col s2">
                             <select id="sortBy">
-                                <option value="" disabled selected>Sort by</option>
+                                <option value = "0" disabled selected>Sort by</option>
                                 <option value = "1">Timestamp</option>
                                 <option value = "2">Element</option>
                                 <option value = "3">Concentration Value</option>
+                            </select>
+                        </div>
+                        <div class="col s2">
+                            <select id="filterBy">
+                                <option value = "0" disabled selected>Area</option>
+                                <option value = "1">Bancal</option>
+                                <option value = "2">SLEX Carmona</option>
                             </select>
                         </div>
                     </div>

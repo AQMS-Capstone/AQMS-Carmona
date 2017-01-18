@@ -11,6 +11,7 @@ var isTriggered = false;
 var isFirstTriggered = false;
 var isResumedTriggered = false;
 var isSortPicked = false;
+var isFilterPicked = false;
 
 var alertToPlay = "0";
 var statusHolder = "0";
@@ -90,11 +91,39 @@ function GetFeed(bancal_area, slex_area)
 
     if(isRunning == false) {
 
-        if(!isSortPicked) {
+        if(!isSortPicked && !isFilterPicked) {
             $.ajax({
                 type: "GET",
                 url: 'retrieve_feed.php',
-                data: {phpValue: JSON.stringify("-1")},
+                data: {phpValue: JSON.stringify($('#showEntries').val())},
+                success: function (response) {
+                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                    } else {
+                        feed_holder = response;
+                        $('#feedDiv').html(response);
+                    }
+                }
+            });
+        }else if(isSortPicked && !isFilterPicked){
+            $.ajax({
+                type: "GET",
+                url: 'retrieve_feed.php',
+                data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val())},
+                success: function (response) {
+                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                    } else {
+                        feed_holder = response;
+                        $('#feedDiv').html(response);
+                    }
+                }
+            });
+        }else if(!isSortPicked && isFilterPicked){
+            $.ajax({
+                type: "GET",
+                url: 'retrieve_feed.php',
+                data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#filterBy').val())},
                 success: function (response) {
                     if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
 
@@ -108,7 +137,7 @@ function GetFeed(bancal_area, slex_area)
             $.ajax({
                 type: "GET",
                 url: 'retrieve_feed.php',
-                data: {phpValue: JSON.stringify("-1"), phpValue2: JSON.stringify($('#sortBy').val())},
+                data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val()), phpValue3: JSON.stringify($('#filterBy').val())},
                 success: function (response) {
                     if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
 
@@ -180,7 +209,7 @@ function stopSound(){
 function GetFeed2() {
     isRunning = true;
 
-    if(!isSortPicked) {
+    if(!isSortPicked && !isFilterPicked) {
         $.ajax({
             type: "GET",
             url: 'retrieve_feed.php',
@@ -194,11 +223,39 @@ function GetFeed2() {
                 }
             }
         });
-    }else{
+    }else if(isSortPicked && !isFilterPicked){
         $.ajax({
             type: "GET",
             url: 'retrieve_feed.php',
             data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val())},
+            success: function (response) {
+                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                } else {
+                    feed_holder = response;
+                    $('#feedDiv').html(response);
+                }
+            }
+        });
+    }else if(!isSortPicked && isFilterPicked){
+        $.ajax({
+            type: "GET",
+            url: 'retrieve_feed.php',
+            data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue3: JSON.stringify($('#filterBy').val())},
+            success: function (response) {
+                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+
+                } else {
+                    feed_holder = response;
+                    $('#feedDiv').html(response);
+                }
+            }
+        });
+    }else{
+        $.ajax({
+            type: "GET",
+            url: 'retrieve_feed.php',
+            data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val()), phpValue3: JSON.stringify($('#filterBy').val())},
             success: function (response) {
                 if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
 
@@ -227,6 +284,14 @@ $( document ).ready(function() {
         $(function()
         {
             isSortPicked = true;
+        });
+    });
+
+    $('select[id=filterBy]').change(function () {
+
+        $(function()
+        {
+            isFilterPicked = true;
         });
     });
 });
