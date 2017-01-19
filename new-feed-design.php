@@ -74,7 +74,36 @@ include('include/Map.php');
             </div>
         </div>
     </div>
+    <div class="row row-no-after">
+        <div class="col s9">
+            <div class="card z-depth-0" style="min-height: 231.55px">
+                <div class="card-content">
+                    <div style="width: 100%; height: 150px;">
+                        <canvas id="bancal_barChart"></canvas>
+                    </div>
 
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Bancal Rolling 24 hrs
+                            Distribution</b>
+                </div>
+            </div>
+        </div>
+        <div class="col s3">
+            <div class="card z-depth-0">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s9">
+                            <canvas id="bancal_doughnutChart"></canvas>
+                        </div>
+                        <div class="col s2">
+                            <div id="js-legend_1" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">B Current
+                            Distribution</b>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row row-no-after">
         <div class="col s9">
             <div class="card z-depth-0" style="min-height: 231.55px">
@@ -106,36 +135,7 @@ include('include/Map.php');
             </div>
         </div>
     </div>
-    <div class="row row-no-after">
-        <div class="col s9">
-            <div class="card z-depth-0" style="min-height: 231.55px">
-                <div class="card-content">
-                    <div style="width: 100%; height: 150px;">
-                        <canvas id="bancal_barChart"></canvas>
-                    </div>
 
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Bancal Rolling 24 hrs
-                            Distribution</b>
-                </div>
-            </div>
-        </div>
-        <div class="col s3">
-            <div class="card z-depth-0">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="col s9">
-                            <canvas id="bancal_doughnutChart"></canvas>
-                        </div>
-                        <div class="col s2">
-                            <div id="js-legend_1" class="chart-legend"></div>
-                        </div>
-                    </div>
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">B Current
-                            Distribution</b>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <div class="row row-no-after">
