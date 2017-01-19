@@ -23,14 +23,7 @@ if(isset($_REQUEST['phpValue2'])){
 }
 
 function Init($limiter){
-
-    echo "<div class='section no-pad-bot'>";
-    echo "<div class = 'container'>";
-    echo "<div class='row row-no-after'>";
     displayFeed($limiter);
-    endDiv();
-    endDiv();
-    endDiv();
 }
 
 function endDiv(){
