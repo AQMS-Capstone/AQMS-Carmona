@@ -172,55 +172,11 @@ include('include/Map.php');
     </div>
     <div class="scroll" style="height: 700px;">
         <div class="row">
-            <div class="col s12">
-                <div class="card z-depth-0 feed-divider" style="margin-top:0; margin-bottom:0;">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0 feed-divider" style="margin-top:0; margin-bottom:0;">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0 feed-divider" style="margin-top:0; margin-bottom:0;">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0 feed-divider" style="margin-top:0; margin-bottom:0;">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0 feed-divider" style="margin-top:0; margin-bottom:0;">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="card z-depth-0 feed-divider" style="margin-top:0; margin-bottom:0;">
-                    <div class="card-content">
-                        FEED HERE
-                    </div>
-                </div>
-            </div>
-
+            <div id="feedDiv"></div>
         </div>
     </div>
 
-<!--    <div id="feedDiv"></div>-->
-<!--    <div id="play-sound"></div>-->
-
+    <div id="play-sound"></div>
 </main>
     <?php include('include/footer.php'); ?>
 
