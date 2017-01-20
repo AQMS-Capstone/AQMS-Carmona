@@ -1,8 +1,6 @@
 /**
  * Created by Nostos on 16/01/2017.
  */
-
-var isRunning = false;
 var isSoundRunning = false;
 var ctr = 0;
 var ctr2 = 0;
@@ -10,10 +8,6 @@ var ctr2 = 0;
 var isTriggered = false;
 var isFirstTriggered = false;
 var isResumedTriggered = false;
-var isSortPicked = false;
-var isAreaPicked = false;
-var isEntryPicked = false;
-var isPollutantPicked = false;
 
 var alertToPlay = "0";
 var statusHolder = "0";
@@ -65,6 +59,8 @@ function GetFeed(bancal_area, slex_area) {
             dataType: 'JSON',
             success: function (response) {
                 var triggered = response["isSoundTriggered"];
+                var time = response["serverTime"];
+                $('#serverTime').html(time);
                 if (triggered == true) {
                     isTriggered = true;
                     isResumedTriggered = true;
