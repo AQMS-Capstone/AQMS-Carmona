@@ -103,7 +103,7 @@
                     echo "<td>" . $row['e_name'] . "</td>";
                     echo "<td>" . $row['e_symbol'] . "</td>";
                     echo "<td>" . $row['concentration_value'] . "</td>";
-                    echo "<td><a data-target='" . $identifier . "' class='waves-effect waves-light btn modal-trigger'>Edit</button></td>";
+                    echo "<td><a data-target='" . $identifier . "' class='waves-effect waves-light btn modal-trigger'>Edit</a></td>";
                     echo "</tr>";
 
                     $step = 0;
