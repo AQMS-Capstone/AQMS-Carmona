@@ -130,7 +130,7 @@ function GetElementInfoAQI(){
             });
         }
 
-        $('#unit').text("ug/m3");
+        $('#unit').text("");
     }
 }
 
