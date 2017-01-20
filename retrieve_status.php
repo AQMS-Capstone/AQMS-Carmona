@@ -13,16 +13,11 @@ function Init(){
 
     date_default_timezone_set('Asia/Manila');
     $date_now_feed = date("Y-m-d H:i:s");
-    echo "<div class='section no-pad-bot'>";
-    echo "<div class = 'container'>";
-    echo "<div class='row row-no-after'>";
+
 
     displayAQIMonitoring($date_now_feed, $bancal);
     displayAQIMonitoring($date_now_feed, $slex);
 
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
 }
 
 function displayCautionary($AQIStatus, $element, $control){
@@ -74,52 +69,99 @@ function displayAQIMonitoring($date,$area){
     include('include/guidelines.php');
     $color1 = returnAQIColor($area->aqi_values[$area->prevalentIndex[0]]);
 
-    echo "<div class='col s6'>";
-    echo "<div class = 'card z-depth-0' style='padding:0; margin-bottom:0; box-shadow:0px 0px 0px; background: $color1';>";
-    echo "<div class = 'card-content'>";
-    echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
-    echo "<b>".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."</b>";
-    echo "</h6>";
-    echo "</div>";
-    echo "</div>";
-    echo "<div class = 'card z-depth-0' style='margin-top:0; margin-bottom:0'>";
-    echo "<div class = 'card-content'>";
-    //echo "AQI as of ". strtoupper(date("F d, Y @ h a", strtotime($date))) . " in " . strtoupper($area->name);
-    //echo negateZero($area->aqi_values[$area->prevalentIndex[0]]) . " [".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."]";
-    echo "<p class='teal-text center-align' style='font-size:1.5em; margin-bottom: 0;'><b>".strtoupper($area->name)."</b></p>";
-    echo "<div class='center-align'>
-    <p class='material-icons' style='font-size: 6em;margin-bottom: 0;margin-top: 0; color: $color1;'>
-           cloud</p>";
+//    echo "<div class='col s6'>";
+//    echo "<div class = 'card z-depth-0' style='padding:0; margin-bottom:0; box-shadow:0px 0px 0px; background: $color1';>";
+//    echo "<div class = 'card-content'>";
+//    echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
+//    echo "<b>".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."</b>";
+//    echo "</h6>";
+//    echo "</div>";
+//    echo "</div>";
+//    echo "<div class = 'card z-depth-0' style='margin-top:0; margin-bottom:0'>";
+//    echo "<div class = 'card-content'>";
+//    //echo "AQI as of ". strtoupper(date("F d, Y @ h a", strtotime($date))) . " in " . strtoupper($area->name);
+//    //echo negateZero($area->aqi_values[$area->prevalentIndex[0]]) . " [".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."]";
+//    echo "<p class='teal-text center-align' style='font-size:1.5em; margin-bottom: 0;'><b>".strtoupper($area->name)."</b></p>";
+//    echo "<div class='center-align'>
+//    <p class='material-icons' style='font-size: 6em;margin-bottom: 0;margin-top: 0; color: $color1;'>
+//           cloud</p>";
+//
+//    if($area->aqi_values[$area->prevalentIndex[0]] < 0){
+//        echo "
+//    <p style='font-size: 1.5em;margin-top: 0;'><b>AQI: </b><span>-</span></p>
+//    <p><b>Prevalent Air Pollutant: </b> <span>-</span></p>
+//    <p><b>Recorded on: </b><span>-</span></p>
+//    <p><b>Change in AQI Status: </b><span>-</span></p>
+//    </div>";
+//        //<p><b>Status: </b><span>-</span></p>
+//    }else{
+//        echo "
+//    <p style='font-size: 1.5em;margin-top: 0;'><b>AQI: </b><span>".negateZero($area->aqi_values[$area->prevalentIndex[0]])."</span></p>
+//    <p><b>Prevalent Air Pollutant: </b> <span>".$pollutant_labels[$area->prevalentIndex[0]]."</span></p>
+//    <p><b>Recorded on: </b><span>$area->date_gathered</span></p>
+//    <p><b>Change in AQI Status: </b><span>".displayAQIStatusChange(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
+//    </div>";
+//        //<p><b>Status: </b><span>".displayAQIDesc(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
+//    }
+//
+//    echo "</div>";
+//    echo "</div>";
+//    echo "<div class = 'card z-depth-0' style='padding:0; margin-top:0; box-shadow:0px 0px 0px; background: $color1';>";
+//    echo "<div class = 'card-content'>";
+//    echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
+//    echo "<b>Action: ".displayAction($area->aqi_values[$area->prevalentIndex[0]])."</b>";
+//    echo "</h6>";
+//    echo "</div>";
+//    echo "</div>";
+//    echo "</div>";
 
-    if($area->aqi_values[$area->prevalentIndex[0]] < 0){
+    echo "<div class='col s6'>
+        <div class='card z-depth-0'>
+            <div id='aqiColor' class='col s12' style='margin-bottom: 15px; background: $color1'>
+                <p style='font-size: 1em;' class='white-text'><b id='aqiText'>".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."</b></p>
+            </div>
+            <div class='card-content'>
+                <div class='row'>
+                   <p class='card-title teal-text' style='font-weight: bold' id='zoneName'>".strtoupper($area->name)."</p>  
+                    <div class='divider'></div>
+                    <br>";
+
+    if($area->aqi_values[$area->prevalentIndex[0]] < 0) {
         echo "
-    <p style='font-size: 1.5em;margin-top: 0;'><b>AQI: </b><span>-</span></p>
-    <p><b>Prevalent Air Pollutant: </b> <span>-</span></p>
-    <p><b>Recorded on: </b><span>-</span></p>
-    <p><b>Change in AQI Status: </b><span>-</span></p>
-    </div>";
-        //<p><b>Status: </b><span>-</span></p>
+                        <div class='col s12' style='padding: 0;'>
+                            <p style='font-weight: bold; font-size: 2em;'>AQI: <span id='aqiNum'>-</span ></p>
+                        </div>
+        
+                        <div class='col s12' style='padding: 0;'>
+                    
+                        <p><b>Prevalent Air Pollutant: </b> <span id='prevalentPollutant'>-</span></p>
+                        <p><b>Recorded on: </b><span id='timeUpdated'>-</span></p>
+                        <p><b>Change in AQI Status: </b><span id='timeUpdated'>-</span></p>
+                        ";
     }else{
         echo "
-    <p style='font-size: 1.5em;margin-top: 0;'><b>AQI: </b><span>".negateZero($area->aqi_values[$area->prevalentIndex[0]])."</span></p>
-    <p><b>Prevalent Air Pollutant: </b> <span>".$pollutant_labels[$area->prevalentIndex[0]]."</span></p>
-    <p><b>Recorded on: </b><span>$area->date_gathered</span></p>
-    <p><b>Change in AQI Status: </b><span>".displayAQIStatusChange(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
-    </div>";
-        //<p><b>Status: </b><span>".displayAQIDesc(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
-
+                        <div class='col s12' style='padding: 0;'>
+                            <p style='font-weight: bold; font-size: 2em;'>AQI: <span id='aqiNum'>".negateZero($area->aqi_values[$area->prevalentIndex[0]])."</span ></p>
+                        </div>
+        
+                        <div class='col s12' style='padding: 0;'>
+                    
+                        <p><b>Prevalent Air Pollutant: </b> <span id='prevalentPollutant'>".$pollutant_labels[$area->prevalentIndex[0]]."</span></p>
+                        <p><b>Recorded on: </b><span id='timeUpdated'>$area->date_gathered</span></p>
+                        <p><b>Change in AQI Status: </b><span id='timeUpdated'>".displayAQIStatusChange(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
+                        ";
     }
 
-    echo "</div>";
-    echo "</div>";
-    echo "<div class = 'card z-depth-0' style='padding:0; margin-top:0; box-shadow:0px 0px 0px; background: $color1';>";
-    echo "<div class = 'card-content'>";
-    echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
-    echo "<b>Action: ".displayAction($area->aqi_values[$area->prevalentIndex[0]])."</b>";
-    echo "</h6>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
+    echo"
+                    </div>
+                </div>
+            </div>
+            <div id='aqiColor' class='col s12' style='background: $color1'>
+                <p style='font-size: 1em;' class='white-text'><b id='aqiText'>Action</b></p>
+            </div>
+        </div>
+    </div>
+    ";
 
     if($area->name == "bancal") {
         $controlName = "1";

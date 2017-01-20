@@ -11,7 +11,9 @@ var isTriggered = false;
 var isFirstTriggered = false;
 var isResumedTriggered = false;
 var isSortPicked = false;
-var isFilterPicked = false;
+var isAreaPicked = false;
+var isEntryPicked = false;
+var isPollutantPicked = false;
 
 var alertToPlay = "0";
 var statusHolder = "0";
@@ -27,16 +29,15 @@ $(function()
     GetFeed(bancal_area, slex_area);
 });
 
-function GetFeed(bancal_area, slex_area)
-{
+function GetFeed(bancal_area, slex_area) {
     initGraph(bancal_area, bancal_area.rolling_time, "bancal_barChart", "bancal_doughnutChart");
     initGraph(slex_area, slex_area.rolling_time, "slex_barChart", "slex_doughnutChart");
 
-    if(isTriggered) {
-        if(ctr2 == 7){
+    if (isTriggered) {
+        if (ctr2 == 7) {
             ctr2 = 0;
             isTriggered = false;
-        }else{
+        } else {
             ctr2++;
         }
     }
@@ -49,15 +50,15 @@ function GetFeed(bancal_area, slex_area)
             var isResumed = response["isResumed"];
             if (isResumed == true) {
                 isResumedTriggered = false;
-            }else{
-                if(isTriggered) {
+            } else {
+                if (isTriggered) {
                     isResumedTriggered = true;
                 }
             }
         }
     });
 
-    if(!isTriggered && !isResumedTriggered){
+    if (!isTriggered && !isResumedTriggered) {
         $.ajax({
             type: "GET",
             url: 'retrieve_time.php',
@@ -77,83 +78,38 @@ function GetFeed(bancal_area, slex_area)
         type: "GET",
         url: 'retrieve_status.php',
         success: function (response) {
-            if(JSON.stringify(response) === JSON.stringify(status_holder)){
+            if (JSON.stringify(response) === JSON.stringify(status_holder)) {
 
-            }else{
+            } else {
                 status_holder = response;
                 $('#statusDiv').html(response);
             }
         },
-        error:function(response){
+        error: function (response) {
 
         }
     });
 
-    if(isRunning == false) {
 
-        if(!isSortPicked && !isFilterPicked) {
-            $.ajax({
-                type: "GET",
-                url: 'retrieve_feed.php',
-                data: {phpValue: JSON.stringify($('#showEntries').val())},
-                success: function (response) {
-                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
+    $.ajax({
+        type: "GET",
+        url: 'retrieve_feed.php',
+        data: {phpValue: JSON.stringify($('#cbxEntries').val()), phpValue2: JSON.stringify($('#cbxSort').val()),  phpValue3: JSON.stringify($('#cbxArea').val()),  phpValue4: JSON.stringify($('#cbxPollutant').val())},
+        success: function (response) {
+            if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
 
-                    } else {
-                        feed_holder = response;
-                        $('#feedDiv').html(response);
-                    }
-                }
-            });
-        }else if(isSortPicked && !isFilterPicked){
-            $.ajax({
-                type: "GET",
-                url: 'retrieve_feed.php',
-                data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val())},
-                success: function (response) {
-                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                    } else {
-                        feed_holder = response;
-                        $('#feedDiv').html(response);
-                    }
-                }
-            });
-        }else if(!isSortPicked && isFilterPicked){
-            $.ajax({
-                type: "GET",
-                url: 'retrieve_feed.php',
-                data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#filterBy').val())},
-                success: function (response) {
-                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                    } else {
-                        feed_holder = response;
-                        $('#feedDiv').html(response);
-                    }
-                }
-            });
-        }else{
-            $.ajax({
-                type: "GET",
-                url: 'retrieve_feed.php',
-                data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val()), phpValue3: JSON.stringify($('#filterBy').val())},
-                success: function (response) {
-                    if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                    } else {
-                        feed_holder = response;
-                        $('#feedDiv').html(response);
-                    }
-                }
-            });
+            } else {
+                feed_holder = response;
+                $('#feedDiv').html(response);
+            }
         }
-    }
+    });
+
 
     $.ajax({
         type: "GET",
         url: 'retrieve_alert.php',
-        dataType:'JSON',
+        dataType: 'JSON',
         success: function (response) {
             var container1 = response["play1"];
             var container2 = response["play2"];
@@ -195,7 +151,7 @@ function GetFeed(bancal_area, slex_area)
         }
     });
 
-    myGetFeed = setTimeout('GetFeed(bancal_area, slex_area)',1000);
+    myGetFeed = setTimeout('GetFeed(bancal_area, slex_area)', 1000);
 }
 
 function playSound(filePath,filename){
@@ -205,96 +161,6 @@ function playSound(filePath,filename){
 function stopSound(){
     document.getElementById("play-sound").innerHTML= '';
 }
-
-function GetFeed2() {
-    isRunning = true;
-
-    if(!isSortPicked && !isFilterPicked) {
-        $.ajax({
-            type: "GET",
-            url: 'retrieve_feed.php',
-            data: {phpValue: JSON.stringify($('#showEntries').val())},
-            success: function (response) {
-                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                } else {
-                    feed_holder = response;
-                    $('#feedDiv').html(response);
-                }
-            }
-        });
-    }else if(isSortPicked && !isFilterPicked){
-        $.ajax({
-            type: "GET",
-            url: 'retrieve_feed.php',
-            data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val())},
-            success: function (response) {
-                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                } else {
-                    feed_holder = response;
-                    $('#feedDiv').html(response);
-                }
-            }
-        });
-    }else if(!isSortPicked && isFilterPicked){
-        $.ajax({
-            type: "GET",
-            url: 'retrieve_feed.php',
-            data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue3: JSON.stringify($('#filterBy').val())},
-            success: function (response) {
-                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                } else {
-                    feed_holder = response;
-                    $('#feedDiv').html(response);
-                }
-            }
-        });
-    }else{
-        $.ajax({
-            type: "GET",
-            url: 'retrieve_feed.php',
-            data: {phpValue: JSON.stringify($('#showEntries').val()), phpValue2: JSON.stringify($('#sortBy').val()), phpValue3: JSON.stringify($('#filterBy').val())},
-            success: function (response) {
-                if (JSON.stringify(response) === JSON.stringify(feed_holder)) {
-
-                } else {
-                    feed_holder = response;
-                    $('#feedDiv').html(response);
-                }
-            }
-        });
-    }
-
-    myGetFeed2 = setTimeout('GetFeed2()', 1000);
-}
-
-$( document ).ready(function() {
-    $('select[id=showEntries]').change(function () {
-
-        $(function()
-        {
-            GetFeed2();
-        });
-    });
-
-    $('select[id=sortBy]').change(function () {
-
-        $(function()
-        {
-            isSortPicked = true;
-        });
-    });
-
-    $('select[id=filterBy]').change(function () {
-
-        $(function()
-        {
-            isFilterPicked = true;
-        });
-    });
-});
 
 function GetCautionary(AQIStatus,element, control){
 

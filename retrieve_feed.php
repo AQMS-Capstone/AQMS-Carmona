@@ -6,133 +6,57 @@
  * Time: 11:59 PM
  */
 
-$limiter = "";
+$limiter = "5";
+$sortOption = "TIMESTAMP";
+$filterArea = "";
+$filterPollutants = "";
 
+
+if(isset($_REQUEST['phpValue'])){
+    $limiter = json_decode($_REQUEST['phpValue']);
+    if($limiter == ""){
+        $limiter = "5";
+    }
+}
 if(isset($_REQUEST['phpValue2'])){
-    if(isset($_REQUEST['phpValue'])){
-        $limiter = json_decode($_REQUEST['phpValue']);
-        $sortOption = json_decode($_REQUEST['phpValue2']);
-        $filterOption = 0;
-
-        Init($limiter, $sortOption, $filterOption);
-    }
-}else if(isset($_REQUEST['phpValue3'])){
-    if(isset($_REQUEST['phpValue'])){
-        $limiter = json_decode($_REQUEST['phpValue']);
-        $filterOption = json_decode($_REQUEST['phpValue3']);
-        $sortOption = 0;
-
-        Init($limiter, $sortOption, $filterOption);
-    }
-}else if(isset($_REQUEST['phpValue3'])){
-    if(isset($_REQUEST['phpValue2'])) {
-        if (isset($_REQUEST['phpValue'])) {
-            $limiter = json_decode($_REQUEST['phpValue']);
-            $sortOption = json_decode($_REQUEST['phpValue2']);
-            $filterOption = json_decode($_REQUEST['phpValue3']);
-
-            Init($limiter, $sortOption, $filterOption);
-        }
-    }
-} else{
-    if(isset($_REQUEST['phpValue'])){
-        $limiter = json_decode($_REQUEST['phpValue']);
-        $sortOption = 0;
-        $filterOption = 0;
-        Init($limiter, $sortOption, $filterOption);
+    $sortOption = json_decode($_REQUEST['phpValue2']);
+    if($sortOption == ""){
+        $sortOption = "TIMESTAMP";
     }
 }
-
-function Init($limiter, $sortOption, $filterOption){
-
-    echo "<div class='section no-pad-bot'>";
-    echo "<div class = 'container'>";
-    echo "<div class='row row-no-after'>";
-    displayFeed($limiter, $sortOption, $filterOption);
-    endDiv();
-    endDiv();
-    endDiv();
+if(isset($_REQUEST['phpValue3'])){
+    $filterArea = json_decode($_REQUEST['phpValue3']);
+}
+if(isset($_REQUEST['phpValue4'])){
+    $filterPollutants = json_decode($_REQUEST['phpValue4']);
 }
 
-function endDiv(){
-    echo "</div>";
-}
 
-function displayFeed($limiter, $sortOption, $filterOption){
+//echo $limiter, $sortOption, $filterArea, $filterPollutants;
+
+
+displayFeed($limiter, $sortOption, $filterArea, $filterPollutants);
+
+function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
     include('include/db_connect.php');
 
-    $query = "";
-    $sortProcedure = "";
-    $filterProcedure = "";
+    $whereClause = "";
 
-    if($sortOption == 1){
-        $sortProcedure = 'TIMESTAMP';
-    }else if($sortOption == 2){
-        $sortProcedure = 'MASTER.E_ID, TIMESTAMP';
-    }else if($sortOption == 3){
-        $sortProcedure = 'MASTER.CONCENTRATION_VALUE, TIMESTAMP';
+    if($filterArea != "" && $filterPollutants == ""){
+        $whereClause = "WHERE AREA_NAME = '$filterArea'";
     }
-
-    if($filterOption == 1){
-        $filterProcedure = 'bancal';
-    }else if($filterOption == 2){
-        $filterProcedure = 'slex';
+    else if($filterPollutants != "" && $filterArea == ""){
+        $whereClause = "WHERE MASTER.E_ID = '$filterPollutants'";
+    }
+    else if($filterPollutants != "" && $filterArea != ""){
+        $whereClause = "WHERE AREA_NAME = '$filterArea' AND MASTER.E_ID = '$filterPollutants'";
     }
 
-
-    if($limiter == 0 && $sortOption == 0 && $filterOption == 0){ //0-0-0
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
+    $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              ORDER BY TIMESTAMP DESC LIMIT 5";
-    }
-    else if($limiter > 0 && $sortOption == 0 && $filterOption == 0){ //1-0-0
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              ORDER BY TIMESTAMP DESC LIMIT $limiter";
-    }
-    else if($limiter > 0 && $sortOption > 0 && $filterOption == 0){ //1-1-0
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              ORDER BY $sortProcedure DESC LIMIT $limiter";
-    }
-    else if($limiter > 0 && $sortOption == 0 && $filterOption > 0){ //1-0-1
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              WHERE area_name = '$filterProcedure' 
-              ORDER BY TIMESTAMP DESC LIMIT $limiter";
-    }
-    else if($limiter > 0 && $sortOption > 0 && $filterOption > 0){ //1-1-1
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              WHERE area_name = '$filterProcedure' 
-              ORDER BY $sortProcedure DESC LIMIT $limiter";
-    }
-    else if($limiter == 0 && $sortOption > 0 && $filterOption == 0){ //0-1-0
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              ORDER BY $sortProcedure DESC LIMIT 5";
-    }
-    else if($limiter == 0 && $sortOption > 0 && $filterOption > 0){ //0-1-1
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              WHERE area_name = '$filterProcedure' 
-              ORDER BY $sortProcedure DESC LIMIT 5";
-    }
-    else if($limiter == 0 && $sortOption == 0 && $filterOption > 0){ //0-0-1
-        $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              WHERE area_name = '$filterProcedure' 
-              ORDER BY TIMESTAMP DESC LIMIT 5";
-    }
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ".$whereClause."
+              ORDER BY $sortOption DESC LIMIT $limiter";
 
     $result = mysqli_query($con, $query);
 
@@ -140,19 +64,18 @@ function displayFeed($limiter, $sortOption, $filterOption){
 
         if (mysqli_num_rows($result) == 0) {
             echo "<div class='col s12'>";
-            echo "<div class = 'card z-depth-0' style='margin-top:0em;'>";
+            echo "<div class = 'card z-depth-0' feed-divider' style='margin-top:0; margin-bottom:0;'>";
             echo "<div class = 'card-content'>";
             echo "NO FEED";
             echo "</div>";
             echo "</div>";
             echo "</div>";
         } else {
-            $ctr = 0;
 
             while ($row = mysqli_fetch_array($result)) {
 
                 echo "<div class='col s12'>";
-                echo "<div class = 'card' style='margin-top:0em;'>";
+                echo "<div class = 'card z-depth-0' feed-divider' style='margin-top:0; margin-bottom:0;'>";
                 echo "<div class = 'card-content'>";
                 echo "<p style='color:gray'>".date("F d, Y - h:i a", strtotime($row['timestamp']))."</p>";
                 echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
