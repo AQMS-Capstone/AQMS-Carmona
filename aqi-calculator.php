@@ -137,7 +137,11 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             <div class='collapsible-body'>
                                 <p class="center grey-text">DAO 2000-81 Breakpoint Table</p>
                                 <img class="materialboxed" width="90%" src="res/images/guidelines/reference-table.png" alt="CAA Breakpoint Table">
-                                <br>
+                                <div class='row-no-after'>
+                                    <p><b>1*</b> When 8-hour O3 concentrations exceed 0.374 ppm, AQI values of 301 or higher must be calculated with 1-hour O3 concentrations.<br><br>
+                                    <b>2*</b> Areas are generally required to report the AQI based on 8-hour ozone values. However, there are a smaller number of areas where an AQI based on 1-hour ozone values would be more precautionary. In these cases, in addition to calculating the 8-hour ozone index value, the 1-hour index value may be calculated and the maximum of the two values is reported.<br><br>
+                                    <b>3*</b>  NO2 has no 1-hour term NAAQG.</p>
+                                </div>
                                 <p class="center grey-text">AQI Formula (from Guidelines for Reporting of Daily Air Quality Index - AQI - May 2016)</p>
                                 <img class="materialboxed" width="50%" src="res/images/guidelines/formula.png" alt="CAA Breakpoint Table">
                                 <br>
