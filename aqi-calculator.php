@@ -172,7 +172,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                                 <img src="res/images/guidelines/picture2.png" alt="CAA Breakpoint Table">
                                 <br>
                                 <p class="gray-text text-lighten-3 caption center-align">AQI Formula (from Guidelines for Reporting of Daily Air Quality Index - AQI - May 2016)</p>
-                                <img src="res/images/guidelines/formula1.png" alt="CAA Breakpoint Table">
+                                <img src="res/images/guidelines/formula.png" alt="CAA Breakpoint Table">
                                 <br>
                             </div>
                         </li>
