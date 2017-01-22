@@ -136,7 +136,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             </div>
                             <div class='collapsible-body'>
                                 <p class="center grey-text">DAO 2000-81 Breakpoint Table</p>
-                                <img class="materialboxed" width="90%" src="res/images/guidelines/picture2.png" alt="CAA Breakpoint Table">
+                                <img class="materialboxed" width="90%" src="res/images/guidelines/reference-table.png" alt="CAA Breakpoint Table">
                                 <br>
                                 <p class="center grey-text">AQI Formula (from Guidelines for Reporting of Daily Air Quality Index - AQI - May 2016)</p>
                                 <img class="materialboxed" width="50%" src="res/images/guidelines/formula.png" alt="CAA Breakpoint Table">
