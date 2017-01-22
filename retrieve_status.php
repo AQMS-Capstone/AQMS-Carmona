@@ -115,9 +115,9 @@ function displayAQIMonitoring($date,$area){
 //    echo "</div>";
 //    echo "</div>";
 
-    echo "<div class='col s6'>
+    echo "<div class='col s12 m6'>
         <div class='card z-depth-0'>
-            <div id='aqiColor' class='col s12' style='margin-bottom: 15px; background: $color1'>
+            <div id='aqiColor' class='col s12' style='margin-bottom: 15px; background: $color1;'>
                 <p style='font-size: 1em;' class='white-text'><b id='aqiText'>".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."</b></p>
             </div>
             <div class='card-content'>

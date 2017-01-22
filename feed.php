@@ -48,34 +48,34 @@ include('include/Map.php');
 
     <div class="row row-no-after">
 
-        <div class="col s6">
-            <div class="card z-depth-0" style="height: 215px;">
+        <div class="col s12 m6">
+            <div class="card z-depth-0">
                 <div class="card-content">
                     <ul class="tabs">
                         <li class="tab col s3"><a href="#">Cautionary Statement</a></li>
                     </ul>
                     <br>
-                    <div id="cautionary_1" class="col s12"> </div>
+                    <div id="cautionary_1"> </div>
                     <br>
                 </div>
             </div>
         </div>
 
-        <div class="col s6">
-            <div class="card z-depth-0" style="height: 215px;">
+        <div class="col s12 m6">
+            <div class="card z-depth-0">
                 <div class="card-content">
                     <ul class="tabs">
                         <li class="tab col s3"><a href="#">Cautionary Statement</a></li>
                     </ul>
                     <br>
-                    <div id="cautionary_2" class="col s12"> </div>
+                    <div id="cautionary_2"> </div>
                     <br>
                 </div>
             </div>
         </div>
     </div>
     <div class="row row-no-after">
-        <div class="col s9">
+        <div class="col s12 m9">
             <div class="card z-depth-0" style="min-height: 231.55px">
                 <div class="card-content">
                     <div style="width: 100%; height: 150px;">
@@ -87,7 +87,7 @@ include('include/Map.php');
                 </div>
             </div>
         </div>
-        <div class="col s3">
+        <div class="col s12 m3">
             <div class="card z-depth-0">
                 <div class="card-content">
                     <div class="row">
@@ -105,7 +105,7 @@ include('include/Map.php');
         </div>
     </div>
     <div class="row row-no-after">
-        <div class="col s9">
+        <div class="col s12 m9">
             <div class="card z-depth-0" style="min-height: 231.55px">
                 <div class="card-content">
                     <div style="width: 100%; height: 150px;">
@@ -118,7 +118,7 @@ include('include/Map.php');
             </div>
         </div>
 
-        <div class="col s3">
+        <div class="col s12 m3">
             <div class="card z-depth-0">
                 <div class="card-content">
                     <div class="row">
