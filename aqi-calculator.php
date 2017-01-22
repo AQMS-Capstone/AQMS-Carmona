@@ -105,39 +105,6 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                         </div>
                     </div>
                 </div>
-<!--                <div class="row">-->
-<!--                    <div class="col s12 l4">-->
-<!--                        <div class="card" style="min-height: 328px;">-->
-<!--                            <div class="card-content">-->
-<!--                                <div class="card-title teal-text"><b>Sensitive Groups</b></div>-->
-<!--                                <p id="synthesis">-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col s12 l4">-->
-<!--                        <div class="card" style="min-height: 328px;">-->
-<!--                            <div class="card-content">-->
-<!--                                <div class="card-title teal-text"><b>Health Effects</b></div>-->
-<!--                                <p id="health-effects">-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col s12 l4">-->
-<!--                        <div class="card" style="min-height: 328px;">-->
-<!--                            <div class="card-content">-->
-<!--                                <div class="card-title teal-text"><b>Cautionary</b></div>-->
-<!--                                <p id="cautionary">-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
                 <div class="row row-no-after">
                     <div class="col s12 m12">
                         <div class="card" style="height: 215px;">
@@ -168,10 +135,10 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
                             </div>
                             <div class='collapsible-body'>
-                                <p class="gray-text text-lighten-3 caption center-align">DAO 2000-81 Breakpoint Table</p>
+                                <p class="center grey-text">DAO 2000-81 Breakpoint Table</p>
                                 <img src="res/images/guidelines/picture2.png" alt="CAA Breakpoint Table">
                                 <br>
-                                <p class="gray-text text-lighten-3 caption center-align">AQI Formula (from Guidelines for Reporting of Daily Air Quality Index - AQI - May 2016)</p>
+                                <p class="center grey-text">AQI Formula (from Guidelines for Reporting of Daily Air Quality Index - AQI - May 2016)</p>
                                 <img src="res/images/guidelines/formula.png" alt="CAA Breakpoint Table">
                                 <br>
                             </div>
@@ -195,14 +162,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <script type="text/javascript">
     var unit_used = "<?php echo $unit_used; ?>";
 
-    /*
-    var co_precision = "<?php echo $unit_used; ?>";
-    var sulfur_precision = "<?php echo $unit_used; ?>";
-    var no2_precision = "<?php echo $unit_used; ?>";
-    var o3_precision = "<?php echo $unit_used; ?>";
-    var pm10_precision = "<?php echo $unit_used; ?>";
-    var tsp_precision = "<?php echo $unit_used; ?>";
-    */
+
 
     var co_step = <?php echo $co_step; ?>;
     var co_min = <?php echo $co_min; ?>;
