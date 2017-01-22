@@ -12,7 +12,7 @@
         <div class="nav-wrapper">
             <a id="logo" href="http://aqms.mcl-ccis.net/"><img class="brand-logo center" alt="Brand Logo"
                                                                src="res/logo.png"> </a>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-small-and-down"><i class="material-icons">menu</i></a>
             <ul class="side-nav" id="mobile-demo">
                 <li class="teal z-depth-1"><a id="logo" href="index.php"><img alt="Brand Logo" class="center"
                                                                                       src="res/logo.png"
@@ -43,7 +43,7 @@
     </nav>
 </div>
 <div>
-    <nav id="nav" class="hide-on-med-and-down">
+    <nav id="nav" class="hide-on-small-and-down">
         <div class="nav-wrapper">
 
             <ul class="centered-nav">
@@ -76,7 +76,7 @@
     <li><a href="index.php?area=Bancal" id="drpBancal">Bancal</a></li>
 </ul>
 <div id="legends">
-    <nav class="navbar-fixed hide-on-med-and-down">
+    <nav class="navbar-fixed hide-on-small-and-down">
         <div class="nav-wrapper white">
             <ul class="centered-legend">
                 <li style="color: #4CAF50;"><span class="material-icons">cloud</span> Good</li>
