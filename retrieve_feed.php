@@ -64,7 +64,7 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
         if (mysqli_num_rows($result) == 0) {
             echo "<div class='col s12'>";
-            echo "<div class = 'card z-depth-0' feed-divider' style='margin-top:0; margin-bottom:0;'>";
+            echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
             echo "<div class = 'card-content'>";
             echo "NO FEED";
             echo "</div>";
@@ -75,7 +75,7 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
             while ($row = mysqli_fetch_array($result)) {
 
                 echo "<div class='col s12'>";
-                echo "<div class = 'card z-depth-0' feed-divider' style='margin-top:0; margin-bottom:0;'>";
+                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
                 echo "<div class = 'card-content'>";
                 echo "<p style='color:gray'>".date("F d, Y - h:i a", strtotime($row['timestamp']))."</p>";
                 echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
