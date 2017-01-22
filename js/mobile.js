@@ -20,7 +20,7 @@ $("#prevArea").click(function () {
         location.href = "mobile-home.php?area=SLEX";
     }
     else if (area == "SLEX") {
-        location.href = "mobile-home?area=Bancal";
+        location.href = "mobile-home.php?area=Bancal";
     }
     else {
         location.href = "mobile-home.php?area=SLEX";
