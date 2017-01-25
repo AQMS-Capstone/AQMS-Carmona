@@ -2,7 +2,6 @@
 define("PAGE_TITLE", "About - Air Quality Monitoring System");
 include('include/header.php');
 ?>
-
 <div id="content-holder">
     <br>
     <div class="section white">
