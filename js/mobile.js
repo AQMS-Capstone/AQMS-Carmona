@@ -12,7 +12,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
-
+var mobile=true;
 var area = getUrlParameter('area');
 
 $("#prevArea").click(function () {
@@ -36,6 +36,30 @@ $("#nextArea").click(function () {
     }
     else {
         location.href = "mobile-home.php?area=SLEX";
+    }
+})
+
+$("#prevArea-daily").click(function () {
+    if (area == "Bancal") {
+        location.href = "mobile-daily.php?area=SLEX";
+    }
+    else if (area == "SLEX") {
+        location.href = "mobile-daily.php?area=Bancal";
+    }
+    else {
+        location.href = "mobile-daily.php?area=SLEX";
+    }
+})
+
+$("#nextArea-daily").click(function () {
+    if (area == "Bancal") {
+        location.href = "mobile-daily.php?area=SLEX";
+    }
+    else if (area == "SLEX") {
+        location.href = "mobile-daily.php?area=Bancal";
+    }
+    else {
+        location.href = "mobile-daily.php?area=SLEX";
     }
 })
 

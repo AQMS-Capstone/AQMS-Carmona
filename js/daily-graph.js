@@ -15,7 +15,7 @@ function checkData(data){
         return data;
     }
 }
-
+mobile = false;
 function drawTheGraph2(area_data, rolling_time) {
     var ctx_doughnut = document.getElementById("doughnutChart");
     var doughnutChart = new Chart(ctx_doughnut, {
@@ -33,12 +33,15 @@ function drawTheGraph2(area_data, rolling_time) {
         },
         options: {
             legend: {
-                display: false
+                display: mobile
             }
         }
     });
-
+if(!mobile)
+{
     document.getElementById('js-legend').innerHTML = doughnutChart.generateLegend();
+}
+
 
     var ctx_bar = document.getElementById("barChart");
     var barChart = new Chart(ctx_bar, {

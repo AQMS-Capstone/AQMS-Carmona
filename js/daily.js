@@ -1,7 +1,7 @@
 /**
  * Created by Skullpluggery on 11/8/2016.
  */
-
+var mobile=false;
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -35,6 +35,7 @@ $(document).ready(function () {
         GetAreaStatus2(bancal_area);
     }
     drawBasic();
+
     ScrollTo("content-holder");
 });
 
