@@ -112,31 +112,12 @@ if (isset($_GET["area"])) {
 
                 </div>
                 <div class="card-action center">
-                    <a>VIEW MORE</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-no-after">
-        <div class="col s12">
-            <div class="card">
-                <div class="card-content">
-                    <h5 class="teal-text" style="margin-top: 0;"><b>Sensitive Groups</b></h5>
-                    <div class="divider"></div>
-                    <br>
-                    <div id="synthesis"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-no-after">
-        <div class="col s12">
-            <div class="card">
-                <div class="card-content">
-                    <h5 class="teal-text" style="margin-top: 0;"><b>Health Effects</b></h5>
-                    <div class="divider"></div>
-                    <br>
-                    <div id="health-effects"> </div>
+                    <?php
+                    $data = "bancal";
+                    if (isset($_GET["area"]))
+                        $data = $_GET["area"];
+                    ?>
+                    <a href="mobile-daily.php?area=<?php echo "$data" ?>">SEE MORE</a>
                 </div>
             </div>
         </div>

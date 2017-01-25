@@ -20,7 +20,7 @@
     </div>
     <div class="footer-copyright black-text">
         <div class="container">
-            <span class="white-text">© 2016 Copyright AQMS-Carmona</span>
+            <span class="white-text">© 2017 Copyright AQMS-Carmona</span>
         </div>
     </div>
 </footer>

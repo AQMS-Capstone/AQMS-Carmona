@@ -47,7 +47,7 @@
         <div class="nav-wrapper">
 
             <ul class="centered-nav">
-                <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
+                <li><a href="mobile-home.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
                 <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown1"><span
                                 class="material-icons">location_on</span> Sensors Map<i class="material-icons right"
                                                                                         style="margin-left: 5px!important;">arrow_drop_down</i></a>
@@ -72,8 +72,8 @@
     <li><a href="aqi-calculator.php?calculator=ACV" id="drpACV">Concentration Value Calculator</a></li>
 </ul>
 <ul id="dropdown1" class="dropdown-content">
-    <li><a href="index.php?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
-    <li><a href="index.php?area=Bancal" id="drpBancal">Bancal</a></li>
+    <li><a href="mobile-home.php?area=SLEX" id="drpSLEX">SLEX - Carmona Exit</a></li>
+    <li><a href="mobile-home.php?area=Bancal" id="drpBancal">Bancal</a></li>
 </ul>
 <div id="legends">
     <nav class="navbar-fixed hide-on-med-and-down">

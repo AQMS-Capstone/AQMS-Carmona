@@ -54,15 +54,10 @@ include('include/header.php');
                             <div style="min-height: 120px">
                                 <!--Synthesis-->
                                 <ul class="tabs">
-<!--                                    <li class="tab col s3"><a class="active" href="#synthesis">Sensitive Groups</a></li>-->
-<!--                                    <li class="tab col s3"><a href="#health-effects">Health Effects</a></li>-->
                                     <li class="tab col s3"><a href="#cautionary">Cautionary Statement</a></li>
                                 </ul>
                                 <div class="divider"></div>
                                 <br>
-
-<!--                                <div id="synthesis" class="col s12"> </div>-->
-<!--                                <div id="health-effects" class="col s12"> </div>-->
                                 <div id="cautionary" class="col s12"> </div>
 
                                 <br>
@@ -177,8 +172,8 @@ include('include/header.php');
                         </div>
 
 
-                        <a class="waves-effect teal-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
-                           style="margin-top: 1em; width: 100%;">See More</a>
+                        <a class="waves-effect orange-text btn-flat center-align" href="daily.php?area=<?php echo "$data" ?>"
+                           style="margin-top: 1em; width: 100%;">SEE MORE</a>
                     </div>
                 </div>
 
