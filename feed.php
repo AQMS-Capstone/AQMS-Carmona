@@ -163,6 +163,7 @@ include('include/Map.php');
                             <option value="" disabled selected>Area</option>
                             <option value = "bancal">Bancal</option>
                             <option value = "slex">SLEX</option>
+                            <option value = "">All</option>
                         </select>
                     </div>
                     <div class="col s2">
@@ -171,6 +172,7 @@ include('include/Map.php');
                             <option value = "1">CO</option>
                             <option value = "2">SO2</option>
                             <option value = "3">NO2</option>
+                            <option value = "">All</option>
                         </select>
                     </div>
                     <div class="col s2">
