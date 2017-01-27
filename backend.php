@@ -6,19 +6,24 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
 {
     include('include/db_connect.php');
 
-    $query = "SELECT timestamp FROM MASTER WHERE E_ID = '$e_id' and area_name='$area' and timestamp = '$date_now_string' ORDER BY timestamp desc limit 1";
-    $result = mysqli_query($con, $query);
+    $query = $con->prepare("SELECT timestamp FROM MASTER 
+                            WHERE E_ID = ? and area_name= ? and timestamp = ? 
+                            ORDER BY timestamp desc limit 1");
+    $query->bind_param("sss", $e_id, $area, $date_now_string);
+    $query->execute();
+    $result = $query->get_result();
 
     if($result) {
 
         if (mysqli_num_rows($result) == 0) {
-            $query = "INSERT INTO MASTER (area_name, e_id, concentration_value, timestamp) VALUES ('$area', '$e_id', '$value', '$date_now_string')";
-            if (!mysqli_query($con, $query)) {
-                die('Error: ' . mysqli_error($con));
-            }
+            $query = $con->prepare("INSERT INTO MASTER (area_name, e_id, concentration_value, timestamp) VALUES (?,?,?,?)");
+            $query->bind_param("ssss", $area, $e_id, $value, $date_now_string);
 
-            else
-            {
+            $query->execute();
+
+            if(!$query->execute()){
+                die('Error: ' . mysqli_error($con));
+            }else{
                 if($statusMessage[1] == "") {
                     $statusMessage[1] = $symbol;
                 }
@@ -37,8 +42,10 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
                 $statusMessage[0] = $statusMessage[0].", ".$symbol;
             }
         }
-
     }
+
+    $query->close();
+    $con->close();
 
     return $statusMessage;
 

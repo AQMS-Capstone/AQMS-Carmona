@@ -75,22 +75,15 @@ function DbConnect($hour_value, $date_yesterday, $date_now, $date_tomorrow, $are
   $date_now = date("Y-m-d H") . ":00:00";
   $date_beginning = date("Y-m-d H", time() - (86400 * 2) + (3600 * 1)) . ":01:00";
 
-  $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE TIMESTAMP <= '$date_now'  AND TIMESTAMP >= '$date_beginning' AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
+  $sql = $con->prepare("SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id 
+          WHERE TIMESTAMP <= ?  AND TIMESTAMP >= ? AND AREA_NAME = ? 
+          ORDER BY TIMESTAMP");
+  $sql->bind_param("sss", $date_now, $date_beginning, $area);
 
-  /*
-  if($hour_value == 0)
-  {
-    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_yesterday%' OR TIMESTAMP = '$date_now_string') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
-  }
+  $sql->execute();
+  $result = $sql->get_result();
 
-  else
-  {
-    $sql = "SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE (TIMESTAMP LIKE '%$date_now%' OR TIMESTAMP = '$date_tomorrow') AND AREA_NAME = '$area' ORDER BY TIMESTAMP";
-  }*/
-
-  $result = mysqli_query($con, $sql);
-
-  while ($row = mysqli_fetch_assoc($result)) {
+  while ($row = $result->fetch_assoc()) {
     $dataClass = new Master();
 
     $dataClass->area_name = $row['area_name'];

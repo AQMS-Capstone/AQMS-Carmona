@@ -32,33 +32,71 @@ if(isset($_REQUEST['phpValue4'])){
 }
 
 
-//echo $limiter, $sortOption, $filterArea, $filterPollutants;
-
-
 displayFeed($limiter, $sortOption, $filterArea, $filterPollutants);
 
 function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
     include('include/db_connect.php');
 
-    $whereClause = "";
-
     if($filterArea != "" && $filterPollutants == ""){
-        $whereClause = "WHERE AREA_NAME = '$filterArea'";
+
+        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
+              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ?
+              ORDER BY ? DESC LIMIT ?");
+
+        $query->bind_param("sss", $filterArea, $sortOption, $limiter);
+
+        $query->execute();
+        $result = $query->get_result();
+        fetchFeed($result);
+        $query->close();
     }
     else if($filterPollutants != "" && $filterArea == ""){
-        $whereClause = "WHERE MASTER.E_ID = '$filterPollutants'";
+
+        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
+              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE MASTER.E_ID = ?
+              ORDER BY ? DESC LIMIT ?");
+
+        $query->bind_param("sss", $filterPollutants, $sortOption, $limiter);
+        $query->execute();
+        $result = $query->get_result();
+        fetchFeed($result);
+        $query->close();
     }
     else if($filterPollutants != "" && $filterArea != ""){
-        $whereClause = "WHERE AREA_NAME = '$filterArea' AND MASTER.E_ID = '$filterPollutants'";
+
+        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
+              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ? AND MASTER.E_ID = ? 
+              ORDER BY ? DESC LIMIT ?");
+
+        $query->bind_param("ssss", $filterArea, $filterPollutants, $sortOption, $limiter);
+        $query->execute();
+        $result = $query->get_result();
+        fetchFeed($result);
+        $query->close();
+    }
+    else{
+        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
+              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
+              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
+              ORDER BY ? DESC LIMIT ?");
+
+        $query->bind_param("ss", $sortOption, $limiter);
+
+        $query->execute();
+        $result = $query->get_result();
+        fetchFeed($result);
+        $query->close();
     }
 
-    $query = "SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID ".$whereClause."
-              ORDER BY $sortOption DESC LIMIT $limiter";
 
-    $result = mysqli_query($con, $query);
+    $con->close();
+}
+
+function fetchFeed($result){
 
     if ($result) {
 
@@ -72,7 +110,7 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
             echo "</div>";
         } else {
 
-            while ($row = mysqli_fetch_array($result)) {
+            while ($row = $result->fetch_assoc()) {
 
                 echo "<div class='col s12'>";
                 echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
@@ -87,4 +125,5 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
         }
     }
+
 }

@@ -70,36 +70,41 @@ class GPDF{
     function CheckPollutants($a_name, $p_name, $dFrom, $dTo){
         include('include/db_connect.php');
         if($a_name == "" && $p_name == ""){
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+            $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY TIMESTAMP DESC";
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+            $query->bind_param("ss", $dFrom, $dTo);
         }
         else if($a_name == ""){
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+            $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY TIMESTAMP DESC";
+                          WHERE ELEMENTS.e_symbol = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+            $query->bind_param("sss", $p_name, $dFrom, $dTo);
 
         }
         else if($p_name == ""){
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+            $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$a_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY TIMESTAMP DESC";
+                          WHERE area_name = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+            $query->bind_param("sss", $a_name, $dFrom, $dTo);
 
         }
         else{
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
+            $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$a_name' and ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY TIMESTAMP DESC";
+                          WHERE area_name = ? and ELEMENTS.e_symbol = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+            $query->bind_param("ssss", $a_name, $p_name, $dFrom, $dTo);
 
         }
-
-        $result = mysqli_query($con, $query);
-        $row = mysqli_num_rows($result);
-        mysqli_close($con);
+        $query->execute();
+        $result = $query->get_result();
+        $row = $result->fetch_assoc();
+        $query->close();
+        $con->close();
         return $row;
     }
 
@@ -113,32 +118,36 @@ class GPDF{
         $slexData1 = array();
 
         if($a_name == "" && $p_name == ""){
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+            $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY $order DESC";
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY ? DESC");
+            $query->bind_param("sss", $dFrom, $dTo, $order);
         }
         else if($a_name == ""){
-            $query = "SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
+            $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE ELEMENTS.e_symbol = '$p_name' AND DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY $order DESC";
-
+                          WHERE ELEMENTS.e_symbol = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY ? DESC");
+            $query->bind_param("ssss", $p_name, $dFrom, $dTo, $order);
         }
         else if($p_name == ""){
-            $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
+            $query = $con->prepare("SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$a_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY $order DESC";
+                          WHERE area_name = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY ? DESC");
+            $query->bind_param("ssss", $a_name, $dFrom, $dTo, $order);
         }
         else{
-            $query = "SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
+            $query = $con->prepare("SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
-                          WHERE area_name = '$a_name' and ELEMENTS.e_symbol = '$p_name' and DATE(timestamp) BETWEEN DATE('$dFrom') and DATE('$dTo')
-                          ORDER BY $order DESC";
+                          WHERE area_name = ? and ELEMENTS.e_symbol = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY ? DESC");
+            $query->bind_param("sssss", $a_name, $p_name, $dFrom, $dTo, $order);
         }
-        $result = mysqli_query($con, $query);
-        while ($row = mysqli_fetch_array($result)) {
+        $query->execute();
+        $result = $query->get_result();
+        while ($row = $result->fetch_assoc()) {
 
             if($row['AREA_NAME'] == "bancal"){
                 array_push($bancalData, $row["E_NAME"] . ';' . $row["E_SYMBOL"] . ';' . $row["CONCENTRATION_VALUE"] . ';' . $row["timestamp"]);
@@ -161,7 +170,8 @@ class GPDF{
 
         }
 
-        mysqli_close($con);
+        $query->close();
+        $con->close();
         return [$bancalData, $slexData, $bancalData1, $slexData1];
 
     }
