@@ -36,7 +36,6 @@ else{
     if($row == 0){
         //$error = true;
         echo "<script>alert('No available data')</script>";
-
     }else{
         //$error = false; // THEN SET THIS TO TRUE / FALSE OK OK
 
@@ -76,7 +75,7 @@ include('include/header.php');
             <div class="row">
                 <div class="col s12">
                     <div>
-                        <form method = "post" action="generatepdf.php">
+                        <form method = "post" target="_blank" action="generatepdf.php">
                         <!--<form method = "post" action="generatepdf.php">-->
                             <div id = "woah" class="input-field col s12">
                                 <!--<select name = "drpArea" id = "drpArea" required onchange="getData(this.value)">-->
@@ -130,7 +129,7 @@ include('include/header.php');
                             </div>
 
                             <div class="input-field center col s12">
-                                <button class="btn btn-large waves-effect waves-light" type="submit" name="btnGenerate" style="width: 100%;">
+                                <button class="btn btn-large waves-effect waves-light"  type="submit" name="btnGenerate" style="width: 100%;">
                                     Generate
                                 </button>
                             </div>

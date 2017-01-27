@@ -85,8 +85,8 @@ try {
     {
         echo "<script>
                 alert('There are no data available to generate a report');
-                window.location.href='history.php';
                </script>";
+        echo "<script>window.close();</script>";
     }
 
     if(!empty($slexData) && empty($bancalData)){
