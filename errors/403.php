@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', 'http://localhost/aqms-carmona/');
+define('BASE_URL', 'http://aqms.mcl-ccis.net/');
 ?>
 <!DOCTYPE html>
 <html>
