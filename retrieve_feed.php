@@ -14,23 +14,57 @@ $filterPollutants = "";
 
 if(isset($_REQUEST['phpValue'])){
     $limiter = json_decode($_REQUEST['phpValue']);
-    if($limiter == ""){
+
+    if($limiter == "1"){
+        $limiter = "5";
+    }else if($limiter == "2"){
+        $limiter = "10";
+    }else if($limiter == "3"){
+        $limiter = "25";
+    }else if($limiter == "4"){
+        $limiter = "50";
+    }else if($limiter == "5"){
+        $limiter = "100";
+    }else{
         $limiter = "5";
     }
 }
 if(isset($_REQUEST['phpValue2'])){
     $sortOption = json_decode($_REQUEST['phpValue2']);
-    if($sortOption == ""){
+    if($sortOption == "1"){
+        $sortOption = "TIMESTAMP";
+    }else if($sortOption == "2"){
+        $sortOption = "MASTER.E_ID, TIMESTAMP";
+    }else if($sortOption == "3"){
+        $sortOption = "MASTER.CONCENTRATION_VALUE, TIMESTAMP";
+    }else{
         $sortOption = "TIMESTAMP";
     }
 }
 if(isset($_REQUEST['phpValue3'])){
     $filterArea = json_decode($_REQUEST['phpValue3']);
+
+    if($filterArea == "1"){
+        $filterArea = "bancal";
+    }else if($filterArea == "2"){
+        $filterArea = "slex";
+    }elsE{
+        $filterArea = "";
+    }
 }
 if(isset($_REQUEST['phpValue4'])){
     $filterPollutants = json_decode($_REQUEST['phpValue4']);
-}
 
+    if($filterPollutants == "CO"){
+        $filterPollutants = "1";
+    }else if($filterPollutants == "NO2"){
+        $filterPollutants = "3";
+    }else if($filterPollutants == "SO2"){
+        $filterPollutants = "2";
+    }else{
+        $filterPollutants = "";
+    }
+}
 
 displayFeed($limiter, $sortOption, $filterArea, $filterPollutants);
 
@@ -38,14 +72,16 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
     include('include/db_connect.php');
 
+    $sortOption =  filter_var($sortOption, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
     if($filterArea != "" && $filterPollutants == ""){
 
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ?
-              ORDER BY ? DESC LIMIT ?");
+              ORDER BY $sortOption DESC LIMIT ?");
 
-        $query->bind_param("sss", $filterArea, $sortOption, $limiter);
+        $query->bind_param("ss", $filterArea, $limiter);
 
         $query->execute();
         $result = $query->get_result();
@@ -57,9 +93,9 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE MASTER.E_ID = ?
-              ORDER BY ? DESC LIMIT ?");
+              ORDER BY $sortOption DESC LIMIT ?");
 
-        $query->bind_param("sss", $filterPollutants, $sortOption, $limiter);
+        $query->bind_param("ss", $filterPollutants, $limiter);
         $query->execute();
         $result = $query->get_result();
         fetchFeed($result);
@@ -70,9 +106,9 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ? AND MASTER.E_ID = ? 
-              ORDER BY ? DESC LIMIT ?");
+              ORDER BY $sortOption DESC LIMIT ?");
 
-        $query->bind_param("ssss", $filterArea, $filterPollutants, $sortOption, $limiter);
+        $query->bind_param("sss", $filterArea, $filterPollutants, $limiter);
         $query->execute();
         $result = $query->get_result();
         fetchFeed($result);
@@ -82,9 +118,9 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
-              ORDER BY ? DESC LIMIT ?");
+              ORDER BY $sortOption DESC LIMIT ?");
 
-        $query->bind_param("ss", $sortOption, $limiter);
+        $query->bind_param("s", $limiter);
 
         $query->execute();
         $result = $query->get_result();

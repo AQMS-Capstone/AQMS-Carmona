@@ -151,36 +151,36 @@ include('include/Map.php');
                     <div class="col s2">
                         <select id="cbxEntries">
                             <option value="" disabled selected>Show entries</option>
-                            <option value = "5">5</option>
-                            <option value = "10">10</option>
-                            <option value = "25">25</option>
-                            <option value = "50">50</option>
-                            <option value = "100">100</option>
+                            <option value = "1">5</option>
+                            <option value = "2">10</option>
+                            <option value = "3">25</option>
+                            <option value = "4">50</option>
+                            <option value = "5">100</option>
                         </select>
                     </div>
                     <div class="col s2">
                         <select id="cbxArea">
                             <option value="" disabled selected>Area</option>
-                            <option value = "bancal">Bancal</option>
-                            <option value = "slex">SLEX</option>
+                            <option value = "1">Bancal</option>
+                            <option value = "2">SLEX</option>
                             <option value = "">All</option>
                         </select>
                     </div>
                     <div class="col s2">
                         <select id="cbxPollutant">
                             <option value="" disabled selected>Pollutants</option>
-                            <option value = "1">CO</option>
-                            <option value = "2">SO2</option>
-                            <option value = "3">NO2</option>
+                            <option value = "CO">CO</option>
+                            <option value = "SO2">SO2</option>
+                            <option value = "NO2">NO2</option>
                             <option value = "">All</option>
                         </select>
                     </div>
                     <div class="col s2">
                         <select id="cbxSort">
                             <option value="" disabled selected>Sort by</option>
-                            <option value = "TIMESTAMP">Timestamp</option>
-                            <option value = "MASTER.E_ID, TIMESTAMP">Element</option>
-                            <option value = "MASTER.CONCENTRATION_VALUE, TIMESTAMP">Concentration Value</option>
+                            <option value = "1">Timestamp</option>
+                            <option value = "2">Element</option>
+                            <option value = "3">Concentration Value</option>
                         </select>
                     </div>
                 </div>

@@ -19,8 +19,6 @@ function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statu
             $query = $con->prepare("INSERT INTO MASTER (area_name, e_id, concentration_value, timestamp) VALUES (?,?,?,?)");
             $query->bind_param("ssss", $area, $e_id, $value, $date_now_string);
 
-            $query->execute();
-
             if(!$query->execute()){
                 die('Error: ' . mysqli_error($con));
             }else{
