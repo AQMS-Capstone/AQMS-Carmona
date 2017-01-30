@@ -34,9 +34,9 @@ if(isset($_REQUEST['phpValue2'])){
     if($sortOption == "1"){
         $sortOption = "TIMESTAMP";
     }else if($sortOption == "2"){
-        $sortOption = "MASTER.E_ID, TIMESTAMP";
+        $sortOption = "MASTER.E_ID";
     }else if($sortOption == "3"){
-        $sortOption = "MASTER.CONCENTRATION_VALUE, TIMESTAMP";
+        $sortOption = "MASTER.CONCENTRATION_VALUE";
     }else{
         $sortOption = "TIMESTAMP";
     }
@@ -75,7 +75,6 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
     $sortOption =  filter_var($sortOption, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
     if($filterArea != "" && $filterPollutants == ""){
-
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ?
@@ -89,7 +88,6 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query->close();
     }
     else if($filterPollutants != "" && $filterArea == ""){
-
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE MASTER.E_ID = ?
@@ -102,7 +100,6 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query->close();
     }
     else if($filterPollutants != "" && $filterArea != ""){
-
         $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
               ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
               FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ? AND MASTER.E_ID = ? 
