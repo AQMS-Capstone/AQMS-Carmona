@@ -112,6 +112,8 @@ class GPDF{
 
         include('include/db_connect.php');
 
+        $order =  filter_var($order, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -121,29 +123,29 @@ class GPDF{
             $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY ? DESC");
-            $query->bind_param("sss", $dFrom, $dTo, $order);
+                          ORDER BY $order DESC");
+            $query->bind_param("ss", $dFrom, $dTo);
         }
         else if($a_name == ""){
             $query = $con->prepare("SELECT E_NAME, E_SYMBOL, CONCENTRATION_VALUE, timestamp, AREA_NAME
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE ELEMENTS.e_symbol = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY ? DESC");
-            $query->bind_param("ssss", $p_name, $dFrom, $dTo, $order);
+                          ORDER BY $order DESC");
+            $query->bind_param("sss", $p_name, $dFrom, $dTo);
         }
         else if($p_name == ""){
             $query = $con->prepare("SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY ? DESC");
-            $query->bind_param("ssss", $a_name, $dFrom, $dTo, $order);
+                          ORDER BY $order DESC");
+            $query->bind_param("sss", $a_name, $dFrom, $dTo);
         }
         else{
             $query = $con->prepare("SELECT E_NAME, AREA_NAME ,E_SYMBOL, CONCENTRATION_VALUE, timestamp
                           FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id
                           WHERE area_name = ? and ELEMENTS.e_symbol = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY ? DESC");
-            $query->bind_param("sssss", $a_name, $p_name, $dFrom, $dTo, $order);
+                          ORDER BY $order DESC");
+            $query->bind_param("ssss", $a_name, $p_name, $dFrom, $dTo);
         }
         $query->execute();
         $result = $query->get_result();
