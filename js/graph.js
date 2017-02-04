@@ -57,7 +57,13 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     this.data.datasets.forEach(function (dataset) {
                         for (var i = 0; i < dataset.data.length; i++) {
                             var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                            ctx.fillText(dataset.data[i], model.x, model.y);
+                            if(data_pollutant[i] == -2){
+                                ctx.fillText("400+", model.x, model.y);
+                            }else if(data_pollutant[i] == -3){
+                                ctx.fillText("201-", model.x, model.y);
+                            }else {
+                                ctx.fillText(dataset.data[i], model.x, model.y);
+                            }
                         }
                     });
                 }
@@ -98,102 +104,51 @@ function createGraph(data_pollutant, chartNames, rolling_time)
 
 }
 
-function drawTheGraph(area_data)
-{
-  var array_draw = [];
+function drawTheGraph(area_data) {
+    var array_draw = [];
 
-  array_draw.push(area_data.co_aqi_values);
-  array_draw.push(area_data.so2_aqi_values);
-  array_draw.push(area_data.no2_aqi_values);
-  array_draw.push(area_data.o3_aqi_values);
-  array_draw.push(area_data.pm10_aqi_values);
-  array_draw.push(area_data.tsp_aqi_values);
+    array_draw.push(area_data.co_aqi_values);
+    array_draw.push(area_data.so2_aqi_values);
+    array_draw.push(area_data.no2_aqi_values);
 
-  //if(area_data.AllDayValues_array.length != 0){
+    var url = window.location.href.toString();
 
-      var url = window.location.href.toString();
+    if (url.includes("daily")) {
 
-      if (url.includes("daily")){
+        for (var i = 0; i < area_data.aqi_values.length; i++) {
+            var maxValue = 0;
+            var found = false;
 
-          for(var i = 0 ; i < area_data.aqi_values.length; i++)
-          {
-              var maxValue = 0;
-              var found = false;
+            switch (i) {
+                case 0:
+                    maxValue = Math.max(parseInt(area_data.co_max));
+                    found = true;
+                    break;
 
-              switch(i)
-              {
-                  case 0:
-                      maxValue = Math.max(parseInt(area_data.co_max));
-                      found = true;
-                      break;
+                case 1:
+                    maxValue = Math.max(parseInt(area_data.so2_max));
+                    found = true;
+                    break;
 
-                  case 1:
-                      maxValue = Math.max(parseInt(area_data.so2_max));
-                      found = true;
-                      break;
+                case 2:
+                    maxValue = Math.max(parseInt(area_data.no2_max));
+                    found = true;
+                    break;
+            }
 
-                  case 2:
-                      maxValue = Math.max(parseInt(area_data.no2_max));
-                      found = true;
-                      break;
+            if (found) {
+                var chartNames = "chart_div_" + (i + 1);
+                createGraph(array_draw[i], chartNames, area_data.rolling_time);
+            }
+        }
+    } else {
+        if (area_data.AQI != "-") {
+            var index = area_data.prevalentIndex;
 
-                  case 3:
-                      maxValue = Math.max(parseInt(area_data.o3_max));
-                      break;
-
-                  case 4:
-                      maxValue = Math.max(parseInt(area_data.pm10_max));
-                      break;
-
-                  case 5:
-                      maxValue = Math.max(parseInt(area_data.tsp_max));
-                      break;
-              }
-
-              if(found)
-              {
-                  var chartNames = "chart_div_" + (i+1);
-                  createGraph(array_draw[i], chartNames, area_data.rolling_time);
-              }
-          }
-      }else {
-          if(area_data.AQI != "-"){
-              var index = area_data.prevalentIndex;
-              var maxValue = 0;
-
-              switch(index) {
-                  case 0:
-                      maxValue = Math.max(parseInt(area_data.co_max));
-                      break;
-
-                  case 1:
-                      maxValue = Math.max(parseInt(area_data.so2_max));
-                      break;
-
-                  case 2:
-                      maxValue = Math.max(parseInt(area_data.no2_max));
-                      break;
-
-                  case 3:
-                      maxValue = Math.max(parseInt(area_data.o3_max));
-                      break;
-
-                  case 4:
-                      maxValue = Math.max(parseInt(area_data.pm10_max));
-                      break;
-
-                  case 5:
-                      maxValue = Math.max(parseInt(area_data.tsp_max));
-                      break;
-              }
-
-              if(maxValue > -1) {
-                  var chartNames = "chart_div_" + (index + 1);
-                  createGraph(array_draw[index], chartNames, area_data.rolling_time);
-              }
-          }
-      }
-  //}
+            var chartNames = "chart_div_" + (index + 1);
+            createGraph(array_draw[index], chartNames, area_data.rolling_time);
+        }
+    }
 }
 
 function drawBasic() {
@@ -225,13 +180,21 @@ function determineBG(AQI){
         AirQuality = emergencyAir;
     }else if(AQI == -1){
         AirQuality = otherAir;
+    }else if(AQI == -2){
+        AirQuality = emergencyAir;
+    }else if(AQI == -3){
+        AirQuality = goodAir;
     }
 
     return AirQuality;
 }
 
 function removeNegative(AQI){
-    if(AQI < 0){
+    if(AQI == -3){
+        AQI = 200;
+    }else if(AQI == -2){
+        AQI = 401;
+    }else if(AQI == -1){
         AQI = 0;
     }
 

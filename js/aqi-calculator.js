@@ -320,8 +320,13 @@ function GetAQIDetails(AQI,element){
         }else if(AQI == -1){
             AQIAirQuality = otherAir;
             AQIStatus = "No Current Data";
-        }
-        else{
+        }else if (AQI == -2) {
+            AQIAirQuality = emergencyAir;
+            AQIStatus = "Emergency";
+        } else if (AQI == -3) {
+            AQIAirQuality = goodAir;
+            AQIStatus = "Good";
+        }else{
             AQIAirQuality = otherAir;
             AQIStatus = "No Current Data";
         }

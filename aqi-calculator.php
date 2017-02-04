@@ -164,8 +164,6 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 <script type="text/javascript">
     var unit_used = "<?php echo $unit_used; ?>";
 
-
-
     var co_step = <?php echo $co_step; ?>;
     var co_min = <?php echo $co_min; ?>;
     var co_max = <?php echo $co_max; ?>;

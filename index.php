@@ -71,90 +71,11 @@ include('include/header.php');
 
                             function getAreaStatus($area_data)
                             {
-//                                if (count($area_data->AllDayValues_array) != 0) {
-//
-//                                    $ind = $area_data->prevalentIndex[0];
-//                                    $maxValue = 0;
-//
-//                                    switch ($ind) {
-//                                        case 0:
-//                                            $maxValue = $area_data->co_max;
-//                                            break;
-//
-//                                        case 1:
-//                                            $maxValue = $area_data->so2_max;
-//                                            break;
-//
-//                                        case 2:
-//                                            $maxValue = $area_data->no2_max;
-//                                            break;
-//
-//                                        case 3:
-//                                            $maxValue = $area_data->o3_max;
-//                                            break;
-//
-//                                        case 4:
-//                                            $maxValue = $area_data->pm10_max;
-//                                            break;
-//
-//                                        case 5:
-//                                            $maxValue = $area_data->tsp_max;
-//                                            break;
-//                                    }
-//
-//                                    if ($maxValue > -1) {
-//                                        $chartName = "chart_div_" . ($ind + 1);
-//                                        echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
-//                                    }
-//                                }
-                                $untilValue = $area_data->aqi_values;
+                                $index = $area_data->prevalentIndex[0];
 
-                                if (count($area_data->AllDayValues_array) != 0) {
-                                    for ($x = 0; $x < count($untilValue); $x++) {
-                                        $maxValue = 0;
-
-                                        switch ($x) {
-                                            case 0:
-                                                $maxValue = $area_data->co_max;
-                                                break;
-
-                                            case 1:
-                                                $maxValue = $area_data->so2_max;
-                                                break;
-
-                                            case 2:
-                                                $maxValue = $area_data->no2_max;
-                                                break;
-
-                                            case 3:
-                                                $maxValue = $area_data->o3_max;
-                                                break;
-
-                                            case 4:
-                                                $maxValue = $area_data->pm10_max;
-                                                break;
-
-                                            case 5:
-                                                $maxValue = $area_data->tsp_max;
-                                                break;
-                                        }
-
-                                        if ($maxValue > -1) {
-                                            $elementName = "e_symbol_" . ($x + 1);
-                                            $conentrationName = "concentration_value_" . ($x + 1);
-                                            $chartName = "chart_div_" . ($x + 1);
-                                            $elementNameMin = "aqi_min_" . ($x + 1);
-                                            $elementNameMax = "aqi_max_" . ($x + 1);
-
-//                                                echo "<tr>";
-//                                                echo "<td class='elementName' id='$elementName'>NaN</td>";
-//                                                echo "<td class='elementCurrent' id='$conentrationName'>NaN</td>";
-                                            echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
-//                                                echo "<td class='elementMin' id='$elementNameMin'>NaN</td>";
-//                                                echo "<td class='elementMax' id='$elementNameMax'>NaN</td>";
-//                                                echo "</tr>";
-                                        }
-                                    }
+                                if($area_data->aqi_values[$index] != -1) {
+                                    $chartName = "chart_div_" . ($index + 1);
+                                    echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
                                 }
                             }
 

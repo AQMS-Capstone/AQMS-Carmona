@@ -56,6 +56,14 @@ function generateArea(area) {
             area.AirQuality = otherAir;
             area.AQIStatus = "No Current Data";
             area.d_date_gathered = "-";
+        }else if(area.AQI == -2){
+            area.AQI = "400+";
+            area.AirQuality = emergencyAir;
+            area.AQIStatus = "Emergency";
+        }else if(area.AQI == -3){
+            area.AQI = "201-";
+            area.AirQuality = goodAir;
+            area.AQIStatus = "Good";
         }
     }
 }

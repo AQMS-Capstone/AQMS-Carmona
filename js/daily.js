@@ -70,8 +70,16 @@ function GetAreaStatus2(area_data)
     }
 
     else {
+        if(area_data.prevalent_value == -2){
+            $("#aqiNum").text("400+");
+        }else if(area_data.prevalent_value == -3){
+            $("#aqiNum").text("201-");
+        }else{
+            $("#aqiNum").text(area_data.prevalent_value);
+        }
+
         $("#prevalentPollutant").text("(" + pollutant_symbols[area_data.prevalentIndex] + ") " + pollutant_labels[area_data.prevalentIndex]);
-        $("#aqiNum").text(area_data.prevalent_value);
+
         $("#timeUpdated").text(area_data.date_gathered);
     }
 
@@ -83,35 +91,19 @@ function GetAreaStatus2(area_data)
 
     //if (area_data.AllDayValues_array.length != 0) {
         for (var i = 0; i < area_data.aqi_values.length; i++) {
-            var maxValue = 0;
             var found = false;
 
             switch (i) {
                 case 0:
-                    maxValue = Math.max(parseInt(area_data.co_max));
                     found = true;
                     break;
 
                 case 1:
-                    maxValue = Math.max(parseInt(area_data.so2_max));
                     found = true;
                     break;
 
                 case 2:
-                    maxValue = Math.max(parseInt(area_data.no2_max));
                     found = true;
-                    break;
-
-                case 3:
-                    maxValue = Math.max(parseInt(area_data.o3_max));
-                    break;
-
-                case 4:
-                    maxValue = Math.max(parseInt(area_data.pm10_max));
-                    break;
-
-                case 5:
-                    maxValue = Math.max(parseInt(area_data.tsp_max));
                     break;
             }
 
@@ -126,32 +118,102 @@ function GetAreaStatus2(area_data)
 
                 if (area_data.aqi_values[i] == -1) {
                     document.getElementById(conentrationName).innerHTML = "Current: -";
-                }
-
-                else {
+                } else if (area_data.aqi_values[i] == -2) {
+                    document.getElementById(conentrationName).innerHTML = "Current: 400+";
+                } else if (area_data.aqi_values[i] == -3) {
+                    document.getElementById(conentrationName).innerHTML = "Current: 201-";
+                } else {
                     document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
                 }
 
                 var minValue = area_data.min_max_values[i][0];
-
-                if (minValue == -1) {
-                    document.getElementById(elementMin).innerHTML = "Min: 0";
-                }
-
-                else {
-                    document.getElementById(elementMin).innerHTML = "Min: " + minValue;
-                }
-
                 var maxValue =  area_data.min_max_values[i][1];
 
-                if(maxValue == -1){
-                    document.getElementById(elementMax).innerHTML = "Max: 0";
-                }else{
-                    document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                if(i == 0){
+                    if(checkArray(area_data.co_aqi_values, -2)){
+                        document.getElementById(elementMax).innerHTML = "Max: 400+";
+                    }else{
+
+                        if(maxValue == -1){
+                            document.getElementById(elementMax).innerHTML = "Max: -";
+                        }else{
+                            document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                        }
+                    }
+
+                    if(minValue == -1){
+                        document.getElementById(elementMin).innerHTML = "Min: -";
+                    }else{
+                        document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                    }
+                }else if(i == 1){
+                    if(checkArray(area_data.so2_aqi_values, -2)){
+                        document.getElementById(elementMax).innerHTML = "Max: 400+";
+                    }else{
+
+                        if(maxValue == -1){
+                            document.getElementById(elementMax).innerHTML = "Max: -";
+                        }else{
+                            document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                        }
+                    }
+
+                    if(minValue == -1){
+                        document.getElementById(elementMin).innerHTML = "Min: -";
+                    }else{
+                        document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                    }
+                }else if(i == 2){
+                    if(checkArray(area_data.no2_aqi_values, -2)){
+                        document.getElementById(elementMax).innerHTML = "Max: 400+";
+                    }else{
+
+                        if(maxValue == -1){
+                            document.getElementById(elementMax).innerHTML = "Max: -";
+                        }else{
+                            document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                        }
+                    }
+
+                    if(!checkLower(area_data.no2_aqi_values)){
+                        document.getElementById(elementMin).innerHTML = "Min: 201-";
+                    }else{
+                        if(minValue == -1){
+                            document.getElementById(elementMin).innerHTML = "Min: -";
+                        }else{
+                            document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                        }
+                    }
                 }
             }
         }
     //}
+}
+
+function checkLower(array_container){
+    var returnBool = false
+
+    for (var i = 0; i < array_container.length; i++){
+        if(array_container[i] >= 0 && array_container[i] < 201){
+            returnBool = true;
+            break;
+        }
+    }
+
+    return returnBool;
+}
+
+function checkArray(array_container, search){
+    var returnBool = false;
+
+    for(var i = 0; i < array_container.length; i++)
+    {
+        if(array_container[i] == search){
+            returnBool = true;
+            break;
+        }
+    }
+    return returnBool;
 }
 
 $("#prevArea").click(function () {
