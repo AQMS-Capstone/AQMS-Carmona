@@ -38,6 +38,19 @@ function InitAQICalculator(){
     });
 }
 
+function InitCVCalculator(){
+
+    $("#txtTitle").text('Concentration Value Calculator');
+    $("#txtConversion").text('AQI');
+    $("#unit").hide();
+
+    $('select[id=element]').change(function () {
+
+        GetElementInfoCV();
+    });
+
+}
+
 function GetElementInfoAQI(){
     if($('#element').val() == "CO" || $('#element').val() == "SO2" || $('#element').val() == "NO2" || $('#element').val() == "O3_8" || $('#element').val() == "O3_1" )
     {
@@ -120,6 +133,8 @@ function GetElementInfoAQI(){
                 "max" : pm10_max,
                 "step" : 1
             });
+
+            $('#unit').text("ug/m3");
         }
         if($('#element').val() == "TSP")
         {
@@ -128,128 +143,73 @@ function GetElementInfoAQI(){
                 "max" : 999999,
                 "step" : 1
             });
-        }
 
-        $('#unit').text("");
+            $('#unit').text("ug/m3");
+        }
     }
 }
 
 function GetElementInfoCV(){
-
-    //CHANGE THIS LATER ON HA PAG GINAWANG OLD
-
-    if(unit_used == "old") {
-        $('select[id=element]').change(function () {
-
-            if ($('#element').val() == "O3_8") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 300
-                });
-            }
-            if ($('#element').val() == "O3_1") {
-                $("#concentration").attr({
-                    "min": 101,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "PM 10") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "CO") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "SO2") {
-                $("#concentration").attr({
-                    "min": 101,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "NO2") {
-                $("#concentration").attr({
-                    "min": 201,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "TSP") // CHECK
-            {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-
-            $('#unit').text("AQI");
-        });
-    }else{
-        $('select[id=element]').change(function () {
-
-            if ($('#element').val() == "O3_8") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 300
-                });
-            }
-            if ($('#element').val() == "O3_1") {
-                $("#concentration").attr({
-                    "min": 101,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "PM 10") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "CO") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "SO2") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "NO2") {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-            if ($('#element').val() == "TSP") // CHECK
-            {
-                $("#concentration").attr({
-                    "min": 0,
-                    "max": 400,
-                });
-            }
-
-            $('#unit').text("AQI");
-        });
-    }
-}
-
-function InitCVCalculator(){
-
-    $("#txtTitle").text('Concentration Value Calculator');
-    $("#txtConversion").text('AQI');
-    $("#unit").hide();
-
     $('select[id=element]').change(function () {
 
-        GetElementInfoCV();
-    });
+        if ($('#element').val() == "O3_8") {
+            $("#concentration").attr({
+                "min": 0,
+                "max": 300
+            });
 
+            $('#unit').text("AQI");
+        }
+        if ($('#element').val() == "O3_1") {
+            $("#concentration").attr({
+                "min": 101,
+                "max": 400,
+            });
+
+            $('#unit').text("AQI");
+        }
+        if ($('#element').val() == "PM 10") {
+            $("#concentration").attr({
+                "min": 0,
+                "max": 400,
+            });
+
+            $('#unit').text("AQI");
+        }
+        if ($('#element').val() == "CO") {
+            $("#concentration").attr({
+                "min": 0,
+                "max": 400,
+            });
+
+            $('#unit').text("AQI");
+        }
+        if ($('#element').val() == "SO2") {
+            $("#concentration").attr({
+                "min": 101,
+                "max": 400,
+            });
+
+            $('#unit').text("AQI");
+        }
+        if ($('#element').val() == "NO2") {
+            $("#concentration").attr({
+                "min": 201,
+                "max": 400,
+            });
+
+            $('#unit').text("AQI");
+        }
+        if ($('#element').val() == "TSP") // CHECK
+        {
+            $("#concentration").attr({
+                "min": 0,
+                "max": 301,
+            });
+
+            $('#unit').text("AQI");
+        }
+    });
 }
 
 function GetAQIDetails(AQI,element){
