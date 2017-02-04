@@ -69,52 +69,6 @@ function displayAQIMonitoring($date,$area){
     include('include/guidelines.php');
     $color1 = returnAQIColor($area->aqi_values[$area->prevalentIndex[0]]);
 
-//    echo "<div class='col s6'>";
-//    echo "<div class = 'card z-depth-0' style='padding:0; margin-bottom:0; box-shadow:0px 0px 0px; background: $color1';>";
-//    echo "<div class = 'card-content'>";
-//    echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
-//    echo "<b>".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."</b>";
-//    echo "</h6>";
-//    echo "</div>";
-//    echo "</div>";
-//    echo "<div class = 'card z-depth-0' style='margin-top:0; margin-bottom:0'>";
-//    echo "<div class = 'card-content'>";
-//    //echo "AQI as of ". strtoupper(date("F d, Y @ h a", strtotime($date))) . " in " . strtoupper($area->name);
-//    //echo negateZero($area->aqi_values[$area->prevalentIndex[0]]) . " [".returnAQIStstus($area->aqi_values[$area->prevalentIndex[0]])."]";
-//    echo "<p class='teal-text center-align' style='font-size:1.5em; margin-bottom: 0;'><b>".strtoupper($area->name)."</b></p>";
-//    echo "<div class='center-align'>
-//    <p class='material-icons' style='font-size: 6em;margin-bottom: 0;margin-top: 0; color: $color1;'>
-//           cloud</p>";
-//
-//    if($area->aqi_values[$area->prevalentIndex[0]] < 0){
-//        echo "
-//    <p style='font-size: 1.5em;margin-top: 0;'><b>AQI: </b><span>-</span></p>
-//    <p><b>Prevalent Air Pollutant: </b> <span>-</span></p>
-//    <p><b>Recorded on: </b><span>-</span></p>
-//    <p><b>Change in AQI Status: </b><span>-</span></p>
-//    </div>";
-//        //<p><b>Status: </b><span>-</span></p>
-//    }else{
-//        echo "
-//    <p style='font-size: 1.5em;margin-top: 0;'><b>AQI: </b><span>".negateZero($area->aqi_values[$area->prevalentIndex[0]])."</span></p>
-//    <p><b>Prevalent Air Pollutant: </b> <span>".$pollutant_labels[$area->prevalentIndex[0]]."</span></p>
-//    <p><b>Recorded on: </b><span>$area->date_gathered</span></p>
-//    <p><b>Change in AQI Status: </b><span>".displayAQIStatusChange(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
-//    </div>";
-//        //<p><b>Status: </b><span>".displayAQIDesc(determineLastHourAQI($area),$area->aqi_values[$area->prevalentIndex[0]])."</span></p>
-//    }
-//
-//    echo "</div>";
-//    echo "</div>";
-//    echo "<div class = 'card z-depth-0' style='padding:0; margin-top:0; box-shadow:0px 0px 0px; background: $color1';>";
-//    echo "<div class = 'card-content'>";
-//    echo "<h6 class='white-text center-align' style='margin-bottom: 0;'>";
-//    echo "<b>Action: ".displayAction($area->aqi_values[$area->prevalentIndex[0]])."</b>";
-//    echo "</h6>";
-//    echo "</div>";
-//    echo "</div>";
-//    echo "</div>";
-
     echo "<div class='col s12 m6'>
         <div class='card z-depth-0'>
             <div id='aqiColor' class='col s12' style='margin-bottom: 15px; background: $color1;'>
@@ -126,7 +80,7 @@ function displayAQIMonitoring($date,$area){
                     <div class='divider'></div>
                     <br>";
 
-    if($area->aqi_values[$area->prevalentIndex[0]] < 0) {
+    if($area->aqi_values[$area->prevalentIndex[0]] == -1) {
         echo "
                         <div class='col s12' style='padding: 0;'>
                             <p style='font-weight: bold; font-size: 2em;'>AQI: <span id='aqiNum'>-</span ></p>
@@ -258,9 +212,12 @@ function displayAQIStatusChange($prevAQI, $curAQI){
     return $change;
 }
 function negateZero($AQI){
-    if($AQI < 0){
-        return 0;
+    if($AQI == -3){
+        return "201-";
+    } if($AQI == -2){
+        return "400+";
+    } if($AQI == -1){
+        return "-";
     }
-
     return $AQI;
 }

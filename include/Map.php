@@ -431,14 +431,70 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
 
   require 'include/guidelines.php';
 
-  for ($x = 0; $x < count($gv); $x++) {
-    $roundedValue = floorDec($ave, $precision = $prec);
+  for($x = 0; $x < count($gv); $x++)
+  {
+    if($gv == $tsp_guideline_values)
+    {
+      if($ave >= 900)
+      {
+        $roundedValue = floorDec($ave, $precision = $prec);
 
-    if ($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1]) {
-      $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0]) / ($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
-      break;
-    } else if ($x == count($gv) - 1) {
-      $aqi = -1;
+        if($roundedValue >= $gv[$x][0])
+        {
+          //$aqi = round((($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0]);
+          $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+          break;
+        }
+
+
+        else if($x == count($gv) - 1)
+        {
+          $aqi = -1;
+        }
+      }
+
+      else
+      {
+        $roundedValue = floorDec($ave, $precision = $prec);
+
+        if($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1])
+        {
+          //$aqi = round((($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0]);
+          $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+          break;
+        }
+
+        else if($x == count($gv) - 1)
+        {
+          $aqi = -1;
+        }
+      }
+
+    }
+
+    else
+    {
+      if($gv == $ozone_guideline_values_8)
+      {
+
+        if($ave > 0.374)
+        {
+          $gv = $ozone_guideline_values_1;
+        }
+      }
+
+      $roundedValue = floorDec($ave, $precision = $prec);
+
+      if($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1])
+      {
+        $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+        break;
+      }
+
+      else if($x == count($gv) - 1)
+      {
+        $aqi = -1;
+      }
     }
   }
 
@@ -457,13 +513,13 @@ function calculateConcentrationValue($gv, $aqi_value, $prec, $aqi_val)
 
     else
     {
-      $index - -1;
+      $index = -1;
     }
   }
 
-  if(index == -1)
+  if($index == -1)
   {
-    return index;
+    return $index;
   }
 
   else {
