@@ -210,6 +210,10 @@ function returnAQIColor($AQI){
         $AQIStatus = $emergencyAir;
     } else if ($AQI == -1) {
         $AQIStatus = $otherAir;
+    }else if ($AQI == -2) {
+        $AQIStatus = $emergencyAir;
+    }else if ($AQI == -3) {
+        $AQIStatus = $goodAir;
     }
 
     return strtoupper($AQIStatus);
@@ -232,6 +236,10 @@ function returnAQIStstus($AQI)
         $AQIStatus = "Emergency";
     } else if ($AQI == -1) {
         $AQIStatus = "No Status";
+    }else if ($AQI == -2) {
+        $AQIStatus = "Emergency";
+    }else if ($AQI == -3) {
+        $AQIStatus = "Good";
     }
 
     return strtoupper($AQIStatus);

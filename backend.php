@@ -70,11 +70,8 @@ if (isset($_POST['btnSubmit'])) {
     $co_value = $_POST['co_value'];
     $so2_value = $_POST['so2_value'];
     $no2_value = $_POST['no2_value'];
-    $o3_value = $_POST['o3_value'];
-    $pm10_value = $_POST['pm10_value'];
-    $tsp_value = $_POST['tsp_value'];
 
-    if($co_value == "" && $so2_value == "" && $no2_value == "" && $o3_value == "" && $pm10_value == "" && $tsp_value == "")
+    if($co_value == "" && $so2_value == "" && $no2_value == "")
     {
         echo "<script language = 'javascript'>alert('Input a value for at-least one pollutant. Try again.')</script>";
     }
@@ -95,22 +92,7 @@ if (isset($_POST['btnSubmit'])) {
                 $e_id = '3';
                 $statusMessage = insertPollutant($e_id, $area, $no2_value, $time, "NO2", $statusMessage);
             }
-
-            if ($o3_value != null) {
-                $e_id = '4';
-                $statusMessage = insertPollutant($e_id, $area, $o3_value, $time, "O3", $statusMessage);
-            }
-
-            if ($pm10_value != null) {
-                $e_id = '5';
-                $statusMessage = insertPollutant($e_id, $area, $pm10_value, $time, "PM 10", $statusMessage);
-            }
-
-            if ($tsp_value != null) {
-                $e_id = '6';
-                $statusMessage = insertPollutant($e_id, $area, $tsp_value, $time, "TSP", $statusMessage);
-            }
-
+            
             if ($statusMessage[0] != "") {
                 $statusMessage[0] = "Values entered for " . $statusMessage[0] . " was not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
             }
@@ -207,11 +189,10 @@ if (isset($_POST['btnSubmit'])) {
                             </div>
                         </div>
                         <div class='row'>
-                            <div class='col s12 l6'>
+                            <div class='col s12'>
                                 <div class='input-field col s10'>
                                     <input id='co_value' name='co_value' type='number' class='validate' step='$co_step'
-                                           min='$co_min'
-                                           max='$co_max'>
+                                           min='$co_min'>
                                     <label>Carbon Monoxide</label>
                                 </div>
                                 <div class='input-field col s2'>
@@ -221,7 +202,7 @@ if (isset($_POST['btnSubmit'])) {
                                 if($unit_used == "old"){
                                 echo "
                                 <div class='input-field col s10'>
-                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$sulfur_step' min='$sulfur_min' max='$sulfur_max'>
+                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$sulfur_step' min='$sulfur_min'>
                                     <label>Sulfur Dioxide</label>
                                 </div>
                                 <div class='input-field col s2'>
@@ -230,28 +211,7 @@ if (isset($_POST['btnSubmit'])) {
                                 
                                 <div class='input-field col s10'>
                                     <input id='no2_value' name='no2_value' type='number' class='validate' step='$no2_step'
-                                           min='$no2_min'
-                                           max='$no2_max'>
-                                    <label>Nitrogen Dioxide</label>
-                                </div>
-                                <div class='input-field col s2'>
-                                    <label id='unit'>$no2_unit</label>
-                                </div>
-                                ";
-                                }else{
-                                echo"
-                                <div class='input-field col s10'>
-                                    <input id='so2_value' name='so2_value' type='number' class='validate' min='$sulfur_min' max='$sulfur_max'>
-                                    <label>Sulfur Dioxide</label>
-                                </div>
-                                <div class='input-field col s2'>
-                                    <label id='unit'>$sulfur_unit</label>
-                                </div>
-                                
-                                <div class='input-field col s10'>
-                                    <input id='no2_value' name='no2_value' type='number' class='validate'
-                                           min='$no2_min'
-                                           max='$no2_max'>
+                                           min='0'>
                                     <label>Nitrogen Dioxide</label>
                                 </div>
                                 <div class='input-field col s2'>
@@ -260,34 +220,6 @@ if (isset($_POST['btnSubmit'])) {
                                 ";
                                 }
                                 echo"
-                            </div>
-            
-                            <div class='col s12 l6'>
-                                <div class='input-field col s10'>
-                                    <input id='o3_value' name='o3_value' type='number' class='validate' step='$o3_step'
-                                           min='$o3_min'
-                                           max='$o3_max'>
-                                    <label>Ozone</label>
-                                </div>
-                                <div class='input-field col s2'>
-                                    <label id='unit'>$o3_unit</label>
-                                </div>
-            
-                                <div class='input-field col s10'>
-                                    <input id='pm10_value' name='pm10_value' type='number' class='validate' min='$pm10_min' max='$pm10_max'>
-                                    <label>Particulate Matter 10</label>
-                                </div>
-                                <div class='input-field col s2'>
-                                    <label id='unit'>$pm10_unit</label>
-                                </div>
-            
-                                <div class='input-field col s10'>
-                                    <input id='tsp_value' name='tsp_value' type='number' class='validate' min='$tsp_min'>
-                                    <label>Total Suspended Particles</label>
-                                </div>
-                                <div class='input-field col s2'>
-                                    <label id='unit'>$tsp_unit</label>
-                                </div>
                             </div>
                         </div>
                         
