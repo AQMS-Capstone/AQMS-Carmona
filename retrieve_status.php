@@ -111,7 +111,7 @@ function displayAQIMonitoring($date,$area){
                 </div>
             </div>
             <div id='aqiColor' class='col s12' style='background: $color1'>
-                <p style='font-size: 1em;' class='white-text'><b id='aqiText'>Action</b></p>
+                <p style='font-size: 1em;' class='white-text'><b id='aqiText'>Action: ".displayAction($area->aqi_values[$area->prevalentIndex[0]])."</b></p>
             </div>
         </div>
     </div>
@@ -127,7 +127,6 @@ function displayAQIMonitoring($date,$area){
 }
 function displayAction($curAQI){
     $curStatus = returnAQIStstus($curAQI);
-    $action = "";
 
     if($curStatus == "EMERGENCY" || $curStatus == "VERY UNHEALTHY" || $curStatus == "ACUTELY UNHEALTHY"){
         $action = "Needs immediate attention";
