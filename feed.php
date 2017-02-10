@@ -74,69 +74,165 @@ include('include/Map.php');
             </div>
         </div>
     </div>
-    <div class="row row-no-after">
-        <div class="col s12 m9">
-            <div class="card z-depth-0" style="min-height: 231.55px">
-                <div class="card-content">
-                    <div style="width: 100%; height: 150px;">
-                        <canvas id="bancal_barChart"></canvas>
-                    </div>
 
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Bancal Rolling 24 hrs
-                            Distribution</b>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m3">
-            <div class="card z-depth-0">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="col s9">
-                            <canvas id="bancal_doughnutChart"></canvas>
-                        </div>
-                        <div class="col s2">
-                            <div id="js-legend_1" class="chart-legend"></div>
+    <div class="row row-no-after">
+        <div class="col s12">
+            <ul class='collapsible' data-collapsible='accordion'>
+                <li>
+                    <div class='collapsible-header active'>
+                        <div class='row-no-after'>
+                            <div class='col s5'>
+                                <i class='material-icons'>settings_input_svideo</i>
+                                <b>Bancal 24 Rolling Graph</b>
+                            </div>
                         </div>
                     </div>
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">B Current
-                            Distribution</b>
-                </div>
-            </div>
+                    <div class='collapsible-body'>
+                        <div class="card-content">
+                            <div class="card z-depth-0">
+                                <div class="card-content">
+                                    <div>
+                                        <canvas id="graph1"></canvas>
+                                    </div>
+
+                                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Carbon Monoxide</b>
+                                </div>
+                            </div>
+
+                            <div class="card z-depth-0">
+                                <div class="card-content">
+                                    <div>
+                                        <canvas id="graph2"></canvas>
+                                    </div>
+
+                                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Sulfur Dioxide</b>
+                                </div>
+                            </div>
+
+                            <div class="card z-depth-0">
+                                <div class="card-content">
+                                    <div>
+                                        <canvas id="graph3"></canvas>
+                                    </div>
+
+                                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Nitrogen Dioxide</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+            <ul class='collapsible' data-collapsible='accordion'>
+                <li>
+                    <div class='collapsible-header active'>
+                        <div class='row-no-after'>
+                            <div class='col s5'>
+                                <i class='material-icons'>settings_input_svideo</i>
+                                <b>SLEX 24 Rolling Graph</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='collapsible-body'>
+                        <div class="card-content">
+                            <div class="card z-depth-0">
+                                <div class="card-content">
+                                    <div>
+                                        <canvas id="graph4"></canvas>
+                                    </div>
+
+                                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Carbon Monoxide</b>
+                                </div>
+                            </div>
+
+                            <div class="card z-depth-0">
+                                <div class="card-content">
+                                    <div>
+                                        <canvas id="graph5"></canvas>
+                                    </div>
+
+                                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Sulfur Dioxide</b>
+                                </div>
+                            </div>
+
+                            <div class="card z-depth-0">
+                                <div class="card-content">
+                                    <div>
+                                        <canvas id="graph6"></canvas>
+                                    </div>
+
+                                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Nitrogen Dioxide</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
         </div>
     </div>
-    <div class="row row-no-after">
-        <div class="col s12 m9">
-            <div class="card z-depth-0" style="min-height: 231.55px">
-                <div class="card-content">
-                    <div style="width: 100%; height: 150px;">
-                        <canvas id="slex_barChart"></canvas>
-                    </div>
 
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">SLEX Rolling 24 hrs
-                            Distribution</b>
-                </div>
-            </div>
-        </div>
-
-        <div class="col s12 m3">
-            <div class="card z-depth-0">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="col s9">
-                            <canvas id="slex_doughnutChart"></canvas>
-                        </div>
-                        <div class="col s2">
-                            <div id="js-legend_2" class="chart-legend"></div>
-                        </div>
-                    </div>
-                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">S Current
-                            Distribution</b>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+<!--    <div class="row row-no-after">-->
+<!--        <div class="col s12 m9">-->
+<!--            <div class="card z-depth-0" style="min-height: 231.55px">-->
+<!--                <div class="card-content">-->
+<!--                    <div style="width: 100%; height: 150px;">-->
+<!--                        <canvas id="bancal_barChart"></canvas>-->
+<!--                    </div>-->
+<!---->
+<!--                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">Bancal Rolling 24 hrs-->
+<!--                            Distribution</b>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col s12 m3">-->
+<!--            <div class="card z-depth-0">-->
+<!--                <div class="card-content">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col s9">-->
+<!--                            <canvas id="bancal_doughnutChart"></canvas>-->
+<!--                        </div>-->
+<!--                        <div class="col s2">-->
+<!--                            <div id="js-legend_1" class="chart-legend"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">B Current-->
+<!--                            Distribution</b>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row row-no-after">-->
+<!--        <div class="col s12 m9">-->
+<!--            <div class="card z-depth-0" style="min-height: 231.55px">-->
+<!--                <div class="card-content">-->
+<!--                    <div style="width: 100%; height: 150px;">-->
+<!--                        <canvas id="slex_barChart"></canvas>-->
+<!--                    </div>-->
+<!---->
+<!--                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">SLEX Rolling 24 hrs-->
+<!--                            Distribution</b>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="col s12 m3">-->
+<!--            <div class="card z-depth-0">-->
+<!--                <div class="card-content">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col s9">-->
+<!--                            <canvas id="slex_doughnutChart"></canvas>-->
+<!--                        </div>-->
+<!--                        <div class="col s2">-->
+<!--                            <div id="js-legend_2" class="chart-legend"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <h6 class="teal-text center-align" style="margin-bottom: 0;"><b id="zoneName">S Current-->
+<!--                            Distribution</b>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="row row-no-after">
         <div class="col s12">

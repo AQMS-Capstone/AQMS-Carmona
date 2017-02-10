@@ -1,6 +1,3 @@
-
-
-
 function createGraph(data_pollutant, chartNames, rolling_time)
 {
     const CHART = document.getElementById(chartNames);
