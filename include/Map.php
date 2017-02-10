@@ -216,6 +216,8 @@ function AssignDataElements($area_name, $e_id, $ave, $date, $name, $symbol){
 }
 function EightHrAveraging($values, $guideline_values, $guideline_aqi_values, $prec)
 {
+  require 'include/guidelines.php';
+
   $container = array();
   $dates = GetRollingDates();
 
@@ -265,10 +267,11 @@ function EightHrAveraging($values, $guideline_values, $guideline_aqi_values, $pr
 
     if ($ctr >= (8 * 0.75) && $exists) { //* - REMOVE EXISTS IF UNNECESSARY
       $ave = $ave / $ctr;
-      $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
-      if ($aqi_value > 400) {
-        $aqi_value = -1;
+      if($ave > $co_max){
+        $aqi_value = -2;
+      }else{
+        $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
       }
 
       array_push($aqi_values, $aqi_value);
@@ -290,6 +293,8 @@ function EightHrAveraging($values, $guideline_values, $guideline_aqi_values, $pr
 }
 function TwentyFourHrAveraging($values, $guideline_values, $guideline_aqi_values, $prec)
 {
+  require 'include/guidelines.php';
+
   $container = array();
   $dates = GetRollingDates();
 
@@ -339,10 +344,11 @@ function TwentyFourHrAveraging($values, $guideline_values, $guideline_aqi_values
 
     if ($ctr >= (24 * 0.75) && $exists) { //* - REMOVE EXISTS IF UNNECESSARY
       $ave = $ave / $ctr;
-      $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
 
-      if ($aqi_value > 400) {
-        $aqi_value = -1;
+      if($ave > $so2_max){
+        $aqi_value = -2;
+      }else{
+        $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));
       }
 
       array_push($aqi_values, $aqi_value);
@@ -433,24 +439,35 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
 
   for($x = 0; $x < count($gv); $x++)
   {
+    $roundedValue = floorDec($ave, $precision = $prec);
+
+    if($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1])
+    {
+      $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+      break;
+    }
+
+    else if($x == count($gv) - 1)
+    {
+      $aqi = -1;
+    }
+  }
+
+  return $aqi;
+}
+function calculateAQI_calcu($gv, $ave, $prec, $aqi_val)
+{
+  $aqi = 0;
+
+  require 'include/guidelines.php';
+
+  for($x = 0; $x < count($gv); $x++)
+  {
     if($gv == $tsp_guideline_values)
     {
       if($ave >= 900)
       {
-        $roundedValue = floorDec($ave, $precision = $prec);
-
-        if($roundedValue >= $gv[$x][0])
-        {
-          //$aqi = round((($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0]);
-          $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
-          break;
-        }
-
-
-        else if($x == count($gv) - 1)
-        {
-          $aqi = -1;
-        }
+        $aqi = -4;
       }
 
       else
@@ -459,7 +476,6 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
 
         if($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1])
         {
-          //$aqi = round((($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0]);
           $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
           break;
         }
@@ -476,7 +492,6 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
     {
       if($gv == $ozone_guideline_values_8)
       {
-
         if($ave > 0.374)
         {
           $gv = $ozone_guideline_values_1;
@@ -491,9 +506,26 @@ function calculateAQI($gv, $ave, $prec, $aqi_val)
         break;
       }
 
-      else if($x == count($gv) - 1)
-      {
-        $aqi = -1;
+      else if($x == count($gv) - 1) {
+          if ($gv == $no2_guideline_values) {
+              if ($ave < $no2_min) {
+                  $aqi = -3;
+              }else if($ave > $no2_max){
+                  $aqi = -2;
+              }
+          }else if ($gv == $ozone_guideline_values_8){
+              if ($ave > 0.374){
+                  $aqi = -4;
+              }
+          }else if ($gv == $ozone_guideline_values_1){
+              if($ave < 0.125){
+                  $aqi = -5;
+              }else if($ave > $o3_max){
+                  $aqi = -2;
+              }
+          } else{
+              $aqi = -2;
+          }
       }
     }
   }

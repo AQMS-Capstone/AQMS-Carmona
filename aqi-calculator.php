@@ -74,7 +74,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
                             <label>Pollutant</label>
                         </div>
                         <div class="input-field col s10 l2">
-                            <input id="concentration" type="number" name="concentration" class="validate"
+                            <input id="concentration" type="number" name="concentration" class="validate" required
                                    value="<?php if ($concentration != null) {
                                        echo $concentration;
                                    } ?>">

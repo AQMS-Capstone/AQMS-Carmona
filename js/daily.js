@@ -175,7 +175,7 @@ function GetAreaStatus2(area_data)
                         }
                     }
 
-                    if(!checkLower(area_data.no2_aqi_values)){
+                    if(checkLower(area_data.no2_aqi_values)){
                         document.getElementById(elementMin).innerHTML = "Min: 201-";
                     }else{
                         if(minValue == -1){
@@ -191,7 +191,7 @@ function GetAreaStatus2(area_data)
 }
 
 function checkLower(array_container){
-    var returnBool = false
+    var returnBool = false;
 
     for (var i = 0; i < array_container.length; i++){
         if(array_container[i] >= 0 && array_container[i] < 201){

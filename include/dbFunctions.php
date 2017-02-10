@@ -190,40 +190,60 @@ class AQICalculator{
     {
         require 'include/guidelines.php';
 
-        $aqi = 0;
-
         $concentration = $_POST["concentration"];
         $element = $_POST["element"];
 
+        $concentration = abs($concentration);
+
+        $aqi = 0;
+
         if ($element == "CO") {
-            $aqi = round(calculateAQI($co_guideline_values, $concentration, $co_precision, $guideline_aqi_values));
+            $aqi = round(calculateAQI_calcu($co_guideline_values, $concentration, $co_precision, $guideline_aqi_values));
         }
         if ($element == "SO2") {
-            $aqi = round(calculateAQI($sufur_guideline_values, $concentration, $sulfur_precision, $guideline_aqi_values));
+            $aqi = round(calculateAQI_calcu($sufur_guideline_values, $concentration, $sulfur_precision, $guideline_aqi_values));
         }
         if ($element == "NO2") {
-            $aqi = round(calculateAQI($no2_guideline_values, $concentration, $no2_precision, $guideline_aqi_values));
+            $aqi = round(calculateAQI_calcu($no2_guideline_values, $concentration, $no2_precision, $guideline_aqi_values));
         }
         if ($element == "O3_8") {
-            $aqi = round(calculateAQI($ozone_guideline_values_8, $concentration, $o3_precision, $guideline_aqi_values));
+            $aqi = round(calculateAQI_calcu($ozone_guideline_values_8, $concentration, $o3_precision, $guideline_aqi_values));
         }
         if ($element == "O3_1") {
-            $aqi = round(calculateAQI($ozone_guideline_values_1, $concentration, $o3_precision, $guideline_aqi_values));
+            $aqi = round(calculateAQI_calcu($ozone_guideline_values_1, $concentration, $o3_precision, $guideline_aqi_values));
         }
         if ($element == "PM 10") {
-            $aqi = round(calculateAQI($pm_10_guideline_values, $concentration, $pm10_precision, $guideline_aqi_values));
+            $aqi = round(calculateAQI_calcu($pm_10_guideline_values, $concentration, $pm10_precision, $guideline_aqi_values));
         }
         if ($element == "TSP") {
-            $aqi = round(calculateAQI($tsp_guideline_values, $concentration, $tsp_precision, $guideline_aqi_values));
+            $aqi = calculateAQI_calcu($tsp_guideline_values, $concentration, $tsp_precision, $guideline_aqi_values);
+
+            if($aqi != -4){
+                $aqi = round($aqi);
+            }
+        }
+
+        $aqi_2 = $aqi;
+
+        if($aqi == -4){
+            $aqi_2 = "300+";
+        }else if($aqi == -2){
+            $aqi_2 = "400+";
+        }else if($aqi == -3){
+            $aqi_2 = "201-";
+        }else if($aqi == -5){
+            $aqi_2 = "101-";
         }
 
         echo "
           <script type='text/javascript'>
-          
+            
              var AQI = \"$aqi\";
              var pollutant = \"$element\";
            
              GetAQIDetails(AQI,pollutant);
+             
+             AQI = \"$aqi_2\";
              
              $(\"#aqiNum\").text(AQI);
              
