@@ -185,7 +185,7 @@ function GetElementInfoCV(){
         }
         if ($('#element').val() == "SO2") {
             $("#concentration").attr({
-                "min": 101,
+                "min": 0,
                 "max": 400,
             });
 

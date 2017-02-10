@@ -287,7 +287,7 @@ class AQICalculator{
             $concentration_value = calculateConcentrationValue($tsp_guideline_values, $concentration, $tsp_precision, $guideline_aqi_values);
         }
 
-        if($concentration_value == -6){
+        if($concentration_value == -6 || $concentration_value == -1){
             $concentration = -6;
             $concentration_value = "N/A";
         }
