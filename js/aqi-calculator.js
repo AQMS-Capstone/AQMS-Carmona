@@ -149,66 +149,67 @@ function GetElementInfoAQI(){
 }
 
 function GetElementInfoCV(){
-    $('select[id=element]').change(function () {
+    if($('#element').val() == "CO" || $('#element').val() == "SO2" || $('#element').val() == "NO2" || $('#element').val() == "O3_8" || $('#element').val() == "O3_1" ) {
 
-        if ($('#element').val() == "O3_8") {
-            $("#concentration").attr({
-                "min": 0,
-                "max": 300
-            });
+            if ($('#element').val() == "O3_8") {
+                $("#concentration").attr({
+                    "min": 0,
+                    "max": 300
+                });
 
-            $('#unit').text("AQI");
-        }
-        if ($('#element').val() == "O3_1") {
-            $("#concentration").attr({
-                "min": 101,
-                "max": 400,
-            });
+                $('#unit').text("AQI");
+            }
+            if ($('#element').val() == "O3_1") {
+                $("#concentration").attr({
+                    "min": 101,
+                    "max": 400,
+                });
 
-            $('#unit').text("AQI");
-        }
-        if ($('#element').val() == "PM 10") {
-            $("#concentration").attr({
-                "min": 0,
-                "max": 400,
-            });
+                $('#unit').text("AQI");
+            }
+            if ($('#element').val() == "PM 10") {
+                $("#concentration").attr({
+                    "min": 0,
+                    "max": 400,
+                });
 
-            $('#unit').text("AQI");
-        }
-        if ($('#element').val() == "CO") {
-            $("#concentration").attr({
-                "min": 0,
-                "max": 400,
-            });
+                $('#unit').text("AQI");
+            }
+            if ($('#element').val() == "CO") {
+                $("#concentration").attr({
+                    "min": 0,
+                    "max": 400,
+                });
 
-            $('#unit').text("AQI");
-        }
-        if ($('#element').val() == "SO2") {
-            $("#concentration").attr({
-                "min": 0,
-                "max": 400,
-            });
+                $('#unit').text("AQI");
+            }
+            if ($('#element').val() == "SO2") {
+                $("#concentration").attr({
+                    "min": 0,
+                    "max": 400,
+                });
 
-            $('#unit').text("AQI");
-        }
-        if ($('#element').val() == "NO2") {
-            $("#concentration").attr({
-                "min": 201,
-                "max": 400,
-            });
+                $('#unit').text("AQI");
+            }
+            if ($('#element').val() == "NO2") {
+                $("#concentration").attr({
+                    "min": 201,
+                    "max": 400,
+                });
 
-            $('#unit').text("AQI");
-        }
-        if ($('#element').val() == "TSP") // CHECK
-        {
-            $("#concentration").attr({
-                "min": 0,
-                "max": 301,
-            });
+                $('#unit').text("AQI");
+            }
+            if ($('#element').val() == "TSP") // CHECK
+            {
+                $("#concentration").attr({
+                    "min": 0,
+                    "max": 301,
+                });
 
-            $('#unit').text("AQI");
-        }
-    });
+                $('#unit').text("AQI");
+            }
+
+    }
 }
 
 function GetAQIDetails(AQI,element){
