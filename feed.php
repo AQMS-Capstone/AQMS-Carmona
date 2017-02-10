@@ -33,8 +33,8 @@ include('include/Map.php');
         <li><a href="index.php" id="home-tab"><span class="material-icons">home</span> Home</a></li>
         <li><a href="maintenance.php" id="home-tab"><span class="material-icons">build</span> Maintenance</a></li>
         <div class="divider"></div>
-        <li><a><span class="material-icons">settings_input_svideo</span> Highest AQI: <span class="red-text">400</span></a></li>
-        <li><a><span class="material-icons">settings_input_svideo</span> Lowest AQI: <span class="blue-text">00</span></a></li>
+<!--        <li><a><span class="material-icons">settings_input_svideo</span> Highest AQI: <span class="red-text">400</span></a></li>-->
+<!--        <li><a><span class="material-icons">settings_input_svideo</span> Lowest AQI: <span class="blue-text">00</span></a></li>-->
         <li><a><span class="material-icons">select_all</span> SLEX Sensor: <span class="green-text">Online</span></a></li>
         <li><a><span class="material-icons">select_all</span> Bancal Sensor: <span class="green-text">Online</span></a></li>
         <li><a><span class="material-icons">access_time</span> Server Time: <span class="black-text" id="serverTime">00:00</span></a></li>
