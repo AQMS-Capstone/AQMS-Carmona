@@ -48,7 +48,6 @@ function InitCVCalculator(){
 
         GetElementInfoCV();
     });
-
 }
 
 function GetElementInfoAQI(){
@@ -251,6 +250,9 @@ function GetAQIDetails(AQI,element){
     }else if (AQI == -5) {
         AQIAirQuality = goodAir;
         AQIStatus = "Good";
+    }else if (AQI == -6) {
+        AQIAirQuality = otherAir;
+        AQIStatus = "Invalid";
     }else{
         AQIAirQuality = otherAir;
         AQIStatus = "No Current Data";

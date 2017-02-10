@@ -246,7 +246,6 @@ class AQICalculator{
              AQI = \"$aqi_2\";
              
              $(\"#aqiNum\").text(AQI);
-             
              $(\"#AQIStat\").css(\"background-color\", AQIAirQuality);
              $(\"#aqiText\").text(AQIStatus);
              $(\"#result\").show();
@@ -261,6 +260,8 @@ class AQICalculator{
 
         $concentration = $_POST["concentration"];
         $element = $_POST["element"];
+
+        $concentration = abs($concentration);
 
         $concentration_value = 0;
 
@@ -286,6 +287,11 @@ class AQICalculator{
             $concentration_value = calculateConcentrationValue($tsp_guideline_values, $concentration, $tsp_precision, $guideline_aqi_values);
         }
 
+        if($concentration_value == -6){
+            $concentration = -6;
+            $concentration_value = "N/A";
+        }
+
         echo "
           <script type='text/javascript'>
           
@@ -294,7 +300,9 @@ class AQICalculator{
            
              GetAQIDetails(AQI,pollutant);
              
-             $('#aqiNum').text($concentration_value);
+             AQI = \"$concentration_value\";
+             
+             $('#aqiNum').text(AQI);
              $(\"#AQIStat\").css(\"background-color\", AQIAirQuality);
              $(\"#aqiText\").text(AQIStatus);
              $(\"#result\").show();

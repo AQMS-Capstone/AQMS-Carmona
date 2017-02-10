@@ -545,11 +545,11 @@ function calculateConcentrationValue($gv, $aqi_value, $prec, $aqi_val)
 
     else
     {
-      $index = -1;
+      $index = -6;
     }
   }
 
-  if($index == -1)
+  if($index == -6)
   {
     return $index;
   }

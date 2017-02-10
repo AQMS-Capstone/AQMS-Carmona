@@ -194,7 +194,7 @@ function checkLower(array_container){
     var returnBool = false;
 
     for (var i = 0; i < array_container.length; i++){
-        if(array_container[i] >= 0 && array_container[i] < 201){
+        if(array_container[i] == "-3"){
             returnBool = true;
             break;
         }
