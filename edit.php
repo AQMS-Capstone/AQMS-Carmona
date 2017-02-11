@@ -108,47 +108,53 @@
 
                     $step = 0;
                     $min = 0;
-                    $max = 0;
+                    //$max = 0;
                     $unit = "";
 
                     if ($row['e_symbol'] == "CO") {
                         $step = $co_step;
-                        $min = $co_min;
-                        $max = $co_max;
+                        //$min = $co_min;
+                        //$max = $co_max;
                         $unit = $co_unit;
                     } else if ($row['e_symbol'] == "SO2") {
-                        if($unit_used == "old") {
-                            $step = $sulfur_step;
-                            $min = $sulfur_min;
-                            $max = $sulfur_max;
-                            $unit = $sulfur_unit;
-                        }else{
-                            $min = $sulfur_min;
-                            $max = $sulfur_max;
-                            $unit = $sulfur_unit;
-                        }
+                        $step = $sulfur_step;
+                        $unit = $sulfur_unit;
+
+//                        if($unit_used == "old") {
+//                            $step = $sulfur_step;
+//                            $min = $sulfur_min;
+//                            $max = $sulfur_max;
+//                            $unit = $sulfur_unit;
+//                        }else{
+//                            $min = $sulfur_min;
+//                            $max = $sulfur_max;
+//                            $unit = $sulfur_unit;
+//                        }
                     } else if ($row['e_symbol'] == "NO2") {
-                        if($unit_used == "old") {
-                            $step = $no2_step;
-                            $min = $no2_min;
-                            $max = $no2_max;
-                            $unit = $no2_unit;
-                        }else{
-                            $min = $no2_min;
-                            $max = $no2_max;
-                            $unit = $no2_unit;
-                        }
+                        $step = $no2_step;
+                        $unit = $no2_unit;
+
+//                        if($unit_used == "old") {
+//                            $step = $no2_step;
+//                            $min = $no2_min;
+//                            $max = $no2_max;
+//                            $unit = $no2_unit;
+//                        }else{
+//                            $min = $no2_min;
+//                            $max = $no2_max;
+//                            $unit = $no2_unit;
+//                        }
                     } else if ($row['e_symbol'] == "O3") {
                         $step = $o3_step;
-                        $min = $o3_min;
-                        $max = $o3_max;
+                        //$min = $o3_min;
+                        //$max = $o3_max;
                         $unit = $o3_unit;
                     } else if ($row['e_symbol'] == "PM 10") {
-                        $min = $pm10_min;
-                        $max = $pm10_max;
+                        //$min = $pm10_min;
+                        //$max = $pm10_max;
                         $unit = $pm10_unit;
                     } else if ($row['e_symbol'] == "TSP") {
-                        $min = $tsp_min;
+                        //$min = $tsp_min;
                         $unit = $tsp_unit;
                     }
 
@@ -228,7 +234,7 @@
                                 <div class=\"row\" style=\"margin-bottom: 0px;\">
                                     <div class='input-field col s10'>
                                         <input id='$identifier_input' name='so2_value' type='number' class='validate'
-                                               min='$min' max='$max'>
+                                               min='$min'>
                                         <label>Enter new concentration value</label>
                                     </div>
                                     <div class='input-field col s2'>
@@ -237,40 +243,53 @@
                                 </div>
                             ";
                     } else if ($row['e_symbol'] == "SO2" || $row['e_symbol'] == "NO2") {
-                        if($unit_used == "old"){
-                            echo "
-                                <div class=\"row\" style=\"margin-bottom: 0px;\">
-                                    <div class='input-field col s10'>
-                                        <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
-                                               min='$min' max='$max'>
-                                        <label>Enter new concentration value</label>
-                                    </div>
-                                    <div class='input-field col s2'>
-                                        <label id='unit'>$unit</label>
-                                    </div>
+                        echo "
+                            <div class=\"row\" style=\"margin-bottom: 0px;\">
+                                <div class='input-field col s10'>
+                                    <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
+                                           min='$min'>
+                                    <label>Enter new concentration value</label>
                                 </div>
-                            ";
-                        }else{
-                            echo "
-                                <div class=\"row\" style=\"margin-bottom: 0px;\">
-                                    <div class='input-field col s10'>
-                                        <input id='$identifier_input' name='so2_value' type='number' class='validate'
-                                               min='$min' max='$max'>
-                                        <label>Enter new concentration value</label>
-                                    </div>
-                                    <div class='input-field col s2'>
-                                        <label id='unit'>$unit</label>
-                                    </div>
+                                <div class='input-field col s2'>
+                                    <label id='unit'>$unit</label>
                                 </div>
-                            ";
-                        }
+                            </div>
+                        ";
+
+//                        if($unit_used == "old"){
+//                            echo "
+//                                <div class=\"row\" style=\"margin-bottom: 0px;\">
+//                                    <div class='input-field col s10'>
+//                                        <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
+//                                               min='$min' max='$max'>
+//                                        <label>Enter new concentration value</label>
+//                                    </div>
+//                                    <div class='input-field col s2'>
+//                                        <label id='unit'>$unit</label>
+//                                    </div>
+//                                </div>
+//                            ";
+//                        }else{
+//                            echo "
+//                                <div class=\"row\" style=\"margin-bottom: 0px;\">
+//                                    <div class='input-field col s10'>
+//                                        <input id='$identifier_input' name='so2_value' type='number' class='validate'
+//                                               min='$min' max='$max'>
+//                                        <label>Enter new concentration value</label>
+//                                    </div>
+//                                    <div class='input-field col s2'>
+//                                        <label id='unit'>$unit</label>
+//                                    </div>
+//                                </div>
+//                            ";
+//                        }
 
                     }else {
                         echo "
                                 <div class=\"row\" style=\"margin-bottom: 0px;\">
                                     <div class='input-field col s10'>
                                         <input id='$identifier_input' name='so2_value' type='number' class='validate' step='$step'
-                                               min='$min' max='$max'>
+                                               min='$min'>
                                         <label>Enter new concentration value</label>
                                     </div>
                                     <div class='input-field col s2'>
@@ -312,36 +331,37 @@
     function myFunction(timestamp, symbol, iden2, area, e_id) {
         var concentration_value = iden2.value;
 
-        if (symbol == 'CO') {
-            //var step = 0.1;
-            var min = <?php echo $co_min; ?>;
-            var max = <?php echo $co_max; ?>;
-            //var unit = 'ppm';
-        } else if (symbol == 'SO2') {
-            //var step = 0.001;
-            var min = <?php echo $sulfur_min; ?>;
-            var max = <?php echo $sulfur_max; ?>;
-            //var unit = 'ppm';
-        } else if (symbol == 'NO2') {
-            //var step = 0.01;
-            var min = <?php echo $no2_min; ?>;
-            var max = <?php echo $no2_max; ?>;
-            //var unit = 'ppm';
-        } else if (symbol == 'O3') {
-            //var step = 0.001;
-            var min = <?php echo $o3_min; ?>;
-            var max = <?php echo $o3_max; ?>;
-            //var unit = 'ppm';
-        } else if (symbol == 'PM 10') {
-            //var step = 1;
-            var min = <?php echo $pm10_min; ?>;
-            var max = <?php echo $pm10_max; ?>;
-            //var unit = 'ug/m3';
-        } else if (symbol == 'TSP') {
-            //var step = 1;
-            var min = <?php echo $tsp_min; ?>;
-            //var unit = 'ug/m3';
-        }
+        var min = 0;
+//        if (symbol == 'CO') {
+//            //var step = 0.1;
+//            var min = <?php //echo $co_min; ?>//;
+//            //var max = <?php //echo $co_max; ?>//;
+//            //var unit = 'ppm';
+//        } else if (symbol == 'SO2') {
+//            //var step = 0.001;
+//            var min = <?php //echo $sulfur_min; ?>//;
+//            //var max = <?php //echo $sulfur_max; ?>//;
+//            //var unit = 'ppm';
+//        } else if (symbol == 'NO2') {
+//            //var step = 0.01;
+//            var min = <?php //echo $no2_min; ?>//;
+//            //var max = <?php //echo $no2_max; ?>//;
+//            //var unit = 'ppm';
+//        } else if (symbol == 'O3') {
+//            //var step = 0.001;
+//            var min = <?php //echo $o3_min; ?>//;
+//            //var max = <?php //echo $o3_max; ?>//;
+//            //var unit = 'ppm';
+//        } else if (symbol == 'PM 10') {
+//            //var step = 1;
+//            var min = <?php //echo $pm10_min; ?>//;
+//            //var max = <?php //echo $pm10_max; ?>//;
+//            //var unit = 'ug/m3';
+//        } else if (symbol == 'TSP') {
+//            //var step = 1;
+//            var min = <?php //echo $tsp_min; ?>//;
+//            //var unit = 'ug/m3';
+//        }
 
         var proceed = false;
 
@@ -356,7 +376,11 @@
         }
 
         else {
-            if (concentration_value >= min && concentration_value <= max) {
+//            if (concentration_value >= min && concentration_value <= max) {
+//                proceed = true;
+//            }
+
+            if (concentration_value >= min) {
                 proceed = true;
             }
 

@@ -149,7 +149,7 @@ function GetElementInfoAQI(){
 }
 
 function GetElementInfoCV(){
-    if($('#element').val() == "CO" || $('#element').val() == "SO2" || $('#element').val() == "NO2" || $('#element').val() == "O3_8" || $('#element').val() == "O3_1" ) {
+    if($('#element').val() == "CO" || $('#element').val() == "SO2" || $('#element').val() == "NO2" || $('#element').val() == "O3_8" || $('#element').val() == "O3_1" || $('#element').val() == "PM 10" || $('#element').val() == "TSP") {
 
             if ($('#element').val() == "O3_8") {
                 $("#concentration").attr({

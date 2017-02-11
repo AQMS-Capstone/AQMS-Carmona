@@ -30,7 +30,13 @@ function displayCautionary($AQIStatus, $element, $control){
 }
 
 function determineLastHourAQI($area){
-    return max($area->co_aqi_values[22], $area->no2_aqi_values[22], $area->so2_aqi_values[22]);
+    $value = max($area->co_aqi_values[22], $area->no2_aqi_values[22], $area->so2_aqi_values[22]);
+
+    if($area->co_aqi_values[22] == -3 || $area->co_aqi_values[22] == -2 || $area->no2_aqi_values[22] == -3 || $area->no2_aqi_values[22] == -2 || $area->so2_aqi_values[22] == -3 || $area->so2_aqi_values[22] == -2){
+        $value = min($area->co_aqi_values[22], $area->no2_aqi_values[22], $area->so2_aqi_values[22]);
+    }
+
+    return $value;
 }
 
 //function displayAQILevelChangeMonitoring($date, $area){
