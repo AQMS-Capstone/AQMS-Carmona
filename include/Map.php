@@ -60,23 +60,25 @@ function DbConnect($area)
   $date_now = date("Y-m-d H") . ":00:00";
   $date_beginning = date("Y-m-d H", time() - (86400 * 2) + (3600 * 1)) . ":01:00";
 
-  $sql = $con->prepare("SELECT * FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id 
+  $sql = $con->prepare("SELECT AREA_NAME, MASTER.E_ID, CONCENTRATION_VALUE, TIMESTAMP, ELEMENTS.E_NAME, E_SYMBOL FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id 
           WHERE TIMESTAMP <= ?  AND TIMESTAMP >= ? AND AREA_NAME = ? 
           ORDER BY TIMESTAMP");
   $sql->bind_param("sss", $date_now, $date_beginning, $area);
 
   $sql->execute();
-  $result = $sql->get_result();
+  $sql->store_result();
+  $num_of_rows = $sql->num_rows;
+  $sql->bind_result($area_name, $e_id, $concentration_value, $timestamp, $e_name, $e_symbol);
 
-  while ($row = $result->fetch_assoc()) {
+  while ($sql->fetch()) {
     $dataClass = new Master();
 
-    $dataClass->area_name = $row['area_name'];
-    $dataClass->e_id = $row['e_id'];
-    $dataClass->concentration_value = $row['concentration_value'];
-    $dataClass->timestamp = $row['timestamp'];
-    $dataClass->e_name = $row['e_name'];
-    $dataClass->e_symbol = $row['e_symbol'];
+    $dataClass->area_name = $area_name;
+    $dataClass->e_id = $e_id;
+    $dataClass->concentration_value = $concentration_value;
+    $dataClass->timestamp = $timestamp;
+    $dataClass->e_name = $e_name;
+    $dataClass->e_symbol = $e_symbol;
 
     if($dataClass->area_name == "bancal") {
       if ($dataClass->e_symbol == "CO") {
