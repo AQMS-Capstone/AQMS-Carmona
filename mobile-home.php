@@ -143,7 +143,6 @@ if (isset($_GET["area"])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 <script src="js/graph.js"></script>
 <script src="js/mobile.js"></script>
-<script src="js/caqms-api.js"></script>
 <script src="js/aqi-calculator.js"></script>
 </body>
 </html>
