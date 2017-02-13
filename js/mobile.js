@@ -122,6 +122,104 @@ function GetAreaStatus2(area_data)
     $("#AQIStat").css("color", AQIAirQuality);
     $("#aqiText").text(AQIStatus);
 
+    for (var i = 0; i < area_data.aqi_values.length; i++) {
+        var found = false;
+
+        switch (i) {
+            case 0:
+                found = true;
+                break;
+
+            case 1:
+                found = true;
+                break;
+
+            case 2:
+                found = true;
+                break;
+        }
+
+        if (found) {
+
+            var elementName = "e_symbol_" + (i + 1);
+            var conentrationName = "concentration_value_" + (i + 1);
+            var elementMin = "aqi_min_" + (i + 1);
+            var elementMax = "aqi_max_" + (i + 1);
+
+            document.getElementById(elementName).innerHTML = pollutant_symbols[i];
+
+            if (area_data.aqi_values[i] == -1) {
+                document.getElementById(conentrationName).innerHTML = "Current: -";
+            } else if (area_data.aqi_values[i] == -2) {
+                document.getElementById(conentrationName).innerHTML = "Current: 400+";
+            } else if (area_data.aqi_values[i] == -3) {
+                document.getElementById(conentrationName).innerHTML = "Current: 201-";
+            } else {
+                document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
+            }
+
+            var minValue = area_data.min_max_values[i][0];
+            var maxValue =  area_data.min_max_values[i][1];
+
+            if(i == 0){
+                if(checkArray(area_data.co_aqi_values, -2)){
+                    document.getElementById(elementMax).innerHTML = "Max: 400+";
+                }else{
+
+                    if(maxValue == -1){
+                        document.getElementById(elementMax).innerHTML = "Max: -";
+                    }else{
+                        document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                    }
+                }
+
+                if(minValue == -1){
+                    document.getElementById(elementMin).innerHTML = "Min: -";
+                }else{
+                    document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                }
+            }else if(i == 1){
+                if(checkArray(area_data.so2_aqi_values, -2)){
+                    document.getElementById(elementMax).innerHTML = "Max: 400+";
+                }else{
+
+                    if(maxValue == -1){
+                        document.getElementById(elementMax).innerHTML = "Max: -";
+                    }else{
+                        document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                    }
+                }
+
+                if(minValue == -1){
+                    document.getElementById(elementMin).innerHTML = "Min: -";
+                }else{
+                    document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                }
+            }else if(i == 2){
+                if(checkArray(area_data.no2_aqi_values, -2)){
+                    document.getElementById(elementMax).innerHTML = "Max: 400+";
+                }else{
+
+                    if(maxValue == -1){
+                        document.getElementById(elementMax).innerHTML = "Max: -";
+                    }else{
+                        document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                    }
+                }
+
+                if(checkLower(area_data.no2_aqi_values)){
+                    document.getElementById(elementMin).innerHTML = "Min: 201-";
+                }else{
+                    if(minValue == -1){
+                        document.getElementById(elementMin).innerHTML = "Min: -";
+                    }else{
+                        document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                    }
+                }
+            }
+        }
+    }
+
     //if (area_data.AllDayValues_array.length != 0) {
     // for (var i = 0; i < area_data.aqi_values.length; i++) {
     //     var maxValue = 0;
@@ -193,4 +291,30 @@ function GetAreaStatus2(area_data)
     //     }
     // }
     //}
+}
+
+function checkLower(array_container){
+    var returnBool = false;
+
+    for (var i = 0; i < array_container.length; i++){
+        if(array_container[i] == "-3"){
+            returnBool = true;
+            break;
+        }
+    }
+
+    return returnBool;
+}
+
+function checkArray(array_container, search){
+    var returnBool = false;
+
+    for(var i = 0; i < array_container.length; i++)
+    {
+        if(array_container[i] == search){
+            returnBool = true;
+            break;
+        }
+    }
+    return returnBool;
 }
