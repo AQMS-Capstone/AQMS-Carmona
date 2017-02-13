@@ -148,7 +148,7 @@ function fetchFeed($result){
                 echo "<div class='col s12'>";
                 echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
                 echo "<div class = 'card-content'>";
-                echo "<p style='color:gray'>".date("F d, Y - h:i a", strtotime($row['timestamp']))."</p>";
+                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
                 echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
                 echo $row['e_symbol'] . " sensor has entered a concentration value of <b>" . $row['concentration_value'] . "</b><br/>";
                 echo "</div>";
