@@ -99,6 +99,18 @@ function GetAreaStatus2(area_data)
         $("#timeUpdated").text("-");
     }
 
+    else if(area_data.prevalent_value == -2) {
+        $("#prevalentPollutant").text("(" + pollutant_symbols[area_data.prevalentIndex] + ") " + pollutant_labels[area_data.prevalentIndex]);
+        $("#aqiNum").text("400+");
+        $("#timeUpdated").text(area_data.date_gathered);
+    }
+
+    else if(area_data.prevalent_value == -3) {
+        $("#prevalentPollutant").text("(" + pollutant_symbols[area_data.prevalentIndex] + ") " + pollutant_labels[area_data.prevalentIndex]);
+        $("#aqiNum").text("201-");
+        $("#timeUpdated").text(area_data.date_gathered);
+    }
+
     else {
         $("#prevalentPollutant").text("(" + pollutant_symbols[area_data.prevalentIndex] + ") " + pollutant_labels[area_data.prevalentIndex]);
         $("#aqiNum").text(area_data.prevalent_value);
@@ -108,78 +120,77 @@ function GetAreaStatus2(area_data)
     GetAQIDetails(area_data.prevalent_value, pollutant_symbols[area_data.prevalentIndex]);
 
     $("#AQIStat").css("color", AQIAirQuality);
-    $("#aqiText").css("color", AQIAirQuality);
     $("#aqiText").text(AQIStatus);
 
     //if (area_data.AllDayValues_array.length != 0) {
-    for (var i = 0; i < area_data.aqi_values.length; i++) {
-        var maxValue = 0;
-        var found = false;
-
-        switch (i) {
-            case 0:
-                maxValue = Math.max(parseInt(area_data.co_max));
-                found = true;
-                break;
-
-            case 1:
-                maxValue = Math.max(parseInt(area_data.so2_max));
-                found = true;
-                break;
-
-            case 2:
-                maxValue = Math.max(parseInt(area_data.no2_max));
-                found = true;
-                break;
-
-            case 3:
-                maxValue = Math.max(parseInt(area_data.o3_max));
-                break;
-
-            case 4:
-                maxValue = Math.max(parseInt(area_data.pm10_max));
-                break;
-
-            case 5:
-                maxValue = Math.max(parseInt(area_data.tsp_max));
-                break;
-        }
-
-        if (found) {
-
-            var elementName = "e_symbol_" + (i + 1);
-            var conentrationName = "concentration_value_" + (i + 1);
-            var elementMin = "aqi_min_" + (i + 1);
-            var elementMax = "aqi_max_" + (i + 1);
-
-            document.getElementById(elementName).innerHTML = pollutant_labels[i];
-
-            if (area_data.aqi_values[i] == -1) {
-                document.getElementById(conentrationName).innerHTML = "Current: -";
-            }
-
-            else {
-                document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
-            }
-
-            var minValue = area_data.min_max_values[i][0];
-
-            if (minValue == -1) {
-                document.getElementById(elementMin).innerHTML = "Min: 0";
-            }
-
-            else {
-                document.getElementById(elementMin).innerHTML = "Min: " + minValue;
-            }
-
-            var maxValue =  area_data.min_max_values[i][1];
-
-            if(maxValue == -1){
-                document.getElementById(elementMax).innerHTML = "Max: 0";
-            }else{
-                document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
-            }
-        }
-    }
+    // for (var i = 0; i < area_data.aqi_values.length; i++) {
+    //     var maxValue = 0;
+    //     var found = false;
+    //
+    //     switch (i) {
+    //         case 0:
+    //             maxValue = Math.max(parseInt(area_data.co_max));
+    //             found = true;
+    //             break;
+    //
+    //         case 1:
+    //             maxValue = Math.max(parseInt(area_data.so2_max));
+    //             found = true;
+    //             break;
+    //
+    //         case 2:
+    //             maxValue = Math.max(parseInt(area_data.no2_max));
+    //             found = true;
+    //             break;
+    //
+    //         case 3:
+    //             maxValue = Math.max(parseInt(area_data.o3_max));
+    //             break;
+    //
+    //         case 4:
+    //             maxValue = Math.max(parseInt(area_data.pm10_max));
+    //             break;
+    //
+    //         case 5:
+    //             maxValue = Math.max(parseInt(area_data.tsp_max));
+    //             break;
+    //     }
+    //
+    //     if (found) {
+    //
+    //         var elementName = "e_symbol_" + (i + 1);
+    //         var conentrationName = "concentration_value_" + (i + 1);
+    //         var elementMin = "aqi_min_" + (i + 1);
+    //         var elementMax = "aqi_max_" + (i + 1);
+    //
+    //         document.getElementById(elementName).innerHTML = pollutant_labels[i];
+    //
+    //         if (area_data.aqi_values[i] == -1) {
+    //             document.getElementById(conentrationName).innerHTML = "Current: -";
+    //         }
+    //
+    //         else {
+    //             document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
+    //         }
+    //
+    //         var minValue = area_data.min_max_values[i][0];
+    //
+    //         if (minValue == -1) {
+    //             document.getElementById(elementMin).innerHTML = "Min: 0";
+    //         }
+    //
+    //         else {
+    //             document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+    //         }
+    //
+    //         var maxValue =  area_data.min_max_values[i][1];
+    //
+    //         if(maxValue == -1){
+    //             document.getElementById(elementMax).innerHTML = "Max: 0";
+    //         }else{
+    //             document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+    //         }
+    //     }
+    // }
     //}
 }
