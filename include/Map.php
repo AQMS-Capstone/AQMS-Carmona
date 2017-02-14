@@ -347,7 +347,7 @@ function TwentyFourHrAveraging($values, $guideline_values, $guideline_aqi_values
     if ($ctr >= (24 * 0.75) && $exists) { //* - REMOVE EXISTS IF UNNECESSARY
       $ave = $ave / $ctr;
 
-      if($ave > $so2_max){
+      if($ave > $sulfur_max){
         $aqi_value = -2;
       }else{
         $aqi_value = round(calculateAQI($guideline_values, $ave, $prec, $guideline_aqi_values));

@@ -13,20 +13,22 @@ if(isset($_POST['timestamp']) && !empty($_POST['timestamp'])) {
     $area = $_POST['area'];
     $e_id = $_POST['e_id'];
 
-    $sql = "UPDATE MASTER SET concentration_value='$concentration_value' WHERE timestamp = '$timestamp' and area_name = '$area' and e_id = '$e_id'";
+    $sql = $con->prepare("UPDATE MASTER SET concentration_value=? WHERE timestamp = ? and area_name = ? and e_id = ?");
+    $sql->bind_param("ssss", $concentration_value, $timestamp, $area, $e_id);
 
-    if (!mysqli_query($con,$sql))
+    if (!$sql->execute())
     {
         die('Error: ' . mysqli_error($con));
-        $error_message = mysqli_error($con);
-
-        echo "mysqli_error($con)";
+        //$error_message = mysqli_error($con);
     }
 
     else
     {
         echo "Success";
     }
+
+    $sql->close();
+    $con->close();
 }
 
 else
