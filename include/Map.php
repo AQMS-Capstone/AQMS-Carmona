@@ -603,7 +603,7 @@ function MinMax($aqi_values)
 
   return $data_container;
 }
-function AQIValues($max_value, $pollutant_aqi_values)
+function AQIValues($pollutant_aqi_values)
 {
   $data_container = $pollutant_aqi_values[23];
 
@@ -732,18 +732,6 @@ function Generate($name)
       case 3: // NO2
         array_push($area_generate->no2_values, $area_generate->AllDayValues_array[$i]);
         break;
-
-      case 4: // O3
-        array_push($area_generate->o3_values, $area_generate->AllDayValues_array[$i]);
-        break;
-
-      case 5: // PM 10
-        array_push($area_generate->pm10_values, $area_generate->AllDayValues_array[$i]);
-        break;
-
-      case 6: // TSP
-        array_push($area_generate->tsp_values, $area_generate->AllDayValues_array[$i]);
-        break;
     }
   }
 
@@ -797,9 +785,9 @@ function Generate($name)
 
 // --------- SET DEFAULT VALUE IF NO DATA IN DB --------- //
 
-  array_push($area_generate->aqi_values, AQIValues($area_generate->co_max, $area_generate->co_aqi_values));
-  array_push($area_generate->aqi_values, AQIValues($area_generate->so2_max, $area_generate->so2_aqi_values));
-  array_push($area_generate->aqi_values, AQIValues($area_generate->no2_max, $area_generate->no2_aqi_values));
+  array_push($area_generate->aqi_values, AQIValues($area_generate->co_aqi_values));
+  array_push($area_generate->aqi_values, AQIValues($area_generate->so2_aqi_values));
+  array_push($area_generate->aqi_values, AQIValues($area_generate->no2_aqi_values));
 
 // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
 
