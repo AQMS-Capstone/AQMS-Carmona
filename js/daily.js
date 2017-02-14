@@ -166,8 +166,10 @@ function GetAreaStatus2(area_data)
                 }else if(i == 2){
                     if(checkArray(area_data.no2_aqi_values, -2)){
                         document.getElementById(elementMax).innerHTML = "Max: 400+";
-                    }else{
-
+                    }else if(checkArray(area_data.no2_aqi_values, -3)){
+                        document.getElementById(elementMax).innerHTML = "Max: 201-";
+                    }
+                    else{
                         if(maxValue == -1){
                             document.getElementById(elementMax).innerHTML = "Max: -";
                         }else{
