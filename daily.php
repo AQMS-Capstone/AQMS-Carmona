@@ -41,7 +41,6 @@ include('include/header.php');
                     </div>
                 </div>
             </div>
-           
             <div class="row row-no-after">
                 <div class="col s12">
                     <div class="card" style="height: 215px;">
@@ -58,21 +57,21 @@ include('include/header.php');
 
             </div>
             <?php
-                function getAreaStatus2($area_data)
-                {
-                    $untilValue = $area_data->aqi_values;
+            function getAreaStatus2($area_data)
+            {
+                $untilValue = $area_data->aqi_values;
 
-                    $ind = $area_data->prevalentIndex[0];
+                $ind = $area_data->prevalentIndex[0];
 
-                    $elementName = "e_symbol_" . ($ind + 1);
-                    $conentrationName = "concentration_value_" . ($ind + 1);
-                    $chartName = "chart_div_" . ($ind + 1);
-                    $elementNameMin = "aqi_min_" . ($ind + 1);
-                    $elementNameMax = "aqi_max_" . ($ind + 1);
+                $elementName = "e_symbol_" . ($ind + 1);
+                $conentrationName = "concentration_value_" . ($ind + 1);
+                $chartName = "chart_div_" . ($ind + 1);
+                $elementNameMin = "aqi_min_" . ($ind + 1);
+                $elementNameMax = "aqi_max_" . ($ind + 1);
 
-                    $value = $area_data->aqi_values[$ind];
+                $value = $area_data->aqi_values[$ind];
 
-                    echo "<div class='row'>
+                echo "<div class='row'>
                         <div class='col s12'>
                             <ul class='collapsible' data-collapsible='accordion'>
                                 <li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$ind'>
@@ -97,23 +96,23 @@ include('include/header.php');
                                     </div>
                                 </li>";
 
-                    //if (count($area_data->AllDayValues_array) != 0) {
-                        for ($x = 0; $x < count($untilValue); $x++) {
-                            $found = false;
+                //if (count($area_data->AllDayValues_array) != 0) {
+                for ($x = 0; $x < count($untilValue); $x++) {
+                    $found = false;
 
-                            if ($x != $ind) {
-                                switch ($x) {
-                                    case 0:
-                                        $found = true;
-                                        break;
+                    if ($x != $ind) {
+                        switch ($x) {
+                            case 0:
+                                $found = true;
+                                break;
 
-                                    case 1:
-                                        $found = true;
-                                        break;
+                            case 1:
+                                $found = true;
+                                break;
 
-                                    case 2:
-                                        $found = true;
-                                        break;
+                            case 2:
+                                $found = true;
+                                break;
 
 //                                case 3:
 //                                    $maxValue = $area_data->o3_max;
@@ -126,18 +125,18 @@ include('include/header.php');
 //                                case 5:
 //                                    $maxValue = $area_data->tsp_max;
 //                                    break;
-                                }
+                        }
 
-                                if ($found) {
-                                    $elementName = "e_symbol_" . ($x + 1);
-                                    $conentrationName = "concentration_value_" . ($x + 1);
-                                    $chartName = "chart_div_" . ($x + 1);
-                                    $elementNameMin = "aqi_min_" . ($x + 1);
-                                    $elementNameMax = "aqi_max_" . ($x + 1);
+                        if ($found) {
+                            $elementName = "e_symbol_" . ($x + 1);
+                            $conentrationName = "concentration_value_" . ($x + 1);
+                            $chartName = "chart_div_" . ($x + 1);
+                            $elementNameMin = "aqi_min_" . ($x + 1);
+                            $elementNameMax = "aqi_max_" . ($x + 1);
 
-                                    $value = $area_data->aqi_values[$x];
+                            $value = $area_data->aqi_values[$x];
 
-                                    echo "<li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$x'>
+                            echo "<li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$x'>
                                     <div class='collapsible-header'>
                                         <div class='row-no-after'>
                                             <div class='col s5'>
@@ -160,33 +159,33 @@ include('include/header.php');
                                     </div>
                                 </li>
                                 </li>";
-                                }
-                            }
                         }
-                    //}
+                    }
+                }
+                //}
 
-                    echo "
+                echo "
                             </ul>
                         </div>
                     </div>
                     ";
+            }
+
+            if(isset($_GET["area"]))
+            {
+                $data = $_GET["area"];
+                $untilValue = array();
+
+                if($data == "SLEX") {
+                    getAreaStatus2($slex);
                 }
 
-                if(isset($_GET["area"]))
-                {
-                    $data = $_GET["area"];
-                    $untilValue = array();
-
-                    if($data == "SLEX") {
-                        getAreaStatus2($slex);
-                    }
-
-                    else if($data == "Bancal") {
-                        getAreaStatus2($bancal);
-                    }
-                }else{
+                else if($data == "Bancal") {
                     getAreaStatus2($bancal);
                 }
+            }else{
+                getAreaStatus2($bancal);
+            }
             ?>
         </div>
 
