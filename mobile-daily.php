@@ -43,38 +43,6 @@ include('include/header.php');
             </div>
         </div>
     </div>
-<!--    <div class="row row-no-after">-->
-<!--        <div class="col s12">-->
-<!--            <div class="card">-->
-<!--                <div class="card-content">-->
-<!--                    <h5 class="teal-text" style="margin-top: 0;"><b>Current Distribution</b></h5>-->
-<!--                    <div class="divider"></div>-->
-<!--                    <br>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col s12">-->
-<!--                            <canvas id="doughnutChart"></canvas>-->
-<!--                        </div>-->
-<!---->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="row row-no-after">-->
-<!--        <div class="col s12">-->
-<!--            <div class="card" style="min-height: 400px;">-->
-<!--                <div class="card-content">-->
-<!--                    <h5 class="teal-text" style="margin-top: 0;"><b>Rolling 24 hrs Distribution</b></h5>-->
-<!--                    <div class="divider"></div>-->
-<!--                    <br>-->
-<!--                    <div style="width: 100%; height: 300px;">-->
-<!--                        <canvas id="barChart"></canvas>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--        </div>-->
-<!--    </div>-->
     <div class="row row-no-after">
         <div class="col s12">
             <div class="card">
@@ -110,11 +78,10 @@ include('include/header.php');
                                 <li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$ind'>
                                     <div class='collapsible-header active'>
                                         <div class='row-no-after'>
-                                            <div class='col s5'>
-                                                <i class='material-icons'>settings_input_svideo</i>
+                                            <div class='col s3'>
                                                 <b id = '$elementName'>Prevalent Element Name Here</b>
                                             </div>
-                                            <div class='col s7 right-align'>
+                                            <div class='col s9 right-align'>
                                                 <div style='font-weight: bold'>
                                                     <span class='teal-text' id = '$conentrationName'>Current: 00</span> | <span
                                                             class='blue-text' id = '$elementNameMin'>Min: 00</span> | <span class='red-text' id = '$elementNameMax'>Max: 00</span>
@@ -172,11 +139,10 @@ include('include/header.php');
                     echo "<li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$x'>
                                     <div class='collapsible-header'>
                                         <div class='row-no-after'>
-                                            <div class='col s5'>
-                                                <i class='material-icons'>settings_input_svideo</i>
+                                            <div class='col s3'>
                                                 <b id = '$elementName'></b>
                                             </div>
-                                            <div class='col s7 right-align'>
+                                            <div class='col s9 left-allign'>
                                                 <div style='font-weight: bold'>
                                                     <span class='teal-text' id = '$conentrationName'>Current: 00</span> | <span
                                                             class='blue-text' id = '$elementNameMin'>Min: 00</span> | <span class='red-text' id = '$elementNameMax'>Max: 00</span>
