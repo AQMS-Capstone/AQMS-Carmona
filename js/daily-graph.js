@@ -1,12 +1,12 @@
-if(area_chosen == "Bancal")
-{
-    drawTheGraph2(bancal_area, bancal_area.rolling_time);
-}
-
-else
-{
-    drawTheGraph2(slex_area, slex_area.rolling_time);
-}
+// if(area_chosen == "Bancal")
+// {
+//     drawTheGraph2(bancal_area, bancal_area.rolling_time);
+// }
+//
+// else
+// {
+//     drawTheGraph2(slex_area, slex_area.rolling_time);
+// }
 
 function checkData(data){
     if(data < 0){

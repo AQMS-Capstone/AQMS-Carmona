@@ -43,38 +43,38 @@ include('include/header.php');
             </div>
         </div>
     </div>
-    <div class="row row-no-after">
-        <div class="col s12">
-            <div class="card">
-                <div class="card-content">
-                    <h5 class="teal-text" style="margin-top: 0;"><b>Current Distribution</b></h5>
-                    <div class="divider"></div>
-                    <br>
-                    <div class="row">
-                        <div class="col s12">
-                            <canvas id="doughnutChart"></canvas>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-no-after">
-        <div class="col s12">
-            <div class="card" style="min-height: 400px;">
-                <div class="card-content">
-                    <h5 class="teal-text" style="margin-top: 0;"><b>Rolling 24 hrs Distribution</b></h5>
-                    <div class="divider"></div>
-                    <br>
-                    <div style="width: 100%; height: 300px;">
-                        <canvas id="barChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+<!--    <div class="row row-no-after">-->
+<!--        <div class="col s12">-->
+<!--            <div class="card">-->
+<!--                <div class="card-content">-->
+<!--                    <h5 class="teal-text" style="margin-top: 0;"><b>Current Distribution</b></h5>-->
+<!--                    <div class="divider"></div>-->
+<!--                    <br>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col s12">-->
+<!--                            <canvas id="doughnutChart"></canvas>-->
+<!--                        </div>-->
+<!---->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row row-no-after">-->
+<!--        <div class="col s12">-->
+<!--            <div class="card" style="min-height: 400px;">-->
+<!--                <div class="card-content">-->
+<!--                    <h5 class="teal-text" style="margin-top: 0;"><b>Rolling 24 hrs Distribution</b></h5>-->
+<!--                    <div class="divider"></div>-->
+<!--                    <br>-->
+<!--                    <div style="width: 100%; height: 300px;">-->
+<!--                        <canvas id="barChart"></canvas>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--        </div>-->
+<!--    </div>-->
     <div class="row row-no-after">
         <div class="col s12">
             <div class="card">
