@@ -29,7 +29,7 @@ include('include/header.php');
                             <p style="font-weight: bold; font-size: 1em;">AQI: <span id="aqiNum"></span ></p>
                         </div>
                         <div class="col s9">
-                            <p style="font-size: 1.5em"><b id="aqiText">NaN</b></p>
+                            <p style="font-size: 3em"><b id="aqiText">NaN</b></p>
                         </div>
                     </div>
                     <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
@@ -78,10 +78,10 @@ include('include/header.php');
                                 <li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$ind'>
                                     <div class='collapsible-header active'>
                                         <div class='row-no-after'>
-                                            <div class='col s3'>
+                                            <div class='col s2'>
                                                 <b id = '$elementName'>Prevalent Element Name Here</b>
                                             </div>
-                                            <div class='col s9 right-align'>
+                                            <div class='col s10 left-align'>
                                                 <div style='font-weight: bold'>
                                                     <span class='teal-text' id = '$conentrationName'>Current: 00</span> | <span
                                                             class='blue-text' id = '$elementNameMin'>Min: 00</span> | <span class='red-text' id = '$elementNameMax'>Max: 00</span>
@@ -140,10 +140,10 @@ include('include/header.php');
                     echo "<li data-click-accordion = '' data-prevValue = '$value' data-prevIndex = '$x'>
                                     <div class='collapsible-header'>
                                         <div class='row-no-after'>
-                                            <div class='col s3'>
+                                            <div class='col s2'>
                                                 <b id = '$elementName'></b>
                                             </div>
-                                            <div class='col s9 left-allign'>
+                                            <div class='col s10 left-allign'>
                                                 <div style='font-weight: bold'>
                                                     <span class='teal-text' id = '$conentrationName'>Current: 00</span> | <span
                                                             class='blue-text' id = '$elementNameMin'>Min: 00</span> | <span class='red-text' id = '$elementNameMax'>Max: 00</span>
@@ -192,7 +192,7 @@ include('include/header.php');
 <?php include('include/footer.php'); ?>
 <!--Additional Scripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
-<script src="js/mobile.js"></script>
+<script src="js/mobile-daily.js"></script>
 <script src="js/graph.js"></script>
 <script src="js/aqi-calculator.js"></script>
 </body>

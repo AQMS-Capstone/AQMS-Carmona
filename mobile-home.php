@@ -26,12 +26,12 @@ if (isset($_GET["area"])) {
                 </div>
                 <div class="card-content">
                     <div class="row">
-                        <div class="col s3 center">
+                        <div class="col s4 center">
                             <p><span class="material-icons" style="font-size: 4em;" id="AQIStat">cloud</span></p>
                             <p style="font-weight: bold; font-size: 1em;">AQI: <span id="aqiNum"></span ></p>
                         </div>
-                        <div class="col s9">
-                            <p style="font-size: 1.5em"><b id="aqiText">NaN</b></p>
+                        <div class="col s8">
+                            <p style="font-size: 4em"><b id="aqiText">NaN</b></p>
                         </div>
                     </div>
                     <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
@@ -57,7 +57,7 @@ if (isset($_GET["area"])) {
 
                         if($area_data->aqi_values[$index] != -1) {
                             $chartName = "chart_div_" . ($index + 1);
-                            echo "<div class='chart'><canvas id='$chartName'></canvas></div>";
+                            echo "<div class='chart materialboxed' style='background-color: white'><canvas id='$chartName'></canvas></div>";
                         }
                     }
 
