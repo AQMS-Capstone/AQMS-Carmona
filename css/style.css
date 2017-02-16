@@ -136,7 +136,7 @@ footer.page-footer .footer-copyright {
 
 
 #legends nav ul li {
-    margin: 0 5px 0 5px;
+    margin: 0 25px 0 5px;
 }
 .img-parallax{
 
@@ -148,7 +148,7 @@ footer.page-footer .footer-copyright {
     .centered-legend {
         float: right;
         position: relative;
-        left: -22%;
+        left: -19%;
     }
 
     .centered-nav {
@@ -176,7 +176,7 @@ footer.page-footer .footer-copyright {
     .centered-legend {
         float: right;
         position: relative;
-        left: 9%;
+        left: 18%;
     }
 
     .centered-nav {
