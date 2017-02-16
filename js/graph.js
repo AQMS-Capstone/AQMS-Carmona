@@ -78,7 +78,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     ticks: {
                         max: 480,
                         beginAtZero: true,
-                        fontSize: 11
+                        fontSize: 8
                     },
                     gridLines: {
                         display: false
@@ -89,7 +89,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     categoryPercentage: .98,
                     ticks: {
 
-                        fontSize: 11
+                        fontSize: 8
                     },
                     gridLines: {
                         display: false
