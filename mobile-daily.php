@@ -29,7 +29,7 @@ include('include/header.php');
                             <p style="font-weight: bold; font-size: 1em;">AQI: <span id="aqiNum"></span ></p>
                         </div>
                         <div class="col s9">
-                            <p style="font-size: 3em"><b id="aqiText">NaN</b></p>
+                            <p style="font-size: 1.5em"><b id="aqiText">NaN</b></p>
                         </div>
                     </div>
                     <p><b>Prevalent Air Pollutant: </b> <span id="prevalentPollutant">NaN</span></p>
