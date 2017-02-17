@@ -35,8 +35,8 @@ include('include/Map.php');
         <div class="divider"></div>
 <!--        <li><a><span class="material-icons">settings_input_svideo</span> Highest AQI: <span class="red-text">400</span></a></li>-->
 <!--        <li><a><span class="material-icons">settings_input_svideo</span> Lowest AQI: <span class="blue-text">00</span></a></li>-->
-        <li><a><span class="material-icons">select_all</span> SLEX Sensor: <span class="green-text">Online</span></a></li>
-        <li><a><span class="material-icons">select_all</span> Bancal Sensor: <span class="green-text">Online</span></a></li>
+        <li><a><span class="material-icons">select_all</span> Bancal Sensor: <span id="status1">Online</span></a></li>
+        <li><a><span class="material-icons">select_all</span> SLEX Sensor: <span id="status2">Online</span></a></li>
 
         <li><a><span class="material-icons">access_time</span> Server Time: <span class="black-text" id="serverTime">00:00</span></a></li>
     </ul>
