@@ -168,18 +168,15 @@ if (isset($_POST['btnSubmit'])) {
                         <div class='row'>
                             <div class='col s12'>
                                 <div class='input-field col s10'>
-                                    <input id='co_value' name='co_value' type='number' class='validate' step='$co_step'
-                                           min='$co_min'>
+                                    <input id='co_value' name='co_value' type='number' class='validate' step='$co_step' min='0' required>
                                     <label>Carbon Monoxide</label>
                                 </div>
                                 <div class='input-field col s2'>
                                     <label id='unit'>$co_unit</label>
-                                </div>";
-
-                                if($unit_used == "old"){
-                                echo "
+                                </div>
+                                
                                 <div class='input-field col s10'>
-                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$sulfur_step' min='$sulfur_min'>
+                                    <input id='so2_value' name='so2_value' type='number' class='validate' step='$sulfur_step' min='0' required>
                                     <label>Sulfur Dioxide</label>
                                 </div>
                                 <div class='input-field col s2'>
@@ -187,16 +184,12 @@ if (isset($_POST['btnSubmit'])) {
                                 </div>
                                 
                                 <div class='input-field col s10'>
-                                    <input id='no2_value' name='no2_value' type='number' class='validate' step='$no2_step'
-                                           min='0'>
+                                    <input id='no2_value' name='no2_value' type='number' class='validate' step='$no2_step' min='0' required>
                                     <label>Nitrogen Dioxide</label>
                                 </div>
                                 <div class='input-field col s2'>
                                     <label id='unit'>$no2_unit</label>
                                 </div>
-                                ";
-                                }
-                                echo"
                             </div>
                         </div>
                         
