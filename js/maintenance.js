@@ -31,7 +31,7 @@ function GetBasics() {
                 $('#status1').attr("class","green-text");
                 $('#message1').html("The municipality is receiving data from the BANCAL station. Click to disconnect from the BANCAL station.");
                 $('#aqiColor1').attr("style", "margin-bottom: 15px; background: green;");
-                $('#aqiText1').html("SENDING");
+                $('#aqiText1').html("RECEIVING");
                 $('#btn1').html("DISCONNECT");
             }else{
                 $('#status1').html("DISCONNECTED");
@@ -47,7 +47,7 @@ function GetBasics() {
                 $('#status2').attr("class","green-text");
                 $('#message2').html("The municipality is receiving data from the SLEX station. Click to disconnect from the SLEX station.");
                 $('#aqiColor2').attr("style", "margin-bottom: 15px; background: green;");
-                $('#aqiText2').html("SENDING");
+                $('#aqiText2').html("RECEIVING");
                 $('#btn2').html("DISCONNECT");
             }else{
                 $('#status2').html("DISCONNECTED");
@@ -68,7 +68,7 @@ function ChangeStat(cond){
     if(cond == "1"){
         var value = $("#aqiText1").text();
 
-        if(value == "SENDING"){
+        if(value == "RECEIVING"){
             $.ajax({
                 type: "GET",
                 url: 'change_status.php',
@@ -89,7 +89,7 @@ function ChangeStat(cond){
     }else if(cond == "2"){
         var value = $("#aqiText2").text();
 
-        if(value == "SENDING"){
+        if(value == "RECEIVING"){
             $.ajax({
                 type: "GET",
                 url: 'change_status.php',
