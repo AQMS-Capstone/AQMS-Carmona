@@ -31,12 +31,11 @@ if(isset($_REQUEST['phpValue'])){
 }
 if(isset($_REQUEST['phpValue2'])){
     $sortOption = json_decode($_REQUEST['phpValue2']);
+
     if($sortOption == "1"){
         $sortOption = "TIMESTAMP";
     }else if($sortOption == "2"){
-        $sortOption = "MASTER.E_ID";
-    }else if($sortOption == "3"){
-        $sortOption = "MASTER.CONCENTRATION_VALUE";
+        $sortOption = "2";
     }else{
         $sortOption = "TIMESTAMP";
     }
@@ -75,10 +74,16 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
     $sortOption =  filter_var($sortOption, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
     if($filterArea != "" && $filterPollutants == ""){
-        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ?
+
+        if($sortOption == "2"){
+            $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+              FROM MASTER WHERE AREA_NAME = ?
+              ORDER BY CO DESC, SO2 DESC, NO2 DESC LIMIT ?");
+        }else{
+            $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+              FROM MASTER WHERE AREA_NAME = ?
               ORDER BY $sortOption DESC LIMIT ?");
+        }
 
         $query->bind_param("ss", $filterArea, $limiter);
 
@@ -88,34 +93,79 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query->close();
     }
     else if($filterPollutants != "" && $filterArea == ""){
-        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE MASTER.E_ID = ?
-              ORDER BY $sortOption DESC LIMIT ?");
 
-        $query->bind_param("ss", $filterPollutants, $limiter);
+        if($sortOption == "2") {
+            if($filterPollutants == "1"){
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+                  FROM MASTER
+                  ORDER BY CO DESC LIMIT ?");
+            }else if($filterPollutants == "2"){
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+                  FROM MASTER
+                  ORDER BY SO2 DESC LIMIT ?");
+            }else if($filterPollutants == "3"){
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+                  FROM MASTER
+                  ORDER BY NO2 DESC LIMIT ?");
+            }else{
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+                  FROM MASTER
+                  ORDER BY CO DESC, SO2 DESC, NO2 DESC LIMIT ?");
+            }
+        }else{
+            $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+              FROM MASTER
+              ORDER BY $sortOption DESC LIMIT ?");
+        }
+
+        $query->bind_param("s", $limiter);
         $query->execute();
         $result = $query->get_result();
-        fetchFeed($result);
+        fetchFeed2($result, $filterPollutants);
         $query->close();
     }
     else if($filterPollutants != "" && $filterArea != ""){
-        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID WHERE AREA_NAME = ? AND MASTER.E_ID = ? 
-              ORDER BY $sortOption DESC LIMIT ?");
 
-        $query->bind_param("sss", $filterArea, $filterPollutants, $limiter);
+        if($sortOption == "2") {
+            if($filterPollutants == "1"){
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+                  FROM MASTER WHERE AREA_NAME = ? 
+                  ORDER BY CO DESC LIMIT ?");
+            }else if($filterPollutants == "2"){
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+                  FROM MASTER WHERE AREA_NAME = ? 
+                  ORDER BY SO2 DESC LIMIT ?");
+            }else if($filterPollutants == "3"){
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+                  FROM MASTER WHERE AREA_NAME = ? 
+                  ORDER BY NO2 DESC LIMIT ?");
+            }else{
+                $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+                  FROM MASTER WHERE AREA_NAME = ? 
+                  ORDER BY CO DESC, SO2 DESC, NO2 DESC LIMIT ?");
+            }
+        }else{
+            $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2
+              FROM MASTER WHERE AREA_NAME = ? 
+              ORDER BY $sortOption DESC LIMIT ?");
+        }
+
+        $query->bind_param("ss", $filterArea, $limiter);
         $query->execute();
         $result = $query->get_result();
-        fetchFeed($result);
+        fetchFeed2($result, $filterPollutants);
         $query->close();
     }
     else{
-        $query = $con->prepare("SELECT timestamp, area_name, ELEMENTS.e_name as e_name, 
-              ELEMENTS.e_symbol as e_symbol, concentration_value, MASTER.e_id as e_id 
-              FROM MASTER INNER JOIN ELEMENTS ON MASTER.E_ID = ELEMENTS.E_ID 
+        if($sortOption == "2") {
+            $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+              FROM MASTER
+              ORDER BY CO DESC, SO2 DESC, NO2 DESC LIMIT ?");
+        }else{
+            $query = $con->prepare("SELECT timestamp, area_name, CO, SO2, NO2 
+              FROM MASTER
               ORDER BY $sortOption DESC LIMIT ?");
+        }
 
         $query->bind_param("s", $limiter);
 
@@ -127,6 +177,46 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
 
     $con->close();
+}
+
+function fetchFeed2($result, $filterPollutants){
+
+    if ($result) {
+
+        if (mysqli_num_rows($result) == 0) {
+            echo "<div class='col s12'>";
+            echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+            echo "<div class = 'card-content'>";
+            echo "NO FEED";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+        } else {
+
+            while ($row = $result->fetch_assoc()) {
+
+                echo "<div class='col s12'>";
+                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+                echo "<div class = 'card-content'>";
+                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
+                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
+
+                if($filterPollutants == "1"){
+                    echo "CO" . " sensor has entered a concentration value of <b>" . $row['CO'] . "</b><br/>";
+                }else if($filterPollutants == "2"){
+                    echo "SO2" . " sensor has entered a concentration value of <b>" . $row['SO2'] . "</b><br/>";
+                }else{
+                    echo "NO2" . " sensor has entered a concentration value of <b>" . $row['NO2'] . "</b><br/>";
+                }
+
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+            }
+
+        }
+    }
+
 }
 
 function fetchFeed($result){
@@ -150,7 +240,27 @@ function fetchFeed($result){
                 echo "<div class = 'card-content'>";
                 echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
                 echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
-                echo $row['e_symbol'] . " sensor has entered a concentration value of <b>" . $row['concentration_value'] . "</b><br/>";
+                echo "CO" . " sensor has entered a concentration value of <b>" . $row['CO'] . "</b><br/>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+
+                echo "<div class='col s12'>";
+                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+                echo "<div class = 'card-content'>";
+                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
+                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
+                echo "SO2" . " sensor has entered a concentration value of <b>" . $row['SO2'] . "</b><br/>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+
+                echo "<div class='col s12'>";
+                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+                echo "<div class = 'card-content'>";
+                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
+                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
+                echo "NO2" . " sensor has entered a concentration value of <b>" . $row['NO2'] . "</b><br/>";
                 echo "</div>";
                 echo "</div>";
                 echo "</div>";

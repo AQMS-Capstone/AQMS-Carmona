@@ -275,8 +275,7 @@ include('include/Map.php');
                         <select id="cbxSort">
                             <option value="" disabled selected>Sort by</option>
                             <option value = "1">Timestamp</option>
-                            <option value = "2">Element</option>
-                            <option value = "3">Concentration Value</option>
+                            <option value = "2">Concentration Value</option>
                         </select>
                     </div>
                 </div>
