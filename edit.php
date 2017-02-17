@@ -60,7 +60,7 @@
         <tr>
             <th data-field='time'>Timestamp</th>
             <th data-field='area'>Area</th>
-            <th data-field='pollutant'>Carbon Monoxide (ppm)</th>
+            <th data-field='pollutant'>CO (ppm)</th>
             <th data-field='symbol'>SO2 (ppm)</th>
             <th data-field='value'>NO2 (ppm)</th>
             <th data-field='function'></th>
