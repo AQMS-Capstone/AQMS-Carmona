@@ -107,6 +107,10 @@ function DbConnect($area)
     }
   }
 
+  $sql->free_result();
+  $sql->close();
+  $con->close();
+
   if(count($element_holder_bancal->co_holder) > 0){
     $data_holder = CalculateAveraging($element_holder_bancal->co_holder);
     for($i = 0 ; $i < count($data_holder); $i++){
