@@ -27,7 +27,7 @@ function GetBasics() {
             var status2 = response["status2"];
 
             if(status1 == "1"){
-                $('#status1').html("RECEIVING");
+                $('#status1').html("SENDING");
                 $('#status1').attr("class","green-text");
             }else{
                 $('#status1').html("DISCONNECTED");
@@ -35,7 +35,7 @@ function GetBasics() {
             }
 
             if(status2 == "1"){
-                $('#status2').html("RECEIVING");
+                $('#status2').html("SENDING");
                 $('#status2').attr("class","green-text");
             }else{
                 $('#status2').html("DISCONNECTED");
