@@ -57,8 +57,8 @@ include('include/Map.php');
                             <p><span id='message1'></span ></p>
                             <br><br>
                             <div class="input-field center">
-                                <button class="btn btn-large waves-effect waves-light"  type="submit" name="btnGenerate" style="width: 100%;">
-                                    DISCONNECT
+                                <button class="btn btn-large waves-effect waves-light" type="button" value="1" onclick ='ChangeStat(this.value)' style="width: 100%;">
+                                    <span id='btn1'>
                                 </button>
                             </div>
                         </div>
@@ -83,8 +83,8 @@ include('include/Map.php');
                             <p><span id='message2'></span ></p>
                             <br><br>
                             <div class="input-field center">
-                                <button class="btn btn-large waves-effect waves-light"  type="submit" name="btnGenerate" style="width: 100%;">
-                                    CONNECT
+                                <button class="btn btn-large waves-effect waves-light" type="button" value="2" onclick ='ChangeStat(this.value)' style="width: 100%;">
+                                    <span id='btn2'>
                                 </button>
                             </div>
                         </div>
