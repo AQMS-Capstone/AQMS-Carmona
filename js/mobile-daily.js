@@ -137,60 +137,66 @@ function GetAreaStatus2(area_data)
             var minValue = area_data.min_max_values[i][0];
             var maxValue =  area_data.min_max_values[i][1];
 
-            if(i == 0){
-                if(checkArray(area_data.co_aqi_values, -2)){
+            if (i == 0) {
+                if (checkArray(area_data.co_aqi_values, -2)) {
                     document.getElementById(elementMax).innerHTML = "Max: 400+";
-                }else{
+                } else {
 
-                    if(maxValue == -1){
+                    if (maxValue == -1) {
                         document.getElementById(elementMax).innerHTML = "Max: -";
-                    }else{
+                    } else {
                         document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
                     }
                 }
 
-                if(minValue == -1){
+                if (minValue == -1) {
                     document.getElementById(elementMin).innerHTML = "Min: -";
-                }else{
+                } else if (minValue == -2) {
+                    document.getElementById(elementMin).innerHTML = "Min: 400+";
+                } else {
                     document.getElementById(elementMin).innerHTML = "Min: " + minValue;
                 }
-            }else if(i == 1){
-                if(checkArray(area_data.so2_aqi_values, -2)){
+            } else if (i == 1) {
+                if (checkArray(area_data.so2_aqi_values, -2)) {
                     document.getElementById(elementMax).innerHTML = "Max: 400+";
-                }else{
+                } else {
 
-                    if(maxValue == -1){
+                    if (maxValue == -1) {
                         document.getElementById(elementMax).innerHTML = "Max: -";
-                    }else{
+                    } else {
                         document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
                     }
                 }
 
-                if(minValue == -1){
+                if (minValue == -1) {
                     document.getElementById(elementMin).innerHTML = "Min: -";
-                }else{
+                } else if (minValue == -2) {
+                    document.getElementById(elementMin).innerHTML = "Min: 400+";
+                } else {
                     document.getElementById(elementMin).innerHTML = "Min: " + minValue;
                 }
-            }else if(i == 2){
-                if(checkArray(area_data.no2_aqi_values, -2)){
+            } else if (i == 2) {
+                if (checkArray(area_data.no2_aqi_values, -2)) {
                     document.getElementById(elementMax).innerHTML = "Max: 400+";
-                }else if(checkArray(area_data.no2_aqi_values, -3)){
+                } else if (checkArray(area_data.no2_aqi_values, -3)) {
                     document.getElementById(elementMax).innerHTML = "Max: 201-";
-                }else{
-
-                    if(maxValue == -1){
+                }
+                else {
+                    if (maxValue == -1) {
                         document.getElementById(elementMax).innerHTML = "Max: -";
-                    }else{
+                    } else {
                         document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
                     }
                 }
 
-                if(checkLower(area_data.no2_aqi_values)){
+                if (checkLower(area_data.no2_aqi_values)) {
                     document.getElementById(elementMin).innerHTML = "Min: 201-";
-                }else{
-                    if(minValue == -1){
+                } else {
+                    if (minValue == -1) {
                         document.getElementById(elementMin).innerHTML = "Min: -";
-                    }else{
+                    } else if (minValue == -2) {
+                        document.getElementById(elementMin).innerHTML = "Min: 400+";
+                    } else {
                         document.getElementById(elementMin).innerHTML = "Min: " + minValue;
                     }
                 }

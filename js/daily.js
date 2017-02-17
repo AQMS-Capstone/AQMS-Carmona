@@ -53,12 +53,11 @@ $("[data-click-accordion]").on('click', function (e) {
 var AQIAirQuality;
 var AQIStatus;
 
-function GetAreaStatus2(area_data)
-{
-    if(area_data.name == "bancal") {
+function GetAreaStatus2(area_data) {
+    if (area_data.name == "bancal") {
         $("#zoneName").text('Bancal Carmona, Cavite');
         $("#zoneImg").attr("src", "res/images/area/bancal.jpg");
-    }else{
+    } else {
         $("#zoneName").text('SLEX Carmona Exit, Cavite');
         $("#zoneImg").attr("src", "res/images/area/slex_carmona-exit.jpg");
     }
@@ -70,11 +69,11 @@ function GetAreaStatus2(area_data)
     }
 
     else {
-        if(area_data.prevalent_value == -2){
+        if (area_data.prevalent_value == -2) {
             $("#aqiNum").text("400+");
-        }else if(area_data.prevalent_value == -3){
+        } else if (area_data.prevalent_value == -3) {
             $("#aqiNum").text("201-");
-        }else{
+        } else {
             $("#aqiNum").text(area_data.prevalent_value);
         }
 
@@ -90,106 +89,111 @@ function GetAreaStatus2(area_data)
     $("#aqiText").text(AQIStatus);
 
     //if (area_data.AllDayValues_array.length != 0) {
-        for (var i = 0; i < area_data.aqi_values.length; i++) {
-            var found = false;
+    for (var i = 0; i < area_data.aqi_values.length; i++) {
+        var found = false;
 
-            switch (i) {
-                case 0:
-                    found = true;
-                    break;
+        switch (i) {
+            case 0:
+                found = true;
+                break;
 
-                case 1:
-                    found = true;
-                    break;
+            case 1:
+                found = true;
+                break;
 
-                case 2:
-                    found = true;
-                    break;
+            case 2:
+                found = true;
+                break;
+        }
+
+        if (found) {
+
+            var elementName = "e_symbol_" + (i + 1);
+            var conentrationName = "concentration_value_" + (i + 1);
+            var elementMin = "aqi_min_" + (i + 1);
+            var elementMax = "aqi_max_" + (i + 1);
+
+            document.getElementById(elementName).innerHTML = pollutant_labels[i];
+
+            if (area_data.aqi_values[i] == -1) {
+                document.getElementById(conentrationName).innerHTML = "Current: -";
+            } else if (area_data.aqi_values[i] == -2) {
+                document.getElementById(conentrationName).innerHTML = "Current: 400+";
+            } else if (area_data.aqi_values[i] == -3) {
+                document.getElementById(conentrationName).innerHTML = "Current: 201-";
+            } else {
+                document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
             }
 
-            if (found) {
+            var minValue = area_data.min_max_values[i][0];
+            var maxValue = area_data.min_max_values[i][1];
 
-                var elementName = "e_symbol_" + (i + 1);
-                var conentrationName = "concentration_value_" + (i + 1);
-                var elementMin = "aqi_min_" + (i + 1);
-                var elementMax = "aqi_max_" + (i + 1);
-
-                document.getElementById(elementName).innerHTML = pollutant_labels[i];
-
-                if (area_data.aqi_values[i] == -1) {
-                    document.getElementById(conentrationName).innerHTML = "Current: -";
-                } else if (area_data.aqi_values[i] == -2) {
-                    document.getElementById(conentrationName).innerHTML = "Current: 400+";
-                } else if (area_data.aqi_values[i] == -3) {
-                    document.getElementById(conentrationName).innerHTML = "Current: 201-";
+            if (i == 0) {
+                if (checkArray(area_data.co_aqi_values, -2)) {
+                    document.getElementById(elementMax).innerHTML = "Max: 400+";
                 } else {
-                    document.getElementById(conentrationName).innerHTML = "Current: " + area_data.aqi_values[i];
+
+                    if (maxValue == -1) {
+                        document.getElementById(elementMax).innerHTML = "Max: -";
+                    } else {
+                        document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                    }
                 }
 
-                var minValue = area_data.min_max_values[i][0];
-                var maxValue =  area_data.min_max_values[i][1];
+                if (minValue == -1) {
+                    document.getElementById(elementMin).innerHTML = "Min: -";
+                } else if (minValue == -2) {
+                    document.getElementById(elementMin).innerHTML = "Min: 400+";
+                } else {
+                    document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                }
+            } else if (i == 1) {
+                if (checkArray(area_data.so2_aqi_values, -2)) {
+                    document.getElementById(elementMax).innerHTML = "Max: 400+";
+                } else {
 
-                if(i == 0){
-                    if(checkArray(area_data.co_aqi_values, -2)){
-                        document.getElementById(elementMax).innerHTML = "Max: 400+";
-                    }else{
-
-                        if(maxValue == -1){
-                            document.getElementById(elementMax).innerHTML = "Max: -";
-                        }else{
-                            document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
-                        }
+                    if (maxValue == -1) {
+                        document.getElementById(elementMax).innerHTML = "Max: -";
+                    } else {
+                        document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
                     }
+                }
 
-                    if(minValue == -1){
+                if (minValue == -1) {
+                    document.getElementById(elementMin).innerHTML = "Min: -";
+                } else if (minValue == -2) {
+                    document.getElementById(elementMin).innerHTML = "Min: 400+";
+                } else {
+                    document.getElementById(elementMin).innerHTML = "Min: " + minValue;
+                }
+            } else if (i == 2) {
+                if (checkArray(area_data.no2_aqi_values, -2)) {
+                    document.getElementById(elementMax).innerHTML = "Max: 400+";
+                } else if (checkArray(area_data.no2_aqi_values, -3)) {
+                    document.getElementById(elementMax).innerHTML = "Max: 201-";
+                }
+                else {
+                    if (maxValue == -1) {
+                        document.getElementById(elementMax).innerHTML = "Max: -";
+                    } else {
+                        document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
+                    }
+                }
+
+                if (checkLower(area_data.no2_aqi_values)) {
+                    document.getElementById(elementMin).innerHTML = "Min: 201-";
+                } else {
+                    if (minValue == -1) {
                         document.getElementById(elementMin).innerHTML = "Min: -";
-                    }else{
+                    } else if (minValue == -2) {
+                        document.getElementById(elementMin).innerHTML = "Min: 400+";
+                    } else {
                         document.getElementById(elementMin).innerHTML = "Min: " + minValue;
-                    }
-                }else if(i == 1){
-                    if(checkArray(area_data.so2_aqi_values, -2)){
-                        document.getElementById(elementMax).innerHTML = "Max: 400+";
-                    }else{
-
-                        if(maxValue == -1){
-                            document.getElementById(elementMax).innerHTML = "Max: -";
-                        }else{
-                            document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
-                        }
-                    }
-
-                    if(minValue == -1){
-                        document.getElementById(elementMin).innerHTML = "Min: -";
-                    }else{
-                        document.getElementById(elementMin).innerHTML = "Min: " + minValue;
-                    }
-                }else if(i == 2){
-                    if(checkArray(area_data.no2_aqi_values, -2)){
-                        document.getElementById(elementMax).innerHTML = "Max: 400+";
-                    }else if(checkArray(area_data.no2_aqi_values, -3)){
-                        document.getElementById(elementMax).innerHTML = "Max: 201-";
-                    }
-                    else{
-                        if(maxValue == -1){
-                            document.getElementById(elementMax).innerHTML = "Max: -";
-                        }else{
-                            document.getElementById(elementMax).innerHTML = "Max: " + maxValue;
-                        }
-                    }
-
-                    if(checkLower(area_data.no2_aqi_values)){
-                        document.getElementById(elementMin).innerHTML = "Min: 201-";
-                    }else{
-                        if(minValue == -1){
-                            document.getElementById(elementMin).innerHTML = "Min: -";
-                        }else{
-                            document.getElementById(elementMin).innerHTML = "Min: " + minValue;
-                        }
                     }
                 }
             }
         }
-    //}
+    }
 }
 
 function checkLower(array_container){
