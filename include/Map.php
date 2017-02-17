@@ -60,42 +60,50 @@ function DbConnect($area)
   $date_now = date("Y-m-d H") . ":00:00";
   $date_beginning = date("Y-m-d H", time() - (86400 * 2) + (3600 * 1)) . ":01:00";
 
-  $sql = $con->prepare("SELECT AREA_NAME, MASTER.E_ID, CONCENTRATION_VALUE, TIMESTAMP, ELEMENTS.E_NAME, E_SYMBOL FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id 
+  $sql = $con->prepare("SELECT AREA_NAME, CO, SO2, NO2, TIMESTAMP FROM MASTER
           WHERE TIMESTAMP <= ?  AND TIMESTAMP >= ? AND AREA_NAME = ? 
           ORDER BY TIMESTAMP");
   $sql->bind_param("sss", $date_now, $date_beginning, $area);
 
   $sql->execute();
   $sql->store_result();
-  $num_of_rows = $sql->num_rows;
-  $sql->bind_result($area_name, $e_id, $concentration_value, $timestamp, $e_name, $e_symbol);
+  //$num_of_rows = $sql->num_rows;
+  $sql->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
 
   while ($sql->fetch()) {
-    $dataClass = new Master();
+    $dataClass_co = new Master();
+    $dataClass_so2 = new Master();
+    $dataClass_no2 = new Master();
 
-    $dataClass->area_name = $area_name;
-    $dataClass->e_id = $e_id;
-    $dataClass->concentration_value = $concentration_value;
-    $dataClass->timestamp = $timestamp;
-    $dataClass->e_name = $e_name;
-    $dataClass->e_symbol = $e_symbol;
+    $dataClass_co->area_name = $area_name;
+    $dataClass_co->e_id = "1";
+    $dataClass_co->concentration_value = $CO;
+    $dataClass_co->timestamp = $timestamp;
+    $dataClass_co->e_name = "Carbon Monoxide";
+    $dataClass_co->e_symbol = "CO";
 
-    if($dataClass->area_name == "bancal") {
-      if ($dataClass->e_symbol == "CO") {
-        array_push($element_holder_bancal->co_holder, $dataClass);
-      } else if ($dataClass->e_symbol == "SO2") {
-        array_push($element_holder_bancal->so2_holder, $dataClass);
-      } else if ($dataClass->e_symbol == "NO2") {
-        array_push($element_holder_bancal->no2_holder, $dataClass);
-      }
+    $dataClass_so2->area_name = $area_name;
+    $dataClass_so2->e_id = "2";
+    $dataClass_so2->concentration_value = $SO2;
+    $dataClass_so2->timestamp = $timestamp;
+    $dataClass_so2->e_name = "Sulfur Dioxide";
+    $dataClass_so2->e_symbol = "SO2";
+
+    $dataClass_no2->area_name = $area_name;
+    $dataClass_no2->e_id = "3";
+    $dataClass_no2->concentration_value = $NO2;
+    $dataClass_no2->timestamp = $timestamp;
+    $dataClass_no2->e_name = "Nitrogen Dioxide";
+    $dataClass_no2->e_symbol = "NO2";
+
+    if($area_name == "bancal") {
+      array_push($element_holder_bancal->co_holder, $dataClass_co);
+      array_push($element_holder_bancal->so2_holder, $dataClass_so2);
+      array_push($element_holder_bancal->no2_holder, $dataClass_no2);
     }else{
-      if ($dataClass->e_symbol == "CO") {
-        array_push($element_holder_slex->co_holder, $dataClass);
-      } else if ($dataClass->e_symbol == "SO2") {
-        array_push($element_holder_slex->so2_holder, $dataClass);
-      } else if ($dataClass->e_symbol == "NO2") {
-        array_push($element_holder_slex->no2_holder, $dataClass);
-      }
+      array_push($element_holder_slex->co_holder, $dataClass_co);
+      array_push($element_holder_slex->so2_holder, $dataClass_so2);
+      array_push($element_holder_slex->no2_holder, $dataClass_no2);
     }
   }
 

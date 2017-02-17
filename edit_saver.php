@@ -9,12 +9,13 @@ include('include/db_connect.php');
 
 if(isset($_POST['timestamp']) && !empty($_POST['timestamp'])) {
     $timestamp = $_POST['timestamp'];
-    $concentration_value = $_POST['concentration_value'];
+    $concentration_value_co = $_POST['concentration_value_co'];
+    $concentration_value_so2 = $_POST['concentration_value_so2'];
+    $concentration_value_no2 = $_POST['concentration_value_no2'];
     $area = $_POST['area'];
-    $e_id = $_POST['e_id'];
 
-    $sql = $con->prepare("UPDATE MASTER SET concentration_value=? WHERE timestamp = ? and area_name = ? and e_id = ?");
-    $sql->bind_param("ssss", $concentration_value, $timestamp, $area, $e_id);
+    $sql = $con->prepare("UPDATE MASTER SET CO = ?, SO2 = ?, NO2 = ? WHERE timestamp = ? and area_name = ?");
+    $sql->bind_param("sssss", $concentration_value_co, $concentration_value_so2, $concentration_value_no2, $timestamp, $area);
 
     if (!$sql->execute())
     {
@@ -35,20 +36,3 @@ else
 {
     echo "Update failed. Please try again.";
 }
-
-/*
-$timestamp = $_POST['timestamp'];
-$concentration_value = $_POST['concentration_value'];
-
-$sql = "UPDATE MASTER SET concentration_value='$concentration_value' WHERE timestamp = '$timestamp'";
-
-if (!mysqli_query($con,$query))
-{
-    die('Error: ' . mysqli_error($con));
-}
-
-else
-{
-    echo "alert('Success');";
-}
-*/

@@ -2,43 +2,33 @@
 
 $statusMessage = ["", ""];
 
-function insertPollutant($e_id, $area, $value, $date_now_string, $symbol, $statusMessage)
+function insertPollutant($area, $co2_value, $so2_value, $no2_value, $date_now_string, $statusMessage)
 {
     include('include/db_connect.php');
 
     $query = $con->prepare("SELECT timestamp FROM MASTER 
-                            WHERE E_ID = ? and area_name= ? and timestamp = ? 
+                            WHERE area_name= ? and timestamp = ? 
                             ORDER BY timestamp desc limit 1");
-    $query->bind_param("sss", $e_id, $area, $date_now_string);
+    $query->bind_param("ss", $area, $date_now_string);
     $query->execute();
     $result = $query->get_result();
 
     if($result) {
 
         if (mysqli_num_rows($result) == 0) {
-            $query = $con->prepare("INSERT INTO MASTER (area_name, e_id, concentration_value, timestamp) VALUES (?,?,?,?)");
-            $query->bind_param("ssss", $area, $e_id, $value, $date_now_string);
+            $query = $con->prepare("INSERT INTO MASTER (area_name, CO, SO2, NO2, timestamp) VALUES (?,?,?,?,?)");
+            $query->bind_param("sssss", $area, $co2_value, $so2_value, $no2_value, $date_now_string);
 
             if(!$query->execute()){
                 die('Error: ' . mysqli_error($con));
             }else{
-                if($statusMessage[1] == "") {
-                    $statusMessage[1] = $symbol;
-                }
-                else{
-                    $statusMessage[1] = $statusMessage[1].", ".$symbol;
-                }
+                $statusMessage[1] = "1";
             }
         }
 
         else
         {
-            if($statusMessage[0] == "") {
-                $statusMessage[0] = $symbol;
-            }
-            else{
-                $statusMessage[0] = $statusMessage[0].", ".$symbol;
-            }
+            $statusMessage[0] = "1";
         }
     }
 
@@ -71,40 +61,27 @@ if (isset($_POST['btnSubmit'])) {
     $so2_value = $_POST['so2_value'];
     $no2_value = $_POST['no2_value'];
 
-    if($co_value == "" && $so2_value == "" && $no2_value == "")
+    if($co_value == "" || $so2_value == "" || $no2_value == "")
     {
-        echo "<script language = 'javascript'>alert('Input a value for at-least one pollutant. Try again.')</script>";
+        echo "<script language = 'javascript'>alert('Input a value for all pollutants. Try again.')</script>";
     }
 
     else {
         if (strtotime($time) <= strtotime($date_now_string)) {
-            if ($co_value != null) {
-                $e_id = '1';
-                $statusMessage = insertPollutant($e_id, $area, $co_value, $time, "CO", $statusMessage);
+
+            $statusMessage = insertPollutant($area, $co_value, $so2_value, $no2_value, $time, $statusMessage);
+
+            if ($statusMessage[0] == "1") {
+                $statusMessage[0] = "Values entered were not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
             }
 
-            if ($so2_value != null) {
-                $e_id = '2';
-                $statusMessage = insertPollutant($e_id, $area, $so2_value, $time, "SO2", $statusMessage);
-            }
-
-            if ($no2_value != null) {
-                $e_id = '3';
-                $statusMessage = insertPollutant($e_id, $area, $no2_value, $time, "NO2", $statusMessage);
-            }
-            
-            if ($statusMessage[0] != "") {
-                $statusMessage[0] = "Values entered for " . $statusMessage[0] . " was not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
-            }
-
-            if ($statusMessage[1] != "") {
-                $statusMessage[1] = "Values entered for " . $statusMessage[1] . " was successfuly inserted.";
+            if ($statusMessage[1] == "1") {
+                $statusMessage[1] = "Values entered were successfuly inserted.";
             }
         } else {
             echo "<script language = 'javascript'>alert('You cannot insert a value for time that is greater than now. Please try again.')</script>";
         }
     }
-
 }
 
 
