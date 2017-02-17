@@ -42,7 +42,57 @@ include('include/Map.php');
     <a href="#" data-activates="slide-out" class="button-collapse hide-on-med-and-up"><i class="material-icons">menu</i></a>
 </header>
 <main>
+    <div class="row row-no-after" id="statusDiv">
+        <div class='col s12 m6'>
+            <div class='card z-depth-0'>
+                <div id='aqiColor1' class='col s12' style='margin-bottom: 15px;'>
+                    <p style='font-size: 1em;' class='white-text'><b id='aqiText1'></p>
+                </div>
+                <div class='card-content'>
+                    <div class='row'>
+                        <p class='card-title teal-text' style='font-weight: bold' id='zoneName'>BANCAL</p>
+                        <div class='divider'></div>
+                        <br>
+                        <div class='col s12' style='padding: 0;'>
+                            <p><span id='message1'></span ></p>
+                            <br><br>
+                            <div class="input-field center">
+                                <button class="btn btn-large waves-effect waves-light"  type="submit" name="btnGenerate" style="width: 100%;">
+                                    DISCONNECT
+                                </button>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='col s12 m6'>
+            <div class='card z-depth-0'>
+                <div id='aqiColor2' class='col s12' style='margin-bottom: 15px;'>
+                    <p style='font-size: 1em;' class='white-text'><b id='aqiText2'></p>
+                </div>
+                <div class='card-content'>
+                    <div class='row'>
+                        <p class='card-title teal-text' style='font-weight: bold' id='zoneName'>SLEX</p>
+                        <div class='divider'></div>
+
+                        <br>
+                        <div class='col s12' style='padding: 0;'>
+                            <p><span id='message2'></span ></p>
+                            <br><br>
+                            <div class="input-field center">
+                                <button class="btn btn-large waves-effect waves-light"  type="submit" name="btnGenerate" style="width: 100%;">
+                                    CONNECT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <?php include('include/footer.php'); ?>
 

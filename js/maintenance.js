@@ -29,17 +29,29 @@ function GetBasics() {
             if(status1 == "1"){
                 $('#status1').html("SENDING");
                 $('#status1').attr("class","green-text");
+                $('#message1').html("The municipality is receiving data from the BANCAL station. Click to disconnect from the BANCAL station.");
+                $('#aqiColor1').attr("style", "margin-bottom: 15px; background: green;");
+                $('#aqiText1').html("SENDING");
             }else{
                 $('#status1').html("DISCONNECTED");
                 $('#status1').attr("class","red-text");
+                $('#message1').html("The municipality is disconnected from the BANCAL station. Click to connect with the BANCAL station.");
+                $('#aqiColor1').attr("style", "margin-bottom: 15px; background: red;");
+                $('#aqiText1').html("DISCONNECTED");
             }
 
             if(status2 == "1"){
                 $('#status2').html("SENDING");
                 $('#status2').attr("class","green-text");
+                $('#message2').html("The municipality is receiving data from the SLEX station. Click to disconnect from the SLEX station.");
+                $('#aqiColor2').attr("style", "margin-bottom: 15px; background: green;");
+                $('#aqiText2').html("SENDING");
             }else{
                 $('#status2').html("DISCONNECTED");
                 $('#status2').attr("class","red-text");
+                $('#message2').html("The municipality is disconnected from the SLEX station. Click to connect with the SLEX station.");
+                $('#aqiColor2').attr("style", "margin-bottom: 15px; background: red;");
+                $('#aqiText2').html("DISCONNECTED");
             }
         }
     });
