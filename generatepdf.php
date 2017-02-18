@@ -148,7 +148,7 @@ try {
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Pollutant', 'CO', 'SO2', 'NO2', 'Timestamp');
+        $header = array('Timestamp', 'CO', 'SO2', 'NO2');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $bancalDataSet);
         $pdf->Ln(2);

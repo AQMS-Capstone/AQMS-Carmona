@@ -89,6 +89,7 @@ class GPDF{
         $result = $query;
         $result->fetch();
         $row = $result->num_rows;
+        $result->free_result();
         $query->close();
         $con->close();
         return $row;
@@ -144,6 +145,7 @@ class GPDF{
 
         }
 
+        $result->free_result();
         $query->close();
         $con->close();
         return [$bancalData, $slexData, $bancalData1, $slexData1];
