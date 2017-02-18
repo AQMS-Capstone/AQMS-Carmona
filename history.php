@@ -12,26 +12,16 @@ if(isset($_POST['btnGenerate']))
     // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
 
     $area = filter_input(INPUT_POST, 'drpArea');
-    $pollutant = filter_input(INPUT_POST, 'drpPollutant');
     $dateTimeFrom = filter_input(INPUT_POST, 'txtDateTimeFrom');
     $dateTimeTo = filter_input(INPUT_POST, 'txtDateTimeTo');
     $order = filter_input(INPUT_POST, 'drpOrder');
 
 
 if($area == 3) {
-    if ($pollutant == 'All') {
-        $row = $gpdf->CheckPollutants("", "", $dateTimeFrom, $dateTimeTo);
-    } else {
-        $row = $gpdf->CheckPollutants("", $pollutant, $dateTimeFrom, $dateTimeTo);
-    }
+    $row = $gpdf->CheckPollutants("", $dateTimeFrom, $dateTimeTo);
 }
 else{
-    if ($pollutant == 'All') {
-        $row = $gpdf->CheckPollutants($areaName[$area], "", $dateTimeFrom, $dateTimeTo);
-    } else {
-
-        $row = $gpdf->CheckPollutants($areaName[$area], $pollutant, $dateTimeFrom, $dateTimeTo);
-    }
+    $row = $gpdf->CheckPollutants($areaName[$area], $dateTimeFrom, $dateTimeTo);
 }
     if($row == 0){
         //$error = true;
@@ -88,18 +78,16 @@ include('include/header.php');
                                 </select>
                                 <label>Area</label>
                             </div>
-                            <div  class="input-field col s12">
+                            <!--<div  class="input-field col s12">
                                 <select name = "drpPollutant" id = "drpPollutant" required>
                                     <option value="" disabled selected>Select a pollutant</option>
                                 </select>
                                 <label>Pollutant</label>
-                            </div>
+                            </div>-->
 
                             <div  class="input-field col s12">
                                 <select name = "drpOrder" required>
                                     <option value="1" selected>Timestamp</option>
-                                    <option value="2">Element</option>
-                                    <option value="3">Concentration Value</option>
 
                                 </select>
                                 <label>Order By</label>
