@@ -8,9 +8,6 @@ if(isset($_POST['btnGenerate']))
 {
 
     $gpdf = new GPDF();
-
-    // CODE HERE TO DETERMINE IF MAY LAMAN BA UNG DB BASED SA GANERN OK OK
-
     $area = filter_input(INPUT_POST, 'drpArea');
     $dateTimeFrom = filter_input(INPUT_POST, 'txtDateTimeFrom');
     $dateTimeTo = filter_input(INPUT_POST, 'txtDateTimeTo');
@@ -23,24 +20,12 @@ if($area == 3) {
 else{
     $row = $gpdf->CheckPollutants($areaName[$area], $dateTimeFrom, $dateTimeTo);
 }
-    if($row == 0){
-        //$error = true;
-        echo "<script>alert('No available data')</script>";
-    }else{
-        //$error = false; // THEN SET THIS TO TRUE / FALSE OK OK
-
-        /*session_start();
-
-        $_SESSION['drpArea'] = $_POST["drpArea"];
-        $_SESSION['drpPollutant'] = $_POST["drpPollutant"];
-        $_SESSION['txtDateTimeFrom'] = $_POST["txtDateTimeFrom"];
-        $_SESSION['txtDateTimeTo'] = $_POST["txtDateTimeTo"];
-        $_SESSION['drpOrder'] = $_POST["drpOrder"];
-
-        */
-        header("Location: generatepdf.php");
-    }
-    //unset($_POST['btnGenerate']);
+if($row == 0){
+    //$error = true;
+    echo "<script>alert('No available data')</script>";
+}else{
+    header("Location: generatepdf.php");
+}
 
 }
 ?>

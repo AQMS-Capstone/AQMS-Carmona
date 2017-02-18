@@ -84,8 +84,11 @@ class GPDF{
 
         }
         $query->execute();
-        $result = $query->get_result();
-        $row = $result->fetch_assoc();
+        $query->store_result();
+        $query->bind_result($timestamp, $area_name, $CO, $SO2, $NO2);
+        $result = $query;
+        $result->fetch();
+        $row = $result->num_rows;
         $query->close();
         $con->close();
         return $row;
@@ -115,25 +118,27 @@ class GPDF{
             $query->bind_param("sss", $a_name, $dFrom, $dTo);
         }
         $query->execute();
-        $result = $query->get_result();
-        while ($row = $result->fetch_assoc()) {
+        $query->store_result();
+        $query->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
+        $result = $query;
+        while ($result->fetch()) {
 
-            if($row['AREA_NAME'] == "bancal"){
-                array_push($bancalData, $row["TIMESTAMP"] . ';' . $row["CO"] . ';' . $row["SO2"] . ';' . $row["NO2"]);
+            if($area_name == "bancal"){
+                array_push($bancalData, $timestamp . ';' . $CO . ';' . $SO2 . ';' .  $NO2);
 
-                array_push($bancalData1, $row["TIMESTAMP"]);
-                array_push($bancalData1, $row["CO"]);
-                array_push($bancalData1, $row["SO2"]);
-                array_push($bancalData1, $row["NO2"]);
+                array_push($bancalData1, $timestamp);
+                array_push($bancalData1, $CO);
+                array_push($bancalData1, $SO2);
+                array_push($bancalData1, $NO2);
 
             }
             else{
-                array_push($slexData, $row["TIMESTAMP"] . ';' . $row["CO"] . ';' . $row["SO2"] . ';' . $row["NO2"]);
+                array_push($slexData, $timestamp . ';' . $CO . ';' . $SO2 . ';' .  $NO2);
 
-                array_push($slexData1, $row["TIMESTAMP"]);
-                array_push($slexData1, $row["CO"]);
-                array_push($slexData1, $row["SO2"]);
-                array_push($slexData1, $row["NO2"]);
+                array_push($slexData1,$timestamp);
+                array_push($slexData1, $CO);
+                array_push($slexData1, $SO2);
+                array_push($slexData1, $NO2);
 
             }
 
