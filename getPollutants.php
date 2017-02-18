@@ -13,32 +13,34 @@ $area = $_GET['area'];
 echo "<option value=\"\" disabled selected>Select a pollutant</option>";
 if($area == "all")
 {
-    $query = "SELECT DISTINCT ELEMENTS.e_symbol as e_symbol FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id ORDER BY ELEMENTS.e_id";
+    $query = "SELECT * FROM MASTER";
     $result = mysqli_query($con, $query);
 
-    while ($row = mysqli_fetch_array($result)) {
-
-        echo  "<option value='".$row['e_symbol']."'>{$row['e_symbol']}</option>";
-    }
-
-    if (mysqli_num_rows($result) > 0) {
+    if(!mysqli_num_rows($result) == 0){
+        echo  "<option value='CO'>CO</option>";
+        echo  "<option value='SO2'>SO2</option>";
+        echo  "<option value='NO2'>NO2</option>";
         echo  "<option value='All'>All</option>";
     }
 }
 
 else
 {
-    $query = "SELECT DISTINCT ELEMENTS.e_symbol as e_symbol FROM MASTER INNER JOIN ELEMENTS ON MASTER.e_id = ELEMENTS.e_id WHERE area_name = '$area' ORDER BY ELEMENTS.e_id";
-    $result = mysqli_query($con, $query);
+    $query = $con->prepare("SELECT * FROM MASTER WHERE AREA_NAME = ?");
+    $query->bind_param("s", $area);
+    $query->execute();
+    $query->store_result();
+    $num_of_rows = $query->num_rows;
 
-    while ($row = mysqli_fetch_array($result)) {
-
-        echo  "<option value='".$row['e_symbol']."'>{$row['e_symbol']}</option>";
-    }
-
-    if (mysqli_num_rows($result) > 0) {
+    if(!$num_of_rows == 0){
+        echo  "<option value='CO'>CO</option>";
+        echo  "<option value='SO2'>SO2</option>";
+        echo  "<option value='NO2'>NO2</option>";
         echo  "<option value='All'>All</option>";
     }
+
+    $query->free_result();
+    $con->close();
 }
 
 mysqli_close($con);
