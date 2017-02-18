@@ -12,20 +12,9 @@ if(isset($_POST['btnGenerate']))
     $dateTimeFrom = filter_input(INPUT_POST, 'txtDateTimeFrom');
     $dateTimeTo = filter_input(INPUT_POST, 'txtDateTimeTo');
     $order = filter_input(INPUT_POST, 'drpOrder');
+    $filterPollutant = filter_input(INPUT_POST, 'drpPollutant');
 
-
-if($area == 3) {
-    $row = $gpdf->CheckPollutants("", $dateTimeFrom, $dateTimeTo);
-}
-else{
-    $row = $gpdf->CheckPollutants($areaName[$area], $dateTimeFrom, $dateTimeTo);
-}
-if($row == 0){
-    //$error = true;
-    echo "<script>alert('No available data')</script>";
-}else{
     header("Location: generatepdf.php");
-}
 
 }
 ?>
@@ -63,19 +52,11 @@ include('include/header.php');
                                 </select>
                                 <label>Area</label>
                             </div>
-                            <!--<div  class="input-field col s12">
+                            <div  class="input-field col s12">
                                 <select name = "drpPollutant" id = "drpPollutant" required>
                                     <option value="" disabled selected>Select a pollutant</option>
                                 </select>
                                 <label>Pollutant</label>
-                            </div>-->
-
-                            <div  class="input-field col s12">
-                                <select name = "drpOrder" required>
-                                    <option value="1" selected>Timestamp</option>
-
-                                </select>
-                                <label>Order By</label>
                             </div>
 
                             <div class="input-field s12">

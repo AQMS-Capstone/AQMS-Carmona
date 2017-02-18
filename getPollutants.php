@@ -17,10 +17,10 @@ if($area == "all")
     $result = mysqli_query($con, $query);
 
     if(!mysqli_num_rows($result) == 0){
-        echo  "<option value='CO'>CO</option>";
-        echo  "<option value='SO2'>SO2</option>";
-        echo  "<option value='NO2'>NO2</option>";
-        echo  "<option value='All'>All</option>";
+        echo  "<option value='1'>CO</option>";
+        echo  "<option value='2'>SO2</option>";
+        echo  "<option value='3'>NO2</option>";
+        echo  "<option value='4'>All</option>";
     }
 }
 
@@ -33,10 +33,10 @@ else
     $num_of_rows = $query->num_rows;
 
     if(!$num_of_rows == 0){
-        echo  "<option value='CO'>CO</option>";
-        echo  "<option value='SO2'>SO2</option>";
-        echo  "<option value='NO2'>NO2</option>";
-        echo  "<option value='All'>All</option>";
+        echo  "<option value='1'>CO</option>";
+        echo  "<option value='2'>SO2</option>";
+        echo  "<option value='3'>NO2</option>";
+        echo  "<option value='4'>All</option>";
     }
 
     $query->free_result();

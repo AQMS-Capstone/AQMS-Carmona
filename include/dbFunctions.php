@@ -67,39 +67,9 @@ class PDF extends FPDF
 
 class GPDF{
 
-    function CheckPollutants($a_name, $dFrom, $dTo){
-        include('include/db_connect.php');
-        if($a_name == "All"){
-            $query = $con->prepare("SELECT * FROM MASTER
-                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY TIMESTAMP DESC");
-            $query->bind_param("ss", $dFrom, $dTo);
-        }
-
-        else {
-            $query = $con->prepare("SELECT * FROM MASTER
-                          WHERE area_name = ? and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY TIMESTAMP DESC");
-            $query->bind_param("sss", $a_name, $dFrom, $dTo);
-
-        }
-        $query->execute();
-        $query->store_result();
-        $query->bind_result($timestamp, $area_name, $CO, $SO2, $NO2);
-        $result = $query;
-        $result->fetch();
-        $row = $result->num_rows;
-        $result->free_result();
-        $query->close();
-        $con->close();
-        return $row;
-    }
-
-    function GetPollutants($a_name, $dFrom, $dTo, $order){
+    function GetPollutants($a_name, $dFrom, $dTo, $filterPollutant){
 
         include('include/db_connect.php');
-
-        $order =  filter_var($order, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
         $bancalData = array();
         $slexData = array();
@@ -107,17 +77,193 @@ class GPDF{
         $slexData1 = array();
 
         if($a_name == "All"){
-            $query = $con->prepare("SELECT * FROM MASTER
-                          WHERE  DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY $order DESC");
-            $query->bind_param("ss", $dFrom, $dTo);
+            switch($filterPollutant){
+                case 1:{
+                    $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("ss", $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant($query);
+                    break;
+                }
+                case 2:{
+                    $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("ss", $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant($query);
+                    break;
+                }
+                case 3:{
+                    $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("ss", $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant($query);
+                    break;
+                }
+                case 4:{
+                    $query = $con->prepare("SELECT * FROM MASTER
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("ss", $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreAllPollutants($query);
+                    break;
+                }
+            }
+
         }
         else{
-            $query = $con->prepare("SELECT * FROM MASTER
-                          WHERE area_name = ?  and DATE(timestamp) BETWEEN DATE(?) and DATE(?)
-                          ORDER BY $order DESC");
-            $query->bind_param("sss", $a_name, $dFrom, $dTo);
+            switch($filterPollutant){
+                case 1:{
+                    $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
+                          WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("sss", $a_name, $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant($query);
+                    break;
+                }
+                case 2:{
+                    $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
+                          WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("sss", $a_name, $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant($query);
+                    break;
+                }
+                case 3:{
+                    $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
+                          WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("sss", $a_name, $dFrom, $dTo);
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant($query);
+                    break;
+                }
+                case 4:{
+                    $query = $con->prepare("SELECT * FROM MASTER
+                          WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+                    $query->bind_param("sss", $a_name, $dFrom, $dTo);
+
+                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreAllPollutants($query);
+                    break;
+                }
+            }
         }
+
+
+        $query->close();
+        $con->close();
+        return [$bancalData, $slexData, $bancalData1, $slexData1];
+
+    }
+
+    function StoreCOPollutant($query){
+        $bancalData = array();
+        $slexData = array();
+        $bancalData1 = array();
+        $slexData1 = array();
+
+        $query->execute();
+        $query->store_result();
+        $query->bind_result($area_name, $timestamp, $CO);
+        $result = $query;
+        while ($result->fetch()) {
+
+            if($area_name == "bancal"){
+                array_push($bancalData, $timestamp . ';' . $CO);
+
+                array_push($bancalData1, $timestamp);
+                array_push($bancalData1, $CO);
+
+            }
+            else{
+                array_push($slexData, $timestamp . ';' . $CO);
+
+                array_push($slexData1,$timestamp);
+                array_push($slexData1, $CO);
+
+            }
+        }
+
+        $result->free_result();
+        return [$bancalData, $slexData, $bancalData1, $slexData1];
+    }
+
+    function StoreSO2Pollutant($query){
+        $bancalData = array();
+        $slexData = array();
+        $bancalData1 = array();
+        $slexData1 = array();
+
+        $query->execute();
+        $query->store_result();
+        $query->bind_result($area_name,$timestamp, $SO2);
+        $result = $query;
+        while ($result->fetch()) {
+
+            if($area_name == "bancal"){
+                array_push($bancalData, $timestamp .  ';' . $SO2);
+
+                array_push($bancalData1, $timestamp);
+                array_push($bancalData1, $SO2);
+
+            }
+            else{
+                array_push($slexData, $timestamp .  ';' . $SO2);
+
+                array_push($slexData1,$timestamp);
+                array_push($slexData1, $SO2);
+
+            }
+
+        }
+
+        $result->free_result();
+        return [$bancalData, $slexData, $bancalData1, $slexData1];
+
+    }
+
+    function StoreNO2Pollutant($query){
+        $bancalData = array();
+        $slexData = array();
+        $bancalData1 = array();
+        $slexData1 = array();
+
+        $query->execute();
+        $query->store_result();
+        $query->bind_result($area_name, $timestamp, $NO2);
+        $result = $query;
+        while ($result->fetch()) {
+
+            if($area_name == "bancal"){
+                array_push($bancalData, $timestamp . ';' .  $NO2);
+
+                array_push($bancalData1, $timestamp);
+                array_push($bancalData1, $NO2);
+
+            }
+            else{
+                array_push($slexData, $timestamp . ';' .  $NO2);
+
+                array_push($slexData1,$timestamp);
+                array_push($slexData1, $NO2);
+
+            }
+
+        }
+
+        $result->free_result();
+        return [$bancalData, $slexData, $bancalData1, $slexData1];
+
+    }
+
+    function StoreAllPollutants($query){
+        $bancalData = array();
+        $slexData = array();
+        $bancalData1 = array();
+        $slexData1 = array();
+
         $query->execute();
         $query->store_result();
         $query->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
@@ -146,14 +292,10 @@ class GPDF{
         }
 
         $result->free_result();
-        $query->close();
-        $con->close();
         return [$bancalData, $slexData, $bancalData1, $slexData1];
-
     }
 
 }
-
 
 ?>
 
