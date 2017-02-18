@@ -11,27 +11,26 @@ function insertPollutant($area, $co2_value, $so2_value, $no2_value, $date_now_st
                             ORDER BY timestamp desc limit 1");
     $query->bind_param("ss", $area, $date_now_string);
     $query->execute();
-    $result = $query->get_result();
+    $query->store_result();
+    $num_of_rows = $query->num_rows;
 
-    if($result) {
+    if ($num_of_rows == 0) {
+        $query = $con->prepare("INSERT INTO MASTER (area_name, CO, SO2, NO2, timestamp) VALUES (?,?,?,?,?)");
+        $query->bind_param("sssss", $area, $co2_value, $so2_value, $no2_value, $date_now_string);
 
-        if (mysqli_num_rows($result) == 0) {
-            $query = $con->prepare("INSERT INTO MASTER (area_name, CO, SO2, NO2, timestamp) VALUES (?,?,?,?,?)");
-            $query->bind_param("sssss", $area, $co2_value, $so2_value, $no2_value, $date_now_string);
-
-            if(!$query->execute()){
-                die('Error: ' . mysqli_error($con));
-            }else{
-                $statusMessage[1] = "1";
-            }
-        }
-
-        else
-        {
-            $statusMessage[0] = "1";
+        if(!$query->execute()){
+            die('Error: ' . mysqli_error($con));
+        }else{
+            $statusMessage[1] = "1";
         }
     }
 
+    else
+    {
+        $statusMessage[0] = "1";
+    }
+
+    $query->free_result();
     $query->close();
     $con->close();
 
