@@ -88,8 +88,8 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query->bind_param("ss", $filterArea, $limiter);
 
         $query->execute();
-        $result = $query->get_result();
-        fetchFeed($result);
+        $query->store_result();
+        fetchFeed($query);
         $query->close();
     }
     else if($filterPollutants != "" && $filterArea == ""){
@@ -120,8 +120,8 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
         $query->bind_param("s", $limiter);
         $query->execute();
-        $result = $query->get_result();
-        fetchFeed2($result, $filterPollutants);
+        $query->store_result();
+        fetchFeed2($query, $filterPollutants);
         $query->close();
     }
     else if($filterPollutants != "" && $filterArea != ""){
@@ -152,8 +152,8 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
 
         $query->bind_param("ss", $filterArea, $limiter);
         $query->execute();
-        $result = $query->get_result();
-        fetchFeed2($result, $filterPollutants);
+        $query->store_result();
+        fetchFeed2($query, $filterPollutants);
         $query->close();
     }
     else{
@@ -170,103 +170,104 @@ function displayFeed($limiter, $sortOption, $filterArea, $filterPollutants){
         $query->bind_param("s", $limiter);
 
         $query->execute();
-        $result = $query->get_result();
-        fetchFeed($result);
+        $query->store_result();
+        fetchFeed($query);
         $query->close();
     }
-
 
     $con->close();
 }
 
 function fetchFeed2($result, $filterPollutants){
 
-    if ($result) {
+    $num_of_rows = $result->num_rows;
+    $result->bind_result($timestamp, $area_name, $CO, $SO2, $NO2);
 
-        if (mysqli_num_rows($result) == 0) {
+    if ($num_of_rows == 0) {
+        echo "<div class='col s12'>";
+        echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+        echo "<div class = 'card-content'>";
+        echo "NO FEED";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    } else {
+
+        while ($result->fetch()) {
+
             echo "<div class='col s12'>";
             echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
             echo "<div class = 'card-content'>";
-            echo "NO FEED";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-        } else {
+            echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($timestamp))."</p>";
+            echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($area_name.", Carmona")."</p>";
 
-            while ($row = $result->fetch_assoc()) {
-
-                echo "<div class='col s12'>";
-                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
-                echo "<div class = 'card-content'>";
-                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
-                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
-
-                if($filterPollutants == "1"){
-                    echo "CO" . " sensor has entered a concentration value of <b>" . $row['CO'] . "</b><br/>";
-                }else if($filterPollutants == "2"){
-                    echo "SO2" . " sensor has entered a concentration value of <b>" . $row['SO2'] . "</b><br/>";
-                }else{
-                    echo "NO2" . " sensor has entered a concentration value of <b>" . $row['NO2'] . "</b><br/>";
-                }
-
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
+            if($filterPollutants == "1"){
+                echo "CO" . " sensor has entered a concentration value of <b>" . $CO . "</b><br/>";
+            }else if($filterPollutants == "2"){
+                echo "SO2" . " sensor has entered a concentration value of <b>" . $SO2 . "</b><br/>";
+            }else{
+                echo "NO2" . " sensor has entered a concentration value of <b>" . $NO2 . "</b><br/>";
             }
 
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
         }
+
     }
 
+    $result->free_result();
 }
 
 function fetchFeed($result){
 
-    if ($result) {
+    $num_of_rows = $result->num_rows;
+    $result->bind_result($timestamp, $area_name, $CO, $SO2, $NO2);
 
-        if (mysqli_num_rows($result) == 0) {
+    if ($num_of_rows == 0) {
+        echo "<div class='col s12'>";
+        echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+        echo "<div class = 'card-content'>";
+        echo "NO FEED";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    } else {
+
+        while ($result->fetch()) {
+
             echo "<div class='col s12'>";
             echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
             echo "<div class = 'card-content'>";
-            echo "NO FEED";
+            echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($timestamp))."</p>";
+            echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($area_name.", Carmona")."</p>";
+            echo "CO" . " sensor has entered a concentration value of <b>" . $CO . "</b><br/>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
-        } else {
 
-            while ($row = $result->fetch_assoc()) {
+            echo "<div class='col s12'>";
+            echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+            echo "<div class = 'card-content'>";
+            echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($timestamp))."</p>";
+            echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($area_name.", Carmona")."</p>";
+            echo "SO2" . " sensor has entered a concentration value of <b>" . $SO2 . "</b><br/>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
 
-                echo "<div class='col s12'>";
-                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
-                echo "<div class = 'card-content'>";
-                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
-                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
-                echo "CO" . " sensor has entered a concentration value of <b>" . $row['CO'] . "</b><br/>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-
-                echo "<div class='col s12'>";
-                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
-                echo "<div class = 'card-content'>";
-                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
-                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
-                echo "SO2" . " sensor has entered a concentration value of <b>" . $row['SO2'] . "</b><br/>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-
-                echo "<div class='col s12'>";
-                echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
-                echo "<div class = 'card-content'>";
-                echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($row['timestamp']))."</p>";
-                echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($row['area_name'].", Carmona")."</p>";
-                echo "NO2" . " sensor has entered a concentration value of <b>" . $row['NO2'] . "</b><br/>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-            }
-
+            echo "<div class='col s12'>";
+            echo "<div class = 'card z-depth-0 feed-divider' style='margin-top:0; margin-bottom:0;'>";
+            echo "<div class = 'card-content'>";
+            echo "<p style='color:gray'>".date("F d, Y - h:i:s a", strtotime($timestamp))."</p>";
+            echo "<p style='color:gray; font-size:11px; margin-bottom: 10px'>".strtoupper($area_name.", Carmona")."</p>";
+            echo "NO2" . " sensor has entered a concentration value of <b>" . $NO2 . "</b><br/>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
         }
+
     }
 
+    $result->free_result();
 }
