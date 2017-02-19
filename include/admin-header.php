@@ -31,8 +31,8 @@
         <li class="link"><a id="account"><span class="material-icons">account_circle</span> AQMS - Admin <i
                     class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a></li>
         <div hidden id="account-content">
-            <li><a href="mobile-home.php?area=SLEX" id="drpManageAcc">Manage Accounts</a></li>
-            <li><a href="mobile-home.php?area=Bancal" id="drpLogout">Logout</a></li>
+            <li><a href="manage-accounts.php" id="drpManageAcc">Manage Accounts</a></li>
+            <li><a href="logout.php" id="drpLogout">Logout</a></li>
         </div>
 
 

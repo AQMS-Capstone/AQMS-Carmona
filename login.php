@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+if(isset($_SESSION["USERNAME"]))
+{
+    header('Location: feed.php');
+}
+?>
+<?php
 define("PAGE_TITLE", "Login - Air Quality Monitoring System");
 ?>
 

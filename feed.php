@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if(!isset($_SESSION["USERNAME"]))
+{
+    header('Location: login.php');
+}
+?>
+<?php
+
 define("PAGE_TITLE", "Feed - Air Quality Monitoring System");
 include('include/Map.php');
 ?>
