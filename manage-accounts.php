@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+if(!isset($_SESSION["USERNAME"]))
+{
+    header('Location: user-login.php');
+}
+?>
+<?php
 //VONN NOTE
 
 //THINGS TO HASH:
