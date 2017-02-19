@@ -20,6 +20,10 @@ $("#sensor").off("click").on("click", function() {
     $("#sensor-content").fadeToggle("default");
 });
 
+$("#account").off("click").on("click", function() {
+    $("#account-content").fadeToggle("default");
+});
+
 $("#calculator").off("click").on("click", function() {
     $("#calculator-content").fadeToggle("default");
 });
