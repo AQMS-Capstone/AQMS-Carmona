@@ -4,6 +4,7 @@ $error=''; // Variable To Store Error Message
 if (isset($_POST['submit'])) {
     if (empty($_POST['username']) || empty($_POST['password'])) {
         $error = "Username or Password is invalid";
+
     }
     else
     {
@@ -22,14 +23,27 @@ if (isset($_POST['submit'])) {
 
         $query->bind_param("ss", $username, $password);
         $query->execute();
-        $query->store_result();
-        $num_of_rows = $query->num_rows;
+        $result = $query->get_result();
+        $num_of_rows = $result->num_rows;
 
         if ($num_of_rows == 1) {
-            $_SESSION["USERNAME"]=$username; // Initializing Session
-            header("location: feed.php"); // Redirecting To Other Page
+            while($row = $result->fetch_assoc()) {
+                $_SESSION["USERNAME"]=$row["USERNAME"]; // Initializing Session
+                $_SESSION["PRIVILEGE"]=$row["PRIVILEGE"]; // Initializing Session
+            }
+            if($_SESSION["PRIVILEGE"]!="2")
+            {
+                header("location: feed.php"); // Redirecting To Other Page
+            }
+            else{
+                unset($_SESSION["USERNAME"]);
+                unset($_SESSION["PRIVILEGE"]);
+                $error = "User is blocked!";
+            }
+
         } else {
             $error = "Username or Password is invalid";
+
         }
         $query->free_result();
         $query->close();

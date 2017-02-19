@@ -29,10 +29,16 @@
     <ul id="slide-out" class="side-nav fixed">
         <li class="teal z-depth-1" ><a id="logo" href="index.php"><img alt="Brand Logo" class="center" src="res/logo.png" style="height: 45px;"> </a>
 
-        <li class="link"><a id="account"><span class="material-icons">account_circle</span> AQMS - Admin <i
+        <li class="link"><a id="account"><span class="material-icons">account_circle</span> <?php echo $_SESSION["USERNAME"];?> <i
                     class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a></li>
         <div hidden id="account-content">
-            <li><a href="manage-accounts.php" id="drpManageAcc">Manage Accounts</a></li>
+            <?php
+                if($_SESSION["PRIVILEGE"] == "0")
+                {
+                    echo "<li><a href=\"manage-accounts.php\" id=\"drpManageAcc\">Manage Accounts</a></li>";
+                }
+            ?>
+
             <li><a href="logout.php" id="drpLogout">Logout</a></li>
         </div>
 

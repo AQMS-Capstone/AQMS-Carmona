@@ -1,6 +1,5 @@
 <?php
-session_start();
-
+include('login.php');
 if(isset($_SESSION["USERNAME"]))
 {
     header('Location: feed.php');
@@ -41,20 +40,21 @@ define("PAGE_TITLE", "Login - Air Quality Monitoring System");
             <div class="row">
                 <div class="col s12">
                     <div>
-                        <form method = "post" action="login.php">
+                        <form method = "post" action="">
                             <div class="input-field col s12">
-                                <input id="username" type="text" class="validate">
+                                <input id="username" name="username" type="text" class="validate">
                                 <label for="username">Username</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="password" type="password" class="validate">
+                                <input id="password" name="password" type="password" class="validate">
                                 <label for="password">Password</label>
                             </div>
 
                             <div class="input-field center col s12">
-                                <button class="btn btn-large waves-effect waves-light"  type="submit" name="btnLogin" style="width: 100%;">
-                                    Login
-                                </button>
+                                <button class='btn waves-effect waves-light'style="width: 100%;" name="submit" type="submit">Submit</button>
+                            </div>
+                            <div class="center">
+                                <h6 class="header col s12 red-text"><b><?php if (isset($_POST['submit'])){echo $error;} ?></b></h6>
                             </div>
                         </form>
                     </div>
