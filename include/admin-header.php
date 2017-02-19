@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <?php include('include/header-meta.php'); ?>
+    <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css'>
     <style>
         li.link { cursor: pointer; cursor: hand; }
         header, main, footer {
