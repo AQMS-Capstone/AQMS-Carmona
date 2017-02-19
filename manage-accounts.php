@@ -86,7 +86,7 @@ define("PAGE_TITLE", "Manage Accounts - Air Quality Monitoring System");
                                   
                                   <div class='row' style='margin-bottom: 0px;'>
                                     <div class='input-field col s12'>
-                                        <input id='$identifier_input2' name='password' type='text'>
+                                        <input id='$identifier_input2' name='password' type='password'>
                                         <label>Password</label>
                                     </div>
                                   </div>
