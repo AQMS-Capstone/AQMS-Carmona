@@ -44,12 +44,6 @@ if (isset($_POST['btnSubmit'])) {
 
     date_default_timezone_set('Asia/Manila');
 
-    //$date = date("Y-m-d H", strtotime($time));
-    //$time = $date.":00:00";
-
-    //$date_now = date("Y-m-d H");
-    //$date_now_string = $date_now.":00:00";
-
     $date = date("Y-m-d H:i:s", strtotime($time));
     $time = $date;
 
