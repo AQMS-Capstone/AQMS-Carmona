@@ -19,27 +19,36 @@ if (isset($_POST['submit'])) {
 
 // SQL query to fetch information of registerd users and finds user match.
         $query = $con->prepare("SELECT * FROM ACCOUNT 
-                            WHERE USERNAME= ? AND PASSWORD = ?");
+                            WHERE USERNAME= ?");
 
-        $query->bind_param("ss", $username, $password);
+        $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
         $num_of_rows = $result->num_rows;
 
         if ($num_of_rows == 1) {
             while($row = $result->fetch_assoc()) {
-                $_SESSION["USERNAME"]=$row["USERNAME"]; // Initializing Session
-                $_SESSION["PRIVILEGE"]=$row["PRIVILEGE"]; // Initializing Session
+                if(password_verify($password,$row["PASSWORD"]))
+                {
+                    $_SESSION["USERNAME"]=$row["USERNAME"]; // Initializing Session
+                    $_SESSION["PRIVILEGE"]=$row["PRIVILEGE"]; // Initializing Session
+
+                    if($_SESSION["PRIVILEGE"]!="2")
+                    {
+                        header("location: feed.php"); // Redirecting To Other Page
+                    }
+                    else{
+                        unset($_SESSION["USERNAME"]);
+                        unset($_SESSION["PRIVILEGE"]);
+                        $error = "User is blocked!";
+                    }
+                }
+                else{
+                    $error = "Wrong Password!";
+                }
+
             }
-            if($_SESSION["PRIVILEGE"]!="2")
-            {
-                header("location: feed.php"); // Redirecting To Other Page
-            }
-            else{
-                unset($_SESSION["USERNAME"]);
-                unset($_SESSION["PRIVILEGE"]);
-                $error = "User is blocked!";
-            }
+
 
         } else {
             $error = "Username or Password is invalid";

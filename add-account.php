@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
             $date_now_string = $date_now;
 
             $query = $con->prepare("INSERT INTO ACCOUNT (USERNAME, PASSWORD, PRIVILEGE, DATE_CREATED, CREATED_BY) VALUES (?,?,?,?,?)");
-            $query->bind_param("sssss", $username, $password, $privilege,$date_now_string ,$_SESSION["USERNAME"]);
+            $query->bind_param("sssss", $username, password_hash($password,PASSWORD_DEFAULT), $privilege,$date_now_string ,$_SESSION["USERNAME"]);
 
 
             if (!$query->execute()) {
