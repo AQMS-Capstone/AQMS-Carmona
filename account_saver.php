@@ -33,8 +33,9 @@ if(isset($_POST['UID']) && !empty($_POST['UID']) && isset($_POST['USERNAME']) &&
         }
 
         if($password != ""){
+            $hashed_password = password_hash($password,PASSWORD_DEFAULT);
             $sql = $con->prepare("UPDATE ACCOUNT SET PASSWORD = ?, PRIVILEGE = ? WHERE USERNAME = ? and UID = ?");
-            $sql->bind_param("ssss", password_hash($password,PASSWORD_DEFAULT), $privilege, $username, $uid);
+            $sql->bind_param("ssss", $hashed_password, $privilege, $username, $uid);
         }else{
             $sql = $con->prepare("UPDATE ACCOUNT SET PRIVILEGE = ? WHERE USERNAME = ? and UID = ?");
             $sql->bind_param("sss", $privilege, $username, $uid);

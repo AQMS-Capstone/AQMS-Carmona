@@ -27,9 +27,9 @@ if (isset($_POST['submit'])) {
             date_default_timezone_set('Asia/Manila');
             $date_now = date("Y-m-d H:i:s");
             $date_now_string = $date_now;
-
+            $hashed_password = password_hash($password,PASSWORD_DEFAULT);
             $query = $con->prepare("INSERT INTO ACCOUNT (USERNAME, PASSWORD, PRIVILEGE, DATE_CREATED, CREATED_BY) VALUES (?,?,?,?,?)");
-            $query->bind_param("sssss", $username, password_hash($password,PASSWORD_DEFAULT), $privilege,$date_now_string ,$_SESSION["USERNAME"]);
+            $query->bind_param("sssss", $username, $hashed_password, $privilege,$date_now_string ,$_SESSION["USERNAME"]);
 
 
             if (!$query->execute()) {
