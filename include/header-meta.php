@@ -10,7 +10,6 @@
 <!-- CSS  -->
 
 <link href="css/iconfont/material-icons.css" type="text/css" rel="stylesheet" media="screen">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
 <link href="css/flatpickr.css" type="text/css" rel="stylesheet" media="screen">
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">

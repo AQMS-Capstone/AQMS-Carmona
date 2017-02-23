@@ -66,7 +66,7 @@ include('include/Map.php');
 </main>
 <?php include('include/footer.php'); ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+<script src="js/Chart.bundle.js"></script>
 <script src="js/maintenance.js"></script>
 <script>
     $( "#maintenance-tab" ).addClass( "active" );

@@ -191,7 +191,7 @@ include('include/header.php');
 
 <?php include('include/footer.php'); ?>
 <!--Additional Scripts-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+<script src="js/Chart.bundle.js"></script>
 <script src="js/mobile-daily.js"></script>
 <script src="js/graph.js"></script>
 <script src="js/aqi-calculator.js"></script>

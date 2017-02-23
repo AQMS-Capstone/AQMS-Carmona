@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css'>
+    <link rel='stylesheet' type='text/css' href='css/jquery.dataTables.css'>
     <?php include('include/header-meta.php'); ?>
     <style>
         li.link { cursor: pointer; cursor: hand; }

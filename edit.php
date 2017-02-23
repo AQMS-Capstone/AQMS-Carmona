@@ -8,8 +8,8 @@
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
 
     <!-- CSS  -->
-    <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' href='css/jquery.dataTables.css'>
+    <link href="css/iconfont/material-icons.css" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen">
     <style>
@@ -208,7 +208,7 @@
 </div>
 
 <?php include('include/footer.php'); ?>
-<script type='text/javascript' charset='utf8' src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'></script>
+<script type='text/javascript' charset='utf8' src='js/dataTables.min.js'></script>
 <script type='text/javascript'>
     function myFunction(timestamp, identifier_input1, identifier_input2, identifier_input3, area) {
         var concentration_value_co = identifier_input1.value;
