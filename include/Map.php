@@ -803,13 +803,23 @@ function Generate($name)
 
 // --------- DETERMINE POllUTANT WITH HIGHEST AQI --------- //
 
-  if (count($area_generate->aqi_values) > 0) {
+  if(min($area_generate->aqi_values) == -3){
+    if(max($area_generate-> aqi_values) > -3 && max($area_generate-> aqi_values) != -1){
+      $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, max($area_generate->aqi_values));
+    }else{
+      $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, min($area_generate->aqi_values));
+    }
+  }else{
     $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, max($area_generate->aqi_values));
   }
-
-  if(in_array(-2, $area_generate->aqi_values) || in_array(-3, $area_generate->aqi_values)){
-    $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, min($area_generate->aqi_values));
-  }
+  
+//  if (count($area_generate->aqi_values) > 0) {
+//    $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, max($area_generate->aqi_values));
+//  }
+//
+//  if(in_array(-2, $area_generate->aqi_values) || in_array(-3, $area_generate->aqi_values)){
+//    $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, min($area_generate->aqi_values));
+//  }
 
   // --------- DISPLAY POINT X --------- //
 
