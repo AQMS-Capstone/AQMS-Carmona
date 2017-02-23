@@ -71,7 +71,7 @@ $.ajax({
 });
 $(function()
 {
-    //
+    
     myGetFeed = setTimeout('GetServerTime()', 1000);
 });
 
