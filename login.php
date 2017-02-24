@@ -18,20 +18,26 @@ if (isset($_POST['submit'])) {
         $password = trim($password);
 
 // SQL query to fetch information of registerd users and finds user match.
-        $query = $con->prepare("SELECT * FROM ACCOUNT 
+        $query = $con->prepare("SELECT USERNAME, PASSWORD, PRIVILEGE FROM ACCOUNT 
                             WHERE USERNAME= ?");
 
         $query->bind_param("s", $username);
         $query->execute();
-        $result = $query->get_result();
-        $num_of_rows = $result->num_rows;
+        $query->store_result();
+
+        //$result = $query->get_result();
+        //$num_of_rows = $result->num_rows;
+
+        $query->bind_result($username, $password, $privilege);
+
+        $num_of_rows = $query->num_rows;
 
         if ($num_of_rows == 1) {
             while($row = $result->fetch_assoc()) {
-                if(password_verify($password,$row["PASSWORD"]))
+                if(password_verify($password,$password))
                 {
-                    $_SESSION["USERNAME"]=$row["USERNAME"]; // Initializing Session
-                    $_SESSION["PRIVILEGE"]=$row["PRIVILEGE"]; // Initializing Session
+                    $_SESSION["USERNAME"]=$username; // Initializing Session
+                    $_SESSION["PRIVILEGE"]=$username; // Initializing Session
 
                     if($_SESSION["PRIVILEGE"]!="2")
                     {
