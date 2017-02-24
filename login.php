@@ -28,16 +28,16 @@ if (isset($_POST['submit'])) {
         //$result = $query->get_result();
         //$num_of_rows = $result->num_rows;
 
-        $query->bind_result($username, $password, $privilege);
+        $query->bind_result($ret_username, $ret_password, $ret_privilege);
 
         $num_of_rows = $query->num_rows;
 
         if ($num_of_rows == 1) {
-            while($row = $result->fetch_assoc()) {
-                if(password_verify($password,$password))
+            while($query->fetch()) {
+                if(password_verify($password,$ret_password))
                 {
-                    $_SESSION["USERNAME"]=$username; // Initializing Session
-                    $_SESSION["PRIVILEGE"]=$username; // Initializing Session
+                    $_SESSION["USERNAME"]=$ret_username; // Initializing Session
+                    $_SESSION["PRIVILEGE"]=$ret_privilege; // Initializing Session
 
                     if($_SESSION["PRIVILEGE"]!="2")
                     {
