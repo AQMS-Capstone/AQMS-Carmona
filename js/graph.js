@@ -1,3 +1,8 @@
+var url = window.location.href.toString();
+var font_size = 10;
+if (url.includes("mobile")) {
+   font_size = 7;
+}
 function createGraph(data_pollutant, chartNames, rolling_time)
 {
     const CHART = document.getElementById(chartNames);
@@ -78,7 +83,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     ticks: {
                         max: 480,
                         beginAtZero: true,
-                        fontSize: 8
+                        fontSize: font_size
                     },
                     gridLines: {
                         display: false
@@ -89,7 +94,7 @@ function createGraph(data_pollutant, chartNames, rolling_time)
                     categoryPercentage: .98,
                     ticks: {
 
-                        fontSize: 8
+                        fontSize: font_size
                     },
                     gridLines: {
                         display: false
@@ -108,7 +113,6 @@ function drawTheGraph(area_data) {
     array_draw.push(area_data.so2_aqi_values);
     array_draw.push(area_data.no2_aqi_values);
 
-    var url = window.location.href.toString();
 
     if (url.includes("daily")) {
 
