@@ -515,26 +515,28 @@ class GPDF{
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-//        for($i = 0 ; $i < count($array_holder_bancal); $i++){
-//
-//            //$dates = $this->GetRollingDates_AQI(8, $array_holder[$i]->timestamp);
-//            //$cv = $this->EightHrAveraging_AQI($array_holder, $dates, $array_holder[$i]->area_name);
-//            //$aqi_value = $this->floorDec_AQI($cv, $precision = 1);
-//
-//            if($array_holder[$i]->area_name == "bancal"){
-//                //array_push($bancalData, $array_holder[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder[$i]->concentration_value, $precision = 1) . ';' . $aqi_value . ';' . "-");
-//
-//                //array_push($bancalData1, $array_holder[$i]->timestamp);
-//                //array_push($bancalData1, $array_holder[$i]->concentration_value);
-//
-//            }else{
-//                //array_push($slexData, $array_holder[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder[$i]->concentration_value, $precision = 1) . ';' . $aqi_value . ';' . "-");
-//
-//                //array_push($slexData1,$array_holder[$i]->timestamp);
-//                //array_push($slexData1, $array_holder[$i]->concentration_value);
-//            }
-//        }
+        for($i = 0 ; $i < count($array_holder_slex); $i++){
+            $dates = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
+            $cv = $this->Averaging_AQI($array_holder_slex, $dates, 8);
 
+            if($cv == -1){
+                $aqi = "-";
+            }else{
+                $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
+            }
+
+            if($cv == -1){
+                $cv = "-";
+            }else{
+                $cv = $this->floorDec_AQI($cv, $precision = 1);
+            }
+
+            array_push($slexData, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = 1) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
+
+            array_push($slexData1, $array_holder_slex[$i]->timestamp);
+            array_push($slexData1, $array_holder_slex[$i]->concentration_value);
+        }
+        
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 

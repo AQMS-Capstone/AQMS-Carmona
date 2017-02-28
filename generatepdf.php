@@ -125,10 +125,10 @@ try {
 
         if(empty($bancalData) && empty($slexData))
         {
-//            echo "<script>
-//                alert('There are no data available to generate a report');
-//               </script>";
-//            echo "<script>window.close();</script>";
+            echo "<script>
+                alert('There are no data available to generate a report');
+               </script>";
+            echo "<script>window.close();</script>";
         }
 
         if(!empty($slexData) && empty($bancalData)){
