@@ -934,9 +934,9 @@ function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->BasicTable_ambient($header, $bancalDataSet);
         $pdf->Ln(2);
 
 
@@ -946,24 +946,24 @@ function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->BasicTable_ambient($header, $slexDataSet);
         $pdf->Ln(2);
     }else if(!empty($bancalData) && empty($slexData)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->BasicTable_ambient($header, $bancalDataSet);
         $pdf->Ln(2);
     }
     else if(empty($bancalData) && !empty($slexData)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->BasicTable_ambient($header, $slexDataSet);
         $pdf->Ln(2);
     }
 
@@ -1003,9 +1003,9 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 24hr ppm)', 'NO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->BasicTable_ambient($header, $bancalDataSet);
         $pdf->Ln(2);
 
 
@@ -1015,24 +1015,24 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 24hr ppm)', 'NO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->BasicTable_ambient($header, $slexDataSet);
         $pdf->Ln(2);
     }else if(!empty($bancalData) && empty($slexData)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 24hr ppm)', 'NO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->BasicTable_ambient($header, $bancalDataSet);
         $pdf->Ln(2);
     }
     else if(empty($bancalData) && !empty($slexData)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 24hr ppm)', 'NO2 (Evaluation 24hr)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->BasicTable_ambient($header, $slexDataSet);
         $pdf->Ln(2);
     }
 
