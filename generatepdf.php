@@ -189,12 +189,84 @@ try {
                 break;
             }
             case 4:{
-                CreateTableAllPollutants($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                //CreateTableAllPollutants($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
                 break;
             }
         }
-    }else{
+    }
+    else{
+        list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants_ambient($area, $dateFrom, $dateTo, $filterPollutant);
 
+        if(empty($bancalData) && empty($slexData))
+        {
+            echo "<script>
+        alert('There are no data available to generate a report');
+       </script>";
+            echo "<script>window.close();</script>";
+        }
+
+        if(!empty($slexData) && empty($bancalData)){
+            foreach ($slexData as $line) {
+                # code...
+                $slexDataSet[] = explode(';', trim($line));
+            }
+        }
+        else if(empty($slexData) && !empty($bancalData)){
+            foreach ($bancalData as $line) {
+                # code...
+                $bancalDataSet[] = explode(';', trim($line));
+            }
+        }
+        else{
+            foreach ($slexData as $line) {
+                # code...
+                $slexDataSet[] = explode(';', trim($line));
+            }
+
+            foreach ($bancalData as $line) {
+                # code...
+                $bancalDataSet[] = explode(';', trim($line));
+            }
+        }
+
+        if(count($slexData1) != 0 && count($bancalData1) != 0) {
+            if (strtotime($slexData1[0] > strtotime($bancalData1[0]))) {
+                $time_updated = $slexData1[0];
+            } else {
+                $time_updated = $bancalData1[0];
+            }
+
+            $a_name = "SLEX and Bancal, Carmona, Cavite";
+
+        }else if(count($slexData1) != 0 && count($bancalData1) == 0){
+            $a_name = "SLEX, Carmona, Cavite";
+            $time_updated = $slexData1[0];
+
+        }else if(count($slexData1) == 0 && count($bancalData1) != 0){
+            $a_name = "Bancal, Carmona, Cavite";
+            $time_updated = $bancalData1[0];
+        }
+
+//------------------ GENERATING PDF -------------------------
+
+        switch($filterPollutant){
+            case 1:{
+                CreateTableCO_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                break;
+            }
+            case 2:{
+                CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                break;
+            }
+            case 3:{
+                CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                break;
+            }
+            case 4:{
+                //CreateTableAllPollutants($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                break;
+            }
+        }
     }
 }
 catch(Exception $e){
@@ -754,6 +826,213 @@ function CreateTableAllPollutants_AQI($a_name, $time_updated, $bancalData, $slex
         $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable($header, $slexDataSet);
+        $pdf->Ln(2);
+    }
+
+    $pdf->Output('I', $filename);
+}
+
+function CreateTableCO_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename){
+    $pdf = new PDF();
+    $pdf->AliasNbPages();
+    $pdf->AddPage();
+    $pdf->SetTitle("AQMS Monitoring - Generated Report");
+    $pdf->Ln(-5);
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(1);
+    $pdf->Cell(0, 15, 'Area: ');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->Cell(-178);
+    $pdf->Cell(0, 15, $a_name);
+    $pdf->Ln(8);
+
+    $pdf->Ln(15);
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(1);
+    $pdf->Cell(0, -23, 'Last Updated: ');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->Cell(-163);
+    $pdf->Cell(0, -23, $time_updated);
+    $pdf->Ln(1);
+
+//Table
+
+    if(!empty($bancalData) && !empty($slexData)){
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'Bancal Junction');
+        $pdf->Ln(8);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'CO (Avg 1hr ppm)', 'CO (Evaluation 1hr)', 'CO (Avg 8hr ppm)', 'CO (Evaluation 8hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->Ln(2);
+
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'SLEX Carmona');
+        $pdf->Ln(8);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'CO (Avg 1hr ppm)', 'CO (Evaluation 1hr)', 'CO (Avg 8hr ppm)', 'CO (Evaluation 8hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->Ln(2);
+    }else if(!empty($bancalData) && empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'CO (Avg 1hr ppm)', 'CO (Evaluation 1hr)', 'CO (Avg 8hr ppm)', 'CO (Evaluation 8hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->Ln(2);
+    }
+    else if(empty($bancalData) && !empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'CO (Avg 1hr ppm)', 'CO (Evaluation 1hr)', 'CO (Avg 8hr ppm)', 'CO (Evaluation 8hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->Ln(2);
+    }
+
+    $pdf->Output('I', $filename);
+}
+
+function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename){
+    $pdf = new PDF();
+    $pdf->AliasNbPages();
+    $pdf->AddPage();
+    $pdf->SetTitle("AQMS Monitoring - Generated Report");
+    $pdf->Ln(-5);
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(1);
+    $pdf->Cell(0, 15, 'Area: ');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->Cell(-178);
+    $pdf->Cell(0, 15, $a_name);
+    $pdf->Ln(8);
+
+    $pdf->Ln(15);
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(1);
+    $pdf->Cell(0, -23, 'Last Updated: ');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->Cell(-163);
+    $pdf->Cell(0, -23, $time_updated);
+    $pdf->Ln(1);
+
+//Table
+
+    if(!empty($bancalData) && !empty($slexData)){
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'Bancal Junction');
+        $pdf->Ln(8);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->Ln(2);
+
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'SLEX Carmona');
+        $pdf->Ln(8);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->Ln(2);
+    }else if(!empty($bancalData) && empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->Ln(2);
+    }
+    else if(empty($bancalData) && !empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->Ln(2);
+    }
+
+    $pdf->Output('I', $filename);
+}
+
+function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename){
+    $pdf = new PDF();
+    $pdf->AliasNbPages();
+    $pdf->AddPage();
+    $pdf->SetTitle("AQMS Monitoring - Generated Report");
+    $pdf->Ln(-5);
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(1);
+    $pdf->Cell(0, 15, 'Area: ');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->Cell(-178);
+    $pdf->Cell(0, 15, $a_name);
+    $pdf->Ln(8);
+
+    $pdf->Ln(15);
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(1);
+    $pdf->Cell(0, -23, 'Last Updated: ');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->Cell(-163);
+    $pdf->Cell(0, -23, $time_updated);
+    $pdf->Ln(1);
+
+//Table
+
+    if(!empty($bancalData) && !empty($slexData)){
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'Bancal Junction');
+        $pdf->Ln(8);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->Ln(2);
+
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'SLEX Carmona');
+        $pdf->Ln(8);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
+        $pdf->Ln(2);
+    }else if(!empty($bancalData) && empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
+        $pdf->Ln(2);
+    }
+    else if(empty($bancalData) && !empty($slexData)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
         $pdf->Ln(2);
     }
 
