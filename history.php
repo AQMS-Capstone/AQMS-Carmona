@@ -41,7 +41,7 @@ include('include/header.php');
                     <div>
                         <form method = "post" target="_blank" action="generatepdf.php">
                         <!--<form method = "post" action="generatepdf.php">-->
-                            <div id = "woah" class="input-field col s12">
+                            <div class="input-field col s12">
                                 <!--<select name = "drpArea" id = "drpArea" required onchange="getData(this.value)">-->
                                 <select name = "drpArea" id = "drpArea" required>
                                     <option value="" disabled selected>Select an area</option>
@@ -80,6 +80,16 @@ include('include/header.php');
                                     </p>
 
                                 </div>
+                            </div>
+
+                            <div  class="input-field col s12">
+                                <select name = "drpType" id = "drpType" required>
+                                    <option value="" disabled selected>Select a report type</option>
+                                    <option value="1">Raw Data</option>
+                                    <option value="2">AQI Based</option>
+                                    <option value="3">NAAQGV Based</option>
+                                </select>
+                                <label>Report Type</label>
                             </div>
 
                             <div class="input-field center col s12">
