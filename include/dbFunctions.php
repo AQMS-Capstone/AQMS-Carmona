@@ -1272,7 +1272,7 @@ class GPDF{
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
             }
 
-            array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision). ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+            array_push($slexData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision). ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
 
             array_push($slexData1, $array_holder_slex[$i]->timestamp);
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
