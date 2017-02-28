@@ -812,6 +812,10 @@ function Generate($name)
       }
     }else{
       $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, -3);
+
+      if(in_array(-2, $area_generate->aqi_values)){
+        $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, -2);
+      }
     }
   }else{
     $area_generate->prevalentIndex = array_keys($area_generate->aqi_values, max($area_generate->aqi_values));

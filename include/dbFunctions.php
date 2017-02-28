@@ -499,6 +499,8 @@ class GPDF{
 
             if($cv == -1){
                 $aqi = "-";
+            }else if($cv > $co_max){
+                $aqi = "400+";
             }else{
                 $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
             }
@@ -521,6 +523,8 @@ class GPDF{
 
             if($cv == -1){
                 $aqi = "-";
+            }else if($cv > $co_max){
+                $aqi = "400+";
             }else{
                 $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
             }
@@ -536,7 +540,7 @@ class GPDF{
             array_push($slexData1, $array_holder_slex[$i]->timestamp);
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
         }
-        
+
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
@@ -767,7 +771,9 @@ class GPDF{
     function determineAQICategory($aqi){
         if($aqi == "-"){
             return "-";
-        }else if($aqi >= 0 && $aqi <= 50){
+        }else if($aqi == "-2"){
+            return "Emergency";
+        } else if($aqi >= 0 && $aqi <= 50){
             return "Good";
         }else if($aqi >= 51 && $aqi <= 100)
         {
