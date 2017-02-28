@@ -86,8 +86,8 @@ include('include/header.php');
                                 <select name = "drpType" id = "drpType" required>
                                     <option value="" disabled selected>Select a report type</option>
                                     <option value="1">Raw Data</option>
-                                    <option value="2">AQI Based</option>
-                                    <option value="3">NAAQGV Based</option>
+                                    <option value="2">Averaged - AQI Based</option>
+                                    <option value="3">Averaged - NAAQGV Based</option>
                                 </select>
                                 <label>Report Type</label>
                             </div>

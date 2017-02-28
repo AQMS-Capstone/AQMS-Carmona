@@ -517,9 +517,9 @@ function CreateTableCO_AQI($a_name, $time_updated, $bancalData, $slexData, $banc
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'CO (AQI)', 'CO (Category)');
+        $header = array('Timestamp', 'CO (Hourly ppm)', 'CO (Avg 8hr ppm)', 'CO (AQI)', 'CO (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $bancalDataSet);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
         $pdf->Ln(2);
 
 
@@ -529,24 +529,24 @@ function CreateTableCO_AQI($a_name, $time_updated, $bancalData, $slexData, $banc
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'CO (AQI)', 'CO (Category)');
+        $header = array('Timestamp', 'CO (Hourly ppm)', 'CO (Avg 8hr ppm)', 'CO (AQI)', 'CO (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $slexDataSet);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
         $pdf->Ln(2);
     }else if(!empty($bancalData) && empty($slexData)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'CO (AQI)', 'CO (Category)');
+        $header = array('Timestamp', 'CO (Hourly ppm)', 'CO (Avg 8hr ppm)', 'CO (AQI)', 'CO (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $bancalDataSet);
+        $pdf->BasicTable_AQI($header, $bancalDataSet);
         $pdf->Ln(2);
     }
     else if(empty($bancalData) && !empty($slexData)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'CO (AQI)', 'CO (Category)');
+        $header = array('Timestamp', 'CO (Hourly ppm)', 'CO (Avg 8hr ppm)', 'CO (AQI)', 'CO (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $slexDataSet);
+        $pdf->BasicTable_AQI($header, $slexDataSet);
         $pdf->Ln(2);
     }
 

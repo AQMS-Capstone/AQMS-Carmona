@@ -27,6 +27,28 @@ class PDF extends FPDF
 
     }
 
+    function BasicTable_AQI($header, $data)
+    {
+        // Header
+        $this->Cell(5);
+        foreach ($header as $col) {
+            $this->SetFont('helvetica', 'B', 10);
+
+            $this->Cell(36, 7, $col, 1, 0, 'C');
+        }
+        $this->Ln();
+        // Data
+        foreach ($data as $row) {
+            $this->Cell(5);
+            $this->SetFont('helvetica', '', 10);
+            foreach ($row as $col)
+                $this->Cell(36, 6, $col, 1, 0, 'C');
+            $this->Ln();
+
+        }
+
+    }
+
 // Page header
     function Header()
     {
@@ -473,7 +495,7 @@ class GPDF{
 
         for($i = 0 ; $i < count($array_holder_bancal); $i++){
             $dates = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
-            $cv = $this->EightHrAveraging_AQI($array_holder_bancal, $dates);
+            $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 8);
 
             if($cv == -1){
                 $aqi = "-";
@@ -481,7 +503,13 @@ class GPDF{
                 $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
             }
 
-            array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = 1) . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
+            if($cv == -1){
+                $cv = "-";
+            }else{
+                $cv = $this->floorDec_AQI($cv, $precision = 1);
+            }
+
+            array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = 1) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
 
             array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
@@ -680,7 +708,7 @@ class GPDF{
         return $return_holder;
     }
 
-    function EightHrAveraging_AQI($data, $dates)
+    function Averaging_AQI($data, $dates, $hour)
     {
         $ave = 0;
         $ctr = 0;
@@ -692,7 +720,7 @@ class GPDF{
             }
         }
 
-        if($ctr >= (0.75 * 8)){
+        if($ctr >= (0.75 * $hour)){
             return $ave / $ctr;
         }else{
             return -1;
