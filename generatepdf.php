@@ -166,24 +166,6 @@ try {
                     $no2DataSet_slex[] = explode(';', trim($line));
                 }
             }
-            
-//            if(count($slexData1) != 0 && count($bancalData1) != 0) {
-//                if (strtotime($slexData1[0] > strtotime($bancalData1[0]))) {
-//                    $time_updated = $slexData1[0];
-//                } else {
-//                    $time_updated = $bancalData1[0];
-//                }
-//
-//                $a_name = "SLEX and Bancal, Carmona, Cavite";
-//
-//            }else if(count($slexData1) != 0 && count($bancalData1) == 0){
-//                $a_name = "SLEX, Carmona, Cavite";
-//                $time_updated = $slexData1[0];
-//
-//            }else if(count($slexData1) == 0 && count($bancalData1) != 0){
-//                $a_name = "Bancal, Carmona, Cavite";
-//                $time_updated = $bancalData1[0];
-//            }
 
             $a_name = "SLEX and Bancal, Carmona, Cavite";
             $time_updated = $timestamp;
