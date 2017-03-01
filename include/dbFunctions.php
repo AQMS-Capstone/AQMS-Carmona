@@ -345,7 +345,7 @@ class GPDF{
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("ss", $dFrom, $dTo);
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex) = $this->StoreAllPollutants_AQI($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_AQI($query);
         }
         else{
             $query = $con->prepare("SELECT * FROM MASTER
@@ -353,12 +353,12 @@ class GPDF{
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("sss", $a_name, $dFrom, $dTo);
 
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex) = $this->StoreAllPollutants_AQI($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_AQI($query);
         }
 
         $query->close();
         $con->close();
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex];
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
     }
 
     function GetPollutants_ambient($a_name, $dFrom, $dTo, $filterPollutant){
@@ -982,6 +982,21 @@ class GPDF{
             }
         }
 
+        $timestamp_1 = $element_holder_bancal->no2_holder[0]->timestamp;
+        $timestamp_2 = $element_holder_bancal->no2_holder[0]->timestamp;
+        $timestamp_3 = $element_holder_bancal->no2_holder[0]->timestamp;
+        $timestamp = $timestamp_1;
+
+        if(strtotime($timestamp_1) > strtotime($timestamp_2)){
+            $timestamp = $timestamp_1;
+        }else{
+            $timestamp = $timestamp_2;
+        }
+
+        if(strtotime($timestamp) < strtotime($timestamp_3)){
+            $timestamp = $timestamp_3;
+        }
+
         $result->free_result();
 
         $array_holder_bancal = array();
@@ -1035,7 +1050,7 @@ class GPDF{
             for($i = 0 ; $i < count($array_holder_bancal); $i++){
                 if($array_holder_bancal[$i]->e_id == "3"){
                     $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
-                    $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 1);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 1, $array_holder_bancal[$i]->e_id);
 
                     if($cv == -1){
                         $aqi = "-";
@@ -1058,7 +1073,7 @@ class GPDF{
                 }
                 else if($array_holder_bancal[$i]->e_id == "2"){
                     $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
-                    $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 24);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
 
                     if($cv == -1){
                         $aqi = "-";
@@ -1080,7 +1095,7 @@ class GPDF{
                 }
                 else if($array_holder_bancal[$i]->e_id == "1"){
                     $dates = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
-                    $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 8);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 8, $array_holder_bancal[$i]->e_id);
 
                     if($cv == -1){
                         $aqi = "-";
@@ -1106,7 +1121,7 @@ class GPDF{
         for($i = 0 ; $i < count($array_holder_slex); $i++){
             if($array_holder_slex[$i]->e_id == "3"){
                 $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
-                $cv = $this->Averaging_AQI($array_holder_slex, $dates, 1);
+                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
 
                 if($cv == -1){
                     $aqi = "-";
@@ -1129,7 +1144,7 @@ class GPDF{
             }
             else if($array_holder_slex[$i]->e_id == "2"){
                 $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
-                $cv = $this->Averaging_AQI($array_holder_slex, $dates, 24);
+                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
 
                 if($cv == -1){
                     $aqi = "-";
@@ -1151,7 +1166,7 @@ class GPDF{
             }
             else if($array_holder_slex[$i]->e_id == "1"){
                 $dates = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
-                $cv = $this->Averaging_AQI($array_holder_slex, $dates, 8);
+                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 8, $array_holder_slex[$i]->e_id);
 
                 if($cv == -1){
                     $aqi = "-";
@@ -1173,7 +1188,7 @@ class GPDF{
             }
         }
 
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex];
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
     }
 
     function CalculateAveraging_AQI($element){
@@ -1313,6 +1328,25 @@ class GPDF{
 
         for($i = 0; $i < count($data); $i++){
             if(in_array($data[$i]->timestamp, $dates)){
+                $ave += $data[$i]->concentration_value;
+                $ctr ++;
+            }
+        }
+
+        if($ctr >= (0.75 * $hour)){
+            return $ave / $ctr;
+        }else{
+            return -1;
+        }
+    }
+
+    function Averaging_AQI_ALL($data, $dates, $hour, $e_id)
+    {
+        $ave = 0;
+        $ctr = 0;
+
+        for($i = 0; $i < count($data); $i++){
+            if(in_array($data[$i]->timestamp, $dates) && $e_id == $data[$i]->e_id){
                 $ave += $data[$i]->concentration_value;
                 $ctr ++;
             }

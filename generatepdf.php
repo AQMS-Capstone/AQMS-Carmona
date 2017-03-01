@@ -122,7 +122,7 @@ try {
     }
     else if($reportType == "2"){
         if($filterPollutant == "4"){
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex) = $gpdf->GetPollutants_AQI_ALL($area, $dateFrom, $dateTo, $filterPollutant);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $gpdf->GetPollutants_AQI_ALL($area, $dateFrom, $dateTo, $filterPollutant);
 
             if(empty($coData_bancal) && empty($coData_bancal) && empty($no2Data_bancal) && empty($coData_slex) && empty($coData_slex) && empty($no2Data_slex)){
                 echo "<script>
@@ -166,8 +166,7 @@ try {
                     $no2DataSet_slex[] = explode(';', trim($line));
                 }
             }
-
-
+            
 //            if(count($slexData1) != 0 && count($bancalData1) != 0) {
 //                if (strtotime($slexData1[0] > strtotime($bancalData1[0]))) {
 //                    $time_updated = $slexData1[0];
@@ -186,8 +185,8 @@ try {
 //                $time_updated = $bancalData1[0];
 //            }
 
-            $a_name = "";
-            $time_updated = "";
+            $a_name = "SLEX and Bancal, Carmona, Cavite";
+            $time_updated = $timestamp;
 
             //------------------ GENERATING PDF -------------------------
 
@@ -380,8 +379,8 @@ function CreateTableCO($a_name, $time_updated, $bancalData, $slexData, $bancalDa
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -449,8 +448,8 @@ function CreateTableSO2($a_name, $time_updated, $bancalData, $slexData, $bancalD
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -518,8 +517,8 @@ function CreateTableNO2($a_name, $time_updated, $bancalData, $slexData, $bancalD
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -587,8 +586,8 @@ function CreateTableAllPollutants($a_name, $time_updated, $bancalData, $slexData
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -658,8 +657,8 @@ function CreateTableCO_AQI($a_name, $time_updated, $bancalData, $slexData, $banc
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -727,8 +726,8 @@ function CreateTableSO2_AQI($a_name, $time_updated, $bancalData, $slexData, $ban
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -796,8 +795,8 @@ function CreateTableNO2_AQI($a_name, $time_updated, $bancalData, $slexData, $ban
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -865,7 +864,7 @@ function CreateTableAllPollutants_AQI($a_name, $time_updated, $coDataSet_bancal,
     if(!empty($coDataSet_bancal) || !empty($so2DataSet_bancal) || !empty($no2DataSet_bancal)){
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(0, -5, 'Bancal Junction');
-        $pdf->Ln(3);
+        $pdf->Ln(1);
     }
 
     if(!empty($coDataSet_bancal)){
@@ -1001,8 +1000,8 @@ function CreateTableCO_ambient($a_name, $time_updated, $bancalData, $slexData, $
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -1070,8 +1069,8 @@ function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -1139,8 +1138,8 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(1);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
