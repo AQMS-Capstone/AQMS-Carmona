@@ -121,76 +121,150 @@ try {
         }
     }
     else if($reportType == "2"){
-        list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants_AQI($area, $dateFrom, $dateTo, $filterPollutant);
+        if($filterPollutant == "4"){
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex) = $gpdf->GetPollutants_AQI_ALL($area, $dateFrom, $dateTo, $filterPollutant);
 
-        if(empty($bancalData) && empty($slexData))
-        {
-            echo "<script>
+            if(empty($coData_bancal) && empty($coData_bancal) && empty($no2Data_bancal) && empty($coData_slex) && empty($coData_slex) && empty($no2Data_slex)){
+                echo "<script>
                 alert('There are no data available to generate a report');
                </script>";
-            echo "<script>window.close();</script>";
-        }
+                echo "<script>window.close();</script>";
+            }
 
-        if(!empty($slexData) && empty($bancalData)){
-            foreach ($slexData as $line) {
-                # code...
-                $slexDataSet[] = explode(';', trim($line));
+            if(!empty($coData_bancal)){
+                foreach ($coData_bancal as $line) {
+                    $coDataSet_bancal[] = explode(';', trim($line));
+                }
             }
-        }
-        else if(empty($slexData) && !empty($bancalData)){
-            foreach ($bancalData as $line) {
-                # code...
-                $bancalDataSet[] = explode(';', trim($line));
+
+            if(!empty($so2Data_bancal)){
+                foreach ($so2Data_bancal as $line) {
+                    $so2DataSet_bancal[] = explode(';', trim($line));
+                }
             }
+
+            if(!empty($no2Data_bancal)){
+                foreach ($no2Data_bancal as $line) {
+                    $no2DataSet_bancal[] = explode(';', trim($line));
+                }
+            }
+
+            if(!empty($coData_slex)){
+                foreach ($coData_slex as $line) {
+                    $coDataSet_slex[] = explode(';', trim($line));
+                }
+            }
+
+            if(!empty($so2Data_slex)){
+                foreach ($so2Data_slex as $line) {
+                    $so2DataSet_slex[] = explode(';', trim($line));
+                }
+            }
+
+            if(!empty($no2Data_slex)){
+                foreach ($no2Data_slex as $line) {
+                    $no2DataSet_slex[] = explode(';', trim($line));
+                }
+            }
+
+
+//            if(count($slexData1) != 0 && count($bancalData1) != 0) {
+//                if (strtotime($slexData1[0] > strtotime($bancalData1[0]))) {
+//                    $time_updated = $slexData1[0];
+//                } else {
+//                    $time_updated = $bancalData1[0];
+//                }
+//
+//                $a_name = "SLEX and Bancal, Carmona, Cavite";
+//
+//            }else if(count($slexData1) != 0 && count($bancalData1) == 0){
+//                $a_name = "SLEX, Carmona, Cavite";
+//                $time_updated = $slexData1[0];
+//
+//            }else if(count($slexData1) == 0 && count($bancalData1) != 0){
+//                $a_name = "Bancal, Carmona, Cavite";
+//                $time_updated = $bancalData1[0];
+//            }
+
+            $a_name = "";
+            $time_updated = "";
+
+            //------------------ GENERATING PDF -------------------------
+
+            CreateTableAllPollutants_AQI($a_name, $time_updated, $coDataSet_bancal, $so2DataSet_bancal, $no2DataSet_bancal, $coDataSet_slex, $so2DataSet_slex, $no2DataSet_slex, $filename);
         }
         else{
-            foreach ($slexData as $line) {
-                # code...
-                $slexDataSet[] = explode(';', trim($line));
+            list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants_AQI($area, $dateFrom, $dateTo, $filterPollutant);
+
+            if(empty($bancalData) && empty($slexData))
+            {
+                echo "<script>
+                alert('There are no data available to generate a report');
+               </script>";
+                echo "<script>window.close();</script>";
             }
 
-            foreach ($bancalData as $line) {
-                # code...
-                $bancalDataSet[] = explode(';', trim($line));
+            if(!empty($slexData) && empty($bancalData)){
+                foreach ($slexData as $line) {
+                    # code...
+                    $slexDataSet[] = explode(';', trim($line));
+                }
             }
-        }
+            else if(empty($slexData) && !empty($bancalData)){
+                foreach ($bancalData as $line) {
+                    # code...
+                    $bancalDataSet[] = explode(';', trim($line));
+                }
+            }
+            else{
+                foreach ($slexData as $line) {
+                    # code...
+                    $slexDataSet[] = explode(';', trim($line));
+                }
 
-        if(count($slexData1) != 0 && count($bancalData1) != 0) {
-            if (strtotime($slexData1[0] > strtotime($bancalData1[0]))) {
+                foreach ($bancalData as $line) {
+                    # code...
+                    $bancalDataSet[] = explode(';', trim($line));
+                }
+            }
+
+            if(count($slexData1) != 0 && count($bancalData1) != 0) {
+                if (strtotime($slexData1[0] > strtotime($bancalData1[0]))) {
+                    $time_updated = $slexData1[0];
+                } else {
+                    $time_updated = $bancalData1[0];
+                }
+
+                $a_name = "SLEX and Bancal, Carmona, Cavite";
+
+            }else if(count($slexData1) != 0 && count($bancalData1) == 0){
+                $a_name = "SLEX, Carmona, Cavite";
                 $time_updated = $slexData1[0];
-            } else {
+
+            }else if(count($slexData1) == 0 && count($bancalData1) != 0){
+                $a_name = "Bancal, Carmona, Cavite";
                 $time_updated = $bancalData1[0];
             }
 
-            $a_name = "SLEX and Bancal, Carmona, Cavite";
+            //------------------ GENERATING PDF -------------------------
 
-        }else if(count($slexData1) != 0 && count($bancalData1) == 0){
-            $a_name = "SLEX, Carmona, Cavite";
-            $time_updated = $slexData1[0];
-
-        }else if(count($slexData1) == 0 && count($bancalData1) != 0){
-            $a_name = "Bancal, Carmona, Cavite";
-            $time_updated = $bancalData1[0];
-        }
-
-        //------------------ GENERATING PDF -------------------------
-
-        switch($filterPollutant){
-            case 1:{
-                CreateTableCO_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
-                break;
-            }
-            case 2:{
-                CreateTableSO2_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
-                break;
-            }
-            case 3:{
-                CreateTableNO2_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
-                break;
-            }
-            case 4:{
-                //CreateTableAllPollutants($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
-                break;
+            switch($filterPollutant){
+                case 1:{
+                    CreateTableCO_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                    break;
+                }
+                case 2:{
+                    CreateTableSO2_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                    break;
+                }
+                case 3:{
+                    CreateTableNO2_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                    break;
+                }
+                case 4:{
+                    //CreateTableAllPollutants($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                    break;
+                }
             }
         }
     }
@@ -763,7 +837,7 @@ function CreateTableNO2_AQI($a_name, $time_updated, $bancalData, $slexData, $ban
     $pdf->Output('I', $filename);
 }
 
-function CreateTableAllPollutants_AQI($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename){
+function CreateTableAllPollutants_AQI($a_name, $time_updated, $coDataSet_bancal, $so2DataSet_bancal, $no2DataSet_bancal, $coDataSet_slex, $so2DataSet_slex, $no2DataSet_slex, $filename){
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
@@ -788,46 +862,113 @@ function CreateTableAllPollutants_AQI($a_name, $time_updated, $bancalData, $slex
 
 //Table
 
-    if(!empty($bancalData) && !empty($slexData)){
-
+    if(!empty($coDataSet_bancal) || !empty($so2DataSet_bancal) || !empty($no2DataSet_bancal)){
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 10, 'Bancal Junction');
-        $pdf->Ln(8);
+        $pdf->Cell(0, -5, 'Bancal Junction');
+        $pdf->Ln(3);
+    }
 
+    if(!empty($coDataSet_bancal)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+        $header = array('Timestamp', 'CO (Hourly ppm)', 'CO (Avg 8hr ppm)', 'CO (AQI)', 'CO (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $bancalDataSet);
+        $pdf->BasicTable_AQI($header, $coDataSet_bancal);
         $pdf->Ln(2);
+    }
 
+    if(!empty($so2DataSet_bancal)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $so2DataSet_bancal);
+        $pdf->Ln(2);
+    }
 
+    if(!empty($no2DataSet_bancal)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $no2DataSet_bancal);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($coDataSet_slex) || !empty($so2DataSet_slex) || !empty($no2DataSet_slex)){
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(0, 10, 'SLEX Carmona');
         $pdf->Ln(8);
+    }
 
+    if(!empty($coDataSet_slex)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+        $header = array('Timestamp', 'CO (Hourly ppm)', 'CO (Avg 8hr ppm)', 'CO (AQI)', 'CO (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $slexDataSet);
-        $pdf->Ln(2);
-    }else if(!empty($bancalData) && empty($slexData)){
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $bancalDataSet);
+        $pdf->BasicTable_AQI($header, $coDataSet_slex);
         $pdf->Ln(2);
     }
-    else if(empty($bancalData) && !empty($slexData)){
+
+    if(!empty($so2DataSet_slex)){
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+        $header = array('Timestamp', 'SO2 (Hourly ppm)', 'SO2 (Avg 24hr ppm)', 'SO2 (AQI)', 'SO2 (Category)');
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable($header, $slexDataSet);
+        $pdf->BasicTable_AQI($header, $so2DataSet_slex);
         $pdf->Ln(2);
     }
+
+    if(!empty($no2DataSet_slex)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Timestamp', 'NO2 (Hourly ppm)', 'NO2 (Avg 1hr ppm)', 'NO2 (AQI)', 'NO2 (Category)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $no2DataSet_slex);
+        $pdf->Ln(2);
+    }
+
+
+//    if(!empty($bancalData) && !empty($slexData)){
+//
+//        $pdf->SetFont('helvetica', 'B', 10);
+//        $pdf->Cell(0, 10, 'Bancal Junction');
+//        $pdf->Ln(8);
+//
+//        $pdf->SetTextColor(0, 0, 0);
+//        $pdf->SetFont('helvetica', 'B', 10);
+//        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+//        $pdf->SetFont('helvetica', '', 10);
+//        $pdf->BasicTable($header, $bancalDataSet);
+//        $pdf->Ln(2);
+//
+//
+//        $pdf->SetFont('helvetica', 'B', 10);
+//        $pdf->Cell(0, 10, 'SLEX Carmona');
+//        $pdf->Ln(8);
+//
+//        $pdf->SetTextColor(0, 0, 0);
+//        $pdf->SetFont('helvetica', 'B', 10);
+//        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+//        $pdf->SetFont('helvetica', '', 10);
+//        $pdf->BasicTable($header, $slexDataSet);
+//        $pdf->Ln(2);
+//    }else if(!empty($bancalData) && empty($slexData)){
+//        $pdf->SetTextColor(0, 0, 0);
+//        $pdf->SetFont('helvetica', 'B', 10);
+//        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+//        $pdf->SetFont('helvetica', '', 10);
+//        $pdf->BasicTable($header, $bancalDataSet);
+//        $pdf->Ln(2);
+//    }
+//    else if(empty($bancalData) && !empty($slexData)){
+//        $pdf->SetTextColor(0, 0, 0);
+//        $pdf->SetFont('helvetica', 'B', 10);
+//        $header = array('Timestamp', 'CO (ppm)', 'SO2 (ppm)', 'NO2 (ppm)');
+//        $pdf->SetFont('helvetica', '', 10);
+//        $pdf->BasicTable($header, $slexDataSet);
+//        $pdf->Ln(2);
+//    }
 
     $pdf->Output('I', $filename);
 }
