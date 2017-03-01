@@ -145,9 +145,11 @@ class AreaFunction_AQI{
     var $no2_holder = array();
 }
 
-class GPDF{
+class GPDF
+{
 
-    function GetPollutants($a_name, $dFrom, $dTo, $filterPollutant){
+    function GetPollutants($a_name, $dFrom, $dTo, $filterPollutant)
+    {
 
         include('include/db_connect.php');
 
@@ -156,9 +158,9 @@ class GPDF{
         $bancalData1 = array();
         $slexData1 = array();
 
-        if($a_name == "All"){
-            switch($filterPollutant){
-                case 1:{
+        if ($a_name == "All") {
+            switch ($filterPollutant) {
+                case 1: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -166,7 +168,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant($query);
                     break;
                 }
-                case 2:{
+                case 2: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -174,7 +176,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant($query);
                     break;
                 }
-                case 3:{
+                case 3: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -182,7 +184,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant($query);
                     break;
                 }
-                case 4:{
+                case 4: {
                     $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -192,10 +194,9 @@ class GPDF{
                 }
             }
 
-        }
-        else{
-            switch($filterPollutant){
-                case 1:{
+        } else {
+            switch ($filterPollutant) {
+                case 1: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -203,7 +204,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant($query);
                     break;
                 }
-                case 2:{
+                case 2: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -211,7 +212,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant($query);
                     break;
                 }
-                case 3:{
+                case 3: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -219,7 +220,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant($query);
                     break;
                 }
-                case 4:{
+                case 4: {
                     $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -238,7 +239,8 @@ class GPDF{
 
     }
 
-    function GetPollutants_AQI($a_name, $dFrom, $dTo, $filterPollutant){
+    function GetPollutants_AQI($a_name, $dFrom, $dTo, $filterPollutant)
+    {
 
         include('include/db_connect.php');
 
@@ -247,9 +249,9 @@ class GPDF{
         $bancalData1 = array();
         $slexData1 = array();
 
-        if($a_name == "All"){
-            switch($filterPollutant){
-                case 1:{
+        if ($a_name == "All") {
+            switch ($filterPollutant) {
+                case 1: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -257,7 +259,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant_AQI($query);
                     break;
                 }
-                case 2:{
+                case 2: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -265,7 +267,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant_AQI($query);
                     break;
                 }
-                case 3:{
+                case 3: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -273,7 +275,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant_AQI($query);
                     break;
                 }
-                case 4:{
+                case 4: {
                     $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -283,10 +285,9 @@ class GPDF{
                 }
             }
 
-        }
-        else{
-            switch($filterPollutant){
-                case 1:{
+        } else {
+            switch ($filterPollutant) {
+                case 1: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -294,7 +295,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant_AQI($query);
                     break;
                 }
-                case 2:{
+                case 2: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -302,7 +303,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant_AQI($query);
                     break;
                 }
-                case 3:{
+                case 3: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -310,7 +311,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant_AQI($query);
                     break;
                 }
-                case 4:{
+                case 4: {
                     $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -329,7 +330,8 @@ class GPDF{
 
     }
 
-    function GetPollutants_AQI_ALL($a_name, $dFrom, $dTo, $filterPollutant){
+    function GetPollutants_AQI_ALL($a_name, $dFrom, $dTo, $filterPollutant)
+    {
 
         include('include/db_connect.php');
 
@@ -340,14 +342,13 @@ class GPDF{
         $so2Data_slex = array();
         $no2Data_slex = array();
 
-        if($a_name == "All"){
+        if ($a_name == "All") {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("ss", $dFrom, $dTo);
             list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_AQI($query);
-        }
-        else{
+        } else {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -361,7 +362,8 @@ class GPDF{
         return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
     }
 
-    function GetPollutants_ambient($a_name, $dFrom, $dTo, $filterPollutant){
+    function GetPollutants_ambient($a_name, $dFrom, $dTo, $filterPollutant)
+    {
 
         include('include/db_connect.php');
 
@@ -370,9 +372,9 @@ class GPDF{
         $bancalData1 = array();
         $slexData1 = array();
 
-        if($a_name == "All"){
-            switch($filterPollutant){
-                case 1:{
+        if ($a_name == "All") {
+            switch ($filterPollutant) {
+                case 1: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -380,7 +382,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant_ambient($query);
                     break;
                 }
-                case 2:{
+                case 2: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -388,7 +390,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant_ambient($query);
                     break;
                 }
-                case 3:{
+                case 3: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -396,7 +398,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant_ambient($query);
                     break;
                 }
-                case 4:{
+                case 4: {
                     $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -406,10 +408,9 @@ class GPDF{
                 }
             }
 
-        }
-        else{
-            switch($filterPollutant){
-                case 1:{
+        } else {
+            switch ($filterPollutant) {
+                case 1: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, CO FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -417,7 +418,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant_ambient($query);
                     break;
                 }
-                case 2:{
+                case 2: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, SO2 FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -425,7 +426,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant_ambient($query);
                     break;
                 }
-                case 3:{
+                case 3: {
                     $query = $con->prepare("SELECT AREA_NAME, TIMESTAMP, NO2 FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -433,7 +434,7 @@ class GPDF{
                     list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant_ambient($query);
                     break;
                 }
-                case 4:{
+                case 4: {
                     $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
@@ -452,7 +453,40 @@ class GPDF{
 
     }
 
-    function StoreCOPollutant($query){
+    function GetPollutants_ambient_ALL($a_name, $dFrom, $dTo, $filterPollutant)
+    {
+
+        include('include/db_connect.php');
+
+        $coData_bancal = array();
+        $so2Data_bancal = array();
+        $no2Data_bancal = array();
+        $coData_slex = array();
+        $so2Data_slex = array();
+        $no2Data_slex = array();
+
+        if ($a_name == "All") {
+            $query = $con->prepare("SELECT * FROM MASTER
+                          WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+            $query->bind_param("ss", $dFrom, $dTo);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_ambient($query);
+        } else {
+            $query = $con->prepare("SELECT * FROM MASTER
+                          WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
+                          ORDER BY TIMESTAMP DESC");
+            $query->bind_param("sss", $a_name, $dFrom, $dTo);
+
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_ambient($query);
+        }
+
+        $query->close();
+        $con->close();
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
+    }
+
+    function StoreCOPollutant($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -464,17 +498,16 @@ class GPDF{
         $result = $query;
         while ($result->fetch()) {
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 array_push($bancalData, $timestamp . ';' . $CO);
 
                 array_push($bancalData1, $timestamp);
                 array_push($bancalData1, $CO);
 
-            }
-            else{
+            } else {
                 array_push($slexData, $timestamp . ';' . $CO);
 
-                array_push($slexData1,$timestamp);
+                array_push($slexData1, $timestamp);
                 array_push($slexData1, $CO);
 
             }
@@ -484,7 +517,8 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function StoreSO2Pollutant($query){
+    function StoreSO2Pollutant($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -492,21 +526,20 @@ class GPDF{
 
         $query->execute();
         $query->store_result();
-        $query->bind_result($area_name,$timestamp, $SO2);
+        $query->bind_result($area_name, $timestamp, $SO2);
         $result = $query;
         while ($result->fetch()) {
 
-            if($area_name == "bancal"){
-                array_push($bancalData, $timestamp .  ';' . $SO2);
+            if ($area_name == "bancal") {
+                array_push($bancalData, $timestamp . ';' . $SO2);
 
                 array_push($bancalData1, $timestamp);
                 array_push($bancalData1, $SO2);
 
-            }
-            else{
-                array_push($slexData, $timestamp .  ';' . $SO2);
+            } else {
+                array_push($slexData, $timestamp . ';' . $SO2);
 
-                array_push($slexData1,$timestamp);
+                array_push($slexData1, $timestamp);
                 array_push($slexData1, $SO2);
 
             }
@@ -518,7 +551,8 @@ class GPDF{
 
     }
 
-    function StoreNO2Pollutant($query){
+    function StoreNO2Pollutant($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -530,17 +564,16 @@ class GPDF{
         $result = $query;
         while ($result->fetch()) {
 
-            if($area_name == "bancal"){
-                array_push($bancalData, $timestamp . ';' .  $NO2);
+            if ($area_name == "bancal") {
+                array_push($bancalData, $timestamp . ';' . $NO2);
 
                 array_push($bancalData1, $timestamp);
                 array_push($bancalData1, $NO2);
 
-            }
-            else{
-                array_push($slexData, $timestamp . ';' .  $NO2);
+            } else {
+                array_push($slexData, $timestamp . ';' . $NO2);
 
-                array_push($slexData1,$timestamp);
+                array_push($slexData1, $timestamp);
                 array_push($slexData1, $NO2);
 
             }
@@ -552,7 +585,8 @@ class GPDF{
 
     }
 
-    function StoreAllPollutants($query){
+    function StoreAllPollutants($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -564,19 +598,18 @@ class GPDF{
         $result = $query;
         while ($result->fetch()) {
 
-            if($area_name == "bancal"){
-                array_push($bancalData, $timestamp . ';' . $CO . ';' . $SO2 . ';' .  $NO2);
+            if ($area_name == "bancal") {
+                array_push($bancalData, $timestamp . ';' . $CO . ';' . $SO2 . ';' . $NO2);
 
                 array_push($bancalData1, $timestamp);
                 array_push($bancalData1, $CO);
                 array_push($bancalData1, $SO2);
                 array_push($bancalData1, $NO2);
 
-            }
-            else{
-                array_push($slexData, $timestamp . ';' . $CO . ';' . $SO2 . ';' .  $NO2);
+            } else {
+                array_push($slexData, $timestamp . ';' . $CO . ';' . $SO2 . ';' . $NO2);
 
-                array_push($slexData1,$timestamp);
+                array_push($slexData1, $timestamp);
                 array_push($slexData1, $CO);
                 array_push($slexData1, $SO2);
                 array_push($slexData1, $NO2);
@@ -594,7 +627,8 @@ class GPDF{
     //$this->floorDec_AQI($array_holder[$i]->concentration_value, $precision = 1)
     //$array_holder[$i]->concentration_value
 
-    function StoreCOPollutant_AQI($query){
+    function StoreCOPollutant_AQI($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -611,14 +645,13 @@ class GPDF{
         while ($result->fetch()) {
             $dataClass_co = new Master_AQI_2();
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass_co->area_name = "bancal";
                 $dataClass_co->timestamp = $timestamp;
                 $dataClass_co->concentration_value = $CO;
 
                 array_push($element_holder_bancal->co_holder, $dataClass_co);
-            }
-            else{
+            } else {
                 $dataClass_co->area_name = "slex";
                 $dataClass_co->timestamp = $timestamp;
                 $dataClass_co->concentration_value = $CO;
@@ -632,37 +665,37 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->co_holder) > 0){
+        if (count($element_holder_bancal->co_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI($element_holder_bancal->co_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->co_holder) > 0){
-            $data_holder =  $this->CalculateAveraging_AQI($element_holder_slex->co_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+        if (count($element_holder_slex->co_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI($element_holder_slex->co_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 8);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $aqi = "-";
-            }else if($cv > $co_max){
+            } else if ($cv > $co_max) {
                 $aqi = "400+";
-            }else{
+            } else {
                 $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
             }
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = 1);
             }
 
@@ -672,21 +705,21 @@ class GPDF{
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
             $dates = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_slex, $dates, 8);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $aqi = "-";
-            }else if($cv > $co_max){
+            } else if ($cv > $co_max) {
                 $aqi = "400+";
-            }else{
+            } else {
                 $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
             }
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = 1);
             }
 
@@ -699,7 +732,8 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function StoreSO2Pollutant_AQI($query){
+    function StoreSO2Pollutant_AQI($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -716,14 +750,13 @@ class GPDF{
         while ($result->fetch()) {
             $dataClass = new Master_AQI_2();
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass->area_name = "bancal";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $SO2;
 
                 array_push($element_holder_bancal->so2_holder, $dataClass);
-            }
-            else{
+            } else {
                 $dataClass->area_name = "slex";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $SO2;
@@ -737,37 +770,37 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->so2_holder) > 0){
+        if (count($element_holder_bancal->so2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI($element_holder_bancal->so2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->so2_holder) > 0){
-            $data_holder =  $this->CalculateAveraging_AQI($element_holder_slex->so2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+        if (count($element_holder_slex->so2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI($element_holder_slex->so2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 24);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $aqi = "-";
-            }else if($cv > $sulfur_max){
+            } else if ($cv > $sulfur_max) {
                 $aqi = "400+";
-            }else{
+            } else {
                 $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
             }
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
             }
 
@@ -777,21 +810,21 @@ class GPDF{
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_slex, $dates, 24);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $aqi = "-";
-            }else if($cv > $sulfur_max){
+            } else if ($cv > $sulfur_max) {
                 $aqi = "400+";
-            }else{
+            } else {
                 $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
             }
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
             }
 
@@ -804,7 +837,8 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function StoreNO2Pollutant_AQI($query){
+    function StoreNO2Pollutant_AQI($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -821,14 +855,13 @@ class GPDF{
         while ($result->fetch()) {
             $dataClass = new Master_AQI_2();
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass->area_name = "bancal";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $NO2;
 
                 array_push($element_holder_bancal->no2_holder, $dataClass);
-            }
-            else{
+            } else {
                 $dataClass->area_name = "slex";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $NO2;
@@ -842,39 +875,39 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->no2_holder) > 0){
+        if (count($element_holder_bancal->no2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI($element_holder_bancal->no2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->no2_holder) > 0){
-            $data_holder =  $this->CalculateAveraging_AQI($element_holder_slex->no2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+        if (count($element_holder_slex->no2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI($element_holder_slex->no2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 1);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $aqi = "-";
-            }else if($cv > $no2_max){
+            } else if ($cv > $no2_max) {
                 $aqi = "400+";
-            }else if($cv < 0.65){
+            } else if ($cv < 0.65) {
                 $aqi = "201-";
-            }else{
+            } else {
                 $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
             }
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
             }
 
@@ -884,23 +917,23 @@ class GPDF{
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
             $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_slex, $dates, 1);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $aqi = "-";
-            }else if($cv > $no2_max){
+            } else if ($cv > $no2_max) {
                 $aqi = "400+";
-            }else if($cv < 0.65){
+            } else if ($cv < 0.65) {
                 $aqi = "201-";
-            }else{
+            } else {
                 $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
             }
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
             }
 
@@ -913,7 +946,8 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function StoreAllPollutants_AQI($query){
+    function StoreAllPollutants_AQI($query)
+    {
         $coData_bancal = array();
         $so2Data_bancal = array();
         $no2Data_bancal = array();
@@ -930,7 +964,7 @@ class GPDF{
         $element_holder_slex = new AreaFunction_AQI();
 
         while ($result->fetch()) {
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass = new Master_AQI_ALL();
 
                 $dataClass->area_name = "bancal";
@@ -954,8 +988,7 @@ class GPDF{
                 $dataClass->concentration_value = $CO;
                 $dataClass->e_id = "1";
                 array_push($element_holder_bancal->co_holder, $dataClass);
-            }
-            else{
+            } else {
                 $dataClass = new Master_AQI_ALL();
 
                 $dataClass->area_name = "slex";
@@ -987,13 +1020,13 @@ class GPDF{
         $timestamp_3 = $element_holder_bancal->no2_holder[0]->timestamp;
         $timestamp = $timestamp_1;
 
-        if(strtotime($timestamp_1) > strtotime($timestamp_2)){
+        if (strtotime($timestamp_1) > strtotime($timestamp_2)) {
             $timestamp = $timestamp_1;
-        }else{
+        } else {
             $timestamp = $timestamp_2;
         }
 
-        if(strtotime($timestamp) < strtotime($timestamp_3)){
+        if (strtotime($timestamp) < strtotime($timestamp_3)) {
             $timestamp = $timestamp_3;
         }
 
@@ -1002,112 +1035,110 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->no2_holder) > 0){
+        if (count($element_holder_bancal->no2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_bancal->no2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_bancal->so2_holder) > 0){
+        if (count($element_holder_bancal->so2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_bancal->so2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_bancal->co_holder) > 0){
+        if (count($element_holder_bancal->co_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_bancal->co_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->no2_holder) > 0){
+        if (count($element_holder_slex->no2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_slex->no2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->so2_holder) > 0){
+        if (count($element_holder_slex->so2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_slex->so2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->co_holder) > 0){
+        if (count($element_holder_slex->co_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_slex->co_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
-            for($i = 0 ; $i < count($array_holder_bancal); $i++){
-                if($array_holder_bancal[$i]->e_id == "3"){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
+            for ($i = 0; $i < count($array_holder_bancal); $i++) {
+                if ($array_holder_bancal[$i]->e_id == "3") {
                     $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
                     $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 1, $array_holder_bancal[$i]->e_id);
 
-                    if($cv == -1){
+                    if ($cv == -1) {
                         $aqi = "-";
-                    }else if($cv > $no2_max){
+                    } else if ($cv > $no2_max) {
                         $aqi = "400+";
-                    }else if($cv < 0.65){
+                    } else if ($cv < 0.65) {
                         $aqi = "201-";
-                    }else{
+                    } else {
                         $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
                     }
 
-                    if($cv == -1){
+                    if ($cv == -1) {
                         $cv = "-";
-                    }else{
+                    } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
                     }
 
                     array_push($no2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
                     //array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
-                }
-                else if($array_holder_bancal[$i]->e_id == "2"){
+                } else if ($array_holder_bancal[$i]->e_id == "2") {
                     $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
                     $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
 
-                    if($cv == -1){
+                    if ($cv == -1) {
                         $aqi = "-";
-                    }else if($cv > $sulfur_max){
+                    } else if ($cv > $sulfur_max) {
                         $aqi = "400+";
-                    }else{
+                    } else {
                         $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
                     }
 
-                    if($cv == -1){
+                    if ($cv == -1) {
                         $cv = "-";
-                    }else{
+                    } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
                     }
 
                     array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
 
                     //array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
-                }
-                else if($array_holder_bancal[$i]->e_id == "1"){
+                } else if ($array_holder_bancal[$i]->e_id == "1") {
                     $dates = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
                     $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 8, $array_holder_bancal[$i]->e_id);
 
-                    if($cv == -1){
+                    if ($cv == -1) {
                         $aqi = "-";
-                    }else if($cv > $co_max){
+                    } else if ($cv > $co_max) {
                         $aqi = "400+";
-                    }else{
+                    } else {
                         $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
                     }
 
-                    if($cv == -1){
+                    if ($cv == -1) {
                         $cv = "-";
-                    }else{
+                    } else {
                         $cv = $this->floorDec_AQI($cv, $precision = 1);
                     }
 
@@ -1118,67 +1149,65 @@ class GPDF{
             }
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
-            if($array_holder_slex[$i]->e_id == "3"){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
+            if ($array_holder_slex[$i]->e_id == "3") {
                 $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
                 $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
 
-                if($cv == -1){
+                if ($cv == -1) {
                     $aqi = "-";
-                }else if($cv > $no2_max){
+                } else if ($cv > $no2_max) {
                     $aqi = "400+";
-                }else if($cv < 0.65){
+                } else if ($cv < 0.65) {
                     $aqi = "201-";
-                }else{
+                } else {
                     $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
                 }
 
-                if($cv == -1){
+                if ($cv == -1) {
                     $cv = "-";
-                }else{
+                } else {
                     $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
                 }
 
                 array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
                 //array_push($slexData1, $array_holder_slex[$i]->timestamp);
-            }
-            else if($array_holder_slex[$i]->e_id == "2"){
+            } else if ($array_holder_slex[$i]->e_id == "2") {
                 $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
                 $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
 
-                if($cv == -1){
+                if ($cv == -1) {
                     $aqi = "-";
-                }else if($cv > $sulfur_max){
+                } else if ($cv > $sulfur_max) {
                     $aqi = "400+";
-                }else{
+                } else {
                     $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
                 }
 
-                if($cv == -1){
+                if ($cv == -1) {
                     $cv = "-";
-                }else{
+                } else {
                     $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
                 }
 
                 array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
 
                 //array_push($slexData1, $array_holder_slex[$i]->timestamp);
-            }
-            else if($array_holder_slex[$i]->e_id == "1"){
+            } else if ($array_holder_slex[$i]->e_id == "1") {
                 $dates = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
                 $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 8, $array_holder_slex[$i]->e_id);
 
-                if($cv == -1){
+                if ($cv == -1) {
                     $aqi = "-";
-                }else if($cv > $co_max){
+                } else if ($cv > $co_max) {
                     $aqi = "400+";
-                }else{
+                } else {
                     $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
                 }
 
-                if($cv == -1){
+                if ($cv == -1) {
                     $cv = "-";
-                }else{
+                } else {
                     $cv = $this->floorDec_AQI($cv, $precision = 1);
                 }
 
@@ -1191,19 +1220,20 @@ class GPDF{
         return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
     }
 
-    function CalculateAveraging_AQI($element){
+    function CalculateAveraging_AQI($element)
+    {
         date_default_timezone_set('Asia/Manila');
 
         $return_holder = array();
 
-        if(count($element) > 0) {
+        if (count($element) > 0) {
 
             $date = date("Y-m-d H:i:s", strtotime($element[0]->timestamp));
 
-            if(strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)).":01:00")){
+            if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)) . ":01:00")) {
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
                 $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
-            }else{
+            } else {
 
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
                 $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
@@ -1215,12 +1245,11 @@ class GPDF{
             for ($i = 0; $i < count($element); $i++) {
                 $date = $element[$i]->timestamp;
 
-                if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
+                if (strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)) {
                     $ave += $element[$i]->concentration_value;
                     $ctr++;
-                }
-                else{
-                    if($ctr > 0){
+                } else {
+                    if ($ctr > 0) {
                         $ave = $ave / $ctr;
                         $dateString = $ctr_timestamp_end;
                         array_push($return_holder, $this->AssignDataElements_AQI($element[$i]->area_name, $ave, $dateString));
@@ -1233,18 +1262,18 @@ class GPDF{
 
                         $date = date("Y-m-d H:i:s", strtotime($element[$i]->timestamp));
 
-                        if(strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)).":01:00")){
+                        if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)) . ":01:00")) {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
                             $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
-                        }else {
+                        } else {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
                             $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
                         }
                     }
                 }
 
-                if($i == count($element) - 1){
-                    if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
+                if ($i == count($element) - 1) {
+                    if (strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)) {
                         $ave = $ave / $ctr;
                         $dateString = $ctr_timestamp_end;
                         array_push($return_holder, $this->AssignDataElements_AQI($element[$i]->area_name, $ave, $dateString));
@@ -1256,19 +1285,20 @@ class GPDF{
         return $return_holder;
     }
 
-    function CalculateAveraging_AQI_ALL($element){
+    function CalculateAveraging_AQI_ALL($element)
+    {
         date_default_timezone_set('Asia/Manila');
 
         $return_holder = array();
 
-        if(count($element) > 0) {
+        if (count($element) > 0) {
 
             $date = date("Y-m-d H:i:s", strtotime($element[0]->timestamp));
 
-            if(strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)).":01:00")){
+            if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)) . ":01:00")) {
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
                 $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
-            }else{
+            } else {
 
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
                 $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
@@ -1280,12 +1310,11 @@ class GPDF{
             for ($i = 0; $i < count($element); $i++) {
                 $date = $element[$i]->timestamp;
 
-                if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
+                if (strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)) {
                     $ave += $element[$i]->concentration_value;
                     $ctr++;
-                }
-                else{
-                    if($ctr > 0){
+                } else {
+                    if ($ctr > 0) {
                         $ave = $ave / $ctr;
                         $dateString = $ctr_timestamp_end;
                         array_push($return_holder, $this->AssignDataElements_AQI_ALL($element[$i]->area_name, $ave, $dateString, $element[$i]->e_id));
@@ -1298,18 +1327,18 @@ class GPDF{
 
                         $date = date("Y-m-d H:i:s", strtotime($element[$i]->timestamp));
 
-                        if(strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)).":01:00")){
+                        if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)) . ":01:00")) {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
                             $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
-                        }else {
+                        } else {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
                             $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
                         }
                     }
                 }
 
-                if($i == count($element) - 1){
-                    if(strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)){
+                if ($i == count($element) - 1) {
+                    if (strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)) {
                         $ave = $ave / $ctr;
                         $dateString = $ctr_timestamp_end;
                         array_push($return_holder, $this->AssignDataElements_AQI_ALL($element[$i]->area_name, $ave, $dateString, $element[$i]->e_id));
@@ -1326,16 +1355,16 @@ class GPDF{
         $ave = 0;
         $ctr = 0;
 
-        for($i = 0; $i < count($data); $i++){
-            if(in_array($data[$i]->timestamp, $dates)){
+        for ($i = 0; $i < count($data); $i++) {
+            if (in_array($data[$i]->timestamp, $dates)) {
                 $ave += $data[$i]->concentration_value;
-                $ctr ++;
+                $ctr++;
             }
         }
 
-        if($ctr >= (0.75 * $hour)){
+        if ($ctr >= (0.75 * $hour)) {
             return $ave / $ctr;
-        }else{
+        } else {
             return -1;
         }
     }
@@ -1345,16 +1374,16 @@ class GPDF{
         $ave = 0;
         $ctr = 0;
 
-        for($i = 0; $i < count($data); $i++){
-            if(in_array($data[$i]->timestamp, $dates) && $e_id == $data[$i]->e_id){
+        for ($i = 0; $i < count($data); $i++) {
+            if (in_array($data[$i]->timestamp, $dates) && $e_id == $data[$i]->e_id) {
                 $ave += $data[$i]->concentration_value;
-                $ctr ++;
+                $ctr++;
             }
         }
 
-        if($ctr >= (0.75 * $hour)){
+        if ($ctr >= (0.75 * $hour)) {
             return $ave / $ctr;
-        }else{
+        } else {
             return -1;
         }
     }
@@ -1366,8 +1395,8 @@ class GPDF{
 
         date_default_timezone_set('Asia/Manila');
 
-        for($i = 0; $i < $limiter; $i++){
-            $date_beginning = date("Y-m-d H",strtotime($date) - $ctr).":00:00";
+        for ($i = 0; $i < $limiter; $i++) {
+            $date_beginning = date("Y-m-d H", strtotime($date) - $ctr) . ":00:00";
             $ctr += 3600;
 
             array_push($dates, $date_beginning);
@@ -1375,7 +1404,8 @@ class GPDF{
         return $dates;
     }
 
-    function AssignDataElements_AQI($area_name, $ave, $date){
+    function AssignDataElements_AQI($area_name, $ave, $date)
+    {
         $dataClass = new Master_AQI_2();
 
         $dataClass->area_name = $area_name;
@@ -1385,7 +1415,8 @@ class GPDF{
         return $dataClass;
     }
 
-    function AssignDataElements_AQI_ALL($area_name, $ave, $date, $e_id){
+    function AssignDataElements_AQI_ALL($area_name, $ave, $date, $e_id)
+    {
         $dataClass = new Master_AQI_ALL();
 
         $dataClass->area_name = $area_name;
@@ -1396,8 +1427,11 @@ class GPDF{
         return $dataClass;
     }
 
-    function floorDec_AQI($val, $precision = 2) {
-        if ($precision < 0) { $precision = 0; }
+    function floorDec_AQI($val, $precision = 2)
+    {
+        if ($precision < 0) {
+            $precision = 0;
+        }
         $numPointPosition = intval(strpos($val, '.'));
         if ($numPointPosition === 0) { //$val is an integer
             return $val;
@@ -1405,31 +1439,27 @@ class GPDF{
         return floatval(substr($val, 0, $numPointPosition + $precision + 1));
     }
 
-    function determineAQICategory($aqi){
-        if($aqi == "-"){
+    function determineAQICategory($aqi)
+    {
+        if ($aqi == "-") {
             return "-";
-        }else if($aqi == "400+"){
+        } else if ($aqi == "400+") {
             return "Emergency";
-        }else if($aqi == "201-"){
+        } else if ($aqi == "201-") {
             return "Good";
-        }else if($aqi >= 0 && $aqi <= 50){
+        } else if ($aqi >= 0 && $aqi <= 50) {
             return "Good";
-        }else if($aqi >= 51 && $aqi <= 100)
-        {
+        } else if ($aqi >= 51 && $aqi <= 100) {
             return "Fair";
-        }else if($aqi >= 101 && $aqi <= 150)
-        {
+        } else if ($aqi >= 101 && $aqi <= 150) {
             return "Unhealthy for Sensitive Groups";
-        }else if($aqi >= 151 && $aqi <= 200)
-        {
+        } else if ($aqi >= 151 && $aqi <= 200) {
             return "Very Unhealthy";
-        }else if($aqi >= 201 && $aqi <= 300)
-        {
+        } else if ($aqi >= 201 && $aqi <= 300) {
             return "Acutely Unhealthy";
-        }else if($aqi >= 301)
-        {
+        } else if ($aqi >= 301) {
             return "Emergency";
-        }else{
+        } else {
             return "-";
         }
     }
@@ -1440,19 +1470,14 @@ class GPDF{
 
         require 'include/guidelines.php';
 
-        for($x = 0; $x < count($gv); $x++)
-        {
+        for ($x = 0; $x < count($gv); $x++) {
             $roundedValue = $this->floorDec_AQI($ave, $precision = $prec);
 
-            if($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1])
-            {
-                $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0])/($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
+            if ($roundedValue >= $gv[$x][0] && $roundedValue <= $gv[$x][1]) {
+                $aqi = (($aqi_val[$x][1] - $aqi_val[$x][0]) / ($gv[$x][1] - $gv[$x][0])) * ($roundedValue - $gv[$x][0]) + $aqi_val[$x][0];
                 $aqi = round($aqi);
                 break;
-            }
-
-            else if($x == count($gv) - 1)
-            {
+            } else if ($x == count($gv) - 1) {
                 $aqi = "-";
             }
         }
@@ -1462,7 +1487,8 @@ class GPDF{
 
     // NAAQGV
 
-    function StoreCOPollutant_ambient($query){
+    function StoreCOPollutant_ambient($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -1479,14 +1505,13 @@ class GPDF{
         while ($result->fetch()) {
             $dataClass_co = new Master_AQI_2();
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass_co->area_name = "bancal";
                 $dataClass_co->timestamp = $timestamp;
                 $dataClass_co->concentration_value = $CO;
 
                 array_push($element_holder_bancal->co_holder, $dataClass_co);
-            }
-            else{
+            } else {
                 $dataClass_co->area_name = "slex";
                 $dataClass_co->timestamp = $timestamp;
                 $dataClass_co->concentration_value = $CO;
@@ -1500,38 +1525,38 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->co_holder) > 0){
+        if (count($element_holder_bancal->co_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI($element_holder_bancal->co_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->co_holder) > 0){
-            $data_holder =  $this->CalculateAveraging_AQI($element_holder_slex->co_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+        if (count($element_holder_slex->co_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI($element_holder_slex->co_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 1);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
             }
 
             $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
             $cv_2 = $this->Averaging_AQI($array_holder_bancal, $dates_2, 8);
 
-            if($cv_2 == -1){
+            if ($cv_2 == -1) {
                 $cv_2 = "-";
-            }else{
+            } else {
                 $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
             }
 
@@ -1541,22 +1566,22 @@ class GPDF{
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
             $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_slex, $dates, 1);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
             }
 
             $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
             $cv_2 = $this->Averaging_AQI($array_holder_slex, $dates_2, 8);
 
-            if($cv_2 == -1){
+            if ($cv_2 == -1) {
                 $cv_2 = "-";
-            }else{
+            } else {
                 $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
             }
 
@@ -1570,7 +1595,8 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function StoreSO2Pollutant_ambient($query){
+    function StoreSO2Pollutant_ambient($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -1587,14 +1613,13 @@ class GPDF{
         while ($result->fetch()) {
             $dataClass = new Master_AQI_2();
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass->area_name = "bancal";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $SO2;
 
                 array_push($element_holder_bancal->so2_holder, $dataClass);
-            }
-            else{
+            } else {
                 $dataClass->area_name = "slex";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $SO2;
@@ -1608,49 +1633,49 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->so2_holder) > 0){
+        if (count($element_holder_bancal->so2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI($element_holder_bancal->so2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->so2_holder) > 0){
-            $data_holder =  $this->CalculateAveraging_AQI($element_holder_slex->so2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+        if (count($element_holder_slex->so2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI($element_holder_slex->so2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 24);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
             }
 
-            array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision). ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+            array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
 
             array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_slex, $dates, 24);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
             }
 
-            array_push($slexData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision). ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+            array_push($slexData, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
 
             array_push($slexData1, $array_holder_slex[$i]->timestamp);
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
@@ -1659,7 +1684,8 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function StoreNO2Pollutant_ambient($query){
+    function StoreNO2Pollutant_ambient($query)
+    {
         $bancalData = array();
         $slexData = array();
         $bancalData1 = array();
@@ -1676,14 +1702,13 @@ class GPDF{
         while ($result->fetch()) {
             $dataClass = new Master_AQI_2();
 
-            if($area_name == "bancal"){
+            if ($area_name == "bancal") {
                 $dataClass->area_name = "bancal";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $NO2;
 
                 array_push($element_holder_bancal->no2_holder, $dataClass);
-            }
-            else{
+            } else {
                 $dataClass->area_name = "slex";
                 $dataClass->timestamp = $timestamp;
                 $dataClass->concentration_value = $NO2;
@@ -1697,29 +1722,29 @@ class GPDF{
         $array_holder_bancal = array();
         $array_holder_slex = array();
 
-        if(count($element_holder_bancal->no2_holder) > 0){
+        if (count($element_holder_bancal->no2_holder) > 0) {
             $data_holder = $this->CalculateAveraging_AQI($element_holder_bancal->no2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_bancal, $data_holder[$i]);
             }
         }
 
-        if(count($element_holder_slex->no2_holder) > 0){
-            $data_holder =  $this->CalculateAveraging_AQI($element_holder_slex->no2_holder);
-            for($i = 0 ; $i < count($data_holder); $i++){
+        if (count($element_holder_slex->no2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI($element_holder_slex->no2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
                 array_push($array_holder_slex, $data_holder[$i]);
             }
         }
 
         require 'include/guidelines.php';
 
-        for($i = 0 ; $i < count($array_holder_bancal); $i++){
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 24);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
             }
 
@@ -1729,13 +1754,13 @@ class GPDF{
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
         }
 
-        for($i = 0 ; $i < count($array_holder_slex); $i++){
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_slex, $dates, 24);
 
-            if($cv == -1){
+            if ($cv == -1) {
                 $cv = "-";
-            }else{
+            } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
             }
 
@@ -1748,40 +1773,277 @@ class GPDF{
         return [$bancalData, $slexData, $bancalData1, $slexData1];
     }
 
-    function determineEvaluation_ambient($cv, $pollutant){
-        if($pollutant == 0){
-            if($cv == "-"){
+    function determineEvaluation_ambient($cv, $pollutant)
+    {
+        if ($pollutant == 0) {
+            if ($cv == "-") {
                 return "-";
-            }else if($cv <= 30){
+            } else if ($cv <= 30) {
                 return "OK";
-            }else{
+            } else {
                 return "EXCEEDED";
             }
-        }else if($pollutant == 1){
-            if($cv == "-"){
+        } else if ($pollutant == 1) {
+            if ($cv == "-") {
                 return "-";
-            }else if($cv <= 9){
+            } else if ($cv <= 9) {
                 return "OK";
-            }else{
+            } else {
                 return "EXCEEDED";
             }
-        }else if($pollutant == 2){
-            if($cv == "-"){
+        } else if ($pollutant == 2) {
+            if ($cv == "-") {
                 return "-";
-            }else if($cv <= 0.07){
+            } else if ($cv <= 0.07) {
                 return "OK";
-            }else{
+            } else {
                 return "EXCEEDED";
             }
-        }else if($pollutant == 3){
-            if($cv == "-"){
+        } else if ($pollutant == 3) {
+            if ($cv == "-") {
                 return "-";
-            }else if($cv <= 0.08){
+            } else if ($cv <= 0.08) {
                 return "OK";
-            }else{
+            } else {
                 return "EXCEEDED";
             }
         }
+    }
+
+    function StoreAllPollutants_ambient($query)
+    {
+        $coData_bancal = array();
+        $so2Data_bancal = array();
+        $no2Data_bancal = array();
+        $coData_slex = array();
+        $so2Data_slex = array();
+        $no2Data_slex = array();
+
+        $query->execute();
+        $query->store_result();
+        $query->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
+        $result = $query;
+
+        $element_holder_bancal = new AreaFunction_AQI();
+        $element_holder_slex = new AreaFunction_AQI();
+
+        while ($result->fetch()) {
+            if ($area_name == "bancal") {
+                $dataClass = new Master_AQI_ALL();
+
+                $dataClass->area_name = "bancal";
+                $dataClass->timestamp = $timestamp;
+                $dataClass->concentration_value = $NO2;
+                $dataClass->e_id = "3";
+                array_push($element_holder_bancal->no2_holder, $dataClass);
+
+                $dataClass = new Master_AQI_ALL();
+
+                $dataClass->area_name = "bancal";
+                $dataClass->timestamp = $timestamp;
+                $dataClass->concentration_value = $SO2;
+                $dataClass->e_id = "2";
+                array_push($element_holder_bancal->so2_holder, $dataClass);
+
+                $dataClass = new Master_AQI_ALL();
+
+                $dataClass->area_name = "bancal";
+                $dataClass->timestamp = $timestamp;
+                $dataClass->concentration_value = $CO;
+                $dataClass->e_id = "1";
+                array_push($element_holder_bancal->co_holder, $dataClass);
+            } else {
+                $dataClass = new Master_AQI_ALL();
+
+                $dataClass->area_name = "slex";
+                $dataClass->timestamp = $timestamp;
+                $dataClass->concentration_value = $NO2;
+                $dataClass->e_id = "3";
+                array_push($element_holder_slex->no2_holder, $dataClass);
+
+                $dataClass = new Master_AQI_ALL();
+
+                $dataClass->area_name = "slex";
+                $dataClass->timestamp = $timestamp;
+                $dataClass->concentration_value = $SO2;
+                $dataClass->e_id = "2";
+                array_push($element_holder_slex->so2_holder, $dataClass);
+
+                $dataClass = new Master_AQI_ALL();
+
+                $dataClass->area_name = "slex";
+                $dataClass->timestamp = $timestamp;
+                $dataClass->concentration_value = $CO;
+                $dataClass->e_id = "1";
+                array_push($element_holder_slex->co_holder, $dataClass);
+            }
+        }
+
+        $timestamp_1 = $element_holder_bancal->no2_holder[0]->timestamp;
+        $timestamp_2 = $element_holder_bancal->no2_holder[0]->timestamp;
+        $timestamp_3 = $element_holder_bancal->no2_holder[0]->timestamp;
+        $timestamp = $timestamp_1;
+
+        if (strtotime($timestamp_1) > strtotime($timestamp_2)) {
+            $timestamp = $timestamp_1;
+        } else {
+            $timestamp = $timestamp_2;
+        }
+
+        if (strtotime($timestamp) < strtotime($timestamp_3)) {
+            $timestamp = $timestamp_3;
+        }
+
+        $result->free_result();
+
+        $array_holder_bancal = array();
+        $array_holder_slex = array();
+
+        if (count($element_holder_bancal->no2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_bancal->no2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
+                array_push($array_holder_bancal, $data_holder[$i]);
+            }
+        }
+
+        if (count($element_holder_bancal->so2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_bancal->so2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
+                array_push($array_holder_bancal, $data_holder[$i]);
+            }
+        }
+
+        if (count($element_holder_bancal->co_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_bancal->co_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
+                array_push($array_holder_bancal, $data_holder[$i]);
+            }
+        }
+
+        if (count($element_holder_slex->no2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_slex->no2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
+                array_push($array_holder_slex, $data_holder[$i]);
+            }
+        }
+
+        if (count($element_holder_slex->so2_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_slex->so2_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
+                array_push($array_holder_slex, $data_holder[$i]);
+            }
+        }
+
+        if (count($element_holder_slex->co_holder) > 0) {
+            $data_holder = $this->CalculateAveraging_AQI_ALL($element_holder_slex->co_holder);
+            for ($i = 0; $i < count($data_holder); $i++) {
+                array_push($array_holder_slex, $data_holder[$i]);
+            }
+        }
+
+        require 'include/guidelines.php';
+
+        for ($i = 0; $i < count($array_holder_bancal); $i++) {
+            for ($i = 0; $i < count($array_holder_bancal); $i++) {
+                if ($array_holder_bancal[$i]->e_id == "3") {
+                    $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+                    }
+
+                    array_push($no2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
+                }
+                else if ($array_holder_bancal[$i]->e_id == "2") {
+                    $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+                    }
+
+                    array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+                }
+                else if ($array_holder_bancal[$i]->e_id == "1") {
+                    $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 1, $array_holder_bancal[$i]->e_id);
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+                    }
+
+                    $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
+                    $cv_2 = $this->Averaging_AQI_ALL($array_holder_bancal, $dates_2, 8, $array_holder_bancal[$i]->e_id);
+
+                    if ($cv_2 == -1) {
+                        $cv_2 = "-";
+                    } else {
+                        $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+                    }
+
+                    array_push($coData_bancal, $array_holder_bancal[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
+                }
+            }
+        }
+
+        for ($i = 0; $i < count($array_holder_slex); $i++) {
+            for ($i = 0; $i < count($array_holder_slex); $i++) {
+                if ($array_holder_slex[$i]->e_id == "3") {
+                    $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+                    }
+
+                    array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
+                }
+                else if ($array_holder_slex[$i]->e_id == "2") {
+                    $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+                    }
+
+                    array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+                }
+                else if ($array_holder_slex[$i]->e_id == "1") {
+                    $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
+                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+                    }
+
+                    $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
+                    $cv_2 = $this->Averaging_AQI_ALL($array_holder_slex, $dates_2, 8, $array_holder_slex[$i]->e_id);
+
+                    if ($cv_2 == -1) {
+                        $cv_2 = "-";
+                    } else {
+                        $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+                    }
+
+                    array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
+                }
+            }
+        }
+
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
     }
 }
 
