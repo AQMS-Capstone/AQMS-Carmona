@@ -55,6 +55,10 @@ include('include/header.php');
                             <div  class="input-field col s12">
                                 <select name = "drpPollutant" id = "drpPollutant" required>
                                     <option value="" disabled selected>Select a pollutant</option>
+                                    <option value="1">CO</option>
+                                    <option value="2">SO2</option>
+                                    <option value="3">NO2</option>
+                                    <option value="4">All</option>
                                 </select>
                                 <label>Pollutant</label>
                             </div>
@@ -119,35 +123,35 @@ include('include/header.php');
 
         $('select').material_select();
 
-        $(document).on('change','#drpArea',function(){
-            var val = $(this).val();
-
-            $.ajax({
-                url: 'getPollutants.php',
-                data: {area:area_name[val-1]},
-                type: 'GET',
-                dataType: 'html',
-                success: function(result){
-                    var $selectDropdown = $("#drpPollutant").empty().html(' ');
-                    $('#drpPollutant').html(result);
-                    $selectDropdown.trigger('contentChanged');
-                }
-            });
-        });
-
-        var val = $("#drpArea").val();
-
-        $.ajax({
-            url: 'getPollutants.php',
-            data: {area:area_name[val-1]},
-            type: 'GET',
-            dataType: 'html',
-            success: function(result){
-                var $selectDropdown = $("#drpPollutant").empty().html(' ');
-                $('#drpPollutant').html(result);
-                $selectDropdown.trigger('contentChanged');
-            }
-        });
+//        $(document).on('change','#drpArea',function(){
+//            var val = $(this).val();
+//
+//            $.ajax({
+//                url: 'getPollutants.php',
+//                data: {area:area_name[val-1]},
+//                type: 'GET',
+//                dataType: 'html',
+//                success: function(result){
+//                    var $selectDropdown = $("#drpPollutant").empty().html(' ');
+//                    $('#drpPollutant').html(result);
+//                    $selectDropdown.trigger('contentChanged');
+//                }
+//            });
+//        });
+//
+//        var val = $("#drpArea").val();
+//
+//        $.ajax({
+//            url: 'getPollutants.php',
+//            data: {area:area_name[val-1]},
+//            type: 'GET',
+//            dataType: 'html',
+//            success: function(result){
+//                var $selectDropdown = $("#drpPollutant").empty().html(' ');
+//                $('#drpPollutant').html(result);
+//                $selectDropdown.trigger('contentChanged');
+//            }
+//        });
 
             $('select').on('contentChanged', function() {
             // re-initialize (update)
