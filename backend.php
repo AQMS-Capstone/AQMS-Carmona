@@ -60,19 +60,29 @@ if (isset($_POST['btnSubmit'])) {
     }
 
     else {
-        if (strtotime($time) <= strtotime($date_now_string)) {
+//        if (strtotime($time) <= strtotime($date_now_string)) {
+//
+//            $statusMessage = insertPollutant($area, $co_value, $so2_value, $no2_value, $time, $statusMessage);
+//
+//            if ($statusMessage[0] == "1") {
+//                $statusMessage[0] = "Values entered were not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
+//            }
+//
+//            if ($statusMessage[1] == "1") {
+//                $statusMessage[1] = "Values entered were successfuly inserted.";
+//            }
+//        } else {
+//            echo "<script language = 'javascript'>alert('You cannot insert a value for time that is greater than now. Please try again.')</script>";
+//        }
 
-            $statusMessage = insertPollutant($area, $co_value, $so2_value, $no2_value, $time, $statusMessage);
+        $statusMessage = insertPollutant($area, $co_value, $so2_value, $no2_value, $time, $statusMessage);
 
-            if ($statusMessage[0] == "1") {
-                $statusMessage[0] = "Values entered were not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
-            }
+        if ($statusMessage[0] == "1") {
+            $statusMessage[0] = "Values entered were not inserted because there's already a value for the time you've specified. If you wish to edit the data, please go to edit function.";
+        }
 
-            if ($statusMessage[1] == "1") {
-                $statusMessage[1] = "Values entered were successfuly inserted.";
-            }
-        } else {
-            echo "<script language = 'javascript'>alert('You cannot insert a value for time that is greater than now. Please try again.')</script>";
+        if ($statusMessage[1] == "1") {
+            $statusMessage[1] = "Values entered were successfuly inserted.";
         }
     }
 }
