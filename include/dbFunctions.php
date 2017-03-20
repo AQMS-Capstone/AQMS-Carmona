@@ -1232,11 +1232,11 @@ class GPDF
 
             if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)) . ":01:00")) {
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
-                $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
+                $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:59";
             } else {
 
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-                $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+                $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:59";
             }
 
             $ave = 0;
@@ -1251,7 +1251,7 @@ class GPDF
                 } else {
                     if ($ctr > 0) {
                         $ave = $ave / $ctr;
-                        $dateString = $ctr_timestamp_end;
+                        $dateString = date("Y-m-d H", strtotime($ctr_timestamp_end)) . ":00:00";
                         array_push($return_holder, $this->AssignDataElements_AQI($element[$i]->area_name, $ave, $dateString));
 
                         $ave = 0;
@@ -1264,10 +1264,10 @@ class GPDF
 
                         if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)) . ":01:00")) {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
-                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
+                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:59";
                         } else {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:59";
                         }
                     }
                 }
@@ -1275,7 +1275,7 @@ class GPDF
                 if ($i == count($element) - 1) {
                     if (strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)) {
                         $ave = $ave / $ctr;
-                        $dateString = $ctr_timestamp_end;
+                        $dateString = date("Y-m-d H", strtotime($ctr_timestamp_end)) . ":00:00";
                         array_push($return_holder, $this->AssignDataElements_AQI($element[$i]->area_name, $ave, $dateString));
                     }
                 }
@@ -1297,11 +1297,11 @@ class GPDF
 
             if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($element[0]->timestamp)) . ":01:00")) {
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
-                $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
+                $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:59";
             } else {
 
                 $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-                $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+                $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:59";
             }
 
             $ave = 0;
@@ -1316,7 +1316,7 @@ class GPDF
                 } else {
                     if ($ctr > 0) {
                         $ave = $ave / $ctr;
-                        $dateString = $ctr_timestamp_end;
+                        $dateString =  date("Y-m-d H", strtotime($ctr_timestamp_end)) . ":00:00";
                         array_push($return_holder, $this->AssignDataElements_AQI_ALL($element[$i]->area_name, $ave, $dateString, $element[$i]->e_id));
 
                         $ave = 0;
@@ -1329,10 +1329,10 @@ class GPDF
 
                         if (strtotime($date) < strtotime(date("Y-m-d H", strtotime($date)) . ":01:00")) {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date) - 3600) . ":01:00";
-                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:00";
+                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date)) . ":00:59";
                         } else {
                             $ctr_timestamp_begin = date("Y-m-d H", strtotime($date)) . ":01:00";
-                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:00";
+                            $ctr_timestamp_end = date("Y-m-d H", strtotime($date) + 3600) . ":00:59";
                         }
                     }
                 }
@@ -1340,7 +1340,7 @@ class GPDF
                 if ($i == count($element) - 1) {
                     if (strtotime($date) <= strtotime($ctr_timestamp_end) && strtotime($date) >= strtotime($ctr_timestamp_begin)) {
                         $ave = $ave / $ctr;
-                        $dateString = $ctr_timestamp_end;
+                        $dateString = date("Y-m-d H", strtotime($ctr_timestamp_end)) . ":00:00";
                         array_push($return_holder, $this->AssignDataElements_AQI_ALL($element[$i]->area_name, $ave, $dateString, $element[$i]->e_id));
                     }
                 }
