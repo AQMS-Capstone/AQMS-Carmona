@@ -1967,12 +1967,37 @@ class GPDF
                 $cv = "-";
             } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                if ($cv <= 0.08) {
+                    $no2_ok_bancal = $no2_ok_bancal + 1;
+                } else {
+                    $no2_exceed_bancal = $no2_exceed_bancal + 1;
+                }
+
+                if(empty($no2_highest_timestamp_bancal)){
+                    $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                    $no2_highest_cv_bancal = $cv;
+                    $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
+                }else{
+                    if($cv > $no2_highest_cv_bancal){
+                        $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $no2_highest_cv_bancal = $cv;
+                        $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
+                    }
+                }
             }
 
             array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
 
             array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
+        }
+
+        if(count($array_holder_bancal) > 0) {
+            array_push($highest_bancal, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_bancal . ";" . $no2_highest_cv_bancal . ";" . $no2_highest_evaluation_bancal);
+
+            array_push($summary_bancal, "OK" . ";" . $no2_ok_bancal);
+            array_push($summary_bancal, "EXCEEDED" . ";" . $no2_exceed_bancal);
         }
 
         for ($i = 0; $i < count($array_holder_slex); $i++) {
@@ -1983,12 +2008,37 @@ class GPDF
                 $cv = "-";
             } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                if ($cv <= 0.08) {
+                    $no2_ok_slex = $no2_ok_slex + 1;
+                } else {
+                    $no2_exceed_slex = $no2_exceed_slex + 1;
+                }
+
+                if(empty($no2_highest_timestamp_slex)){
+                    $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                    $no2_highest_cv_slex = $cv;
+                    $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
+                }else{
+                    if($cv > $no2_highest_cv_slex){
+                        $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $no2_highest_cv_slex = $cv;
+                        $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
+                    }
+                }
             }
 
             array_push($slexData, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
 
             array_push($slexData1, $array_holder_slex[$i]->timestamp);
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
+        }
+
+        if(count($array_holder_slex) > 0) {
+            array_push($highest_slex, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_slex . ";" . $no2_highest_cv_slex . ";" . $no2_highest_evaluation_slex);
+
+            array_push($summary_slex, "OK" . ";" . $no2_ok_slex);
+            array_push($summary_slex, "EXCEEDED" . ";" . $no2_exceed_slex);
         }
 
         return [$bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];

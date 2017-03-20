@@ -1354,7 +1354,7 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)');
+        $header = array('Frequency', 'NO2 (24 hr)');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable_ambient($header, $summaryDataSet_bancal);
         $pdf->Ln(2);
@@ -1376,7 +1376,7 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)');
+        $header = array('Frequency', 'NO2 (24 hr)');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable_ambient($header, $summaryDataSet_slex);
         $pdf->Ln(2);
