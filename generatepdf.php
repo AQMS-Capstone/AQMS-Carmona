@@ -452,11 +452,11 @@ try {
                     break;
                 }
                 case 2:{
-                    CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                    CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename, $summaryDataSet_bancal, $summaryDataSet_slex, $highestDataSet_bancal, $highestDataSet_slex);
                     break;
                 }
                 case 3:{
-                    CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename);
+                    CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename, $summaryDataSet_bancal, $summaryDataSet_slex, $highestDataSet_bancal, $highestDataSet_slex);
                     break;
                 }
                 case 4:{
@@ -1209,7 +1209,7 @@ function CreateTableCO_ambient($a_name, $time_updated, $bancalData, $slexData, $
     $pdf->Output('I', $filename);
 }
 
-function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename){
+function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename, $summaryDataSet_bancal, $summaryDataSet_slex, $highestDataSet_bancal, $highestDataSet_slex){
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
@@ -1234,11 +1234,55 @@ function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
 //Table
 
+    if(!empty($summaryDataSet_bancal)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, -5, 'Bancal Summary');
+        $pdf->Ln(1);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Frequency', 'SO2 (24 hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $summaryDataSet_bancal);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_bancal)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_bancal);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($summaryDataSet_slex)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 5, 'SLEX Carmona Summary');
+        $pdf->Ln(6);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Frequency', 'SO2 (24 hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $summaryDataSet_slex);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_slex)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_slex);
+        $pdf->Ln(2);
+    }
+
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, -5, 'Bancal Junction');
-        $pdf->Ln(1);
+        $pdf->Cell(0, 10, 'Bancal Junction');
+        $pdf->Ln(8);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
@@ -1278,7 +1322,7 @@ function CreateTableSO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
     $pdf->Output('I', $filename);
 }
 
-function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename){
+function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, $bancalDataSet, $slexDataSet, $filename, $summaryDataSet_bancal, $summaryDataSet_slex, $highestDataSet_bancal, $highestDataSet_slex){
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
@@ -1303,11 +1347,55 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
 
 //Table
 
+    if(!empty($summaryDataSet_bancal)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, -5, 'Bancal Summary');
+        $pdf->Ln(1);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $summaryDataSet_bancal);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_bancal)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_bancal);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($summaryDataSet_slex)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 5, 'SLEX Carmona Summary');
+        $pdf->Ln(6);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $summaryDataSet_slex);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_slex)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_slex);
+        $pdf->Ln(2);
+    }
+
     if(!empty($bancalData) && !empty($slexData)){
 
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, -5, 'Bancal Junction');
-        $pdf->Ln(1);
+        $pdf->Cell(0, 10, 'Bancal Junction');
+        $pdf->Ln(8);
 
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);

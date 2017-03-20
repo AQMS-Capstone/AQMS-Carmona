@@ -392,7 +392,7 @@ class GPDF
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("ss", $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreSO2Pollutant_ambient($query);
                     break;
                 }
                 case 3: {
@@ -400,7 +400,7 @@ class GPDF
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("ss", $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreNO2Pollutant_ambient($query);
                     break;
                 }
                 case 4: {
@@ -408,7 +408,7 @@ class GPDF
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("ss", $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreAllPollutants_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreAllPollutants_ambient($query);
                     break;
                 }
             }
@@ -428,7 +428,7 @@ class GPDF
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("sss", $a_name, $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreSO2Pollutant_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreSO2Pollutant_ambient($query);
                     break;
                 }
                 case 3: {
@@ -436,7 +436,7 @@ class GPDF
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("sss", $a_name, $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreNO2Pollutant_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreNO2Pollutant_ambient($query);
                     break;
                 }
                 case 4: {
@@ -445,7 +445,7 @@ class GPDF
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("sss", $a_name, $dFrom, $dTo);
 
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreAllPollutants_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreAllPollutants_ambient($query);
                     break;
                 }
             }
@@ -1808,12 +1808,37 @@ class GPDF
                 $cv = "-";
             } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                if ($cv <= 0.07) {
+                    $so2_ok_bancal = $so2_ok_bancal + 1;
+                } else {
+                    $so2_exceed_bancal = $so2_exceed_bancal + 1;
+                }
+
+                if(empty($so2_highest_timestamp_bancal)){
+                    $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                    $so2_highest_cv_bancal = $cv;
+                    $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
+                }else{
+                    if($cv > $so2_highest_cv_bancal){
+                        $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $so2_highest_cv_bancal = $cv;
+                        $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
+                    }
+                }
             }
 
             array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
 
             array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
+        }
+
+        if(count($array_holder_bancal) > 0) {
+            array_push($highest_bancal, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_bancal . ";" . $so2_highest_cv_bancal . ";" . $so2_highest_evaluation_bancal);
+
+            array_push($summary_bancal, "OK" . ";" . $so2_ok_bancal);
+            array_push($summary_bancal, "EXCEEDED" . ";" . $so2_exceed_bancal);
         }
 
         for ($i = 0; $i < count($array_holder_slex); $i++) {
@@ -1824,6 +1849,24 @@ class GPDF
                 $cv = "-";
             } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                if ($cv <= 0.07) {
+                    $so2_ok_slex = $so2_ok_slex + 1;
+                } else {
+                    $so2_exceed_slex = $so2_exceed_slex + 1;
+                }
+
+                if(empty($so2_highest_timestamp_slex)){
+                    $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                    $so2_highest_cv_slex = $cv;
+                    $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
+                }else{
+                    if($cv > $so2_highest_cv_slex){
+                        $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $so2_highest_cv_slex = $cv;
+                        $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
+                    }
+                }
             }
 
             array_push($slexData, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
@@ -1832,7 +1875,14 @@ class GPDF
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
         }
 
-        return [$bancalData, $slexData, $bancalData1, $slexData1];
+        if(count($array_holder_slex) > 0) {
+            array_push($highest_slex, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_slex . ";" . $so2_highest_cv_slex . ";" . $so2_highest_evaluation_slex);
+
+            array_push($summary_slex, "OK" . ";" . $so2_ok_slex);
+            array_push($summary_slex, "EXCEEDED" . ";" . $so2_exceed_slex);
+        }
+
+        return [$bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function StoreNO2Pollutant_ambient($query)
@@ -1895,6 +1945,20 @@ class GPDF
 
         require 'include/guidelines.php';
 
+        $no2_ok_bancal = 0;
+        $no2_exceed_bancal = 0;
+
+        $no2_ok_slex = 0;
+        $no2_exceed_slex = 0;
+
+        $no2_highest_timestamp_bancal = "";
+        $no2_highest_cv_bancal = "";
+        $no2_highest_evaluation_bancal = "";
+
+        $no2_highest_timestamp_slex = "";
+        $no2_highest_cv_slex = "";
+        $no2_highest_evaluation_slex = "";
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 24);
@@ -1927,7 +1991,7 @@ class GPDF
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
         }
 
-        return [$bancalData, $slexData, $bancalData1, $slexData1];
+        return [$bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function determineEvaluation_ambient($cv, $pollutant)
