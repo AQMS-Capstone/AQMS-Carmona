@@ -1284,13 +1284,11 @@ function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_ban
 
 //Table
 
-    if(!empty($coDataSet_bancal) || !empty($so2DataSet_bancal) || !empty($no2DataSet_bancal)){
-        $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, -5, 'Bancal Junction');
-        $pdf->Ln(1);
-    }
-
     if(!empty($summaryDataSet_bancal)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, -5, 'Bancal Summary');
+        $pdf->Ln(1);
+
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', 'B', 10);
         $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)', 'SO2 (24 hr)', 'NO2 (24 hr)');
@@ -1306,6 +1304,34 @@ function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_ban
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable_ambient($header, $highestDataSet_bancal);
         $pdf->Ln(2);
+    }
+
+    if(!empty($summaryDataSet_slex)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 5, 'SLEX Carmona Summary');
+        $pdf->Ln(6);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)', 'SO2 (24 hr)', 'NO2 (24 hr)');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_AQI($header, $summaryDataSet_slex);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_slex)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_slex);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($coDataSet_bancal) || !empty($so2DataSet_bancal) || !empty($no2DataSet_bancal)){
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 10, 'Bancal Junction');
+        $pdf->Ln(8);
     }
 
     if(!empty($coDataSet_bancal)){
@@ -1339,24 +1365,6 @@ function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_ban
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(0, 10, 'SLEX Carmona');
         $pdf->Ln(8);
-    }
-
-    if(!empty($summaryDataSet_slex)){
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)', 'SO2 (24 hr)', 'NO2 (24 hr)');
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_AQI($header, $summaryDataSet_slex);
-        $pdf->Ln(2);
-    }
-
-    if(!empty($highestDataSet_slex)){
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('helvetica', 'B', 10);
-        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->BasicTable_ambient($header, $highestDataSet_slex);
-        $pdf->Ln(2);
     }
 
     if(!empty($coDataSet_slex)){
