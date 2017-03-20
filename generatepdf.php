@@ -258,17 +258,19 @@ try {
     }
     else{
         if($filterPollutant == "4"){
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex) = $gpdf->GetPollutants_ambient_ALL($area, $dateFrom, $dateTo, $filterPollutant);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $gpdf->GetPollutants_ambient_ALL($area, $dateFrom, $dateTo, $filterPollutant);
 
             $coDataSet_bancal[] = array();
             $so2DataSet_bancal[] = array();
             $no2DataSet_bancal[] = array();
             $summaryDataSet_bancal[] = array();
+            $highestDataSet_bancal[] = array();
 
             $coDataSet_slex[] = array();
             $so2DataSet_slex[] = array();
             $no2DataSet_slex[] = array();
             $summaryDataSet_slex[] = array();
+            $highestDataSet_slex[] = array();
             
             if(empty($coData_bancal) && empty($coData_bancal) && empty($no2Data_bancal) && empty($coData_slex) && empty($coData_slex) && empty($no2Data_slex)){
                 echo "<script>
@@ -325,12 +327,24 @@ try {
                 }
             }
 
+            if(!empty($highest_bancal)){
+                foreach ($highest_bancal as $line) {
+                    $highestDataSet_bancal[] = explode(';', trim($line));
+                }
+            }
+
+            if(!empty($highest_slex)){
+                foreach ($highest_slex as $line) {
+                    $highestDataSet_slex[] = explode(';', trim($line));
+                }
+            }
+
             $a_name = "SLEX and Bancal, Carmona, Cavite";
             $time_updated = $timestamp;
 
             //------------------ GENERATING PDF -------------------------
 
-            CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_bancal, $so2DataSet_bancal, $no2DataSet_bancal, $coDataSet_slex, $so2DataSet_slex, $no2DataSet_slex, $filename, $summaryDataSet_bancal, $summaryDataSet_slex);
+            CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_bancal, $so2DataSet_bancal, $no2DataSet_bancal, $coDataSet_slex, $so2DataSet_slex, $no2DataSet_slex, $filename, $summaryDataSet_bancal, $summaryDataSet_slex, $highestDataSet_bancal, $highestDataSet_slex);
         }
         else{
             list($bancalData, $slexData, $bancalData1, $slexData1) = $gpdf->GetPollutants_ambient($area, $dateFrom, $dateTo, $filterPollutant);
@@ -1245,7 +1259,7 @@ function CreateTableNO2_ambient($a_name, $time_updated, $bancalData, $slexData, 
     $pdf->Output('I', $filename);
 }
 
-function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_bancal, $so2DataSet_bancal, $no2DataSet_bancal, $coDataSet_slex, $so2DataSet_slex, $no2DataSet_slex, $filename, $summaryDataSet_bancal, $summaryDataSet_slex){
+function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_bancal, $so2DataSet_bancal, $no2DataSet_bancal, $coDataSet_slex, $so2DataSet_slex, $no2DataSet_slex, $filename, $summaryDataSet_bancal, $summaryDataSet_slex, $highestDataSet_bancal, $highestDataSet_slex){
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
@@ -1282,6 +1296,15 @@ function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_ban
         $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)', 'SO2 (24 hr)', 'NO2 (24 hr)');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable_AQI($header, $summaryDataSet_bancal);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_bancal)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_bancal);
         $pdf->Ln(2);
     }
 
@@ -1324,6 +1347,15 @@ function CreateTableAllPollutants_ambient($a_name, $time_updated, $coDataSet_ban
         $header = array('Frequency', 'CO (1 hr)', 'CO (8 hr)', 'SO2 (24 hr)', 'NO2 (24 hr)');
         $pdf->SetFont('helvetica', '', 10);
         $pdf->BasicTable_AQI($header, $summaryDataSet_slex);
+        $pdf->Ln(2);
+    }
+
+    if(!empty($highestDataSet_slex)){
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $header = array('Highest per element', 'Timestamp', 'Value', 'Evaluation');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->BasicTable_ambient($header, $highestDataSet_slex);
         $pdf->Ln(2);
     }
 

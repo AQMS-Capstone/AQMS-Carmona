@@ -468,24 +468,27 @@ class GPDF
         $summary_bancal = array();
         $summary_slex = array();
 
+        $highest_bancal = array();
+        $highest_slex = array();
+
         if ($a_name == "All") {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("ss", $dFrom, $dTo);
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex) = $this->StoreAllPollutants_ambient($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreAllPollutants_ambient($query);
         } else {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("sss", $a_name, $dFrom, $dTo);
 
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex) = $this->StoreAllPollutants_ambient($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreAllPollutants_ambient($query);
         }
 
         $query->close();
         $con->close();
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex];
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function StoreCOPollutant($query)
@@ -1825,6 +1828,9 @@ class GPDF
         $summary_bancal = array();
         $summary_slex = array();
 
+        $highest_bancal = array();
+        $highest_slex = array();
+
         $query->execute();
         $query->store_result();
         $query->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
@@ -1969,6 +1975,38 @@ class GPDF
         $so2_exceed_slex = 0;
         $no2_exceed_slex = 0;
 
+        $no2_highest_timestamp_bancal = "";
+        $no2_highest_cv_bancal = "";
+        $no2_highest_evaluation_bancal = "";
+
+        $so2_highest_timestamp_bancal = "";
+        $so2_highest_cv_bancal = "";
+        $so2_highest_evaluation_bancal = "";
+
+        $co_highest_timestamp_bancal = "";
+        $co_highest_cv_bancal = "";
+        $co_highest_evaluation_bancal = "";
+
+        $co_2_highest_timestamp_bancal = "";
+        $co_2_highest_cv_bancal = "";
+        $co_2_highest_evaluation_bancal = "";
+
+        $no2_highest_timestamp_slex = "";
+        $no2_highest_cv_slex = "";
+        $no2_highest_evaluation_slex = "";
+
+        $so2_highest_timestamp_slex = "";
+        $so2_highest_cv_slex = "";
+        $so2_highest_evaluation_slex = "";
+
+        $co_highest_timestamp_slex = "";
+        $co_highest_cv_slex = "";
+        $co_highest_evaluation_slex = "";
+
+        $co_2_highest_timestamp_slex = "";
+        $co_2_highest_cv_slex = "";
+        $co_2_highest_evaluation_slex = "";
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
             for ($i = 0; $i < count($array_holder_bancal); $i++) {
                 if ($array_holder_bancal[$i]->e_id == "3") {
@@ -1984,6 +2022,18 @@ class GPDF
                             $no2_ok_bancal = $no2_ok_bancal + 1;
                         } else {
                             $no2_exceed_bancal = $no2_exceed_bancal + 1;
+                        }
+
+                        if(empty($no2_highest_timestamp_bancal)){
+                            $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $no2_highest_cv_bancal = $cv;
+                            $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
+                        }else{
+                            if($cv > $no2_highest_cv_bancal){
+                                $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $no2_highest_cv_bancal = $cv;
+                                $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
+                            }
                         }
                     }
 
@@ -2003,6 +2053,18 @@ class GPDF
                         } else {
                             $so2_exceed_bancal = $so2_exceed_bancal + 1;
                         }
+
+                        if(empty($so2_highest_timestamp_bancal)){
+                            $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $so2_highest_cv_bancal = $cv;
+                            $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
+                        }else{
+                            if($cv > $so2_highest_cv_bancal){
+                                $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $so2_highest_cv_bancal = $cv;
+                                $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
+                            }
+                        }
                     }
 
                     array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
@@ -2021,6 +2083,18 @@ class GPDF
                         } else {
                             $co_exceed_bancal = $co_exceed_bancal + 1;
                         }
+
+                        if(empty($co_highest_timestamp_bancal)){
+                            $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $co_highest_cv_bancal = $cv;
+                            $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
+                        }else{
+                            if($cv > $co_highest_cv_bancal){
+                                $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $co_highest_cv_bancal = $cv;
+                                $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
+                            }
+                        }
                     }
 
                     $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
@@ -2036,12 +2110,29 @@ class GPDF
                         } else {
                             $co_2_exceed_bancal = $co_2_exceed_bancal + 1;
                         }
+
+                        if(empty($co_2_highest_timestamp_bancal)){
+                            $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $co_2_highest_cv_bancal = $cv_2;
+                            $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
+                        }else{
+                            if($cv_2 > $co_2_highest_cv_bancal){
+                                $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $co_2_highest_cv_bancal = $cv_2;
+                                $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
+                            }
+                        }
                     }
 
                     array_push($coData_bancal, $array_holder_bancal[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
                 }
             }
         }
+
+        array_push($highest_bancal, "CO (1 hr)" . ";" . $co_highest_timestamp_bancal . ";" . $co_highest_cv_bancal . ";" . $co_highest_evaluation_bancal);
+        array_push($highest_bancal, "CO (8 hr)" . ";" . $co_2_highest_timestamp_bancal . ";" . $co_2_highest_cv_bancal . ";" . $co_2_highest_evaluation_bancal);
+        array_push($highest_bancal, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_bancal . ";" . $so2_highest_cv_bancal . ";" . $so2_highest_evaluation_bancal);
+        array_push($highest_bancal, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_bancal . ";" . $no2_highest_cv_bancal . ";" . $no2_highest_evaluation_bancal);
 
         array_push($summary_bancal, "OK" . ";" . $co_ok_bancal . ";" . $co_2_ok_bancal . ";" . $so2_ok_bancal . ";" . $no2_ok_bancal);
         array_push($summary_bancal, "EXCEEDED" . ";" . $co_exceed_bancal . ";" . $co_2_exceed_bancal . ";" . $so2_exceed_bancal . ";" . $no2_exceed_bancal);
@@ -2062,6 +2153,18 @@ class GPDF
                         } else {
                             $no2_exceed_slex = $no2_exceed_slex + 1;
                         }
+
+                        if(empty($no2_highest_timestamp_slex)){
+                            $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $no2_highest_cv_slex = $cv;
+                            $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
+                        }else{
+                            if($cv > $no2_highest_cv_slex){
+                                $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $no2_highest_cv_slex = $cv;
+                                $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
+                            }
+                        }
                     }
 
                     array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
@@ -2079,6 +2182,18 @@ class GPDF
                             $so2_ok_slex = $so2_ok_slex + 1;
                         } else {
                             $so2_exceed_slex = $so2_exceed_slex + 1;
+                        }
+
+                        if(empty($so2_highest_timestamp_slex)){
+                            $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $so2_highest_cv_slex = $cv;
+                            $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
+                        }else{
+                            if($cv > $so2_highest_cv_slex){
+                                $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $so2_highest_cv_slex = $cv;
+                                $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
+                            }
                         }
                     }
 
@@ -2098,6 +2213,18 @@ class GPDF
                         } else {
                             $co_exceed_slex = $co_exceed_slex + 1;
                         }
+
+                        if(empty($co_highest_timestamp_slex)){
+                            $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $co_highest_cv_slex = $cv;
+                            $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
+                        }else{
+                            if($cv > $co_highest_cv_slex){
+                                $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $co_highest_cv_slex = $cv;
+                                $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
+                            }
+                        }
                     }
 
                     $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
@@ -2113,6 +2240,18 @@ class GPDF
                         } else {
                             $co_2_exceed_slex = $co_2_exceed_slex + 1;
                         }
+
+                        if(empty($co_2_highest_timestamp_slex)){
+                            $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $co_2_highest_cv_slex = $cv_2;
+                            $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
+                        }else{
+                            if($cv_2 > $co_2_highest_cv_slex){
+                                $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $co_2_highest_cv_slex = $cv_2;
+                                $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
+                            }
+                        }
                     }
 
                     array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
@@ -2120,10 +2259,16 @@ class GPDF
             }
         }
 
+        array_push($highest_slex, "CO (1 hr)" . ";" . $co_highest_timestamp_slex . ";" . $co_highest_cv_slex . ";" . $co_highest_evaluation_slex);
+        array_push($highest_slex, "CO (8 hr)" . ";" . $co_2_highest_timestamp_slex . ";" . $co_2_highest_cv_slex . ";" . $co_2_highest_evaluation_slex);
+        array_push($highest_slex, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_slex . ";" . $so2_highest_cv_slex . ";" . $so2_highest_evaluation_slex);
+        array_push($highest_slex, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_slex . ";" . $no2_highest_cv_slex . ";" . $no2_highest_evaluation_slex);
+
         array_push($summary_slex, "OK" . ";" . $co_ok_slex . ";" . $co_2_ok_slex . ";" . $so2_ok_slex . ";" . $no2_ok_slex);
         array_push($summary_slex, "EXCEEDED" . ";" . $co_exceed_slex . ";" . $co_2_exceed_slex . ";" . $so2_exceed_slex . ";" . $no2_exceed_slex);
 
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex];
+
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 }
 
