@@ -465,24 +465,27 @@ class GPDF
         $so2Data_slex = array();
         $no2Data_slex = array();
 
+        $summary_bancal = array();
+        $summary_slex = array();
+
         if ($a_name == "All") {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("ss", $dFrom, $dTo);
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_ambient($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex) = $this->StoreAllPollutants_ambient($query);
         } else {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("sss", $a_name, $dFrom, $dTo);
 
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_ambient($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex) = $this->StoreAllPollutants_ambient($query);
         }
 
         $query->close();
         $con->close();
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex];
     }
 
     function StoreCOPollutant($query)
@@ -1819,6 +1822,9 @@ class GPDF
         $so2Data_slex = array();
         $no2Data_slex = array();
 
+        $summary_bancal = array();
+        $summary_slex = array();
+
         $query->execute();
         $query->store_result();
         $query->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
@@ -1943,6 +1949,26 @@ class GPDF
 
         require 'include/guidelines.php';
 
+        $co_ok_bancal = 0;
+        $co_2_ok_bancal = 0;
+        $so2_ok_bancal = 0;
+        $no2_ok_bancal = 0;
+
+        $co_exceed_bancal = 0;
+        $co_2_exceed_bancal = 0;
+        $so2_exceed_bancal = 0;
+        $no2_exceed_bancal = 0;
+
+        $co_ok_slex = 0;
+        $co_2_ok_slex = 0;
+        $so2_ok_slex = 0;
+        $no2_ok_slex = 0;
+
+        $co_exceed_slex = 0;
+        $co_2_exceed_slex = 0;
+        $so2_exceed_slex = 0;
+        $no2_exceed_slex = 0;
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
             for ($i = 0; $i < count($array_holder_bancal); $i++) {
                 if ($array_holder_bancal[$i]->e_id == "3") {
@@ -1953,6 +1979,12 @@ class GPDF
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                        if ($cv <= 0.08) {
+                            $no2_ok_bancal = $no2_ok_bancal + 1;
+                        } else {
+                            $no2_exceed_bancal = $no2_exceed_bancal + 1;
+                        }
                     }
 
                     array_push($no2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
@@ -1965,6 +1997,12 @@ class GPDF
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                        if ($cv <= 0.07) {
+                            $so2_ok_bancal = $so2_ok_bancal + 1;
+                        } else {
+                            $so2_exceed_bancal = $so2_exceed_bancal + 1;
+                        }
                     }
 
                     array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
@@ -1977,6 +2015,12 @@ class GPDF
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+
+                        if ($cv <= 30) {
+                            $co_ok_bancal = $co_ok_bancal + 1;
+                        } else {
+                            $co_exceed_bancal = $co_exceed_bancal + 1;
+                        }
                     }
 
                     $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
@@ -1986,12 +2030,21 @@ class GPDF
                         $cv_2 = "-";
                     } else {
                         $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+
+                        if ($cv_2 <= 9) {
+                            $co_2_ok_bancal = $co_2_ok_bancal + 1;
+                        } else {
+                            $co_2_exceed_bancal = $co_2_exceed_bancal + 1;
+                        }
                     }
 
                     array_push($coData_bancal, $array_holder_bancal[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
                 }
             }
         }
+
+        array_push($summary_bancal, "OK" . ";" . $co_ok_bancal . ";" . $co_2_ok_bancal . ";" . $so2_ok_bancal . ";" . $no2_ok_bancal);
+        array_push($summary_bancal, "EXCEEDED" . ";" . $co_exceed_bancal . ";" . $co_2_exceed_bancal . ";" . $so2_exceed_bancal . ";" . $no2_exceed_bancal);
 
         for ($i = 0; $i < count($array_holder_slex); $i++) {
             for ($i = 0; $i < count($array_holder_slex); $i++) {
@@ -2003,6 +2056,12 @@ class GPDF
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                        if ($cv <= 0.08) {
+                            $no2_ok_slex = $no2_ok_slex + 1;
+                        } else {
+                            $no2_exceed_slex = $no2_exceed_slex + 1;
+                        }
                     }
 
                     array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
@@ -2015,6 +2074,12 @@ class GPDF
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                        if ($cv <= 0.07) {
+                            $so2_ok_slex = $so2_ok_slex + 1;
+                        } else {
+                            $so2_exceed_slex = $so2_exceed_slex + 1;
+                        }
                     }
 
                     array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
@@ -2027,6 +2092,12 @@ class GPDF
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+
+                        if ($cv <= 30) {
+                            $co_ok_slex = $co_ok_slex + 1;
+                        } else {
+                            $co_exceed_slex = $co_exceed_slex + 1;
+                        }
                     }
 
                     $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
@@ -2036,6 +2107,12 @@ class GPDF
                         $cv_2 = "-";
                     } else {
                         $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+
+                        if ($cv_2 <= 9) {
+                            $co_2_ok_slex = $co_2_ok_slex + 1;
+                        } else {
+                            $co_2_exceed_slex = $co_2_exceed_slex + 1;
+                        }
                     }
 
                     array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
@@ -2043,7 +2120,10 @@ class GPDF
             }
         }
 
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
+        array_push($summary_slex, "OK" . ";" . $co_ok_slex . ";" . $co_2_ok_slex . ";" . $so2_ok_slex . ";" . $no2_ok_slex);
+        array_push($summary_slex, "EXCEEDED" . ";" . $co_exceed_slex . ";" . $co_2_exceed_slex . ";" . $so2_exceed_slex . ";" . $no2_exceed_slex);
+
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex];
     }
 }
 
