@@ -260,17 +260,17 @@ try {
         if($filterPollutant == "4"){
             list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $gpdf->GetPollutants_ambient_ALL($area, $dateFrom, $dateTo, $filterPollutant);
 
-            $coDataSet_bancal[] = array();
-            $so2DataSet_bancal[] = array();
-            $no2DataSet_bancal[] = array();
-            $summaryDataSet_bancal[] = array();
-            $highestDataSet_bancal[] = array();
+            $coDataSet_bancal = array();
+            $so2DataSet_bancal = array();
+            $no2DataSet_bancal = array();
+            $summaryDataSet_bancal = array();
+            $highestDataSet_bancal = array();
 
-            $coDataSet_slex[] = array();
-            $so2DataSet_slex[] = array();
-            $no2DataSet_slex[] = array();
-            $summaryDataSet_slex[] = array();
-            $highestDataSet_slex[] = array();
+            $coDataSet_slex = array();
+            $so2DataSet_slex = array();
+            $no2DataSet_slex = array();
+            $summaryDataSet_slex = array();
+            $highestDataSet_slex = array();
             
             if(empty($coData_bancal) && empty($coData_bancal) && empty($no2Data_bancal) && empty($coData_slex) && empty($coData_slex) && empty($no2Data_slex)){
                 echo "<script>
@@ -339,7 +339,22 @@ try {
                 }
             }
 
-            $a_name = "SLEX and Bancal, Carmona, Cavite";
+            $a_name = "";
+            switch($areaIndex){
+                case 1:{
+                    $a_name = "SLEX Carmona";
+                    break;
+                }
+                case 2:{
+                    $a_name = "Bancal Junction";
+                    break;
+                }
+                case 3:{
+                    $a_name = "SLEX Carmona and Bancal Junction";
+                    break;
+                }
+            }
+            
             $time_updated = $timestamp;
 
             //------------------ GENERATING PDF -------------------------

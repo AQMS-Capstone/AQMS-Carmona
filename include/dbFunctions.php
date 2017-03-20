@@ -1891,21 +1891,6 @@ class GPDF
             }
         }
 
-        $timestamp_1 = $element_holder_bancal->no2_holder[0]->timestamp;
-        $timestamp_2 = $element_holder_bancal->no2_holder[0]->timestamp;
-        $timestamp_3 = $element_holder_bancal->no2_holder[0]->timestamp;
-        $timestamp = $timestamp_1;
-
-        if (strtotime($timestamp_1) > strtotime($timestamp_2)) {
-            $timestamp = $timestamp_1;
-        } else {
-            $timestamp = $timestamp_2;
-        }
-
-        if (strtotime($timestamp) < strtotime($timestamp_3)) {
-            $timestamp = $timestamp_3;
-        }
-
         $result->free_result();
 
         $array_holder_bancal = array();
@@ -2007,266 +1992,305 @@ class GPDF
         $co_2_highest_cv_slex = "";
         $co_2_highest_evaluation_slex = "";
 
+        $timestamp_1_bancal = "";
+        $timestamp_2_bancal = "";
+        $timestamp_3_bancal = "";
+
+        $timestamp_1_slex = "";
+        $timestamp_2_slex = "";
+        $timestamp_3_slex = "";
+
+        $timestamp = "";
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
-            for ($i = 0; $i < count($array_holder_bancal); $i++) {
-                if ($array_holder_bancal[$i]->e_id == "3") {
-                    $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
-                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
+            if ($array_holder_bancal[$i]->e_id == "3") {
+                $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
+                if($timestamp_3_bancal == "") {
+                    $timestamp_3_bancal = $array_holder_bancal[$i]->timestamp;
+                }
+                $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
 
-                    if ($cv == -1) {
-                        $cv = "-";
+                if ($cv == -1) {
+                    $cv = "-";
+                } else {
+                    $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                    if ($cv <= 0.08) {
+                        $no2_ok_bancal = $no2_ok_bancal + 1;
                     } else {
-                        $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+                        $no2_exceed_bancal = $no2_exceed_bancal + 1;
+                    }
 
-                        if ($cv <= 0.08) {
-                            $no2_ok_bancal = $no2_ok_bancal + 1;
-                        } else {
-                            $no2_exceed_bancal = $no2_exceed_bancal + 1;
-                        }
-
-                        if(empty($no2_highest_timestamp_bancal)){
+                    if(empty($no2_highest_timestamp_bancal)){
+                        $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $no2_highest_cv_bancal = $cv;
+                        $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
+                    }else{
+                        if($cv > $no2_highest_cv_bancal){
                             $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
                             $no2_highest_cv_bancal = $cv;
                             $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
-                        }else{
-                            if($cv > $no2_highest_cv_bancal){
-                                $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
-                                $no2_highest_cv_bancal = $cv;
-                                $no2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 3);
-                            }
                         }
                     }
-
-                    array_push($no2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
                 }
-                else if ($array_holder_bancal[$i]->e_id == "2") {
-                    $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
-                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
 
-                    if ($cv == -1) {
-                        $cv = "-";
+                array_push($no2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
+            }
+            else if ($array_holder_bancal[$i]->e_id == "2") {
+                $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
+                if($timestamp_2_bancal == "") {
+                    $timestamp_2_bancal = $array_holder_bancal[$i]->timestamp;
+                }
+                $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
+
+                if ($cv == -1) {
+                    $cv = "-";
+                } else {
+                    $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                    if ($cv <= 0.07) {
+                        $so2_ok_bancal = $so2_ok_bancal + 1;
                     } else {
-                        $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+                        $so2_exceed_bancal = $so2_exceed_bancal + 1;
+                    }
 
-                        if ($cv <= 0.07) {
-                            $so2_ok_bancal = $so2_ok_bancal + 1;
-                        } else {
-                            $so2_exceed_bancal = $so2_exceed_bancal + 1;
-                        }
-
-                        if(empty($so2_highest_timestamp_bancal)){
+                    if(empty($so2_highest_timestamp_bancal)){
+                        $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $so2_highest_cv_bancal = $cv;
+                        $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
+                    }else{
+                        if($cv > $so2_highest_cv_bancal){
                             $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
                             $so2_highest_cv_bancal = $cv;
                             $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
-                        }else{
-                            if($cv > $so2_highest_cv_bancal){
-                                $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
-                                $so2_highest_cv_bancal = $cv;
-                                $so2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 2);
-                            }
                         }
                     }
-
-                    array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
                 }
-                else if ($array_holder_bancal[$i]->e_id == "1") {
-                    $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
-                    $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 1, $array_holder_bancal[$i]->e_id);
 
-                    if ($cv == -1) {
-                        $cv = "-";
+                array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+            }
+            else if ($array_holder_bancal[$i]->e_id == "1") {
+                $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
+                if($timestamp_1_bancal == "") {
+                    $timestamp_1_bancal = $array_holder_bancal[$i]->timestamp;
+                }
+                $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 1, $array_holder_bancal[$i]->e_id);
+
+                if ($cv == -1) {
+                    $cv = "-";
+                } else {
+                    $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+
+                    if ($cv <= 30) {
+                        $co_ok_bancal = $co_ok_bancal + 1;
                     } else {
-                        $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+                        $co_exceed_bancal = $co_exceed_bancal + 1;
+                    }
 
-                        if ($cv <= 30) {
-                            $co_ok_bancal = $co_ok_bancal + 1;
-                        } else {
-                            $co_exceed_bancal = $co_exceed_bancal + 1;
-                        }
-
-                        if(empty($co_highest_timestamp_bancal)){
+                    if(empty($co_highest_timestamp_bancal)){
+                        $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $co_highest_cv_bancal = $cv;
+                        $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
+                    }else{
+                        if($cv > $co_highest_cv_bancal){
                             $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
                             $co_highest_cv_bancal = $cv;
                             $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
-                        }else{
-                            if($cv > $co_highest_cv_bancal){
-                                $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
-                                $co_highest_cv_bancal = $cv;
-                                $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
-                            }
                         }
                     }
+                }
 
-                    $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
-                    $cv_2 = $this->Averaging_AQI_ALL($array_holder_bancal, $dates_2, 8, $array_holder_bancal[$i]->e_id);
+                $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
+                $cv_2 = $this->Averaging_AQI_ALL($array_holder_bancal, $dates_2, 8, $array_holder_bancal[$i]->e_id);
 
-                    if ($cv_2 == -1) {
-                        $cv_2 = "-";
+                if ($cv_2 == -1) {
+                    $cv_2 = "-";
+                } else {
+                    $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+
+                    if ($cv_2 <= 9) {
+                        $co_2_ok_bancal = $co_2_ok_bancal + 1;
                     } else {
-                        $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+                        $co_2_exceed_bancal = $co_2_exceed_bancal + 1;
+                    }
 
-                        if ($cv_2 <= 9) {
-                            $co_2_ok_bancal = $co_2_ok_bancal + 1;
-                        } else {
-                            $co_2_exceed_bancal = $co_2_exceed_bancal + 1;
-                        }
-
-                        if(empty($co_2_highest_timestamp_bancal)){
+                    if(empty($co_2_highest_timestamp_bancal)){
+                        $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $co_2_highest_cv_bancal = $cv_2;
+                        $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
+                    }else{
+                        if($cv_2 > $co_2_highest_cv_bancal){
                             $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
                             $co_2_highest_cv_bancal = $cv_2;
                             $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
-                        }else{
-                            if($cv_2 > $co_2_highest_cv_bancal){
-                                $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
-                                $co_2_highest_cv_bancal = $cv_2;
-                                $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
-                            }
                         }
                     }
-
-                    array_push($coData_bancal, $array_holder_bancal[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
                 }
+
+                array_push($coData_bancal, $array_holder_bancal[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
             }
         }
 
-        array_push($highest_bancal, "CO (1 hr)" . ";" . $co_highest_timestamp_bancal . ";" . $co_highest_cv_bancal . ";" . $co_highest_evaluation_bancal);
-        array_push($highest_bancal, "CO (8 hr)" . ";" . $co_2_highest_timestamp_bancal . ";" . $co_2_highest_cv_bancal . ";" . $co_2_highest_evaluation_bancal);
-        array_push($highest_bancal, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_bancal . ";" . $so2_highest_cv_bancal . ";" . $so2_highest_evaluation_bancal);
-        array_push($highest_bancal, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_bancal . ";" . $no2_highest_cv_bancal . ";" . $no2_highest_evaluation_bancal);
+        if(count($array_holder_bancal) > 0) {
+            $timestamp = $timestamp_1_bancal;
 
-        array_push($summary_bancal, "OK" . ";" . $co_ok_bancal . ";" . $co_2_ok_bancal . ";" . $so2_ok_bancal . ";" . $no2_ok_bancal);
-        array_push($summary_bancal, "EXCEEDED" . ";" . $co_exceed_bancal . ";" . $co_2_exceed_bancal . ";" . $so2_exceed_bancal . ";" . $no2_exceed_bancal);
+            array_push($highest_bancal, "CO (1 hr)" . ";" . $co_highest_timestamp_bancal . ";" . $co_highest_cv_bancal . ";" . $co_highest_evaluation_bancal);
+            array_push($highest_bancal, "CO (8 hr)" . ";" . $co_2_highest_timestamp_bancal . ";" . $co_2_highest_cv_bancal . ";" . $co_2_highest_evaluation_bancal);
+            array_push($highest_bancal, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_bancal . ";" . $so2_highest_cv_bancal . ";" . $so2_highest_evaluation_bancal);
+            array_push($highest_bancal, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_bancal . ";" . $no2_highest_cv_bancal . ";" . $no2_highest_evaluation_bancal);
+
+            array_push($summary_bancal, "OK" . ";" . $co_ok_bancal . ";" . $co_2_ok_bancal . ";" . $so2_ok_bancal . ";" . $no2_ok_bancal);
+            array_push($summary_bancal, "EXCEEDED" . ";" . $co_exceed_bancal . ";" . $co_2_exceed_bancal . ";" . $so2_exceed_bancal . ";" . $no2_exceed_bancal);
+        }
 
         for ($i = 0; $i < count($array_holder_slex); $i++) {
-            for ($i = 0; $i < count($array_holder_slex); $i++) {
-                if ($array_holder_slex[$i]->e_id == "3") {
-                    $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
-                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
+            if ($array_holder_slex[$i]->e_id == "3") {
+                $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
+                if($timestamp_3_slex == "") {
+                    $timestamp_3_slex = $array_holder_slex[$i]->timestamp;
+                }
+                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
 
-                    if ($cv == -1) {
-                        $cv = "-";
+                if ($cv == -1) {
+                    $cv = "-";
+                } else {
+                    $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                    if ($cv <= 0.08) {
+                        $no2_ok_slex = $no2_ok_slex + 1;
                     } else {
-                        $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+                        $no2_exceed_slex = $no2_exceed_slex + 1;
+                    }
 
-                        if ($cv <= 0.08) {
-                            $no2_ok_slex = $no2_ok_slex + 1;
-                        } else {
-                            $no2_exceed_slex = $no2_exceed_slex + 1;
-                        }
-
-                        if(empty($no2_highest_timestamp_slex)){
+                    if(empty($no2_highest_timestamp_slex)){
+                        $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $no2_highest_cv_slex = $cv;
+                        $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
+                    }else{
+                        if($cv > $no2_highest_cv_slex){
                             $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
                             $no2_highest_cv_slex = $cv;
                             $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
-                        }else{
-                            if($cv > $no2_highest_cv_slex){
-                                $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
-                                $no2_highest_cv_slex = $cv;
-                                $no2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 3);
-                            }
                         }
                     }
-
-                    array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
                 }
-                else if ($array_holder_slex[$i]->e_id == "2") {
-                    $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
-                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
 
-                    if ($cv == -1) {
-                        $cv = "-";
+                array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 3));
+            }
+            else if ($array_holder_slex[$i]->e_id == "2") {
+                $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
+                if($timestamp_2_slex == "") {
+                    $timestamp_2_slex = $array_holder_slex[$i]->timestamp;
+                }
+                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
+
+                if ($cv == -1) {
+                    $cv = "-";
+                } else {
+                    $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                    if ($cv <= 0.07) {
+                        $so2_ok_slex = $so2_ok_slex + 1;
                     } else {
-                        $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+                        $so2_exceed_slex = $so2_exceed_slex + 1;
+                    }
 
-                        if ($cv <= 0.07) {
-                            $so2_ok_slex = $so2_ok_slex + 1;
-                        } else {
-                            $so2_exceed_slex = $so2_exceed_slex + 1;
-                        }
-
-                        if(empty($so2_highest_timestamp_slex)){
+                    if(empty($so2_highest_timestamp_slex)){
+                        $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $so2_highest_cv_slex = $cv;
+                        $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
+                    }else{
+                        if($cv > $so2_highest_cv_slex){
                             $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
                             $so2_highest_cv_slex = $cv;
                             $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
-                        }else{
-                            if($cv > $so2_highest_cv_slex){
-                                $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
-                                $so2_highest_cv_slex = $cv;
-                                $so2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 2);
-                            }
                         }
                     }
-
-                    array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
                 }
-                else if ($array_holder_slex[$i]->e_id == "1") {
-                    $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
-                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
 
-                    if ($cv == -1) {
-                        $cv = "-";
+                array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 2));
+            }
+            else if ($array_holder_slex[$i]->e_id == "1") {
+                $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
+                if($timestamp_1_slex == "") {
+                    $timestamp_1_slex = $array_holder_slex[$i]->timestamp;
+                }
+                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
+
+                if ($cv == -1) {
+                    $cv = "-";
+                } else {
+                    $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+
+                    if ($cv <= 30) {
+                        $co_ok_slex = $co_ok_slex + 1;
                     } else {
-                        $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+                        $co_exceed_slex = $co_exceed_slex + 1;
+                    }
 
-                        if ($cv <= 30) {
-                            $co_ok_slex = $co_ok_slex + 1;
-                        } else {
-                            $co_exceed_slex = $co_exceed_slex + 1;
-                        }
-
-                        if(empty($co_highest_timestamp_slex)){
+                    if(empty($co_highest_timestamp_slex)){
+                        $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $co_highest_cv_slex = $cv;
+                        $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
+                    }else{
+                        if($cv > $co_highest_cv_slex){
                             $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
                             $co_highest_cv_slex = $cv;
                             $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
-                        }else{
-                            if($cv > $co_highest_cv_slex){
-                                $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
-                                $co_highest_cv_slex = $cv;
-                                $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
-                            }
                         }
                     }
+                }
 
-                    $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
-                    $cv_2 = $this->Averaging_AQI_ALL($array_holder_slex, $dates_2, 8, $array_holder_slex[$i]->e_id);
+                $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
+                $cv_2 = $this->Averaging_AQI_ALL($array_holder_slex, $dates_2, 8, $array_holder_slex[$i]->e_id);
 
-                    if ($cv_2 == -1) {
-                        $cv_2 = "-";
+                if ($cv_2 == -1) {
+                    $cv_2 = "-";
+                } else {
+                    $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+
+                    if ($cv_2 <= 9) {
+                        $co_2_ok_slex = $co_2_ok_slex + 1;
                     } else {
-                        $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+                        $co_2_exceed_slex = $co_2_exceed_slex + 1;
+                    }
 
-                        if ($cv_2 <= 9) {
-                            $co_2_ok_slex = $co_2_ok_slex + 1;
-                        } else {
-                            $co_2_exceed_slex = $co_2_exceed_slex + 1;
-                        }
-
-                        if(empty($co_2_highest_timestamp_slex)){
+                    if(empty($co_2_highest_timestamp_slex)){
+                        $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $co_2_highest_cv_slex = $cv_2;
+                        $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
+                    }else{
+                        if($cv_2 > $co_2_highest_cv_slex){
                             $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
                             $co_2_highest_cv_slex = $cv_2;
                             $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
-                        }else{
-                            if($cv_2 > $co_2_highest_cv_slex){
-                                $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
-                                $co_2_highest_cv_slex = $cv_2;
-                                $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
-                            }
                         }
                     }
-
-                    array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
                 }
+
+                array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
             }
         }
 
-        array_push($highest_slex, "CO (1 hr)" . ";" . $co_highest_timestamp_slex . ";" . $co_highest_cv_slex . ";" . $co_highest_evaluation_slex);
-        array_push($highest_slex, "CO (8 hr)" . ";" . $co_2_highest_timestamp_slex . ";" . $co_2_highest_cv_slex . ";" . $co_2_highest_evaluation_slex);
-        array_push($highest_slex, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_slex . ";" . $so2_highest_cv_slex . ";" . $so2_highest_evaluation_slex);
-        array_push($highest_slex, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_slex . ";" . $no2_highest_cv_slex . ";" . $no2_highest_evaluation_slex);
+        if(count($array_holder_slex) > 0) {
+            $timestamp = $timestamp_1_slex;
 
-        array_push($summary_slex, "OK" . ";" . $co_ok_slex . ";" . $co_2_ok_slex . ";" . $so2_ok_slex . ";" . $no2_ok_slex);
-        array_push($summary_slex, "EXCEEDED" . ";" . $co_exceed_slex . ";" . $co_2_exceed_slex . ";" . $so2_exceed_slex . ";" . $no2_exceed_slex);
+            array_push($highest_slex, "CO (1 hr)" . ";" . $co_highest_timestamp_slex . ";" . $co_highest_cv_slex . ";" . $co_highest_evaluation_slex);
+            array_push($highest_slex, "CO (8 hr)" . ";" . $co_2_highest_timestamp_slex . ";" . $co_2_highest_cv_slex . ";" . $co_2_highest_evaluation_slex);
+            array_push($highest_slex, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_slex . ";" . $so2_highest_cv_slex . ";" . $so2_highest_evaluation_slex);
+            array_push($highest_slex, "NO2 (24 hr)" . ";" . $no2_highest_timestamp_slex . ";" . $no2_highest_cv_slex . ";" . $no2_highest_evaluation_slex);
 
+            array_push($summary_slex, "OK" . ";" . $co_ok_slex . ";" . $co_2_ok_slex . ";" . $so2_ok_slex . ";" . $no2_ok_slex);
+            array_push($summary_slex, "EXCEEDED" . ";" . $co_exceed_slex . ";" . $co_2_exceed_slex . ";" . $so2_exceed_slex . ";" . $no2_exceed_slex);
+        }
+
+        if(count($array_holder_bancal) > 0 && count($array_holder_slex) > 0  ){
+            if($timestamp_1_bancal > $timestamp_1_slex){
+                $timestamp = $timestamp_1_bancal;
+            }else{
+                $timestamp = $timestamp_1_slex;
+            }
+        }
 
         return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
