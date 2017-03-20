@@ -372,6 +372,11 @@ class GPDF
         $bancalData1 = array();
         $slexData1 = array();
 
+        $summary_bancal = array();
+        $summary_slex = array();
+        $highest_bancal = array();
+        $highest_slex = array();
+
         if ($a_name == "All") {
             switch ($filterPollutant) {
                 case 1: {
@@ -379,7 +384,7 @@ class GPDF
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("ss", $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreCOPollutant_ambient($query);
                     break;
                 }
                 case 2: {
@@ -415,7 +420,7 @@ class GPDF
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
                     $query->bind_param("sss", $a_name, $dFrom, $dTo);
-                    list($bancalData, $slexData, $bancalData1, $slexData1) = $this->StoreCOPollutant_ambient($query);
+                    list($bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreCOPollutant_ambient($query);
                     break;
                 }
                 case 2: {
@@ -449,8 +454,7 @@ class GPDF
 
         $query->close();
         $con->close();
-        return [$bancalData, $slexData, $bancalData1, $slexData1];
-
+        return [$bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function GetPollutants_ambient_ALL($a_name, $dFrom, $dTo, $filterPollutant)
@@ -1500,6 +1504,12 @@ class GPDF
         $bancalData1 = array();
         $slexData1 = array();
 
+        $summary_bancal = array();
+        $summary_slex = array();
+
+        $highest_bancal = array();
+        $highest_slex = array();
+
         $query->execute();
         $query->store_result();
         $query->bind_result($area_name, $timestamp, $CO);
@@ -1547,6 +1557,34 @@ class GPDF
 
         require 'include/guidelines.php';
 
+        $co_ok_bancal = 0;
+        $co_2_ok_bancal = 0;
+
+        $co_exceed_bancal = 0;
+        $co_2_exceed_bancal = 0;
+
+        $co_ok_slex = 0;
+        $co_2_ok_slex = 0;
+
+        $co_exceed_slex = 0;
+        $co_2_exceed_slex = 0;
+
+        $co_highest_timestamp_bancal = "";
+        $co_highest_cv_bancal = "";
+        $co_highest_evaluation_bancal = "";
+
+        $co_2_highest_timestamp_bancal = "";
+        $co_2_highest_cv_bancal = "";
+        $co_2_highest_evaluation_bancal = "";
+
+        $co_highest_timestamp_slex = "";
+        $co_highest_cv_slex = "";
+        $co_highest_evaluation_slex = "";
+
+        $co_2_highest_timestamp_slex = "";
+        $co_2_highest_cv_slex = "";
+        $co_2_highest_evaluation_slex = "";
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 1);
@@ -1555,6 +1593,24 @@ class GPDF
                 $cv = "-";
             } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+
+                if ($cv <= 30) {
+                    $co_ok_bancal = $co_ok_bancal + 1;
+                } else {
+                    $co_exceed_bancal = $co_exceed_bancal + 1;
+                }
+
+                if(empty($co_highest_timestamp_bancal)){
+                    $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                    $co_highest_cv_bancal = $cv;
+                    $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
+                }else{
+                    if($cv > $co_highest_cv_bancal){
+                        $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $co_highest_cv_bancal = $cv;
+                        $co_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv, 0);
+                    }
+                }
             }
 
             $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
@@ -1564,12 +1620,38 @@ class GPDF
                 $cv_2 = "-";
             } else {
                 $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+
+                if ($cv_2 <= 9) {
+                    $co_2_ok_bancal = $co_2_ok_bancal + 1;
+                } else {
+                    $co_2_exceed_bancal = $co_2_exceed_bancal + 1;
+                }
+
+                if(empty($co_2_highest_timestamp_bancal)){
+                    $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                    $co_2_highest_cv_bancal = $cv_2;
+                    $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
+                }else{
+                    if($cv_2 > $co_2_highest_cv_bancal){
+                        $co_2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                        $co_2_highest_cv_bancal = $cv_2;
+                        $co_2_highest_evaluation_bancal = $this->determineEvaluation_ambient($cv_2, 1);
+                    }
+                }
             }
 
             array_push($bancalData, $array_holder_bancal[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
 
             array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
             array_push($bancalData1, $array_holder_bancal[$i]->concentration_value);
+        }
+
+        if(count($array_holder_bancal) > 0) {
+            array_push($highest_bancal, "CO (1 hr)" . ";" . $co_highest_timestamp_bancal . ";" . $co_highest_cv_bancal . ";" . $co_highest_evaluation_bancal);
+            array_push($highest_bancal, "CO (8 hr)" . ";" . $co_2_highest_timestamp_bancal . ";" . $co_2_highest_cv_bancal . ";" . $co_2_highest_evaluation_bancal);
+
+            array_push($summary_bancal, "OK" . ";" . $co_ok_bancal . ";" . $co_2_ok_bancal);
+            array_push($summary_bancal, "EXCEEDED" . ";" . $co_exceed_bancal . ";" . $co_2_exceed_bancal);
         }
 
         for ($i = 0; $i < count($array_holder_slex); $i++) {
@@ -1580,6 +1662,24 @@ class GPDF
                 $cv = "-";
             } else {
                 $cv = $this->floorDec_AQI($cv, $precision = $co_precision);
+
+                if ($cv <= 30) {
+                    $co_ok_slex = $co_ok_slex + 1;
+                } else {
+                    $co_exceed_slex = $co_exceed_slex + 1;
+                }
+
+                if(empty($co_highest_timestamp_slex)){
+                    $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                    $co_highest_cv_slex = $cv;
+                    $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
+                }else{
+                    if($cv > $co_highest_cv_slex){
+                        $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $co_highest_cv_slex = $cv;
+                        $co_highest_evaluation_slex = $this->determineEvaluation_ambient($cv, 0);
+                    }
+                }
             }
 
             $dates_2 = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
@@ -1589,16 +1689,41 @@ class GPDF
                 $cv_2 = "-";
             } else {
                 $cv_2 = $this->floorDec_AQI($cv_2, $precision = $co_precision);
+
+                if ($cv_2 <= 9) {
+                    $co_2_ok_slex = $co_2_ok_slex + 1;
+                } else {
+                    $co_2_exceed_slex = $co_2_exceed_slex + 1;
+                }
+
+                if(empty($co_2_highest_timestamp_slex)){
+                    $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                    $co_2_highest_cv_slex = $cv_2;
+                    $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
+                }else{
+                    if($cv_2 > $co_2_highest_cv_slex){
+                        $co_2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                        $co_2_highest_cv_slex = $cv_2;
+                        $co_2_highest_evaluation_slex = $this->determineEvaluation_ambient($cv_2, 1);
+                    }
+                }
             }
 
             array_push($slexData, $array_holder_slex[$i]->timestamp . ';' . $cv . ';' . $this->determineEvaluation_ambient($cv, 0) . ';' . $cv_2 . ';' . $this->determineEvaluation_ambient($cv_2, 1));
 
             array_push($slexData1, $array_holder_slex[$i]->timestamp);
             array_push($slexData1, $array_holder_slex[$i]->concentration_value);
-
         }
 
-        return [$bancalData, $slexData, $bancalData1, $slexData1];
+        if(count($array_holder_slex) > 0) {
+            array_push($highest_slex, "CO (1 hr)" . ";" . $co_highest_timestamp_slex . ";" . $co_highest_cv_slex . ";" . $co_highest_evaluation_slex);
+            array_push($highest_slex, "CO (8 hr)" . ";" . $co_2_highest_timestamp_slex . ";" . $co_2_highest_cv_slex . ";" . $co_2_highest_evaluation_slex);
+
+            array_push($summary_slex, "OK" . ";" . $co_ok_slex . ";" . $co_2_ok_slex);
+            array_push($summary_slex, "EXCEEDED" . ";" . $co_exceed_slex . ";" . $co_2_exceed_slex);
+        }
+
+        return [$bancalData, $slexData, $bancalData1, $slexData1, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function StoreSO2Pollutant_ambient($query)
@@ -1607,6 +1732,12 @@ class GPDF
         $slexData = array();
         $bancalData1 = array();
         $slexData1 = array();
+
+        $summary_bancal = array();
+        $summary_slex = array();
+
+        $highest_bancal = array();
+        $highest_slex = array();
 
         $query->execute();
         $query->store_result();
@@ -1655,6 +1786,20 @@ class GPDF
 
         require 'include/guidelines.php';
 
+        $so2_ok_bancal = 0;
+        $so2_exceed_bancal = 0;
+
+        $so2_ok_slex = 0;
+        $so2_exceed_slex = 0;
+
+        $so2_highest_timestamp_bancal = "";
+        $so2_highest_cv_bancal = "";
+        $so2_highest_evaluation_bancal = "";
+
+        $so2_highest_timestamp_slex = "";
+        $so2_highest_cv_slex = "";
+        $so2_highest_evaluation_slex = "";
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
             $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
             $cv = $this->Averaging_AQI($array_holder_bancal, $dates, 24);
@@ -1696,6 +1841,12 @@ class GPDF
         $slexData = array();
         $bancalData1 = array();
         $slexData1 = array();
+
+        $summary_bancal = array();
+        $summary_slex = array();
+
+        $highest_bancal = array();
+        $highest_slex = array();
 
         $query->execute();
         $query->store_result();
