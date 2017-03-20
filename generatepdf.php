@@ -124,6 +124,14 @@ try {
         if($filterPollutant == "4"){
             list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $gpdf->GetPollutants_AQI_ALL($area, $dateFrom, $dateTo, $filterPollutant);
 
+            $coDataSet_bancal[] = array();
+            $so2DataSet_bancal[] = array();
+            $no2DataSet_bancal[] = array();
+
+            $coDataSet_slex[] = array();
+            $so2DataSet_slex[] = array();
+            $no2DataSet_slex[] = array();
+
             if(empty($coData_bancal) && empty($coData_bancal) && empty($no2Data_bancal) && empty($coData_slex) && empty($coData_slex) && empty($no2Data_slex)){
                 echo "<script>
                 alert('There are no data available to generate a report');
@@ -253,6 +261,14 @@ try {
         if($filterPollutant == "4"){
             list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $gpdf->GetPollutants_ambient_ALL($area, $dateFrom, $dateTo, $filterPollutant);
 
+            $coDataSet_bancal[] = array();
+            $so2DataSet_bancal[] = array();
+            $no2DataSet_bancal[] = array();
+
+            $coDataSet_slex[] = array();
+            $so2DataSet_slex[] = array();
+            $no2DataSet_slex[] = array();
+            
             if(empty($coData_bancal) && empty($coData_bancal) && empty($no2Data_bancal) && empty($coData_slex) && empty($coData_slex) && empty($no2Data_slex)){
                 echo "<script>
                 alert('There are no data available to generate a report');
