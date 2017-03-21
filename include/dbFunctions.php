@@ -241,7 +241,6 @@ class GPDF
 
     function GetPollutants_AQI($a_name, $dFrom, $dTo, $filterPollutant)
     {
-
         include('include/db_connect.php');
 
         $bancalData = array();
@@ -332,7 +331,6 @@ class GPDF
 
     function GetPollutants_AQI_ALL($a_name, $dFrom, $dTo, $filterPollutant)
     {
-
         include('include/db_connect.php');
 
         $coData_bancal = array();
@@ -342,24 +340,30 @@ class GPDF
         $so2Data_slex = array();
         $no2Data_slex = array();
 
+        $summary_bancal = array();
+        $summary_slex = array();
+
+        $highest_bancal = array();
+        $highest_slex = array();
+
         if ($a_name == "All") {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("ss", $dFrom, $dTo);
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_AQI($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreAllPollutants_AQI($query);
         } else {
             $query = $con->prepare("SELECT * FROM MASTER
                           WHERE AREA_NAME = ? AND DATE(timestamp) BETWEEN DATE(?) and DATE(?)
                           ORDER BY TIMESTAMP DESC");
             $query->bind_param("sss", $a_name, $dFrom, $dTo);
 
-            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp) = $this->StoreAllPollutants_AQI($query);
+            list($coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex) = $this->StoreAllPollutants_AQI($query);
         }
 
         $query->close();
         $con->close();
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function GetPollutants_ambient($a_name, $dFrom, $dTo, $filterPollutant)
@@ -965,6 +969,12 @@ class GPDF
         $so2Data_slex = array();
         $no2Data_slex = array();
 
+        $summary_bancal = array();
+        $summary_slex = array();
+
+        $highest_bancal = array();
+        $highest_slex = array();
+
         $query->execute();
         $query->store_result();
         $query->bind_result($area_name, $CO, $SO2, $NO2, $timestamp);
@@ -1025,21 +1035,6 @@ class GPDF
             }
         }
 
-        $timestamp_1 = $element_holder_bancal->no2_holder[0]->timestamp;
-        $timestamp_2 = $element_holder_bancal->no2_holder[0]->timestamp;
-        $timestamp_3 = $element_holder_bancal->no2_holder[0]->timestamp;
-        $timestamp = $timestamp_1;
-
-        if (strtotime($timestamp_1) > strtotime($timestamp_2)) {
-            $timestamp = $timestamp_1;
-        } else {
-            $timestamp = $timestamp_2;
-        }
-
-        if (strtotime($timestamp) < strtotime($timestamp_3)) {
-            $timestamp = $timestamp_3;
-        }
-
         $result->free_result();
 
         $array_holder_bancal = array();
@@ -1089,67 +1084,254 @@ class GPDF
 
         require 'include/guidelines.php';
 
+        $co_g1_bancal = 0;;
+        $so2_g1_bancal = 0;
+        $no2_g1_bancal = 0;
+
+        $co_g2_bancal = 0;;
+        $so2_g2_bancal = 0;
+        $no2_g2_bancal = 0;
+
+        $co_g3_bancal = 0;
+        $so2_g3_bancal = 0;
+        $no2_g3_bancal = 0;
+
+        $co_g4_bancal = 0;
+        $so2_g4_bancal = 0;
+        $no2_g4_bancal = 0;
+
+        $co_g5_bancal = 0;
+        $so2_g5_bancal = 0;
+        $no2_g5_bancal = 0;
+
+        $co_g6_bancal = 0;
+        $so2_g6_bancal = 0;
+        $no2_g6_bancal = 0;
+
+        $co_g1_slex = 0;;
+        $so2_g1_slex = 0;
+        $no2_g1_slex = 0;
+
+        $co_g2_slex = 0;;
+        $so2_g2_slex = 0;
+        $no2_g2_slex = 0;
+
+        $co_g3_slex = 0;
+        $so2_g3_slex = 0;
+        $no2_g3_slex = 0;
+
+        $co_g4_slex = 0;
+        $so2_g4_slex = 0;
+        $no2_g4_slex = 0;
+
+        $co_g5_slex = 0;
+        $so2_g5_slex = 0;
+        $no2_g5_slex = 0;
+
+        $co_g6_slex = 0;
+        $so2_g6_slex = 0;
+        $no2_g6_slex = 0;
+
+        $no2_highest_timestamp_bancal = "";
+        $no2_highest_cv_bancal = "";
+        $no2_highest_evaluation_bancal = "";
+
+        $so2_highest_timestamp_bancal = "";
+        $so2_highest_cv_bancal = "";
+        $so2_highest_evaluation_bancal = "";
+
+        $co_highest_timestamp_bancal = "";
+        $co_highest_cv_bancal = "";
+        $co_highest_evaluation_bancal = "";
+
+        $no2_highest_timestamp_slex = "";
+        $no2_highest_cv_slex = "";
+        $no2_highest_evaluation_slex = "";
+
+        $so2_highest_timestamp_slex = "";
+        $so2_highest_cv_slex = "";
+        $so2_highest_evaluation_slex = "";
+
+        $co_highest_timestamp_slex = "";
+        $co_highest_cv_slex = "";
+        $co_highest_evaluation_slex = "";
+
+        $timestamp_1_bancal = "";
+        $timestamp_2_bancal = "";
+        $timestamp_3_bancal = "";
+
+        $timestamp_1_slex = "";
+        $timestamp_2_slex = "";
+        $timestamp_3_slex = "";
+
+        $timestamp = "";
+
         for ($i = 0; $i < count($array_holder_bancal); $i++) {
             for ($i = 0; $i < count($array_holder_bancal); $i++) {
                 if ($array_holder_bancal[$i]->e_id == "3") {
                     $dates = $this->GetRollingDates_AQI(1, $array_holder_bancal[$i]->timestamp);
+                    if($timestamp_3_bancal == "") {
+                        $timestamp_3_bancal = $array_holder_bancal[$i]->timestamp;
+                    }
                     $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 1, $array_holder_bancal[$i]->e_id);
 
                     if ($cv == -1) {
                         $aqi = "-";
                     } else if ($cv > $no2_max) {
                         $aqi = "400+";
+                        $no2_g6_bancal = $no2_g6_bancal + 1;
                     } else if ($cv < 0.65) {
                         $aqi = "201-";
+                        $no2_g1_bancal = $no2_g1_bancal + 1;
                     } else {
                         $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
+
+                        if ($aqi == "400+") {
+                            $no2_g6_bancal = $no2_g6_bancal + 1;
+                        } else if ($aqi == "201-") {
+                            $no2_g1_bancal = $no2_g1_bancal + 1;
+                        } else if ($aqi >= 0 && $aqi <= 50) {
+                            $no2_g1_bancal = $no2_g1_bancal + 1;
+                        } else if ($aqi >= 51 && $aqi <= 100) {
+                            $no2_g2_bancal = $no2_g2_bancal + 1;
+                        } else if ($aqi >= 101 && $aqi <= 150) {
+                            $no2_g3_bancal = $no2_g3_bancal + 1;
+                        } else if ($aqi >= 151 && $aqi <= 200) {
+                            $no2_g4_bancal = $no2_g4_bancal + 1;
+                        } else if ($aqi >= 201 && $aqi <= 300) {
+                            $no2_g5_bancal = $no2_g5_bancal + 1;
+                        } else if ($aqi >= 301) {
+                            $no2_g6_bancal = $no2_g6_bancal + 1;
+                        }
                     }
 
                     if ($cv == -1) {
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                        if(empty($no2_highest_timestamp_bancal)){
+                            $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $no2_highest_cv_bancal = $cv;
+                            $no2_highest_evaluation_bancal = $this->determineAQICategory($aqi);
+                        }else{
+                            if($cv > $no2_highest_cv_bancal){
+                                $no2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $no2_highest_cv_bancal = $cv;
+                                $no2_highest_evaluation_bancal = $this->determineAQICategory($aqi);
+                            }
+                        }
                     }
 
                     array_push($no2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
                     //array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
-                } else if ($array_holder_bancal[$i]->e_id == "2") {
+                }
+                else if ($array_holder_bancal[$i]->e_id == "2") {
                     $dates = $this->GetRollingDates_AQI(24, $array_holder_bancal[$i]->timestamp);
+                    if($timestamp_2_bancal == "") {
+                        $timestamp_2_bancal = $array_holder_bancal[$i]->timestamp;
+                    }
                     $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 24, $array_holder_bancal[$i]->e_id);
 
                     if ($cv == -1) {
                         $aqi = "-";
                     } else if ($cv > $sulfur_max) {
                         $aqi = "400+";
+                        $so2_g6_bancal = $so2_g6_bancal + 1;
                     } else {
                         $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
+
+                        if ($aqi == "400+") {
+                            $so2_g6_bancal = $so2_g6_bancal + 1;
+                        } else if ($aqi == "201-") {
+                            $so2_g1_bancal = $so2_g1_bancal + 1;
+                        } else if ($aqi >= 0 && $aqi <= 50) {
+                            $so2_g1_bancal = $so2_g1_bancal + 1;
+                        } else if ($aqi >= 51 && $aqi <= 100) {
+                            $so2_g2_bancal = $so2_g2_bancal + 1;
+                        } else if ($aqi >= 101 && $aqi <= 150) {
+                            $so2_g3_bancal = $so2_g3_bancal + 1;
+                        } else if ($aqi >= 151 && $aqi <= 200) {
+                            $so2_g4_bancal = $so2_g4_bancal + 1;
+                        } else if ($aqi >= 201 && $aqi <= 300) {
+                            $so2_g5_bancal = $so2_g5_bancal + 1;
+                        } else if ($aqi >= 301) {
+                            $so2_g6_bancal = $so2_g6_bancal + 1;
+                        }
                     }
 
                     if ($cv == -1) {
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                        if(empty($so2_highest_timestamp_bancal)){
+                            $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $so2_highest_cv_bancal = $cv;
+                            $so2_highest_evaluation_bancal = $this->determineAQICategory($aqi);
+                        }else{
+                            if($cv > $so2_highest_cv_bancal){
+                                $so2_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $so2_highest_cv_bancal = $cv;
+                                $so2_highest_evaluation_bancal = $this->determineAQICategory($aqi);
+                            }
+                        }
                     }
 
                     array_push($so2Data_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
 
                     //array_push($bancalData1, $array_holder_bancal[$i]->timestamp);
-                } else if ($array_holder_bancal[$i]->e_id == "1") {
+                }
+                else if ($array_holder_bancal[$i]->e_id == "1") {
                     $dates = $this->GetRollingDates_AQI(8, $array_holder_bancal[$i]->timestamp);
+                    if($timestamp_1_bancal == "") {
+                        $timestamp_1_bancal = $array_holder_bancal[$i]->timestamp;
+                    }
                     $cv = $this->Averaging_AQI_ALL($array_holder_bancal, $dates, 8, $array_holder_bancal[$i]->e_id);
 
                     if ($cv == -1) {
                         $aqi = "-";
                     } else if ($cv > $co_max) {
                         $aqi = "400+";
+                        $co_g6_bancal = $co_g6_bancal + 1;
                     } else {
                         $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
+
+                        if ($aqi == "400+") {
+                            $co_g6_bancal = $co_g6_bancal + 1;
+                        } else if ($aqi == "201-") {
+                            $co_g1_bancal = $co_g1_bancal + 1;
+                        } else if ($aqi >= 0 && $aqi <= 50) {
+                            $co_g1_bancal = $co_g1_bancal + 1;
+                        } else if ($aqi >= 51 && $aqi <= 100) {
+                            $co_g2_bancal = $co_g2_bancal + 1;
+                        } else if ($aqi >= 101 && $aqi <= 150) {
+                            $co_g3_bancal = $co_g3_bancal + 1;
+                        } else if ($aqi >= 151 && $aqi <= 200) {
+                            $co_g4_bancal = $co_g4_bancal + 1;
+                        } else if ($aqi >= 201 && $aqi <= 300) {
+                            $co_g5_bancal = $co_g5_bancal + 1;
+                        } else if ($aqi >= 301) {
+                            $co_g6_bancal = $co_g6_bancal + 1;
+                        }
                     }
 
                     if ($cv == -1) {
                         $cv = "-";
                     } else {
                         $cv = $this->floorDec_AQI($cv, $precision = 1);
+
+                        if(empty($co_highest_timestamp_bancal)){
+                            $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                            $co_highest_cv_bancal = $cv;
+                            $co_highest_evaluation_bancal = $this->determineAQICategory($aqi);
+                        }else{
+                            if($cv > $co_highest_cv_bancal){
+                                $co_highest_timestamp_bancal = $array_holder_bancal[$i]->timestamp;
+                                $co_highest_cv_bancal = $cv;
+                                $co_highest_evaluation_bancal = $this->determineAQICategory($aqi);
+                            }
+                        }
                     }
 
                     array_push($coData_bancal, $array_holder_bancal[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_bancal[$i]->concentration_value, $precision = 1) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
@@ -1159,75 +1341,220 @@ class GPDF
             }
         }
 
+        if(count($array_holder_bancal) > 0) {
+            $timestamp = $timestamp_1_bancal;
+
+            array_push($highest_bancal, "CO (8 hr)" . ";" . $co_highest_timestamp_bancal . ";" . $co_highest_cv_bancal . ";" . $co_highest_evaluation_bancal);
+            array_push($highest_bancal, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_bancal . ";" . $so2_highest_cv_bancal . ";" . $so2_highest_evaluation_bancal);
+            array_push($highest_bancal, "NO2 (1 hr)" . ";" . $no2_highest_timestamp_bancal . ";" . $no2_highest_cv_bancal . ";" . $no2_highest_evaluation_bancal);
+
+            array_push($summary_bancal, "GOOD" . ";" . $co_g1_bancal . ";" . $so2_g1_bancal . ";" . $no2_g1_bancal);
+            array_push($summary_bancal, "FAIR" . ";" . $co_g2_bancal . ";" . $so2_g2_bancal . ";" . $no2_g2_bancal);
+            array_push($summary_bancal, "UNHEALTHY" . ";" . $co_g3_bancal . ";" . $so2_g3_bancal . ";" . $no2_g3_bancal);
+            array_push($summary_bancal, "VERY UNHEALTHY" . ";" . $co_g4_bancal . ";" . $so2_g4_bancal . ";" . $no2_g4_bancal);
+            array_push($summary_bancal, "ACUTELY UNHEALTHY" . ";" . $co_g5_bancal . ";" . $so2_g5_bancal . ";" . $no2_g5_bancal);
+            array_push($summary_bancal, "EMERGENCY" . ";" . $co_g6_bancal . ";" . $so2_g6_bancal . ";" . $no2_g6_bancal);
+        }
+
         for ($i = 0; $i < count($array_holder_slex); $i++) {
-            if ($array_holder_slex[$i]->e_id == "3") {
-                $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
-                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
+            for ($i = 0; $i < count($array_holder_slex); $i++) {
+                if ($array_holder_slex[$i]->e_id == "3") {
+                    $dates = $this->GetRollingDates_AQI(1, $array_holder_slex[$i]->timestamp);
+                    if($timestamp_3_slex == "") {
+                        $timestamp_3_slex = $array_holder_slex[$i]->timestamp;
+                    }
+                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 1, $array_holder_slex[$i]->e_id);
 
-                if ($cv == -1) {
-                    $aqi = "-";
-                } else if ($cv > $no2_max) {
-                    $aqi = "400+";
-                } else if ($cv < 0.65) {
-                    $aqi = "201-";
-                } else {
-                    $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
+                    if ($cv == -1) {
+                        $aqi = "-";
+                    } else if ($cv > $no2_max) {
+                        $aqi = "400+";
+                        $no2_g6_slex = $no2_g6_slex + 1;
+                    } else if ($cv < 0.65) {
+                        $aqi = "201-";
+                        $no2_g1_slex = $no2_g1_slex + 1;
+                    } else {
+                        $aqi = $this->calculateAQI_AQI($no2_guideline_values, $cv, $no2_precision, $guideline_aqi_values);
+
+                        if ($aqi == "400+") {
+                            $no2_g6_slex = $no2_g6_slex + 1;
+                        } else if ($aqi == "201-") {
+                            $no2_g1_slex = $no2_g1_slex + 1;
+                        } else if ($aqi >= 0 && $aqi <= 50) {
+                            $no2_g1_slex = $no2_g1_slex + 1;
+                        } else if ($aqi >= 51 && $aqi <= 100) {
+                            $no2_g2_slex = $no2_g2_slex + 1;
+                        } else if ($aqi >= 101 && $aqi <= 150) {
+                            $no2_g3_slex = $no2_g3_slex + 1;
+                        } else if ($aqi >= 151 && $aqi <= 200) {
+                            $no2_g4_slex = $no2_g4_slex + 1;
+                        } else if ($aqi >= 201 && $aqi <= 300) {
+                            $no2_g5_slex = $no2_g5_slex + 1;
+                        } else if ($aqi >= 301) {
+                            $no2_g6_slex = $no2_g6_slex + 1;
+                        }
+                    }
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+
+                        if(empty($no2_highest_timestamp_slex)){
+                            $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $no2_highest_cv_slex = $cv;
+                            $no2_highest_evaluation_slex = $this->determineAQICategory($aqi);
+                        }else{
+                            if($cv > $no2_highest_cv_slex){
+                                $no2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $no2_highest_cv_slex = $cv;
+                                $no2_highest_evaluation_slex = $this->determineAQICategory($aqi);
+                            }
+                        }
+                    }
+
+                    array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
+                    //array_push($slexData1, $array_holder_slex[$i]->timestamp);
                 }
+                else if ($array_holder_slex[$i]->e_id == "2") {
+                    $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
+                    if($timestamp_2_slex == "") {
+                        $timestamp_2_slex = $array_holder_slex[$i]->timestamp;
+                    }
+                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
 
-                if ($cv == -1) {
-                    $cv = "-";
-                } else {
-                    $cv = $this->floorDec_AQI($cv, $precision = $no2_precision);
+                    if ($cv == -1) {
+                        $aqi = "-";
+                    } else if ($cv > $sulfur_max) {
+                        $aqi = "400+";
+                        $so2_g6_slex = $so2_g6_slex + 1;
+                    } else {
+                        $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
+
+                        if ($aqi == "400+") {
+                            $so2_g6_slex = $so2_g6_slex + 1;
+                        } else if ($aqi == "201-") {
+                            $so2_g1_slex = $so2_g1_slex + 1;
+                        } else if ($aqi >= 0 && $aqi <= 50) {
+                            $so2_g1_slex = $so2_g1_slex + 1;
+                        } else if ($aqi >= 51 && $aqi <= 100) {
+                            $so2_g2_slex = $so2_g2_slex + 1;
+                        } else if ($aqi >= 101 && $aqi <= 150) {
+                            $so2_g3_slex = $so2_g3_slex + 1;
+                        } else if ($aqi >= 151 && $aqi <= 200) {
+                            $so2_g4_slex = $so2_g4_slex + 1;
+                        } else if ($aqi >= 201 && $aqi <= 300) {
+                            $so2_g5_slex = $so2_g5_slex + 1;
+                        } else if ($aqi >= 301) {
+                            $so2_g6_slex = $so2_g6_slex + 1;
+                        }
+                    }
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
+
+                        if(empty($so2_highest_timestamp_slex)){
+                            $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $so2_highest_cv_slex = $cv;
+                            $so2_highest_evaluation_slex = $this->determineAQICategory($aqi);
+                        }else{
+                            if($cv > $so2_highest_cv_slex){
+                                $so2_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $so2_highest_cv_slex = $cv;
+                                $so2_highest_evaluation_slex = $this->determineAQICategory($aqi);
+                            }
+                        }
+                    }
+
+                    array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
+
+                    //array_push($slexData1, $array_holder_slex[$i]->timestamp);
                 }
+                else if ($array_holder_slex[$i]->e_id == "1") {
+                    $dates = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
+                    if($timestamp_1_slex == "") {
+                        $timestamp_1_slex = $array_holder_slex[$i]->timestamp;
+                    }
+                    $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 8, $array_holder_slex[$i]->e_id);
 
-                array_push($no2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $no2_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
-                //array_push($slexData1, $array_holder_slex[$i]->timestamp);
-            } else if ($array_holder_slex[$i]->e_id == "2") {
-                $dates = $this->GetRollingDates_AQI(24, $array_holder_slex[$i]->timestamp);
-                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 24, $array_holder_slex[$i]->e_id);
+                    if ($cv == -1) {
+                        $aqi = "-";
+                    } else if ($cv > $co_max) {
+                        $aqi = "400+";
+                        $co_g6_slex = $co_g6_slex + 1;
+                    } else {
+                        $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
 
-                if ($cv == -1) {
-                    $aqi = "-";
-                } else if ($cv > $sulfur_max) {
-                    $aqi = "400+";
-                } else {
-                    $aqi = $this->calculateAQI_AQI($sufur_guideline_values, $cv, $sulfur_precision, $guideline_aqi_values);
+                        if ($aqi == "400+") {
+                            $co_g6_slex = $co_g6_slex + 1;
+                        } else if ($aqi == "201-") {
+                            $co_g1_slex = $co_g1_slex + 1;
+                        } else if ($aqi >= 0 && $aqi <= 50) {
+                            $co_g1_slex = $co_g1_slex + 1;
+                        } else if ($aqi >= 51 && $aqi <= 100) {
+                            $co_g2_slex = $co_g2_slex + 1;
+                        } else if ($aqi >= 101 && $aqi <= 150) {
+                            $co_g3_slex = $co_g3_slex + 1;
+                        } else if ($aqi >= 151 && $aqi <= 200) {
+                            $co_g4_slex = $co_g4_slex + 1;
+                        } else if ($aqi >= 201 && $aqi <= 300) {
+                            $co_g5_slex = $co_g5_slex + 1;
+                        } else if ($aqi >= 301) {
+                            $co_g6_slex = $co_g6_slex + 1;
+                        }
+                    }
+
+                    if ($cv == -1) {
+                        $cv = "-";
+                    } else {
+                        $cv = $this->floorDec_AQI($cv, $precision = 1);
+
+                        if(empty($co_highest_timestamp_slex)){
+                            $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                            $co_highest_cv_slex = $cv;
+                            $co_highest_evaluation_slex = $this->determineAQICategory($aqi);
+                        }else{
+                            if($cv > $co_highest_cv_slex){
+                                $co_highest_timestamp_slex = $array_holder_slex[$i]->timestamp;
+                                $co_highest_cv_slex = $cv;
+                                $co_highest_evaluation_slex = $this->determineAQICategory($aqi);
+                            }
+                        }
+                    }
+
+                    array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = 1) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
+
+                    //array_push($slexData1, $array_holder_slex[$i]->timestamp);
                 }
+            }
+        }
+        
+        if(count($array_holder_slex) > 0) {
+            $timestamp = $timestamp_1_slex;
 
-                if ($cv == -1) {
-                    $cv = "-";
-                } else {
-                    $cv = $this->floorDec_AQI($cv, $precision = $sulfur_precision);
-                }
+            array_push($highest_slex, "CO (8 hr)" . ";" . $co_highest_timestamp_slex . ";" . $co_highest_cv_slex . ";" . $co_highest_evaluation_slex);
+            array_push($highest_slex, "SO2 (24 hr)" . ";" . $so2_highest_timestamp_slex . ";" . $so2_highest_cv_slex . ";" . $so2_highest_evaluation_slex);
+            array_push($highest_slex, "NO2 (1 hr)" . ";" . $no2_highest_timestamp_slex . ";" . $no2_highest_cv_slex . ";" . $no2_highest_evaluation_slex);
 
-                array_push($so2Data_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = $sulfur_precision) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
+            array_push($summary_slex, "GOOD" . ";" . $co_g1_slex . ";" . $so2_g1_slex . ";" . $no2_g1_slex);
+            array_push($summary_slex, "FAIR" . ";" . $co_g2_slex . ";" . $so2_g2_slex . ";" . $no2_g2_slex);
+            array_push($summary_slex, "UNHEALTHY" . ";" . $co_g3_slex . ";" . $so2_g3_slex . ";" . $no2_g3_slex);
+            array_push($summary_slex, "VERY UNHEALTHY" . ";" . $co_g4_slex . ";" . $so2_g4_slex . ";" . $no2_g4_slex);
+            array_push($summary_slex, "ACUTELY UNHEALTHY" . ";" . $co_g5_slex . ";" . $so2_g5_slex . ";" . $no2_g5_slex);
+            array_push($summary_slex, "EMERGENCY" . ";" . $co_g6_slex . ";" . $so2_g6_slex . ";" . $no2_g6_slex);
+        }
 
-                //array_push($slexData1, $array_holder_slex[$i]->timestamp);
-            } else if ($array_holder_slex[$i]->e_id == "1") {
-                $dates = $this->GetRollingDates_AQI(8, $array_holder_slex[$i]->timestamp);
-                $cv = $this->Averaging_AQI_ALL($array_holder_slex, $dates, 8, $array_holder_slex[$i]->e_id);
-
-                if ($cv == -1) {
-                    $aqi = "-";
-                } else if ($cv > $co_max) {
-                    $aqi = "400+";
-                } else {
-                    $aqi = $this->calculateAQI_AQI($co_guideline_values, $cv, $co_precision, $guideline_aqi_values);
-                }
-
-                if ($cv == -1) {
-                    $cv = "-";
-                } else {
-                    $cv = $this->floorDec_AQI($cv, $precision = 1);
-                }
-
-                array_push($coData_slex, $array_holder_slex[$i]->timestamp . ';' . $this->floorDec_AQI($array_holder_slex[$i]->concentration_value, $precision = 1) . ';' . $cv . ';' . $aqi . ';' . $this->determineAQICategory($aqi));
-
-                //array_push($slexData1, $array_holder_slex[$i]->timestamp);
+        if(count($array_holder_bancal) > 0 && count($array_holder_slex) > 0  ){
+            if($timestamp_1_bancal > $timestamp_1_slex){
+                $timestamp = $timestamp_1_bancal;
+            }else{
+                $timestamp = $timestamp_1_slex;
             }
         }
 
-        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp];
+        return [$coData_bancal, $so2Data_bancal, $no2Data_bancal, $coData_slex, $so2Data_slex, $no2Data_slex, $timestamp, $summary_bancal, $summary_slex, $highest_bancal, $highest_slex];
     }
 
     function CalculateAveraging_AQI($element)
@@ -1454,21 +1781,21 @@ class GPDF
         if ($aqi == "-") {
             return "-";
         } else if ($aqi == "400+") {
-            return "Emergency";
+            return "EMERGENCY";
         } else if ($aqi == "201-") {
-            return "Good";
+            return "GOOD";
         } else if ($aqi >= 0 && $aqi <= 50) {
-            return "Good";
+            return "GOOD";
         } else if ($aqi >= 51 && $aqi <= 100) {
-            return "Fair";
+            return "FAIR";
         } else if ($aqi >= 101 && $aqi <= 150) {
-            return "Unhealthy for Sensitive Groups";
+            return "UNHEALTHY";
         } else if ($aqi >= 151 && $aqi <= 200) {
-            return "Very Unhealthy";
+            return "VERY UNHEALTHY";
         } else if ($aqi >= 201 && $aqi <= 300) {
-            return "Acutely Unhealthy";
+            return "ACUTELY UNHEALTHY";
         } else if ($aqi >= 301) {
-            return "Emergency";
+            return "EMERGENCY";
         } else {
             return "-";
         }
