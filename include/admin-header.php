@@ -45,7 +45,7 @@
 
         <li  id="home-tab"><a href="feed.php"><span class="material-icons">home</span> Home</a></li>
         <li><a href="history.php" target="_blank"><span class="material-icons">trending_up</span> History</a>
-        <li class="link"><a id="calculators"><span class="material-icons">account_circle</span>Calculators<i
+        <li class="link"><a id="calculators"><span class="material-icons">timeline</span>Calculators<i
                         class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a></li>
         <div hidden id="calculators-content">
             <li><a href="aqi-calculator.php?calculator=CVA" target="_blank" id="drpCVA">AQI Calculator</a></li>
