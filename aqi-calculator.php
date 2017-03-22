@@ -23,7 +23,7 @@ if (isset($_POST["concentration"]) && isset($_POST["element"])) {
 
 ?>
 
-<?php //include('include/header.php'); ?>
+<?php include('include/header.php'); ?>
 
 <div id="content-holder">
     <div class="section">
