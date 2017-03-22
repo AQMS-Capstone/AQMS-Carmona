@@ -27,7 +27,7 @@
                 </div>
 
                 <li><a href="mobile-daily.php"><span class="material-icons">access_time</span> Daily</a></li>
-<!--                <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>-->
+                <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>
 <!--                <li><a id="calculator"><span class="material-icons">timeline</span>Calculators<i-->
 <!--                                class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a>-->
 <!--                </li>-->
@@ -53,7 +53,7 @@
                                                                                         style="margin-left: 5px!important;">arrow_drop_down</i></a>
                 </li>
                 <li><a href="daily.php"><span class="material-icons">access_time</span> Daily</a></li>
-<!--                <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>-->
+                <li><a href="history.php"><span class="material-icons">trending_up</span> History</a></li>
 <!--                <li><a class="dropdown-button" data-beloworigin="true" data-activates="dropdown2"><span-->
 <!--                                class="material-icons">timeline</span>Calculators<i class="material-icons right"-->
 <!--                                                                                    style="margin-left: 5px!important;">arrow_drop_down</i></a>-->
