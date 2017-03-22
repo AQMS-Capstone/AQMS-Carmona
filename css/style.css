@@ -149,13 +149,13 @@ footer.page-footer .footer-copyright {
     .centered-legend {
         float: right;
         position: relative;
-        left: -19%;
+        left: -15%;
     }
 
     .centered-nav {
         float: right;
         position: relative;
-        left: -25%;
+        left: -32%;
     }
 }
 
@@ -163,13 +163,13 @@ footer.page-footer .footer-copyright {
     .centered-legend {
         float: right;
         position: relative;
-        left: 25%;
+        left: 15%;
     }
 
     .centered-nav {
         float: right;
         position: relative;
-        left: -25%;
+        left: -35%;
     }
 }
 
@@ -177,13 +177,13 @@ footer.page-footer .footer-copyright {
     .centered-legend {
         float: right;
         position: relative;
-        left: 18%;
+        left: 7%;
     }
 
     .centered-nav {
         float: right;
         position: relative;
-        left: -30%;
+        left: -38%;
     }
 }
 
