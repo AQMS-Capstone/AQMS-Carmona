@@ -44,8 +44,18 @@
 
 
         <li  id="home-tab"><a href="feed.php"><span class="material-icons">home</span> Home</a></li>
+        <li><a href="history.php"><span class="material-icons">trending_up</span> History</a>
+        <li class="link"><a id="calculators"><span class="material-icons">account_circle</span>Calculators<i
+                        class="material-icons right" style="margin-left: 5px!important;">arrow_drop_down</i></a></li>
+        <div hidden id="calculators-content">
+            <li><a href="aqi-calculator.php?calculator=CVA" id="drpCVA">AQI Calculator</a></li>
+            <li><a href="aqi-calculator.php?calculator=ACV" id="drpACV">Concentration Value Calculator</a></li>
+        </div>
         <li id="maintenance-tab"><a href="maintenance.php"><span class="material-icons">build</span> Maintenance</a></li>
+
+
         <div class="divider"></div>
+
         <li><a><span class="material-icons">select_all</span> Bancal Sensor: <span id="status1">Online</span></a></li>
         <li><a><span class="material-icons">select_all</span> SLEX Sensor: <span id="status2">Online</span></a></li>
 

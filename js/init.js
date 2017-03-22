@@ -24,8 +24,9 @@ $("#account").off("click").on("click", function() {
     $("#account-content").fadeToggle("default");
 });
 
-$("#calculator").off("click").on("click", function() {
-    $("#calculator-content").fadeToggle("default");
+
+$("#calculators").off("click").on("click", function() {
+    $("#calculators-content").fadeToggle("default");
 });
 
 $("#reports-tab").click(function () {
